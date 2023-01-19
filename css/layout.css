@@ -1,0 +1,202 @@
+/* -------------- Begin ------------- */
+
+/* --------- 基本的东西 --------- */
+
+/* 全局汉仪文黑（miHoYo 改）字体 */
+@font-face {
+    font-family: 'mihoyo';
+    font-style: normal;
+    font-weight: 300;
+    src: url('/fonts/mihoyo.ttf') format('truetype');
+}
+/* body 设置背景色为灰色 */
+body {
+    margin: 0;
+    background: rgb(230, 230, 230);
+    font-family: 'mihoyo', 'Microsoft Yahei', 'Serif';
+}
+
+
+/* -------- 配件设置 -------- */
+
+/* 点状下边框，平替分割线（乐） */
+.dotted.border, hr {
+    border: none;
+    border-bottom: rgb(238, 122, 76) dotted;
+}
+/* 取消链接下划线、链接 hover 变色 */
+a {
+    text-decoration: none;
+    color: rgb(235, 165, 101);
+    transition: .15s;
+}
+a:hover {
+    transition: .15s;
+    color: rgb(238, 122, 76);
+    color: rgb(238, 122, 76);
+}
+
+/* 代码 FiraCode 字体 */
+@font-face {
+    font-family: 'FiraCode';
+    font-style: normal;
+    font-weight: 300;
+    src: url('/fonts/FiraCode-Regular.ttf') format('truetype');
+}
+/* 代码设置 */
+code {
+    font-family: 'FiraCode', 'Consolas', 'Serif';
+    font-size: 14px;
+    /* background: #eee; */
+    padding: 2px;
+    border-radius: 3px;
+    line-height: 1em;
+    color: #3e3e3e;
+}
+pre > code {
+    background: unset !important;
+}
+figure.highlight {
+    font-family: 'FiraCode', 'Consolas', 'Serif' !important;
+}
+pre.line-numbers {
+    font-size: .95em;
+}
+
+/* 图片大小、对齐设置 */
+img {
+    max-width: 90%;
+    margin: 10px 10px;
+}
+
+/* --------- 顶栏整体 -------- */
+
+/* 导航顶栏 flex 设置：中轴线横对齐 以及 位置固定 */
+.ui.top.menu {
+    position: fixed;    
+    top: 0;
+    /* 顶栏始终处于最上层 */
+    z-index: 101;
+    top: -1px;
+    height: 48px;
+    border: 1px solid rgba(34,36,38,.15);
+    box-shadow: 0 3px 2px 0 rgba(34,36,38,.15);
+    background: #fff;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    color: #000;
+}
+
+/* -------- 左对齐部分 -------- */
+
+/* 左对齐 logo */
+.ui.top.menu > .logo {
+    flex: 0 0 auto;
+    position: relative;
+    line-height: 1;
+    padding: .92857143em 1.14285714em;
+    text-align: center;
+}
+
+/* -------- 右对齐部分 ------- */
+
+/* 右对齐导航部分 */
+.ui.top.menu > #rightali {
+    display: flex;
+    flex: 0 0 auto;
+    position: relative;
+    justify-content: flex-end;
+    margin-left: auto !important;
+    align-items: center;
+}
+
+/* ------ 导航 a 标签行为 ----- */
+
+/* 词条基本设置 */
+.item, .drop.down.item.ex {
+    color: rgb(91, 91, 91);
+    flex: 0 0 auto;
+    position: relative;
+    line-height: 1;
+    padding: .92857143em 1.14285714em;
+    /* width: 70px; */
+    text-align: center;
+    background: #fff;
+    transition: .15s;
+}
+/* 未活动导航高度对齐 */
+body > .menu > div > .item {
+    border-bottom: #fff solid 4px;
+}
+body > .menu > div > .item:hover {
+    /* 下边框模拟被选中时的颜色 */
+    border-bottom: rgb(250, 250, 250) solid 4px;
+}
+/* hover 时显示动画 */
+.item:hover {
+    transition: .15s;
+    color: rgb(238, 122, 76);
+    background: rgb(250, 250, 250);
+    color: rgb(238, 122, 76);
+    background: rgb(250, 250, 250);
+}
+
+/* ------- 下拉菜单整体 ------- */
+
+/* 覆盖时移动到正常位置且完全不透明 */
+.drop.down.menu:hover {
+    opacity: 1;
+    top: 0;
+}
+/* 中轴线竖对齐 flex，未被覆盖时移动到 Interests 位置且完全透明 */
+.drop.down.menu {
+    top: -100px;
+    overflow: hidden;
+    opacity: 0;
+    display: block;
+    /* transition: opacity .1s ease; */
+    position: absolute;
+    /* left: 10px; */
+    flex: 0 0 auto;
+    width: auto !important;
+    height: auto !important;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.08);
+    background-color: #fff !important;
+}
+/* Interests 和下拉菜单整体中轴线竖对齐 flex */
+.drop.down.item.flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: max-content;
+}
+
+/* ------- 下拉菜单词条 ------- */
+
+/* Interests（下拉）与 Interests（顶栏）完全重合
+    且模拟 Interests（顶栏）完全被选中 */
+.drop.down.menu > a:first-child {
+    height: 19px !important;
+    background-color: rgb(250, 250, 250) !important;
+}
+/* 所有词条宽度一致 */
+.drop.down.item.ex {
+    background-color: #fff;
+    height: 100%;
+    width: 100%;
+    max-width: 720px;
+}
+/* 词条选中时阴影 */
+.drop.down.item.ex:hover {
+    transition: .15s;
+    color: rgb(238, 122, 76);
+    background: rgb(250, 250, 250);
+    color: rgb(238, 122, 76);
+    background: rgb(250, 250, 250);
+}
+
+/* ------------ End. Copyright: OL -------------*/
