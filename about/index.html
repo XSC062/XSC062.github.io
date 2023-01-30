@@ -7,9 +7,18 @@
 
     <title>
     
-        about - Test
+        关于 XSC062 - Test
     
 </title>
+<link rel="stylesheet" href="/css/fa-brands.min.css">
+<link rel="stylesheet" href="/css/fa-regular.min.css">
+<link rel="stylesheet" href="/css/fa-solid.min.css">
+<link rel="stylesheet" href="/css/fontawesome.min.css">
+<link rel="stylesheet" href="/css/fontawesome-all.css">
+<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
 <meta charset="utf-8"> 
     
 <script src="/js/beforebody.js"></script>
@@ -92,17 +101,86 @@
     <div class="ui text container">
         <img src="/images/DEFAULTHEADPHOTO.png" id="photo">
         <div id="othertext">
-            <p>我是 OL，业余前端爱好者，小画师。</p>
-<p>你也可以叫我 XSC062。</p>
-<p>OY 和 OA 是我的两个怨种朋友。</p>
+            <p>我是 XSC062，OIer，业余前端爱好者，小画师。</p>
+<p>你也可以叫我 OL。</p>
 <hr>
-<p>这篇博客目前使用的主题完全由 OL 编写。因为他很懒，所以并不决定发布主题。</p>
-<p>同样因为他很鸽，这个主题还正在施工中。</p>
+<p>这篇博客目前使用的主题完全由 OL 编写。</p>
+<p>如你所见，其代码冗长且不规范，因为这是他的真实水平。</p>
+<p>因为觉得没多少人会要，所以并不决定发布。</p>
 
         </div>
     </div>
+    <div style="max-width: 85%; margin: auto">
+        <hr class="dotted">
+        
+    <div id="vcomments" class="yahei"></div>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: 'OlmvQ0a2Zw7xo3no2bwabOzx-gzGzoHsz',
+            appKey: 'TW6t8mFeGLmhPjWisvmllvvo',
+            recordIP: true,
+            enableQQ: true,
+            emojiCDN: "https://xsc062.gitee.io/Valine/",
+            emojiMaps: {
+                "微笑": "weixiao.gif",
+                "笑哭": "xiaoku.gif",
+                "斜眼笑": "xieyanxiao.gif",
+                "偷笑": "touxiao.gif",
+                "色": "se.gif",
+                "呲牙": "ciya.gif",
+                "亲亲": "qinqin.gif",
+                "疑问": "yiwen.gif",
+                "惊讶": "jingya.gif",
+                "吓": "xia.gif",
+                "大哭": "daku.gif",
+                "可怜": "kelian.gif",
+                "捂脸": "wulian.gif",
+                "泪奔": "leiben.gif",
+                "流泪": "liulei.gif",
+                "委屈": "weiqu.gif",
+                "调皮": "tiaopi.gif",
+                "头秃": "toutu.gif",
+                "吐": "tu.gif",
+                "赞": "zan.gif",
+                "踩": "cai.gif",
+                "无奈": "wunai.gif",
+                "托腮": "tuosai.gif",
+                "流汗": "liuhan.gif",
+                "糗大了": "qiudale.gif",
+                "擦汗": "cahan.gif",
+                "哦哟": "oyo.gif",
+                "暗中观察": "anzhongguancha.gif",
+                "沧桑": "cangsang.gif",
+                "鄙视": "bishi.gif",
+                "吃瓜": "chigua.gif",
+                "doge": "doge.gif",
+                "发呆": "fadai.gif",
+                "emm": "emm.gif",
+                "发怒": "fanu.gif",
+                "奋斗": "fendou.gif",
+                "尴尬": "ganga.gif",
+                "鼓掌": "guzhang.gif",
+                "咒骂": "zhouma.gif",
+                "握手": "woshou.gif",
+                "拥抱": "yongbao.gif",
+                "晕": "yun.gif",
+                "再见": "zaijian.gif",
+                "小纠结": "xiaojiujie.gif",
+                "右哼哼": "youhengheng.gif",
+                "无聊": "wuliao.gif",
+                "羊驼": "yangtuo.gif",
+                "幽灵": "youling.gif",
+                "发抖": "fadou.gif"
+            },
+            placeholder: 'The world is but a little place after all...\n\
+昵称处填写你的 QQ 可自动获取昵称、邮箱和头像 🐱‍🏍'
+        })
+    </script>
+    
+    </div>
 </div>
-
+    
     <div id="footer" class="yahei">
     Powered by 
     <a target="_blank" rel="noopener" href="https://hexo.io">
@@ -113,6 +191,30 @@
         XSC062
     </a>
 </div>
+<script>
+    const getValineDomTimer = setInterval(() => {
+        // 不知道为什么 我从原博客 js 文件粘过来的参数是
+        // "#valine .vcards .vcard"
+        // DEBUG 了半天才定位到这个问题。。。
+        const vcards =
+            document.querySelectorAll('#valine, .vcards, .vcard');
+        if (vcards.length > 0) {
+            let author = 'XSC062';
+            let author1 = 'OL';
+            for (let vcard of vcards) {
+                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                const vnick = vnick_dom.innerHTML;
+                if (vnick === author || vnick === author1) {
+                    vnick_dom.innerHTML =
+                        `${vnick} <span id="rootitem" class="fira">root</span>`
+                }
+            }
+            clearInterval(getValineDomTimer);
+        } else {
+            clearInterval(getValineDomTimer);
+        }
+    }, 2000);
+</script>
     <script>
         SetActiveItem();
     </script>

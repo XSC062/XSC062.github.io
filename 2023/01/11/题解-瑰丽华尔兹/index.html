@@ -10,6 +10,15 @@
         题解 // 瑰丽华尔兹 - Test
     
 </title>
+<link rel="stylesheet" href="/css/fa-brands.min.css">
+<link rel="stylesheet" href="/css/fa-regular.min.css">
+<link rel="stylesheet" href="/css/fa-solid.min.css">
+<link rel="stylesheet" href="/css/fontawesome.min.css">
+<link rel="stylesheet" href="/css/fontawesome-all.css">
+<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
 <meta charset="utf-8"> 
     
 <script src="/js/beforebody.js"></script>
@@ -144,6 +153,13 @@
 
 
 
+
+
+
+
+
+
+
 <div class="ui post container">
     <a href="">
         <div class="ui post title">
@@ -154,7 +170,7 @@
             </div>
         </div>
     </a>
-    <div class="ui text container">
+    <div class="ui text container yahei">
         <p>不难发现，题意可转化为：</p>
 <p>从 $(x,y)$ 出发，按顺序向 $d_i$ 方向移动 $[0,t_i-s_i+1]$ 距离，问最大移动距离。</p>
 <p>为了方便描述，我们把一次「向 $d_i$ 方向移动 $[0,t_i-s_i+1]$ 距离」的操作称为「一步」。</p>
@@ -163,7 +179,7 @@
 <p>设计状态。不难发现位置信息必须出现在 DP 的维度中（因为当前位置会影响下一步滑动的距离），而其他信息均不会对下一步滑动产生影响。</p>
 <p>故可令 $f_{i,j}$ 表示完成当前次滑动后，从起点滑动到 $(i,j)$ 可得到的最大滑动距离。</p>
 <p>以方向上为例，可列 DP 式：</p>
-<p>$$<br>f_{i,j} &#x3D; \max\limits_{i&lt;k\le i+(t_i-s_i+1)}{f_{k,j}+k-i}<br>$$</p>
+<p>$$<br>f_{i,j} &#x3D; \max\limits_{i&lt;k\le i+(t_i-s_i+1)}\{f_{k,j}+k-i\}<br>$$</p>
 <p>此时可枚举每一列的所有状态，使用单调队列优化。</p>
 <p>但实际操作中会出现问题。因为单调队列从下向上更新状态时，$f_{k,j}$ 会比 $f_{i,j}$ 先更新（参考 01 背包倒序枚举容量），导致每一「步」会重复被走很多次。但单调队列的特性限制了我们只能从下向上枚举，此时可新开一个数组记录 $f$ 当次被更新之前的值。</p>
 <p>障碍物如何处理呢？我们知道，如果 $(i,j)$ 下面某一位置有障碍物，那么障碍物下面所有的 $(k,j)$ 都不能用于更新 $f_{i,j}$（因为被挡住了滑不上来）。所以我们在从下往上枚举时，遇到障碍物就清空单调队列即可。</p>
@@ -289,9 +305,6 @@
 <span class="token punctuation">&#125;</span> <span class="token comment">// namespace XSC062</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
         <hr class="dotted">
         <div class="post footer">
-            <p style="text-align: center; color: grey; font-size: 18px;">
-                —— · EOF · ——
-            </p>
             <div id="hitokoto">
                 <h3 id="hitokoto-title">
                     一言 - Hitokoto
@@ -301,13 +314,166 @@
                 <div id="hitokoto-from">
                 </div>
             </div>
+            
+    
+    
+    
+    
+    
+    
+    
+        
+        
+    
+        
+            
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+    
+            
+    
+    
+    
+    
+    
+    
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+            
+        
+        
+    
+        
+        
+    
+    
+            <!-- 注意前后是反过来滴 -->
+            <div class="button flex">
+                <div id="prev">
+                    
+                        <a href="/2023/01/10/题解-背单词/">
+                            <strong class="hoyo">
+                                &lt;
+                            </strong>
+                            题解 // 背单词
+                        </a>
+                    
+                </div>
+                <div id="next">
+                    
+                        <a href="/2023/01/30/做题记录-树剖练习题/">
+                            做题记录 // 树剖练习题
+                            <strong class="hoyo">
+                                &gt;
+                            </strong>
+                        </a>
+                    
+                </div>
+            </div>
+            
+    <div id="vcomments" class="yahei"></div>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: 'OlmvQ0a2Zw7xo3no2bwabOzx-gzGzoHsz',
+            appKey: 'TW6t8mFeGLmhPjWisvmllvvo',
+            recordIP: true,
+            enableQQ: true,
+            emojiCDN: "https://xsc062.gitee.io/Valine/",
+            emojiMaps: {
+                "微笑": "weixiao.gif",
+                "笑哭": "xiaoku.gif",
+                "斜眼笑": "xieyanxiao.gif",
+                "偷笑": "touxiao.gif",
+                "色": "se.gif",
+                "呲牙": "ciya.gif",
+                "亲亲": "qinqin.gif",
+                "疑问": "yiwen.gif",
+                "惊讶": "jingya.gif",
+                "吓": "xia.gif",
+                "大哭": "daku.gif",
+                "可怜": "kelian.gif",
+                "捂脸": "wulian.gif",
+                "泪奔": "leiben.gif",
+                "流泪": "liulei.gif",
+                "委屈": "weiqu.gif",
+                "调皮": "tiaopi.gif",
+                "头秃": "toutu.gif",
+                "吐": "tu.gif",
+                "赞": "zan.gif",
+                "踩": "cai.gif",
+                "无奈": "wunai.gif",
+                "托腮": "tuosai.gif",
+                "流汗": "liuhan.gif",
+                "糗大了": "qiudale.gif",
+                "擦汗": "cahan.gif",
+                "哦哟": "oyo.gif",
+                "暗中观察": "anzhongguancha.gif",
+                "沧桑": "cangsang.gif",
+                "鄙视": "bishi.gif",
+                "吃瓜": "chigua.gif",
+                "doge": "doge.gif",
+                "发呆": "fadai.gif",
+                "emm": "emm.gif",
+                "发怒": "fanu.gif",
+                "奋斗": "fendou.gif",
+                "尴尬": "ganga.gif",
+                "鼓掌": "guzhang.gif",
+                "咒骂": "zhouma.gif",
+                "握手": "woshou.gif",
+                "拥抱": "yongbao.gif",
+                "晕": "yun.gif",
+                "再见": "zaijian.gif",
+                "小纠结": "xiaojiujie.gif",
+                "右哼哼": "youhengheng.gif",
+                "无聊": "wuliao.gif",
+                "羊驼": "yangtuo.gif",
+                "幽灵": "youling.gif",
+                "发抖": "fadou.gif"
+            },
+            placeholder: 'The world is but a little place after all...\n\
+昵称处填写你的 QQ 可自动获取昵称、邮箱和头像 🐱‍🏍'
+        })
+    </script>
+    
         </div>
     </div>
     <script>
         setHitokoto();
     </script>
 </div>
-
+    
     <div id="footer" class="yahei">
     Powered by 
     <a target="_blank" rel="noopener" href="https://hexo.io">
@@ -318,6 +484,30 @@
         XSC062
     </a>
 </div>
+<script>
+    const getValineDomTimer = setInterval(() => {
+        // 不知道为什么 我从原博客 js 文件粘过来的参数是
+        // "#valine .vcards .vcard"
+        // DEBUG 了半天才定位到这个问题。。。
+        const vcards =
+            document.querySelectorAll('#valine, .vcards, .vcard');
+        if (vcards.length > 0) {
+            let author = 'XSC062';
+            let author1 = 'OL';
+            for (let vcard of vcards) {
+                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                const vnick = vnick_dom.innerHTML;
+                if (vnick === author || vnick === author1) {
+                    vnick_dom.innerHTML =
+                        `${vnick} <span id="rootitem" class="fira">root</span>`
+                }
+            }
+            clearInterval(getValineDomTimer);
+        } else {
+            clearInterval(getValineDomTimer);
+        }
+    }, 2000);
+</script>
     <script>
         SetActiveItem();
     </script>

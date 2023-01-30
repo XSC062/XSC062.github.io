@@ -10,6 +10,15 @@
         浅记 // 零基础打造 Hexo 主题 - Test
     
 </title>
+<link rel="stylesheet" href="/css/fa-brands.min.css">
+<link rel="stylesheet" href="/css/fa-regular.min.css">
+<link rel="stylesheet" href="/css/fa-solid.min.css">
+<link rel="stylesheet" href="/css/fontawesome.min.css">
+<link rel="stylesheet" href="/css/fontawesome-all.css">
+<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+
 <meta charset="utf-8"> 
     
 <script src="/js/beforebody.js"></script>
@@ -92,6 +101,13 @@
 <script src="/js/post.js"></script>
 
 
+
+
+
+
+
+
+
 <div class="ui post container">
     <a href="">
         <div class="ui post title">
@@ -102,7 +118,7 @@
             </div>
         </div>
     </a>
-    <div class="ui text container">
+    <div class="ui text container yahei">
         <p>行。目前摆在你面前的是这样的一个纯萌新：</p>
 <ul>
 <li>熟练 C&#x2F;C++ （没用）</li>
@@ -210,7 +226,8 @@
 </ul>
 </li>
 </ul>
-<p>然后接下来我失去了耐心，随手翻了翻发现剩下的好像是 C++ 和 py 的结合体（？），所以直接下一步吧。</p>
+<p>然后接下来我失去了按照教程从上翻到下的耐心，于是决定把一切托付给度娘。</p>
+<p>随手翻了翻发现 js 有点像是 C++ 和 py 的结合体（？），所以直接下一步吧。</p>
 <hr>
 <p>接下来我们学习一下 ejs 的标签语法基础。</p>
 <p>Hexo 的渲染模块本身可以使用 Swig 和 ejs，这里我选用了更简单易学、不用安装额外插件的 ejs。</p>
@@ -239,55 +256,34 @@
 &lt;div> qwq &lt;/div> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>也就是说，<code>&lt;%-  %&gt;</code> 将 <code>str1 + str2 + str3</code> 进行了 HTML 编译（？）。</p>
+<p><em>编写完成后 upd：没啥用。一般来说只用得上 <code>&lt;%- %&gt;</code>，所以并不用特别记忆。</em></p>
 </li>
 <li><p><code>&lt;%#   %&gt;</code> 是注释。与 <code>/*   */</code> 类似。</p>
-</li>
-<li><p><code>&lt;%- include(&quot; PATH OF EJS &quot;) %&gt;</code>  和 C++ 中的 <code>#include</code> 功能，呃，不类似。更多的是像函数调用一样，直接「调用」了某一个其他 ejs 文件中的内容。</p>
 </li>
 </ul>
 <p>ejs 本身远远不止标签这一功能。只是因为标签就够用了，所以暂时只学标签。</p>
 <hr>
 <p>Hexo 预先为我们准备好了一些变量，我们可以在 js 中调用它们。</p>
-<p>下面引用了 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/variables">Hexo 官方网站</a> 的描述，其中 <code>objects</code> 类似于结构体变量，<code>array</code> 类似于数组，<code>string</code> 类似于字符串。</p>
-<table>
-<thead>
-<tr>
-<th align="center">变量</th>
-<th align="center">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><code>site.posts</code></td>
-<td align="center">由 <code>post</code> 构成的 <code>array</code>，代表所有文章</td>
-</tr>
-<tr>
-<td align="center"><code>site.pages</code></td>
-<td align="center">由 <code>page</code> 构成的 <code>array</code>，代表所有页面</td>
-</tr>
-<tr>
-<td align="center"><code>site.categories</code></td>
-<td align="center">所有分类</td>
-</tr>
-<tr>
-<td align="center">懒得写了</td>
-<td align="center">大家可以在需要时自行进入我给出的官网链接查阅，这样快得多</td>
-</tr>
-</tbody></table>
+<p><a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/variables">Hexo 官方网站</a> 中对它们进行了描述，其中，在对变量类型的描述中，<code>objects</code> 类似于结构体变量，<code>array</code> 类似于数组，<code>string</code> 类似于字符串。</p>
+<p>*编写完成后 upd： 官方文本 <strong>及其模糊</strong> 且 <strong>及其不准确</strong>，尤其是在变量类型方面。在遇到预料外的问题时，建议结合 <code>&lt;% console.log() %&gt;</code> 和 <code>&lt;% typeof() %&gt;</code> 确认准确类型。*</p>
 <hr>
-<p>我们发现，Hexo 为我们提供了 <code>&lt;%- partial( PATH OF EJS ) %&gt;</code> 标签，可以将内容放入单独的 ejs 文件，实现类似于 <code>&lt;%- include(&#39;&#39;) %&gt;</code> 的功能。所以我们可以把刚刚的 <code>layout.ejs</code> 内容更改如下：</p>
+<p>我们发现，Hexo 为我们提供了 <code>&lt;%- partial( PATH OF EJS ) %&gt;</code> 标签，可以将内容放入单独的 ejs 文件，类似于头文件。所以我们可以把刚刚的 <code>layout.ejs</code> 内容更改如下：</p>
 <pre class="line-numbers language-ejs" data-language="ejs"><code class="language-ejs"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span>
+<span class="token comment">&lt;!-- 页首 --></span>
 <span class="token ejs language-ejs"><span class="token delimiter punctuation">&lt;%-</span><span class="token language-javascript"> <span class="token function">partial</span><span class="token punctuation">(</span><span class="token string">'_partial/header.ejs'</span><span class="token punctuation">)</span> </span><span class="token delimiter punctuation">%></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
 
     <span class="token ejs language-ejs"><span class="token delimiter punctuation">&lt;%-</span><span class="token language-javascript"> body </span><span class="token delimiter punctuation">%></span></span>
-
+    <span class="token comment">&lt;!-- 页脚 --></span>
     <span class="token ejs language-ejs"><span class="token delimiter punctuation">&lt;%-</span><span class="token language-javascript"> <span class="token function">partial</span><span class="token punctuation">(</span><span class="token string">'_partial/footer.ejs'</span><span class="token punctuation">)</span> </span><span class="token delimiter punctuation">%></span></span>
 
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>其中 <code>&lt;%- body %&gt;</code> 相当于 <code>&lt;%- include(&#39;index.ejs&#39;) %&gt;</code>。</p>
+<p>其中 <code>&lt;%- body %&gt;</code> 表示页面的内容，也就是网页渲染 ejs 的内容。</p>
+<p>我们可以通过更改网页 <code>index.md</code> 中 Front-matter 的 <code>layout</code> 值，调整其渲染方式。首页（<code>/</code>）的渲染默认为 <code>index.ejs</code>，归档（’&#x2F;archives’，有 <code>s</code>）的渲染默认为 <code>archive.ejs</code>（没有 <code>s</code>），若不存在则为 <code>index.ejs</code>。</p>
+<p>文章默认为 <code>post.ejs</code>，其他页面则无默认渲染，需自行填写 <code>layout</code> 项。</p>
 <hr>
 <p>接下来 <code>hexo s</code> 一下，就可以看到我们在 <code>index.ejs</code> 中的内容了。只是形式较为返璞归真。</p>
 <p>接下来，我们就必须脱离所有教程，从零开始为自己的博客编写 CSS 和 js 了。</p>
@@ -309,9 +305,6 @@
 
         <hr class="dotted">
         <div class="post footer">
-            <p style="text-align: center; color: grey; font-size: 18px;">
-                —— · EOF · ——
-            </p>
             <div id="hitokoto">
                 <h3 id="hitokoto-title">
                     一言 - Hitokoto
@@ -321,13 +314,166 @@
                 <div id="hitokoto-from">
                 </div>
             </div>
+            
+    
+    
+    
+    
+    
+    
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+            
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+    
+            
+    
+    
+    
+    
+    
+    
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+            
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+    
+            <!-- 注意前后是反过来滴 -->
+            <div class="button flex">
+                <div id="prev">
+                    
+                        <a href="/2022/08/08/归档：220807-220808-开门水题：STL-系列模板题/">
+                            <strong class="hoyo">
+                                &lt;
+                            </strong>
+                            做题记录 // STL 系列模板题
+                        </a>
+                    
+                </div>
+                <div id="next">
+                    
+                        <a href="/2023/01/10/题解-背单词/">
+                            题解 // 背单词
+                            <strong class="hoyo">
+                                &gt;
+                            </strong>
+                        </a>
+                    
+                </div>
+            </div>
+            
+    <div id="vcomments" class="yahei"></div>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: 'OlmvQ0a2Zw7xo3no2bwabOzx-gzGzoHsz',
+            appKey: 'TW6t8mFeGLmhPjWisvmllvvo',
+            recordIP: true,
+            enableQQ: true,
+            emojiCDN: "https://xsc062.gitee.io/Valine/",
+            emojiMaps: {
+                "微笑": "weixiao.gif",
+                "笑哭": "xiaoku.gif",
+                "斜眼笑": "xieyanxiao.gif",
+                "偷笑": "touxiao.gif",
+                "色": "se.gif",
+                "呲牙": "ciya.gif",
+                "亲亲": "qinqin.gif",
+                "疑问": "yiwen.gif",
+                "惊讶": "jingya.gif",
+                "吓": "xia.gif",
+                "大哭": "daku.gif",
+                "可怜": "kelian.gif",
+                "捂脸": "wulian.gif",
+                "泪奔": "leiben.gif",
+                "流泪": "liulei.gif",
+                "委屈": "weiqu.gif",
+                "调皮": "tiaopi.gif",
+                "头秃": "toutu.gif",
+                "吐": "tu.gif",
+                "赞": "zan.gif",
+                "踩": "cai.gif",
+                "无奈": "wunai.gif",
+                "托腮": "tuosai.gif",
+                "流汗": "liuhan.gif",
+                "糗大了": "qiudale.gif",
+                "擦汗": "cahan.gif",
+                "哦哟": "oyo.gif",
+                "暗中观察": "anzhongguancha.gif",
+                "沧桑": "cangsang.gif",
+                "鄙视": "bishi.gif",
+                "吃瓜": "chigua.gif",
+                "doge": "doge.gif",
+                "发呆": "fadai.gif",
+                "emm": "emm.gif",
+                "发怒": "fanu.gif",
+                "奋斗": "fendou.gif",
+                "尴尬": "ganga.gif",
+                "鼓掌": "guzhang.gif",
+                "咒骂": "zhouma.gif",
+                "握手": "woshou.gif",
+                "拥抱": "yongbao.gif",
+                "晕": "yun.gif",
+                "再见": "zaijian.gif",
+                "小纠结": "xiaojiujie.gif",
+                "右哼哼": "youhengheng.gif",
+                "无聊": "wuliao.gif",
+                "羊驼": "yangtuo.gif",
+                "幽灵": "youling.gif",
+                "发抖": "fadou.gif"
+            },
+            placeholder: 'The world is but a little place after all...\n\
+昵称处填写你的 QQ 可自动获取昵称、邮箱和头像 🐱‍🏍'
+        })
+    </script>
+    
         </div>
     </div>
     <script>
         setHitokoto();
     </script>
 </div>
-
+    
     <div id="footer" class="yahei">
     Powered by 
     <a target="_blank" rel="noopener" href="https://hexo.io">
@@ -338,6 +484,30 @@
         XSC062
     </a>
 </div>
+<script>
+    const getValineDomTimer = setInterval(() => {
+        // 不知道为什么 我从原博客 js 文件粘过来的参数是
+        // "#valine .vcards .vcard"
+        // DEBUG 了半天才定位到这个问题。。。
+        const vcards =
+            document.querySelectorAll('#valine, .vcards, .vcard');
+        if (vcards.length > 0) {
+            let author = 'XSC062';
+            let author1 = 'OL';
+            for (let vcard of vcards) {
+                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                const vnick = vnick_dom.innerHTML;
+                if (vnick === author || vnick === author1) {
+                    vnick_dom.innerHTML =
+                        `${vnick} <span id="rootitem" class="fira">root</span>`
+                }
+            }
+            clearInterval(getValineDomTimer);
+        } else {
+            clearInterval(getValineDomTimer);
+        }
+    }, 2000);
+</script>
     <script>
         SetActiveItem();
     </script>
