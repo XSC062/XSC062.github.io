@@ -4,11 +4,7 @@ function setHitokoto() {
             data = JSON.parse(data);
         $('#hitokoto-loader').removeClass('active');
         $('#hitokoto-content').css('display', '').text(data.hitokoto);
-        if (data.from) {
-            if (data.from_who)
-                $('#hitokoto-from').css('display', '').text('来自「' + data.from + '」：' + data.from_who);
-           else
-                $('#hitokoto-from').css('display', '').text('来自「' + data.from + '」');
-        }
+        if (data.from)
+            $('#hitokoto-from').css('display', '').text('来自' + data.from_who + '：「' + data.from + '」');
     });
 }
