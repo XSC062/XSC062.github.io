@@ -5,6 +5,6 @@ function setHitokoto() {
         $('#hitokoto-loader').removeClass('active');
         $('#hitokoto-content').css('display', '').text(data.hitokoto);
         if (data.from)
-            $('#hitokoto-from').css('display', '').text('来自' + data.from_who + '：「' + data.from + '」');
+            $('#hitokoto-from').css('display', '').text('来自「' + data.from + '」');
     });
 }

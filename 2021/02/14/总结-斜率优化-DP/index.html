@@ -127,10 +127,10 @@
 	</div>
     <div class="ui text container yahei">
         <p><em>实际上是对两年前写的一篇博客进行了补充和更正。</em></p>
-<hr>
-<p>我们以一道题为例。</p>
 <span id="more"></span>
 
+<hr>
+<p>我们以一道题为例。</p>
 <h2 id="打印文章"><a href="#打印文章" class="headerlink" title="打印文章"></a>打印文章</h2><p>明显 DP。</p>
 <p>不难得到 DP 式：<br>$$<br>\begin{aligned}<br>f_i&amp;&#x3D;\min\{f_j+(s_i-s_j)^2+M\}<br>\\<br>&amp;&#x3D;\min\{f_j+{s_i}^2-2\times s_i\times s_j+{s_j}^2+M\}<br>\\<br>&amp;&#x3D;\min\{f_j-2\times s_i\times s_j+{s_j}^2\}+{s_i}^2+M<br>\end{aligned}<br>$$<br>其中 $s$ 为 $c$ 的前缀和。</p>
 <p>时间复杂度 $\mathcal O(n^2)$，明显爆炸，所以我们需要优化。</p>
@@ -196,17 +196,14 @@
 <p>此时所有上凸都被去掉了，只剩下凸，所以大概最后的最优解序列就长这个样子：</p>
 <p><img src="https://img-blog.csdnimg.cn/2021021111003214.png" alt="下凸包"></p>
 <p><del>下 秃 包</del></p>
-<p>观察发现，斜率是从左往右递增的。</p>
-<p>所以，我们考虑用单调队列来当这个「最优解序列」。</p>
+<p>观察发现，斜率是从左往右递增的。所以，我们考虑用单调队列来当这个「最优解序列」。</p>
 <h3 id="维护队头"><a href="#维护队头" class="headerlink" title="维护队头"></a>维护队头</h3><p>即保证队头元素为最优解。</p>
-<p>设队头为 $q_l$。</p>
-<p>如果 $q_{l+1}$ 与 $q_l$ 形成的斜率 $\leqslant s_i$，根据上面推出来的式子，得到 $q_{l+1}$ 优于 $q_l$。</p>
-<p>此时可直接弹出队头。</p>
+<p>设队头为 $q_l$，如果 $q_{l+1}$ 与 $q_l$ 形成的斜率 $\leqslant s_i$，根据上面推出来的式子，得到 $q_{l+1}$ 优于 $q_l$，此时可直接弹出队头。</p>
 <h3 id="更新-DP-值"><a href="#更新-DP-值" class="headerlink" title="更新 DP 值"></a>更新 DP 值</h3><p>此处 $q_L$ 表示队头。</p>
 <p>$f_i&#x3D;f_{q_L}-2\times s_i\times s_{q_L}+{s_{q_L}}^2+{s_i}^2+M$</p>
 <h3 id="维护队尾"><a href="#维护队尾" class="headerlink" title="维护队尾"></a>维护队尾</h3><p>即保证里面塞的点相邻两个的斜率递增。</p>
 <p>设队尾为 $q_r$，我们要往最优解队列里 <code>push</code> 一个 $i$ 。</p>
-<p>若队尾两个点 $q_r,q_{r-1}$ 形成的斜率比 $i,q_r$ 形成的斜率大，那么<code>push(i)</code>后，整个队列的斜率就不再单调递增，所以此时要将<code>r--</code>（因为单调队列性质， $i$ 必须入队）。</p>
+<p>若队尾两个点 $q_r,q_{r-1}$ 形成的斜率比 $i,q_r$ 形成的斜率大，那么 <code>push(i)</code> 后，整个队列的斜率就不再单调递增，所以此时要将 <code>r--</code>（因为单调队列性质， $i$ 必须入队）。</p>
 <hr>
 <p>因为斜率是实数，为了避免损失精度造成的惨案，我们交叉相乘，将分子、分母分开处理。</p>
 <p>时刻都要保证队列中至少有两个点，因为一个点无法独立形成斜率，无法进行进一步处理。</p>
@@ -950,6 +947,12 @@ vector<span class="token operator">&lt;</span><span class="token keyword">int</s
         
     
         
+        
+    
+        
+        
+    
+        
             
         
         
@@ -965,6 +968,12 @@ vector<span class="token operator">&lt;</span><span class="token keyword">int</s
     
         
             
+        
+        
+    
+        
+        
+    
         
         
     
@@ -1047,7 +1056,9 @@ vector<span class="token operator">&lt;</span><span class="token keyword">int</s
             appId: 'OlmvQ0a2Zw7xo3no2bwabOzx-gzGzoHsz',
             appKey: 'TW6t8mFeGLmhPjWisvmllvvo',
             recordIP: true,
-            enableQQ: true,
+            enableQQ: true, 
+			// 目前 Valine 的 QQ 自动获取昵称似乎不可用
+			// 故不建议开启
             emojiCDN: "https://xsc062.gitee.io/Valine/",
             emojiMaps: {
                 "微笑": "weixiao.gif",
@@ -1100,8 +1111,9 @@ vector<span class="token operator">&lt;</span><span class="token keyword">int</s
                 "幽灵": "youling.gif",
                 "发抖": "fadou.gif"
             },
+			pageSize: 10,
             placeholder: 'The world is but a little place after all...\n\
-昵称处填写你的 QQ 即可自动获取昵称、邮箱和头像 🐱‍🏍'
+头像会根据邮箱获取你的 Gravatar 🐱‍🏍'
         })
     </script>
     
@@ -1123,6 +1135,9 @@ vector<span class="token operator">&lt;</span><span class="token keyword">int</s
     <a href="/about">
         XSC062
     </a>
+	<p style="margin-top: 5px;">
+		2021 - 2023
+	</p>
 </div>
 <!-- Valine 相关配置 -->
 <script>
