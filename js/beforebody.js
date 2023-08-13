@@ -1,3 +1,7 @@
+/*
+啊？这玩意儿是我啥时候写的？我居然还会写 js？
+🤔😲😇
+*/
 // 获取相对路径
 function GetUrlRelativePath() {
     // 获取绝对路径
@@ -36,10 +40,6 @@ function GetCategoriyPart() {
     if (resURL == "about") {
         return "Abou";
     }
-    if (resURL == "intrests" || resURL == "imgs"
-        || resURL == "videos" || resURL == "musics") {
-        return "Inte";
-    }
     if ('0' <= resURL[0] <= '9' || resURL == "archive") {
         return "Arch";
     }
@@ -53,7 +53,10 @@ function SetActiveItem() {
             = "border-bottom: rgb(238, 122, 76) solid 4px;";
     }
 }
-// Details 优化
+// Details 优化 1：鼠标悬浮优化
+//	这里因为理论上来说鼠标悬浮在 <summary> 上时才应该有
+//	cursor: pointer，但是大部分 details 都没有 summary
+//	故自动添加
 function setDetailsSummary() {
 	var de = document.getElementsByTagName("details");
 	for (i = 0; i < de.length; ++i) {
@@ -66,6 +69,11 @@ function setDetailsSummary() {
 		}
 	}
 }
+// Details 优化 2：下滑式动画
+// 实时监视 details 的打开状态，用到了 MutationObserver
+// function detailsAnimation() {
+// 	var de = document.getElementsByTagName("details");
+// }
 // function $(Nid) {
 //     return document.getElementById(Nid);
 // }
