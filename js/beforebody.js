@@ -53,6 +53,19 @@ function SetActiveItem() {
             = "border-bottom: rgb(238, 122, 76) solid 4px;";
     }
 }
+// Details 优化
+function setDetailsSummary() {
+	var de = document.getElementsByTagName("details");
+	for (i = 0; i < de.length; ++i) {
+		var su = de[i].getElementsByTagName("summary");
+		if (su.length == 0) {
+			const nsu = document.createElement("summary");
+			const nsutext = document.createTextNode("查看代码");
+			nsu.appendChild(nsutext);
+			de[i].appendChild(nsu);
+		}
+	}
+}
 // function $(Nid) {
 //     return document.getElementById(Nid);
 // }

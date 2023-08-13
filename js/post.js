@@ -1,5 +1,6 @@
 const { page } = require("hexo/lib/plugins/helper/is");
 
+// 一言
 function setHitokoto() {
     $.get('https://v1.hitokoto.cn/', function (data) {
         if (typeof data === 'string')
