@@ -128,6 +128,8 @@
         <p>最近特别喜欢用 NB 这个词。这是为什么呢？</p>
 <p>因为我太 NB 了。我怎么这么厉害呢？我好想朝所有人都嘚瑟嘚瑟！我真 NB！</p>
 <p>先开题吧。</p>
+<span id="more"></span>
+
 <hr>
 <h3 id="A-等差子序列"><a href="#A-等差子序列" class="headerlink" title="A - 等差子序列"></a>A - 等差子序列</h3><p><a target="_blank" rel="noopener" href="https://vjudge.net/contest/583230#problem/A">https://vjudge.net/contest/583230#problem/A</a></p>
 <p>非常 NB 的一道线段树！但是现在没空所以先不写。</p>
@@ -140,12 +142,13 @@
 <p>这个转化是非常厉害的。那么这个时候有一个显而易见暴力做法，我们记录一个颜色在整个序列中出现的第一个位置（记为 $L_x$）和最后一个位置（记作 $R_x$），然后枚举每一个区间 $[i, j]$，再枚举其中的每一个颜色，看看有没有超出去就好，复杂度 $\mathcal O(n^3)$。</p>
 <details>
 <summary>对纯暴力的一点小优化</summary>
-上述区间内枚举过程转化为判定区间是否满足 ${L_x}_{\min} \ge i$ 且 ${R_x}_{\max} \le j$，采用数据结构维护，就可以优化到 $\mathcal O(n^2\log)$。为什么要专门提一嘴这个呢，因为这个模型我没想到。我真 NB。
+
+<p>上述区间内枚举过程转化为判定区间是否满足 $\min\{L_x\} \ge i$ 且 $\max\{R_x\} \le j$，采用数据结构维护，就可以优化到 $\mathcal O(n^2\log)$。为什么要专门提一嘴这个呢，因为这个模型我没想到。我真 NB。</p>
 </details>
 
 <p>接下来又是一个我想不到的模型。我们发现复杂度瓶颈出在枚举区间上，所以考虑通过固定区间右端点，用较小的复杂度直接求解满足条件的左端点数量来解决问题。为什么不是固定左端点呢？</p>
 <p>「因为题解都是写的固定右端点。」 0# 如是说。</p>
-<p>对于正在枚举的右端点 $j$ 右边的颜色 $x$，我们记录它们上一次出现的位置 $p_x$，并用线段树找到范围内最右值 $(p_x)<em>{\max}$，那么左端点 $i&gt;(p_x)</em>{\max}$。取 $i’&#x3D;(p_x)_{\max}+1$，这样我们就初步得到了一个 $[i’, j]$。相对于纯暴力的做法，$R_x\le j$ 的等价条件已经满足，但还有一个条件，就是 $L_x$ 不能小于 $i$。</p>
+<p>对于正在枚举的右端点 $j$ 右边的颜色 $x$，我们记录它们上一次出现的位置 $p_x$，并用线段树找到范围内最右值 $\max\{p_x\}$，那么左端点 $i&gt;\max\{p_x\}$。取 $i’&#x3D;\max\{p_x\}+1$，这样我们就初步得到了一个 $[i’, j]$。相对于纯暴力的做法，$R_x\le j$ 的等价条件已经满足，但还有一个条件，就是 $L_x$ 不能小于 $i$。</p>
 <p>为了方便数据结构维护 $p_x$，我们逆序枚举 $j$，这样又可以得到一个性质：$i’$ 单调不降。这个时候我们逆向思维，处理出对于每个 $i\ge i’$，其能够到的最远的 $j$，记为 $f_i$，那么我们对于 $f_i$ 建一个权值线段树，然后在枚举过程中查询权值在 $[j, +\infty)$ 的 $i$ 的个数就是答案。由于求的是个数，所以可以对超出范围的 $i$ 对应的 $f_i$ 进行删除操作。</p>
 <p>那么 $f_i$ 又该怎么求呢？暴力地再建一个权值线段树维护 $L_x$，在 $(-\infty, i)$ 权值范围内查询下标 $k$ 的最小值，此时的 $k$ 就是 $f_i$。</p>
 <p>因为 0# 讲课的时候我在开飞机，所以我也不知道 0# 是不是这么讲的，总之我这么做应该能做出来，就是要维护的东西实在有亿点点多。</p>
@@ -158,8 +161,6 @@
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">rt</span> <span class="token expression"><span class="token punctuation">(</span>lt <span class="token operator">|</span> <span class="token number">1</span><span class="token punctuation">)</span></span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">mid</span> <span class="token expression"><span class="token punctuation">(</span>t<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">.</span>l <span class="token operator">+</span> t<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">.</span>r<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span></span></span>
 <span class="token keyword">const</span> <span class="token keyword">int</span> maxn <span class="token operator">=</span> <span class="token number">3e5</span> <span class="token operator">+</span> <span class="token number">5</span><span class="token punctuation">;</span>
-<span class="token comment">// shaber monotonicity</span>
-<span class="token comment">// destroy my youth </span>
 <span class="token keyword">struct</span> <span class="token class-name">_</span> <span class="token punctuation">&#123;</span> <span class="token keyword">int</span> l<span class="token punctuation">,</span> r<span class="token punctuation">,</span> u<span class="token punctuation">,</span> d<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 <span class="token keyword">struct</span> <span class="token class-name">__</span> <span class="token punctuation">&#123;</span>
     <span class="token keyword">int</span> u<span class="token punctuation">,</span> i<span class="token punctuation">;</span>
@@ -242,7 +243,7 @@ _ t<span class="token punctuation">[</span>maxn <span class="token operator">&lt
     <span class="token punctuation">&#125;</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span> <span class="token comment">// namespace XSC062</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span> <span class="token comment">// namespace XSC062</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 </details>
         <hr class="dotted">
@@ -265,6 +266,12 @@ _ t<span class="token punctuation">[</span>maxn <span class="token operator">&lt
     
     
         
+        
+    
+        
+        
+    
+        
             
         
         
@@ -442,12 +449,23 @@ _ t<span class="token punctuation">[</span>maxn <span class="token operator">&lt
     
         
             
+        
+        
+    
+        
+        
+    
         
         
     
     
             <div class="button flex">
                 <div id="prev">
+                    
+                        <a href="/2023/10/04/牛客第一场提高-独舞不休/">
+                            <i class="fas fa-angle-double-left"></i>
+                            牛客第一场提高 // 独舞不休
+                        </a>
                     
                 </div>
                 <div id="next">
