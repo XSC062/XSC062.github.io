@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 标题设置 -->
+<title>
+    
+        题解 // 树上染色 - XSC062 的博客
+    
+</title>
+<!-- 载入主题图标库文件 -->
+<link rel="stylesheet" href="/css/facss/fa-brands.min.css">
+<link rel="stylesheet" href="/css/facss/fa-regular.min.css">
+<link rel="stylesheet" href="/css/facss/fa-solid.min.css">
+<link rel="stylesheet" href="/css/facss/fontawesome.min.css">
+<link rel="stylesheet" href="/css/facss/fontawesome-all.css">
+<link rel="stylesheet" href="/css/facss/all.css">
+
+<script src="/js/beforebody.js"></script>
+
+
+<script src="/js/jQuery.js"></script>
+
+
+<link rel="stylesheet" href="/css/layout.css">
+
+
+<link rel="stylesheet" href="/css/prcss/prism.css">
+
+
+<link rel="stylesheet" href="/css/prcss/prism-line-numbers.css">
+
+<!-- 载入 Valine -->
+
+    <script src='/js/Valine.min.js'></script>
+
+<!-- 搜索功能相关配置 -->
+
+<script src="/js/search.js"></script>
+
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length == 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, 'local-search-input', 'local-search-result');
+</script>
+<!-- 图标 -->
+<link rel="icon" type="image/png" sizes="32x32" href="/images/icon.png">
+<meta charset="utf-8"> 
+<meta name="generator" content="Hexo 5.4.2"></head>
+<body>
+    
+        
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+          tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+        });
+    </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+            var all = MathJax.Hub.getAllJax(), i;
+            for(i=0; i < all.length; i += 1) {
+                all[i].SourceElement().parentNode.className += ' has-jax';
+            }
+        });
+    </script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+    <!-- 顶栏整体导航菜单 -->
+    <div class="ui top menu">
+        <!-- 左对齐 logo -->
+        <a class="logo" href="/">
+            <img src="/images/icon.png"></img>
+            <div id="bartitle">
+                XSC062 的博客
+            </div>
+        </a>
+        <!-- 右对齐部分导航 -->
+        <div id="rightali">
+			<a class="item" id="Search" rule="button">
+				<i class="btn text-muted fa fa-search" id="search-icon" disabled></i>
+			</a>
+            <a class="item" id="Home" href="/">
+                Home
+            </a>
+            <a class="item" id="Arch" href="/archives">
+                Archives
+            </a>
+            <a class="item" id="Cate" href="/categories">
+                Categories
+            </a>
+            <a class="item" id="Tags" href="/tags">
+                Tags
+            </a>
+            <a class="item" id="Frie" href="/friends">
+                Friends
+            </a>
+            <a class="item" id="Abou" href="/about">
+                About
+            </a>
+        </div>
+
+        
+    </div>
+    
+	
+<link rel="stylesheet" href="/css/post.css">
+
+
+<script src="/js/post.js"></script>
+
+
+
+
+
+
+
+<div class="ui post container">
+	<div class="ui post title">
+		<div id="fortitle" data-content="题解 // 树上染色">
+			题解 // 树上染色
+		</div>
+		<div class="ui title background">
+		</div>
+	</div>
+    <div class="ui text container yahei">
+		
+	
+	
+	
+	
+	
+	
+	
+	
+        <p>为什么没有空格？为什么没有空格？为什么没有空格？</p>
+<span id="more"></span>
+
+<h3 id="C-树上染色"><a href="#C-树上染色" class="headerlink" title="C. 树上染色"></a>C. 树上染色</h3><p><a target="_blank" rel="noopener" href="http://222.180.160.110:1024/contest/3519/problem/3">http://222.180.160.110:1024/contest/3519/problem/3</a></p>
+<p>妙妙题。很好想到用背包处理问题，但问题在于后效性处理。</p>
+<p>我一开始想到的是费用提前计算，假设一条边之下的子树中存在黑点 &#x2F; 白点且它们的数量 $x$ 不为 $k$ &#x2F; $n - k$，即存在路径经过该点，即经过该边的路径数为 $x\times(s-x)$，其中 $s$ 的值为 $k$ 或 $n-k$。</p>
+<p>于是我们不难得到状态转移方程：</p>
+<p>$$f_{x, j} &#x3D; \max{f_{x, j}, f_{x, j - l} + f_{i, l} + k \times (n - k)\times w + (s_i - l)\times [n - k - (s_i - l)]\times w}$$</p>
+<p>其中 $w$ 为边权，$s_i$ 为子树大小。</p>
+<p>很快我就碰壁了。为了写着方便，我将 $j$ 和 $k$ 同时倒序枚举，输出了预料之外的答案。输出中间变量，发现了原因：不同于一般的 01 背包，正常情况下 01 背包空间为 $0$ 时价值也是 $0$，但我们的这个背包的空间限制的其实是黑点的空间，白点仍然会带来价值，所以当我们枚举多个子树时，因为 $0\le 0$，$f_{v_1, 0}$ 将会更新 $f_{v_2, 0}$。然而对于白点来说，有可能我们使用的个数超过了总数，那么就 GG。一个非常简单的解决方案是正序枚举 $l$。</p>
+<p>但是由于历史遗留问题，我的树形背包的复杂度一直是错的 orz… 这次才彻底改对。所以我们的状态转移方程还需要微调。</p>
+<details>
+
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">int</span> <span class="token expression"><span class="token keyword">long</span> <span class="token keyword">long</span></span></span>
+<span class="token keyword">namespace</span> XSC062 <span class="token punctuation">&#123;</span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> fastIO<span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> maxn <span class="token operator">=</span> <span class="token number">2e3</span> <span class="token operator">+</span> <span class="token number">5</span><span class="token punctuation">;</span>
+<span class="token keyword">struct</span> <span class="token class-name">_</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> v<span class="token punctuation">,</span> w<span class="token punctuation">;</span>
+    <span class="token function">_</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token function">_</span><span class="token punctuation">(</span><span class="token keyword">int</span> v1<span class="token punctuation">,</span> <span class="token keyword">int</span> w1<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        v <span class="token operator">=</span> v1<span class="token punctuation">,</span> w <span class="token operator">=</span> w1<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> siz<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> f<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> n<span class="token punctuation">,</span> k<span class="token punctuation">,</span> x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> w<span class="token punctuation">;</span>
+std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span>_<span class="token operator">></span> g<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">inline</span> <span class="token keyword">int</span> <span class="token function">min</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> x <span class="token operator">&lt;</span> y <span class="token operator">?</span> x <span class="token operator">:</span> y<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">inline</span> <span class="token keyword">int</span> <span class="token function">max</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> x <span class="token operator">></span> y <span class="token operator">?</span> x <span class="token operator">:</span> y<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">void</span> <span class="token function">DFS</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> fa<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    siz<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> i <span class="token operator">:</span> g<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>i<span class="token punctuation">.</span>v <span class="token operator">==</span> fa<span class="token punctuation">)</span>
+            <span class="token keyword">continue</span><span class="token punctuation">;</span>
+        <span class="token function">DFS</span><span class="token punctuation">(</span>i<span class="token punctuation">.</span>v<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> siz<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token operator">~</span>j<span class="token punctuation">;</span> <span class="token operator">--</span>j<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> l <span class="token operator">=</span> siz<span class="token punctuation">[</span>i<span class="token punctuation">.</span>v<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token operator">~</span>l<span class="token punctuation">;</span> <span class="token operator">--</span>l<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">int</span> t <span class="token operator">=</span> f<span class="token punctuation">[</span>i<span class="token punctuation">.</span>v<span class="token punctuation">]</span><span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>l <span class="token operator">!=</span> k <span class="token operator">&amp;&amp;</span> l<span class="token punctuation">)</span>
+                    t <span class="token operator">+=</span> i<span class="token punctuation">.</span>w <span class="token operator">*</span> l <span class="token operator">*</span> <span class="token punctuation">(</span>k <span class="token operator">-</span> l<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>siz<span class="token punctuation">[</span>i<span class="token punctuation">.</span>v<span class="token punctuation">]</span> <span class="token operator">-</span> l <span class="token operator">!=</span> n <span class="token operator">-</span> k
+                                <span class="token operator">&amp;&amp;</span> siz<span class="token punctuation">[</span>i<span class="token punctuation">.</span>v<span class="token punctuation">]</span> <span class="token operator">-</span> l<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    t <span class="token operator">+=</span> i<span class="token punctuation">.</span>w <span class="token operator">*</span> <span class="token punctuation">(</span>siz<span class="token punctuation">[</span>i<span class="token punctuation">.</span>v<span class="token punctuation">]</span> <span class="token operator">-</span> l<span class="token punctuation">)</span> <span class="token operator">*</span>
+                        <span class="token punctuation">(</span>n <span class="token operator">-</span> k <span class="token operator">-</span> <span class="token punctuation">(</span>siz<span class="token punctuation">[</span>i<span class="token punctuation">.</span>v<span class="token punctuation">]</span> <span class="token operator">-</span> l<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span>
+                f<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>j <span class="token operator">+</span> l<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span>f<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>j <span class="token operator">+</span> l<span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                    f<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">+</span> t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        siz<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">+=</span> siz<span class="token punctuation">[</span>i<span class="token punctuation">.</span>v<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">inline</span> <span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">,</span> <span class="token keyword">int</span> w<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    g<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span><span class="token function">_</span><span class="token punctuation">(</span>y<span class="token punctuation">,</span> w<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">read</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">read</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">read</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">read</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">read</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">add</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> w<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">add</span><span class="token punctuation">(</span>y<span class="token punctuation">,</span> x<span class="token punctuation">,</span> w<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">DFS</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>f<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span> <span class="token comment">// namespace XSC062</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">undef</span> <span class="token expression"><span class="token keyword">int</span></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+</details>
+
+<hr>
+<p>口雷瓦，<em>一百七十万年的智慧</em> 得死！</p>
+<p>（讶）</p>
+
+        <hr class="dotted">
+        <div class="post footer">
+            <div id="hitokoto">
+                <h3 id="hitokoto-title">
+                    一言 - Hitokoto
+                </h3>
+                <div id="hitokoto-content">
+                </div>
+                <div id="hitokoto-from">
+                </div>
+            </div>
+            
+    
+    
+    
+    
+    
+    
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+            
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+    
+            
+    
+    
+    
+    
+    
+    
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+            
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+        
+        
+    
+    
+            <div class="button flex">
+                <div id="prev">
+                    
+                        <a href="/2023/05/09/230502-学习笔记-二分图/">
+                            <i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
+                            学习笔记 // 二分图
+                        </a>
+                    
+                </div>
+                <div id="next">
+                    
+                        <a href="/2023/04/18/230418-题解-两双手/">
+                            题解 // 两双手
+                            <i class="fas fa-angle-double-right" style="margin-left:  10px;"></i>
+                        </a>
+                    
+                </div>
+            </div>
+            
+    <div id="vcomments" class="yahei"></div>
+    <script>
+        new Valine({
+            el: '#vcomments',
+            appId: 'OlmvQ0a2Zw7xo3no2bwabOzx-gzGzoHsz',
+            appKey: 'TW6t8mFeGLmhPjWisvmllvvo',
+            recordIP: true,
+            enableQQ: true, 
+			// 目前 Valine 的 QQ 自动获取昵称似乎不可用
+			// 故不建议开启
+            emojiCDN: "https://xsc062.gitee.io/Valine/",
+            emojiMaps: {
+                "微笑": "weixiao.gif",
+                "笑哭": "xiaoku.gif",
+                "斜眼笑": "xieyanxiao.gif",
+                "偷笑": "touxiao.gif",
+                "色": "se.gif",
+                "呲牙": "ciya.gif",
+                "亲亲": "qinqin.gif",
+                "疑问": "yiwen.gif",
+                "惊讶": "jingya.gif",
+                "吓": "xia.gif",
+                "大哭": "daku.gif",
+                "可怜": "kelian.gif",
+                "捂脸": "wulian.gif",
+                "泪奔": "leiben.gif",
+                "流泪": "liulei.gif",
+                "委屈": "weiqu.gif",
+                "调皮": "tiaopi.gif",
+                "头秃": "toutu.gif",
+                "吐": "tu.gif",
+                "赞": "zan.gif",
+                "踩": "cai.gif",
+                "无奈": "wunai.gif",
+                "托腮": "tuosai.gif",
+                "流汗": "liuhan.gif",
+                "糗大了": "qiudale.gif",
+                "擦汗": "cahan.gif",
+                "哦哟": "oyo.gif",
+                "暗中观察": "anzhongguancha.gif",
+                "沧桑": "cangsang.gif",
+                "鄙视": "bishi.gif",
+                "吃瓜": "chigua.gif",
+                "doge": "doge.gif",
+                "发呆": "fadai.gif",
+                "emm": "emm.gif",
+                "发怒": "fanu.gif",
+                "奋斗": "fendou.gif",
+                "尴尬": "ganga.gif",
+                "鼓掌": "guzhang.gif",
+                "咒骂": "zhouma.gif",
+                "握手": "woshou.gif",
+                "拥抱": "yongbao.gif",
+                "晕": "yun.gif",
+                "再见": "zaijian.gif",
+                "小纠结": "xiaojiujie.gif",
+                "右哼哼": "youhengheng.gif",
+                "无聊": "wuliao.gif",
+                "羊驼": "yangtuo.gif",
+                "幽灵": "youling.gif",
+                "发抖": "fadou.gif"
+            },
+			pageSize: 10,
+            placeholder: 'The world is but a little place after all...\n\
+头像会根据邮箱获取你的 Gravatar 🐱‍🏍'
+        })
+    </script>
+    
+        </div>
+    </div>
+    <script>
+        setHitokoto();
+    </script>
+</div> 
+    <!-- 页脚 -->
+
+<div id="footer" class="yahei">
+    Powered by 
+    <a target="_blank" rel="noopener" href="https://hexo.io">
+        Hexo
+    </a>
+    & 
+    <a href="/about">
+        XSC062
+    </a>
+	<p style="margin-top: 5px;">
+		2021 - 2023
+	</p>
+</div>
+<!-- Valine 相关配置 -->
+<script>
+    const getValineDomTimer = setInterval(() => {
+        // 不知道为什么 我从原博客 js 文件粘过来的参数是
+        // "#valine .vcards .vcard"
+        // DEBUG 了半天才定位到这个问题。。。
+        const vcards =
+            document.querySelectorAll('#valine, .vcards, .vcard');
+        if (vcards.length > 0) {
+            let author = 'XSC062';
+            let author1 = 'OL';
+            for (let vcard of vcards) {
+                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                const vnick = vnick_dom.innerHTML;
+                if (vnick === author || vnick === author1) {
+                    vnick_dom.innerHTML =
+                        `${vnick} <span id="rootitem" class="fira">root</span>`
+                }
+            }
+            clearInterval(getValineDomTimer);
+        } else {
+            clearInterval(getValineDomTimer);
+        }
+    }, 2000);
+</script>
+    <script>
+        SetActiveItem();
+        setDetailsSummary();
+    </script>
+</body>
+</html>
