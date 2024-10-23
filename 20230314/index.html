@@ -53,7 +53,6 @@
 <meta charset="utf-8"> 
 <body>
 	
-		
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
           tex2jax: {
@@ -79,10 +78,6 @@
       </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
-	
-	<!-- <div id="searchbar">
-	别慌，搜索还没写好
-</div> -->
 	<!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
 	<!-- 左对齐 logo -->
@@ -94,7 +89,7 @@
 	</a>
 	<!-- 右对齐部分导航 -->
 	<div id="rightali">
-		<a class="item" id="Search" rule="button">
+		<a class="item" id="Search" type="button" onclick="surprise();">
 			<i class="btn text-muted fa fa-search" id="search-icon" disabled></i>
 		</a>
 		<a class="item" id="Home" href="/">
@@ -124,34 +119,42 @@
 <script src="/js/post.js"></script>
 
 
-<div class="ui post container">
-	<div class="ui text container yahei">
-		<span id="postcon">
-			<span id="postinfo">
-				<div class="ui post title">
-					<div id="fortitle" data-content="分治">
-						分治
+<div class="main">
+	<div id="toc">
+		<span id="toctitle">
+			<i class="fas fa-list"></i>
+			目录
+		</span>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#a.-%E8%80%81%E6%9D%BF%E7%9A%84%E5%8F%88%E4%B8%80%E9%81%93%E9%A2%98"><span class="toc-text">A. 老板的又一道题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#b.-%E9%AD%94%E6%B3%95%E7%9F%B3%E7%9A%84%E8%AF%B1%E6%83%91"><span class="toc-text">B. 魔法石的诱惑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#c.-%E7%A5%9E%E6%97%8F%E6%96%87%E5%AD%97"><span class="toc-text">C. 神族文字</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#d.-%E9%80%83%E4%BA%A1"><span class="toc-text">D. 逃亡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#e.-%E5%89%94%E9%99%A4%E5%A4%9A%E4%BD%99%E6%8B%AC%E5%8F%B7"><span class="toc-text">E. 剔除多余括号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#f.-%E6%9C%80%E6%8E%A5%E8%BF%91%E7%82%B9%E5%AF%B9%E9%97%AE%E9%A2%98"><span class="toc-text">F. 最接近点对问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#g.-%E6%AE%8B%E7%BC%BA%E6%A3%8B%E7%9B%98%E9%97%AE%E9%A2%98"><span class="toc-text">G. 残缺棋盘问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#h.-tricky-function"><span class="toc-text">H. Tricky Function</span></a></li></ol>
+	</div>
+	<div class="ui post container">
+		<div class="ui text container yahei">
+			<span id="postcon">
+				<span id="postinfo">
+					<div class="ui post title">
+						<div id="fortitle" data-content="分治">
+							分治
+						</div>
+						<div class="ui title background">
+						</div>
 					</div>
-					<div class="ui title background">
-					</div>
-				</div>
-				<span id="date">
-					<i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
-					2023-03-14
+					<span id="date">
+						<i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
+						2023-03-14
+					</span>
 				</span>
 			</span>
-		</span>
-		<div id="posttags" class="dotted border">
+			<div id="posttags" class="dotted border">
+				
+					
+						<a href="/tags/分治/" class="citem">分治</a>
+					
+					
+					</div>
+			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
-				
-					<a href="/tags/分治/" class="citem">分治</a>
-				
-				
-				</div>
-		<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
-		
-		<div id="content">
-			<p>听说是 <a
+			<div id="content">
+				<p>听说是 <a
 target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/3416">分治场</a>，想起了自己根本没学过分治（甚至从来不知道归并排序的原理
 orz）就去听 CDQ 然后一头雾水的惨痛经历，不禁 PTSD 了。</p>
 <span id="more"></span>
@@ -229,7 +232,7 @@ class="math inline">\(\log_5\)</span> 的，不会有问题。</p>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">namespace</span> XSC062 <span class="token punctuation">&#123;</span>
 <span class="token keyword">using</span> <span class="token keyword">namespace</span> fastIO<span class="token punctuation">;</span>
 <span class="token keyword">int</span> q<span class="token punctuation">,</span> l<span class="token punctuation">,</span> mid<span class="token punctuation">,</span> r <span class="token operator">=</span> <span class="token number">5e18</span><span class="token punctuation">,</span> res<span class="token punctuation">;</span>
-<span class="token keyword">inline</span> <span class="token keyword">int</span> <span class="token function">check</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">int</span> <span class="token function">check</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">int</span> res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 	<span class="token keyword">while</span> <span class="token punctuation">(</span>x <span class="token operator">/</span> <span class="token number">5</span><span class="token punctuation">)</span>
 		res <span class="token operator">+=</span> <span class="token punctuation">(</span>x <span class="token operator">/=</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -314,13 +317,13 @@ class="math inline">\(x\)</span>，尽量使第一个人和第二个人用时接
 <span class="token keyword">const</span> db eps <span class="token operator">=</span> <span class="token number">1e-2</span><span class="token punctuation">;</span>
 db res<span class="token punctuation">,</span> ans <span class="token operator">=</span> <span class="token number">1e18</span><span class="token punctuation">;</span>
 <span class="token keyword">int</span> s<span class="token punctuation">,</span> v1<span class="token punctuation">,</span> v2<span class="token punctuation">,</span> l<span class="token punctuation">,</span> mid<span class="token punctuation">,</span> r<span class="token punctuation">;</span>
-<span class="token keyword">inline</span> db <span class="token function">min</span><span class="token punctuation">(</span>db x<span class="token punctuation">,</span> db y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+db <span class="token function">min</span><span class="token punctuation">(</span>db x<span class="token punctuation">,</span> db y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">return</span> x <span class="token operator">&lt;</span> y <span class="token operator">?</span> x <span class="token operator">:</span> y<span class="token punctuation">;</span> 
 <span class="token punctuation">&#125;</span>
-<span class="token keyword">inline</span> db <span class="token function">max</span><span class="token punctuation">(</span>db x<span class="token punctuation">,</span> db y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+db <span class="token function">max</span><span class="token punctuation">(</span>db x<span class="token punctuation">,</span> db y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">return</span> x <span class="token operator">></span> y <span class="token operator">?</span> x <span class="token operator">:</span> y<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
-<span class="token keyword">inline</span> <span class="token keyword">bool</span> <span class="token function">check</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">bool</span> <span class="token function">check</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	db t1 <span class="token operator">=</span> x <span class="token operator">*</span> <span class="token number">1.0</span> <span class="token operator">/</span> v1<span class="token punctuation">;</span>
 	db r1 <span class="token operator">=</span> t1 <span class="token operator">+</span> <span class="token punctuation">(</span>s <span class="token operator">-</span> x<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">1.0</span> <span class="token operator">/</span> v2<span class="token punctuation">;</span>
 	db t2 <span class="token operator">=</span> <span class="token punctuation">(</span>x <span class="token operator">-</span> t1 <span class="token operator">*</span> v2<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token punctuation">(</span>v1 <span class="token operator">+</span> v2<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -370,10 +373,10 @@ class="uri">https://www.becoder.com.cn/contest/3416/problem/5</a></p>
 <span class="token keyword">int</span> n<span class="token punctuation">;</span>
 <span class="token keyword">char</span> s<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
 <span class="token keyword">bool</span> vis<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token keyword">inline</span> <span class="token keyword">int</span> <span class="token function">max</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">int</span> <span class="token function">max</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">return</span> x <span class="token operator">></span> y <span class="token operator">?</span> x <span class="token operator">:</span> y<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
-<span class="token keyword">inline</span> <span class="token keyword">int</span> <span class="token function">Deal</span><span class="token punctuation">(</span><span class="token keyword">int</span> l<span class="token punctuation">,</span> <span class="token keyword">int</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">int</span> <span class="token function">Deal</span><span class="token punctuation">(</span><span class="token keyword">int</span> l<span class="token punctuation">,</span> <span class="token keyword">int</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">int</span> res <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
 	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> l<span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> r<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 		<span class="token keyword">if</span> <span class="token punctuation">(</span>s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token char">'+'</span> <span class="token operator">||</span> s<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token char">'-'</span><span class="token punctuation">)</span>
@@ -472,7 +475,7 @@ class="math inline">\(j\)</span>
 的纵向距离大于等于了当前最小答案，就可以将第二层循环 <code>break</code>
 了。因为纵坐标单调，继续枚举距离会继续增加，离答案更远。</p>
 <p>那看起来复杂度还是很神奇，理论上来说应该是 <span
-class="math inline">\(\mathcal O(n^2\log n)\)</span> 的呀？</p>
+class="math inline">\(O(n^2\log n)\)</span> 的呀？</p>
 <p>考虑第一层循环 <span class="math inline">\(i\)</span>。对于点 <span
 class="math inline">\(i\)</span>，有哪些 <span
 class="math inline">\(j\)</span> 可以满足它的要求，从而被枚举到呢？</p>
@@ -504,9 +507,9 @@ class="math inline">\(j\)</span>
 需满足的三个条件都是严格小于，所以不能碰到整个矩形的边界，所以一个部分中最多只能存在三个
 <span class="math inline">\(j\)</span>。</p>
 <p>那么实际上看似 <span class="math inline">\(n^2\)</span>
-的枚举，在多个优化下就变成了 <span class="math inline">\(\mathcal
-O(n)\)</span>。再加上对筛选出的点纵坐标排序的时间，总体时间复杂度为
-<span class="math inline">\(\mathcal O(n\log^2 n)\)</span>。</p>
+的枚举，在多个优化下就变成了 <span
+class="math inline">\(O(n)\)</span>。再加上对筛选出的点纵坐标排序的时间，总体时间复杂度为
+<span class="math inline">\(O(n\log^2 n)\)</span>。</p>
 <details>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">namespace</span> XSC062 <span class="token punctuation">&#123;</span>
 <span class="token keyword">using</span> db <span class="token operator">=</span> <span class="token keyword">double</span><span class="token punctuation">;</span>
@@ -515,14 +518,14 @@ O(n)\)</span>。再加上对筛选出的点纵坐标排序的时间，总体时�
 <span class="token keyword">struct</span> <span class="token class-name">_</span> <span class="token punctuation">&#123;</span> db x<span class="token punctuation">,</span> y<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
 <span class="token keyword">int</span> n<span class="token punctuation">;</span>
 _ a<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token keyword">inline</span> db <span class="token function">dis</span><span class="token punctuation">(</span>db x1<span class="token punctuation">,</span> db y1<span class="token punctuation">,</span> db x2<span class="token punctuation">,</span> db y2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+db <span class="token function">dis</span><span class="token punctuation">(</span>db x1<span class="token punctuation">,</span> db y1<span class="token punctuation">,</span> db x2<span class="token punctuation">,</span> db y2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">return</span> <span class="token function">sqrt</span><span class="token punctuation">(</span><span class="token punctuation">(</span>x1 <span class="token operator">-</span> x2<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>x1 <span class="token operator">-</span> x2<span class="token punctuation">)</span> <span class="token operator">+</span>
 				<span class="token punctuation">(</span>y1 <span class="token operator">-</span> y2<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>y1 <span class="token operator">-</span> y2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
-<span class="token keyword">inline</span> db <span class="token function">min</span><span class="token punctuation">(</span>db x<span class="token punctuation">,</span> db y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+db <span class="token function">min</span><span class="token punctuation">(</span>db x<span class="token punctuation">,</span> db y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">return</span> x <span class="token operator">&lt;</span> y <span class="token operator">?</span> x <span class="token operator">:</span> y<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
-<span class="token keyword">inline</span> db <span class="token function">abs</span><span class="token punctuation">(</span>db x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+db <span class="token function">abs</span><span class="token punctuation">(</span>db x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">return</span> x <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">?</span> x <span class="token operator">:</span> <span class="token operator">-</span>x<span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
 db <span class="token function">Solu</span><span class="token punctuation">(</span><span class="token keyword">int</span> l<span class="token punctuation">,</span> <span class="token keyword">int</span> r<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -676,38 +679,38 @@ class="math inline">\(x_i\)</span>，将 <span
 class="math inline">\(\sum_{k=1}^i a_k\)</span> 视作 <span
 class="math inline">\(y_i\)</span>，则直接求解平面最近点对即可。</p>
 
-		</div>
-		<hr class="dotted">
-		<div class="post footer">
-			<div id="hitokoto">
-				<h3 id="hitokoto-title">
-					一言 - Hitokoto
-				</h3>
-				<div id="hitokoto-content">
-				</div>
-				<div id="hitokoto-from">
-				</div>
 			</div>
-			<div class="button flex">
-				<div id="prev">
-					
-						<!-- 吐槽，为啥还需要加 / -->
-						<a href="/20230509/">
-							<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
-							二分图
-						</a>
-					
+			<hr class="dotted">
+			<div class="post footer">
+				<div id="hitokoto">
+					<h3 id="hitokoto-title">
+						一言 - Hitokoto
+					</h3>
+					<div id="hitokoto-content">
+					</div>
+					<div id="hitokoto-from">
+					</div>
 				</div>
-				<div id="next">
-					
-						<a href="/20230203/">
-							美丽的柠檬花！
-							<i class="fas fa-angle-double-right" style="margin-left: 10px;"></i>
-						</a>
-					
+				<div class="button flex">
+					<div id="prev">
+						
+							<!-- 吐槽，为啥还需要加 / -->
+							<a href="/20230509/">
+								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
+								二分图
+							</a>
+						
+					</div>
+					<div id="next">
+						
+							<a href="/20230203/">
+								美丽的柠檬花！
+								<i class="fas fa-angle-double-right" style="margin-left: 10px;"></i>
+							</a>
+						
+					</div>
 				</div>
-			</div>
-			<div id="vcomments" class="yahei"></div>
+				<div id="vcomments" class="yahei"></div>
 <script>
 	new Valine({
 		el: '#vcomments',
@@ -721,9 +724,10 @@ class="math inline">\(y_i\)</span>，则直接求解平面最近点对即可。<
 		placeholder: 'The world is but a little place after all...\n能够根据邮箱获取你的 Gravatar 头像 🐱‍🏍',
 	})
 </script>
-		</div>
-		<script>setHitokoto();</script>
-	</div> 
+			</div>
+			<script>setHitokoto();</script>
+		</div> 
+	</div>
 </div>
     <!-- 页脚开始 -->
 <div id="footer" class="yahei">

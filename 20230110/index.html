@@ -53,7 +53,6 @@
 <meta charset="utf-8"> 
 <body>
 	
-		
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
           tex2jax: {
@@ -79,10 +78,6 @@
       </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
-	
-	<!-- <div id="searchbar">
-	别慌，搜索还没写好
-</div> -->
 	<!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
 	<!-- 左对齐 logo -->
@@ -94,7 +89,7 @@
 	</a>
 	<!-- 右对齐部分导航 -->
 	<div id="rightali">
-		<a class="item" id="Search" rule="button">
+		<a class="item" id="Search" type="button" onclick="surprise();">
 			<i class="btn text-muted fa fa-search" id="search-icon" disabled></i>
 		</a>
 		<a class="item" id="Home" href="/">
@@ -124,32 +119,42 @@
 <script src="/js/post.js"></script>
 
 
-<div class="ui post container">
-	<div class="ui text container yahei">
-		<span id="postcon">
-			<span id="postinfo">
-				<div class="ui post title">
-					<div id="fortitle" data-content="背单词">
-						背单词
+<div class="main">
+	<div id="toc">
+		<span id="toctitle">
+			<i class="fas fa-list"></i>
+			目录
+		</span>
+		
+	</div>
+	<div class="ui post container">
+		<div class="ui text container yahei">
+			<span id="postcon">
+				<span id="postinfo">
+					<div class="ui post title">
+						<div id="fortitle" data-content="背单词">
+							背单词
+						</div>
+						<div class="ui title background">
+						</div>
 					</div>
-					<div class="ui title background">
-					</div>
-				</div>
-				<span id="date">
-					<i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
-					2023-01-10
+					<span id="date">
+						<i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
+						2023-01-10
+					</span>
 				</span>
 			</span>
-		</span>
-		<div id="posttags" class="dotted border">
+			<div id="posttags" class="dotted border">
+				
+					
+						<a href="/tags/字典树/" class="citem">字典树</a>
+					
+					
+					</div>
+			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
-				<span style="color: #888;">暂无标签</span>
-			
-				</div>
-		<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
-		
-		<div id="content">
-			<p>Solution to<a
+			<div id="content">
+				<p>Solution to<a
 target="_blank" rel="noopener" href="https://www.becoder.com.cn/problem/59">「SCOI2016」背单词</a>。</p>
 <span id="more"></span>
 <hr />
@@ -218,11 +223,11 @@ class="math inline">\(\dfrac{(l + l + b - 2) \times (b - 1) + (l + b + l
 <span class="token keyword">const</span> <span class="token keyword">int</span> maxm <span class="token operator">=</span> <span class="token number">1e6</span> <span class="token operator">+</span> <span class="token number">5</span><span class="token punctuation">;</span>
 str s<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
 <span class="token keyword">int</span> T<span class="token punctuation">[</span>maxm<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">26</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token keyword">int</span> kaz<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">,</span> siz<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// kaz 即为 kazuha(?) 表示单词在最终序列中所处的位置</span>
+<span class="token keyword">int</span> kaz<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">,</span> siz<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// kaz 表示单词在最终序列中所处的位置</span>
 std<span class="token double-colon punctuation">::</span>vector<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> g<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
 <span class="token keyword">int</span> n<span class="token punctuation">,</span> l<span class="token punctuation">,</span> res<span class="token punctuation">,</span> cnt <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> ti<span class="token punctuation">;</span>
 <span class="token keyword">int</span> tot<span class="token punctuation">[</span>maxm<span class="token punctuation">]</span><span class="token punctuation">,</span> fa<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">,</span> deg<span class="token punctuation">[</span>maxn<span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token keyword">inline</span> <span class="token keyword">void</span> <span class="token function">Insert</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> 
+<span class="token keyword">void</span> <span class="token function">Insert</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> 
 	<span class="token keyword">int</span> f <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> len <span class="token operator">=</span> s<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> len<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>T<span class="token punctuation">[</span>f<span class="token punctuation">]</span><span class="token punctuation">[</span>s<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> <span class="token char">'a'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> 
@@ -232,7 +237,7 @@ std<span class="token double-colon punctuation">::</span>vector<span class="toke
 	tot<span class="token punctuation">[</span>f<span class="token punctuation">]</span> <span class="token operator">=</span> k<span class="token punctuation">;</span>
 	<span class="token keyword">return</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
-<span class="token keyword">inline</span> <span class="token keyword">void</span> <span class="token function">Search</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">void</span> <span class="token function">Search</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token keyword">int</span> f <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
 	<span class="token keyword">int</span> len <span class="token operator">=</span> s<span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> len<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -244,7 +249,7 @@ std<span class="token double-colon punctuation">::</span>vector<span class="toke
 	<span class="token punctuation">&#125;</span>
 	<span class="token keyword">return</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span>
-<span class="token keyword">inline</span> <span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
 	<span class="token operator">++</span>deg<span class="token punctuation">[</span>y<span class="token punctuation">]</span><span class="token punctuation">;</span>
 	g<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token keyword">return</span><span class="token punctuation">;</span>
@@ -291,38 +296,38 @@ std<span class="token double-colon punctuation">::</span>vector<span class="toke
 <span class="token punctuation">&#125;</span> <span class="token comment">// namespace XSC062</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </details>
 
-		</div>
-		<hr class="dotted">
-		<div class="post footer">
-			<div id="hitokoto">
-				<h3 id="hitokoto-title">
-					一言 - Hitokoto
-				</h3>
-				<div id="hitokoto-content">
-				</div>
-				<div id="hitokoto-from">
-				</div>
 			</div>
-			<div class="button flex">
-				<div id="prev">
-					
-						<!-- 吐槽，为啥还需要加 / -->
-						<a href="/20230111/">
-							<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
-							瑰丽华尔兹
-						</a>
-					
+			<hr class="dotted">
+			<div class="post footer">
+				<div id="hitokoto">
+					<h3 id="hitokoto-title">
+						一言 - Hitokoto
+					</h3>
+					<div id="hitokoto-content">
+					</div>
+					<div id="hitokoto-from">
+					</div>
 				</div>
-				<div id="next">
-					
-						<a href="/20220927/">
-							悬线法及其与笛卡尔树的关联
-							<i class="fas fa-angle-double-right" style="margin-left: 10px;"></i>
-						</a>
-					
+				<div class="button flex">
+					<div id="prev">
+						
+							<!-- 吐槽，为啥还需要加 / -->
+							<a href="/20230111/">
+								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
+								瑰丽华尔兹
+							</a>
+						
+					</div>
+					<div id="next">
+						
+							<a href="/20220927/">
+								悬线法及其与笛卡尔树的关联
+								<i class="fas fa-angle-double-right" style="margin-left: 10px;"></i>
+							</a>
+						
+					</div>
 				</div>
-			</div>
-			<div id="vcomments" class="yahei"></div>
+				<div id="vcomments" class="yahei"></div>
 <script>
 	new Valine({
 		el: '#vcomments',
@@ -336,9 +341,10 @@ std<span class="token double-colon punctuation">::</span>vector<span class="toke
 		placeholder: 'The world is but a little place after all...\n能够根据邮箱获取你的 Gravatar 头像 🐱‍🏍',
 	})
 </script>
-		</div>
-		<script>setHitokoto();</script>
-	</div> 
+			</div>
+			<script>setHitokoto();</script>
+		</div> 
+	</div>
 </div>
     <!-- 页脚开始 -->
 <div id="footer" class="yahei">
