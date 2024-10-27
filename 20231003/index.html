@@ -592,10 +592,8 @@ class="math inline">\(x\)</span> 是字符串合法情况的状态压缩。</p>
 <p>所以，假设对于状态 <span class="math inline">\(i\)</span>，有串 <span
 class="math inline">\(j\)</span> 未满足，枚举位置 <span
 class="math inline">\(k\)</span>，有：</p>
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">f<span class="token punctuation">[</span>i <span class="token operator">|</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token punctuation">(</span>j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span>
-	<span class="token function">min</span><span class="token punctuation">(</span>f<span class="token punctuation">[</span>i <span class="token operator">|</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token punctuation">(</span>j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span> f<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> a<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-f<span class="token punctuation">[</span>i <span class="token operator">|</span> lac<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span>
-	<span class="token function">min</span><span class="token punctuation">(</span>f<span class="token punctuation">[</span>i <span class="token operator">|</span> lac<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span> f<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> mx<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">f<span class="token punctuation">[</span>i <span class="token operator">|</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token punctuation">(</span>j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>f<span class="token punctuation">[</span>i <span class="token operator">|</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token punctuation">(</span>j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span> f<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> a<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+f<span class="token punctuation">[</span>i <span class="token operator">|</span> lac<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>f<span class="token punctuation">[</span>i <span class="token operator">|</span> lac<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span> f<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> mx<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>其中 <code>lac[j][k]</code> 和 <code>mx[j][k]</code>
 都是预处理出来的值。<code>lac[j][k]</code> 表示与第 <span
 class="math inline">\(j\)</span> 个串的第 <span
@@ -629,7 +627,7 @@ class="math inline">\(O(m)\)</span>
 的时间进行计算，现在我们碰到一个状态为 <code>0</code> 的 <span
 class="math inline">\(j\)</span> 就开始计算，得到完全相同的答案。</p>
 <p>很 NB 并且很实用的优化，已加入 <a
-href="/2023/07/17/下饭操作合集/">下饭操作合集</a>。</p>
+href="/20231117/">下饭操作合集</a>。</p>
 <details>
 <pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">namespace</span> XSC062 <span class="token punctuation">&#123;</span>
 <span class="token keyword">using</span> <span class="token keyword">namespace</span> fastIO<span class="token punctuation">;</span>
@@ -692,7 +690,8 @@ href="/2023/07/17/下饭操作合集/">下饭操作合集</a>。</p>
 <p>没了。这次主要问题出在 T5。T3 估计真的想不到，先不强求自己。</p>
 <p>这次学到的新知识：</p>
 <ul>
-<li>对于 <del>包括但不限于状压</del> DP 的优化</li>
+<li>对于子集合并最优性的问题，可以用单点 + 集合代替集合 +
+集合枚举。</li>
 </ul>
 
 			</div>
@@ -734,10 +733,15 @@ href="/2023/07/17/下饭操作合集/">下饭操作合集</a>。</p>
 		appKey: 'TW6t8mFeGLmhPjWisvmllvvo',
 		recordIP: true,
 		enableQQ: true, 
-		// 目前 Valine 的 QQ 自动获取昵称似乎不可用
-		// 故不建议开启
+		// 目前 Valine 的 QQ 自动获取昵称似乎不可用 故不建议开启
 		pageSize: 10,
-		placeholder: 'The world is but a little place after all...\n能够根据邮箱获取你的 Gravatar 头像 🐱‍🏍',
+		requiredFields:
+			
+				['nick']
+			,
+		placeholder: 'The world is but a little place after all...\n能够根据邮箱获取你的 Gravatar 头像。昵称是必填项，长度需不低于 3 😄',
+		avatar: 'mp',
+		avatar_cdn: 'https://cravatar.cn/avatar/'
 	})
 </script>
 			</div>
@@ -752,8 +756,8 @@ href="/2023/07/17/下饭操作合集/">下饭操作合集</a>。</p>
         Hexo
     </a>
     & 
-    <a href="/about">
-       XSC062
+    <a href="/about-this-theme">
+       iwll
     </a>
 	<p style="margin-top: 5px;">
 		2021 - 2024
