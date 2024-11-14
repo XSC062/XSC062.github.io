@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="/css/fa-solid.min.css">
 <link rel="stylesheet" href="/css/fontawesome.min.css">
 <link rel="stylesheet" href="/css/fontawesome-all.css">
+<link rel="stylesheet" href="/css/myukitoast.css"/>
+<script type="text/javascript" src="/js/myukitoast.js"></script>
 <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
 <!-- 网站标题 -->
 <title>
@@ -120,12 +122,14 @@
 
 
 <div class="main">
-	<div id="toc">
-		<span id="toctitle">
-			<i class="fas fa-list"></i>
-			目录
-		</span>
-		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E5%8E%8B%E6%9E%9A%E4%B8%BE%E5%AD%90%E9%9B%86"><span class="toc-text">状压枚举子集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE%E8%A1%A5%E9%9B%86"><span class="toc-text">枚举补集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E7%BB%B4%E5%89%8D%E7%BC%80%E5%92%8C"><span class="toc-text">高维前缀和</span></a></li></ol>
+	<div id="sidebar">
+		<aside id="toc">
+			<span id="toctitle">
+				<i class="fas fa-list"></i>
+				目录
+			</span>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E5%8E%8B%E6%9E%9A%E4%B8%BE%E5%AD%90%E9%9B%86"><span class="toc-text">状压枚举子集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE%E8%A1%A5%E9%9B%86"><span class="toc-text">枚举补集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E7%BB%B4%E5%89%8D%E7%BC%80%E5%92%8C"><span class="toc-text">高维前缀和</span></a></li></ol>
+		</aside>
 	</div>
 	<div class="ui post container">
 		<div class="ui text container yahei">
@@ -149,8 +153,8 @@
 					
 						<a href="/tags/状压/" class="citem">状压</a>
 					
-					
-					</div>
+				
+			</div>
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
@@ -251,9 +255,21 @@ class="math inline">\(s\)</span> 异或一下 <span
 class="math inline">\(2^n-1\)</span> 然后枚举子集。</p>
 <hr />
 <h3 id="高维前缀和">高维前缀和</h3>
-<p>首先考虑一下什么是高维前缀和。</p>
-<p>理解起来的困难点在于这个命名方式虽然和一维 /
-二维前缀和相似，但其内涵有较大区别。</p>
+<p>首先理解一下什么是高维前缀和。实际上全程应为边长为 <span
+class="math inline">\(2\)</span> 的高维空间前缀和。</p>
+<p>传统的二位前缀和使用容斥求解，很难扩展到高维。如果我们取 <span
+class="math inline">\(n=2\)</span>，那么有另一种无需容斥位运算求解方式：</p>
+<ul>
+<li>对于一维前缀和，其计算方式为 <span
+class="math inline">\(s_1=s_0+a_1\)</span>；</li>
+<li>对于二维前缀和，其计算方式为 <span
+class="math inline">\(s_{(11)_2}=s_{(00)_2}+s_{(01)_2}+s_{(10)_2}+a_{(11_2)}\)</span>，以此类推。</li>
+</ul>
+<p>即在 <span class="math inline">\(n=2\)</span>
+的情况下，我们发现我们可以将 <span class="math inline">\(k\)</span>
+维前缀和看作在 <span class="math inline">\(k\)</span>
+位二进制数上做子集元素求和。显然根据枚举子集有 <span
+class="math inline">\(3^k\)</span> 的做法，但还能更快。</p>
 
 			</div>
 			<hr class="dotted">
@@ -300,9 +316,85 @@ class="math inline">\(2^n-1\)</span> 然后枚举子集。</p>
 			
 				['nick']
 			,
-		placeholder: 'The world is but a little place after all...\n能够根据邮箱获取你的 Gravatar 头像。昵称是必填项，长度需不低于 3 😄',
+		placeholder: "The world is but a little place after all...\n能够根据邮箱获取你的 Gravatar 头像。昵称是必填项，长度需不低于 3。",
 		avatar: 'mp',
-		avatar_cdn: 'https://cravatar.cn/avatar/'
+		avatar_cdn: 'https://cravatar.cn/avatar/',
+		emojiCDN: 'https://xsc062.netlify.app/em/', 
+		emojiMaps: {
+			
+				"微笑": "wx.gif",
+			
+				"龇牙": "cy.gif",
+			
+				"流泪": "ll.gif",
+			
+				"笑哭": "xk.gif",
+			
+				"流汗": "lh.gif",
+			
+				"擦汗": "ch.gif",
+			
+				"亲亲": "qq.gif",
+			
+				"色": "se.gif",
+			
+				"疑问": "yiw.gif",
+			
+				"发呆": "fd.gif",
+			
+				"晕": "yun.gif",
+			
+				"鼓掌": "gz.gif",
+			
+				"憨笑": "hanx.gif",
+			
+				"快哭了": "kk.gif",
+			
+				"得意": "dy.gif",
+			
+				"狂笑": "kx.gif",
+			
+				"害羞": "hx.gif",
+			
+				"妈妈生的": "dz.gif",
+			
+				"糗大了": "qd.gif",
+			
+				"吃瓜": "cg.gif",
+			
+				"睁眼": "zy.webp",
+			
+				"辣眼睛": "lyj.gif",
+			
+				"酸了": "nm.gif",
+			
+				"滚": "gun.webp",
+			
+				"惊恐": "jk.gif",
+			
+				"幽灵": "youl.gif",
+			
+				"无聊": "wul.gif",
+			
+				"吃": "eat.gif",
+			
+				"你很棒棒": "bb.gif",
+			
+				"赞": "qiang.gif",
+			
+				"踩": "ruo.gif",
+			
+				"握手": "wsh.gif",
+			
+				"发抖": "fad.gif",
+			
+				"挥手": "hsh.gif",
+			
+				"磕头": "kt.gif",
+			
+				"怄火": "oh.gif",
+			
+		},
 	})
 </script>
 			</div>
@@ -342,16 +434,17 @@ class="math inline">\(2^n-1\)</span> 然后枚举子集。</p>
                         `${vnick} <span id="rootitem" class="fira">root</span>`
                 }
             }
-            clearInterval(getValineDomTimer);
-        } else {
+        }
+        else {
             clearInterval(getValineDomTimer);
         }
     }, 2000);
+    
 </script>
-<script>
-	SetActiveItem();
-	setDetailsSummary();
-</script>
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/clipboard-use.js"></script>
+<script>SetActiveItem();setDetailsSummary();</script>
 
 <!-- 页脚结束 -->
 
