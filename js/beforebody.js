@@ -78,6 +78,19 @@ function setDetailsSummary() {
 //     return document.getElementById(Nid);
 // }
 
-function surprise() {
-	;
+// 标题优化：hover 时显示锚
+function setTitleAnchor() {
+	var h = document.getElementsByTagName("h2");
+	for (i = 0; i < h.length; ++i) {
+		var anchor = document.createElement("a");
+		var inner = document.createElement("a");
+		inner.innerText = h[i].innerText;
+		h[i].innerText = '';
+		anchor.innerText = "#";
+		anchor.id = "anchor";
+		inner.href = anchor.href = '#' + h[i].id;
+		inner.id="inner";
+		h[i].insertBefore(anchor, h[i].firstChild);
+		h[i].appendChild(inner);
+	}
 }
