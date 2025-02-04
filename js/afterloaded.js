@@ -93,4 +93,41 @@ function setTitleAnchor() {
 		h[i].insertBefore(anchor, h[i].firstChild);
 		h[i].appendChild(inner);
 	}
+	h = document.getElementsByTagName("h3");
+	for (i = 0; i < h.length; ++i) {
+		var anchor = document.createElement("a");
+		var inner = document.createElement("a");
+		inner.innerText = h[i].innerText;
+		h[i].innerText = '';
+		anchor.innerText = "#";
+		anchor.id = "anchor";
+		inner.href = anchor.href = '#' + h[i].id;
+		inner.id="inner";
+		h[i].insertBefore(anchor, h[i].firstChild);
+		h[i].appendChild(inner);
+	}
+	return;
+}
+
+// 目录优化：空目录提示
+function setEmptyToc() {
+	var toc = document.getElementById("toc");
+	if (toc.lastElementChild.id == "toctitle") {
+		var tip = document.createElement("div");
+		tip.id = "tip";
+		tip.innerHTML = "<a href=\"https://github.com/DavidAnson/markdownlint/blob/main/doc/md041.md\" style=\"text-decoration: underline;\">MD041</a> 建议，Markdown 文件的首行应为一级标题。显然地，这篇文章并没能做到这一点。";
+		toc.appendChild(tip);
+	}
+	return;
+}
+
+// 设置代码高亮类名
+function setCodeClassName() {
+	var pre = document.getElementsByTagName("pre");
+	for (var i = 0; i < pre.length; ++i) {
+		var code = pre[i].getElementsByTagName("code");
+		for (var j in code)
+			code[j].className = "language-" + pre[i].className;
+	}
+	return;
 }

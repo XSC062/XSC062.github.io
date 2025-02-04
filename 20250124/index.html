@@ -13,7 +13,7 @@
 <!-- 网站标题 -->
 <title>
 	
-		我超！雀！ -
+		网络流 -
 	
 	XSC062 的博客
 </title>
@@ -114,7 +114,7 @@
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E6%B5%81%E9%97%AE%E9%A2%98"><span class="toc-text">最大流问题</span></a></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -122,170 +122,68 @@
 			<span id="postcon">
 				<span id="postinfo">
 					<div class="ui post title">
-						<div id="fortitle" data-content="我超！雀！">
-							我超！雀！
+						<div id="fortitle" data-content="网络流">
+							网络流
 						</div>
 						<div class="ui title background">
 						</div>
 					</div>
 					<span id="date">
 						<i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
-						2024-01-25
+						2025-01-24
 					</span>
 				</span>
 			</span>
 			<div id="posttags" class="dotted border">
 				
 					
-						<a href="/tags/DP/" class="citem">DP</a>
+						<a href="/tags/网络流/" class="citem">网络流</a>
 					
 				
 			</div>
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
-				<p>Solution to <a
-target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4813/problem/1">PKUSC2022
-Mahjong</a>。</p>
+				<p>想当年叱诧风云左牵字符串右擎网络流，而今飘零憔悴沦落到需要学而时习之的地步
+<img src="/em/kx.gif" /></p>
 <span id="more"></span>
 <hr />
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1JB4y1R7AP/"
-class="uri">https://www.bilibili.com/video/BV1JB4y1R7AP/</a></p>
-<p>这里是 PKUSC 当时的讲解视频。听说可以证明本题一定有 <span
-class="math inline">\(\le 5\)</span> 的解。好神奇。</p>
-<hr />
-<p>就比如说我们爆搜，<span class="math inline">\(9^4\times 13^4\)</span>
-这个显然干不动对吧，所以我们考虑反过来 DP。</p>
-<p>我们先把字符串转化成计数数组，就是每种牌有多少片。不妨将
-<code>1m ~ 9s</code> 编号为 <span class="math inline">\(1\sim
-27\)</span>，记 <span class="math inline">\(g_i\)</span> 为编号为 <span
-class="math inline">\(i\)</span> 的牌的数量。</p>
-<p>为什么我们觉得 DP
-不好打呢？因为换牌操作可以将两个毫不相干的牌的数量更改，不好记录状态。我们不妨直接将换牌拆成
-<em>丢弃一张牌</em> 和 <em>借取令一张牌</em>
-两个操作。很显然这两个操作数量是一样的，因为我们的牌数量自始至终不变。</p>
-<p>对于比较简单的对子作为终局的情况，我们只关心对数是否为 <span
-class="math inline">\(7\)</span>，所以设计状态：<span
-class="math inline">\(dp_{i,j}\)</span> 表示前 <span
-class="math inline">\(i\)</span> 张牌中凑出 <span
-class="math inline">\(j\)</span> 个对子的最小代价。</p>
-<p>那么就分 <em>把当前牌丢一些 / 借一些拿去组对子</em> 和
-<em>直接丢弃当前牌</em> 两种方案。因为丢 / 借的数量是不确定的，直接
-<code>abs</code> 一下就好。刷表，有：</p>
-<p><span class="math display">\[
-dp_{i+1,j}=dp_{i,j}+g_{i+1}\\
-dp_{i+1,j+1}=dp_{i,j}+|g_{i+1}-2|
-\]</span></p>
-<p>最后我们的答案就来自 <span
-class="math inline">\(dp_{27,7}\)</span>。然后注意这里我们的终局是 14
-张牌 <del>你能秒我</del>，但起手只有 13
-张牌，所以其实会有一个额外的借牌操作，假设答案为 <span
-class="math inline">\(x\)</span>，那么其实 <span
-class="math inline">\(dp_{27,7}=2\times x+1\)</span>。</p>
-<hr />
-<p>有了对子的铺垫，面子手其实也还好。我们需要考虑的是对子和面子的个数。</p>
-<p>但是有个问题，对子只用借 / 丢当前花色，但面子可能是会借 / 丢下一个 /
-下下一个花色的。</p>
-<p>所以干脆全部记录到状态里，令 <span
-class="math inline">\(f_{i,j,k,a,b}\)</span> 表示当前在第 <span
-class="math inline">\(i\)</span> 个花色，凑成了 <span
-class="math inline">\(j\)</span> 个面子，<span
-class="math inline">\(k\)</span> 个对子，需要 <span
-class="math inline">\(a\)</span> 个 <span
-class="math inline">\(i+1\)</span>，<span
-class="math inline">\(b\)</span> 个 <span
-class="math inline">\(i+2\)</span>。注意因为表示丢借有负数不太容易，不如就直接设成需要的数量了。</p>
-<p>因为这个需要数量只是前面的花色对当前花色的需要 <span
-class="math inline">\(a\)</span>，我们还要满足当前花色
-<strong>自身</strong> 的需要 <span
-class="math inline">\(now\)</span>（也就是说当前花色一共需要 <span
-class="math inline">\(a+now\)</span> 张）。注意这里 <span
-class="math inline">\(a\)</span>
-张全部都是拿去借给前面的花色用的，自己不能用。</p>
+<h2 id="定义">定义</h2>
+<p>对于有一个源点 <span class="math inline">\(s\)</span> 和汇点 <span
+class="math inline">\(t\)</span> 的有向图，每条边都有一个权值 <span
+class="math inline">\(c\)</span> 作为容量，称这个有向图 <span
+class="math inline">\(G\)</span> 是一个网络。</p>
+<p>假设现在有 <span class="math inline">\(f\)</span> 升水从 <span
+class="math inline">\(s\)</span>
+流入，而我们可以自由分配每个点的水可以朝哪个方向流出，那么显然地：</p>
 <ul>
-<li><p>对于 <span class="math inline">\(k=0\)</span> 且 <span
-class="math inline">\(now\ge 2\)</span>，此时可以从 <span
-class="math inline">\(now\)</span> 里拿两张出来凑对子，剩下的 <span
-class="math inline">\(now - 2\)</span> 因为肯定 <span
-class="math inline">\(\le
-2\)</span>，所以只能全部拿去凑顺子。所以有：</p>
-<p><span class="math display">\[
-f_{i+1,j+now-2,1,b+now-2, now-2}=f_{i,j,0,a,b}+|g_{i+1}-(a+now)|
-\]</span></p></li>
-<li><p>对于 <span class="math inline">\(now\ge
-3\)</span>，拿三张凑一面。有：</p>
-<p><span class="math display">\[
-f_{i+1,j+now-2,k,b+now-3,now-3}=f_{i,j,0,a,b}+|g_{i+1}-(a+now)|
-\]</span></p></li>
-<li><p>对于 <span class="math inline">\(now\ne
-0\)</span>，可以凑顺子，有：</p>
-<p><span class="math display">\[
-f_{i+1,j+now,k,b+now,now}=f_{i,j,0,a,b}+|g_{i+1}-(a+now)|
-\]</span></p>
-<p>注意不能跨花色借牌，也就是不能让 <span
-class="math inline">\(i=8/9/17/18/26/27\)</span>。</p></li>
+<li>流出 <span class="math inline">\(t\)</span> 的水为 <span
+class="math inline">\(f\)</span> 升。</li>
+<li>对于除 <span class="math inline">\(s\)</span> 和 <span
+class="math inline">\(t\)</span>
+以外的所有点，流入的水量等于流出的水量。</li>
+<li>对于任意一条边，流经的水量不超过容量。</li>
 </ul>
-<p>答案就是 <span class="math inline">\(f_{27,4,1,0,0}\)</span>。</p>
+<p>对于这个网络，任选出一部分点与 <span class="math inline">\(s\)</span>
+分为一组，剩下与 <span class="math inline">\(t\)</span>
+分为一组，该操作称为「割」。一个割的「容量」定义为 <span
+class="math inline">\(s\)</span> 组与 <span
+class="math inline">\(t\)</span> 组间连边的容量和。</p>
+<p>那么接下来就会由这个模型衍生出许多问题：</p>
+<ul>
+<li>最大流问题：找到一种分配方式最大化 <span
+class="math inline">\(f\)</span>。</li>
+<li>最小割问题：找到一种割的方案最小化割的容量。</li>
+<li>最小费用最大流问题：给每条边除容量 <span
+class="math inline">\(c\)</span> 外外加一个费用权值 <span
+class="math inline">\(w\)</span>，需要在保证最大化 <span
+class="math inline">\(f\)</span> 的前提下最小化 <span
+class="math inline">\(\sum f(u, v)\times w(u, v)\)</span>。</li>
+</ul>
+<p>接下来会分别介绍解决这几种不同问题的方法。</p>
 <hr />
-<p>然后这两个情况取一个 <span class="math inline">\(\min\)</span>
-就是答案。</p>
-<details>
-<pre class="cpp"><code>namespace XSC062 &#123;
-using namespace fastIO;
-using std::cin;
-using std::getline;
-using str = std::string;
-int g[30];
-int dp[30][15];
-str sm, sp, ss;
-int f[30][7][2][7][7];
-int abs(int x) &#123; return x &gt;= 0 ? x : -x; &#125;
-int min(int x, int y) &#123; return x &lt; y ? x : y; &#125;
-void upd(int &amp;x, int y) &#123; x = min(x, y); return; &#125;
-int main() &#123;
-    getline(cin, sm, &#39;m&#39;);
-    getline(cin, sp, &#39;p&#39;);
-    getline(cin, ss, &#39;s&#39;);
-    for (auto i : sm) ++g[i - &#39;0&#39;];
-    for (auto i : sp) ++g[i - &#39;0&#39; + 9];
-    for (auto i : ss) ++g[i - &#39;0&#39; + 18];
-    // 打对子
-    memset(dp, 0x3f, sizeof (dp));
-    dp[0][0] = 0;
-    for (int i = 0; i &lt; 27; ++i) &#123;
-        for (int j = 0; j &lt;= 7; ++j) &#123;
-            if (dp[i][j] == 0x3f3f3f3f) continue;
-            upd(dp[i + 1][j], dp[i][j] + g[i + 1]);
-            upd(dp[i + 1][j + 1], dp[i][j] + abs(g[i + 1] - 2));
-        &#125;
-    &#125;
-    // 打飞机
-    memset(f, 0x3f, sizeof (f));
-    f[0][0][0][0][0] = 0;
-    for (int i = 0; i &lt; 27; ++i)
-    for (int j = 0; j &lt;= 4; ++j)
-    for (int k = 0; k &lt;= 1; ++k)
-    for (int a = 0; a &lt;= 4; ++a)
-    for (int b = 0; b &lt;= 4; ++b) &#123;
-        if (i % 9 == 8 &amp;&amp; b) continue;
-        if (i % 9 == 0 &amp;&amp; a + b) continue;
-        for (int now = 0; now &lt;= 4; ++now) &#123; // 对当前的额外需求 
-            if (a + now &gt; 4) continue;
-            int v = f[i][j][k][a][b] + abs(g[i + 1] - (a + now));
-            if (j + now &lt;= 4 &amp;&amp; b + now &lt;= 4) // 直接硬配顺子 
-                upd(f[i + 1][j + now][k][b + now][now], v);
-            if (now &gt;= 2 &amp;&amp; !k &amp;&amp; j + now - 2 &lt;= 4 &amp;&amp; b + now - 2 &lt;= 4) // 借两个去凑对子 
-                upd(f[i + 1][j + now - 2][1][b + now - 2][now - 2], v);
-            if (now &gt;= 3 &amp;&amp; j + now - 2 &lt;= 4 &amp;&amp; b + now - 3 &lt;= 4) // 借两个去凑三不带 
-                upd(f[i + 1][j + now - 2][k][b + now - 3][now - 3], v);
-        &#125;
-    &#125;
-    // 拿来借走会算两次 
-    print(min(dp[27][7], f[27][4][1][0][0]) / 2, &#39;\n&#39;);
-    return 0;
-&#125;
-&#125; // namespace XSC062</code></pre>
-</details>
+<h2 id="最大流问题">最大流问题</h2>
+<p>一个主要的思想是 <strong>贪心寻找增广路更新当前答案</strong>。</p>
 
 			</div>
 			<hr class="dotted">
@@ -303,16 +201,16 @@ int main() &#123;
 					<div id="prev">
 						
 							<!-- 吐槽，为啥还需要加 / -->
-							<a href="/20240131/">
+							<a href="/20250202/">
 								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
-								USACO2024JAN 三组连打
+								学习笔记：后缀数组
 							</a>
 						
 					</div>
 					<div id="next">
 						
-							<a href="/20240111/">
-								杂题别选谈了
+							<a href="/20250121/">
+								技巧：字符串拆分
 								<i class="fas fa-angle-double-right" style="margin-left: 10px;"></i>
 							</a>
 						

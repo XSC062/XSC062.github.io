@@ -5,7 +5,7 @@
         copyHtml += '<button type="button" class="btn-copy" data-clipboard-snippet="">';
         copyHtml += '<i class="far fa-clone"></i><span>Copy</span>';
         copyHtml += '</button>';
-        $(".line-numbers").wrap($('<div class="code-wrap"></div>'));
+        $("pre.line-numbers, .line-numbers pre").wrap($('<div class="code-wrap"></div>'));
         $('.code-wrap').prepend(copyHtml);
         var clipboard = new ClipboardJS('.btn-copy', {
             target: function(trigger) {
