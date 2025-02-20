@@ -58,6 +58,9 @@ function SetActiveItem() {
 //	cursor: pointer，但是大部分 details 都没有 summary
 //	故自动添加
 function setDetailsSummary() {
+	$("summary>p").parent().text(function(r, o) {
+		return $(this).children("p").text();
+	})
 	var de = document.getElementsByTagName("details");
 	for (i = 0; i < de.length; ++i) {
 		var su = de[i].getElementsByTagName("summary");
@@ -94,25 +97,26 @@ function setTitleAnchor() {
 		h[i].appendChild(inner);
 	}
 	h = document.getElementsByTagName("h3");
-	for (i = 0; i < h.length; ++i) {
-		var anchor = document.createElement("a");
-		var inner = document.createElement("a");
-		inner.innerText = h[i].innerText;
-		h[i].innerText = '';
-		anchor.innerText = "#";
-		anchor.id = "anchor";
-		inner.href = anchor.href = '#' + h[i].id;
-		inner.id="inner";
-		h[i].insertBefore(anchor, h[i].firstChild);
-		h[i].appendChild(inner);
-	}
+	for (i = 0; i < h.length; ++i)
+		if (h[i].id != "hitokoto-title") {
+			var anchor = document.createElement("a");
+			var inner = document.createElement("a");
+			inner.innerText = h[i].innerText;
+			h[i].innerText = '';
+			anchor.innerText = "#";
+			anchor.id = "anchor";
+			inner.href = anchor.href = '#' + h[i].id;
+			inner.id="inner";
+			h[i].insertBefore(anchor, h[i].firstChild);
+			h[i].appendChild(inner);
+		}
 	return;
 }
 
 // 目录优化：空目录提示
 function setEmptyToc() {
 	var toc = document.getElementById("toc");
-	if (toc.lastElementChild.id == "toctitle") {
+	if (toc && toc.lastElementChild.id == "toctitle") {
 		var tip = document.createElement("div");
 		tip.id = "tip";
 		tip.innerHTML = "<a href=\"https://github.com/DavidAnson/markdownlint/blob/main/doc/md041.md\" style=\"text-decoration: underline;\">MD041</a> 建议，Markdown 文件的首行应为一级标题。显然地，这篇文章并没能做到这一点。";

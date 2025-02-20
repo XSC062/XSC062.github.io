@@ -2,7 +2,7 @@
 <html>
 <head>
     <!-- 网站图标 -->
-<link rel="icon" type="image/png" sizes="32x32" href="/images/icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/icon.svg">
 <!-- 其他图标支持 -->
 <link rel="stylesheet" href="/css/fa-brands.min.css">
 <link rel="stylesheet" href="/css/fa-regular.min.css">
@@ -66,7 +66,15 @@
       </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
-	<!-- 顶栏整体导航菜单 -->
+	<!-- 搜索 -->
+<div id="search-bg">
+	<div id="search-box"></div>
+	<!-- <div class="form-group">
+		<input type="text" id="local-search-input" name="q" results="0" placeholder="search" class="st-search-input st-default-search-input form-control"/>
+	</div>  
+	<div id="local-search-result"></div> -->
+</div>
+<!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
 	<!-- 左对齐 logo -->
 	<a class="logo" href="/">
@@ -76,8 +84,14 @@
 		</div>
 	</a>
 	<!-- 右对齐部分导航 -->
+	<script>
+		function toSearch() {
+			$("#search-bg, #search-bg *").css("z-index", "1002");
+			$("#search-bg, #search-bg *").css("opacity", "100%");
+		}
+	</script>
 	<div id="rightali">
-		<a class="item" id="Search" type="button" onclick="surprise();">
+		<a class="item" id="Search" type="button" onclick="toSearch()">
 			<i class="btn text-muted fa fa-search" id="search-icon" disabled></i>
 		</a>
 		<a class="item" id="Home" href="/">
@@ -853,18 +867,15 @@ class="math inline">\(y_i\)</span>，则直接求解平面最近点对即可。<
 <script src="/js/search.js"></script>
 
 <script type="text/javascript">
-	var search_path = "search.xml";
-	if (search_path.length == 0) {
-		search_path = "search.xml";
-	}
-	var path = "/" + search_path;
-	searchFunc(path, 'local-search-input', 'local-search-result');
+var search_path = "search.xml";
+if (search_path.length == 0) {
+    search_path = "search.xml";
+}
+var path = "/" + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
 </script>
 <!-- prism 相关配置 -->
-
-<script src="/js/prism.js"></script>
-
-
+<script type="text/javascript" src="/js/prism.js" defer></script>
 <!-- 代码块复制功能 -->
 <script type="text/javascript" src="/js/clipboard.min.js"></script>
 <script type="text/javascript" src="/js/clipboard-use.js"></script>

@@ -2,7 +2,7 @@
 <html>
 <head>
     <!-- 网站图标 -->
-<link rel="icon" type="image/png" sizes="32x32" href="/images/icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/icon.svg">
 <!-- 其他图标支持 -->
 <link rel="stylesheet" href="/css/fa-brands.min.css">
 <link rel="stylesheet" href="/css/fa-regular.min.css">
@@ -66,7 +66,15 @@
       </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
-	<!-- 顶栏整体导航菜单 -->
+	<!-- 搜索 -->
+<div id="search-bg">
+	<div id="search-box"></div>
+	<!-- <div class="form-group">
+		<input type="text" id="local-search-input" name="q" results="0" placeholder="search" class="st-search-input st-default-search-input form-control"/>
+	</div>  
+	<div id="local-search-result"></div> -->
+</div>
+<!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
 	<!-- 左对齐 logo -->
 	<a class="logo" href="/">
@@ -76,8 +84,14 @@
 		</div>
 	</a>
 	<!-- 右对齐部分导航 -->
+	<script>
+		function toSearch() {
+			$("#search-bg, #search-bg *").css("z-index", "1002");
+			$("#search-bg, #search-bg *").css("opacity", "100%");
+		}
+	</script>
 	<div id="rightali">
-		<a class="item" id="Search" type="button" onclick="surprise();">
+		<a class="item" id="Search" type="button" onclick="toSearch()">
 			<i class="btn text-muted fa fa-search" id="search-icon" disabled></i>
 		</a>
 		<a class="item" id="Home" href="/">
@@ -107,22 +121,28 @@
 <div class="ui content container">
 	<h1 id="title">更新日志 / 关于 iwll</h1>
     <div class="ui text container yahei">
-		<p>是的 iwll 是这个 theme 的名字。其内涵我在两年前就已完全遗忘。</p>
-<p>适才用脚趾考虑须臾，自以为把 Change Log 写在 comments
-里还是太过荒唐，因而转写在此。</p>
+		<p>是的 iwll 是这个 theme 的名字，就是 will
+的乱序，不排除是想名字的时候英语水平比较低想不出来什么高级词汇。</p>
 <p>2022 年 10
-月，平凡的一天，最后一节晚自习上，笔者面对一笔未动的数学作业，在草稿上画下了本主题的
-UI 设想，又抱着学习前端的态度慢慢实现，在一双只实现过简单 Stylus
-的手下，零零落落到 2022 年 12 月，iwll 竟已初具雏形。</p>
-<p>一路上修修补补，直到两年后的今天——</p>
-<p>在两年前做的 To-do list 只完成了 20% <img src="/em/kx.gif"
-alt="狂笑" /></p>
+月晚自习，面对一笔未动的数学作业，在草稿本上画下了本主题的大致精神面貌。在一双只实现过简单
+Stylus 的手下，到 2022 年 12 月，iwll
+竟已初具雏形（虽然和草稿本上那个不说相去甚远，也是毫不沾边）。</p>
+<p>一路上修修补补，直到今天——</p>
+<p>To-do list 只完成了 20% <img src="/em/kx.gif" alt="狂笑" /></p>
 <p>当然也加了很多当时没有想到的功能。<em><del>真的吗？</del></em></p>
 <p>因为我在 2020-2022 期间使用的都是 Fluid 主题，UI 设计上其实参考了很多
 Fluid 的处理方式。<em><del>知识产权警告</del></em></p>
-<p>总之总之！</p>
+<p>以下从观感上似乎更像是 Site change log 而非
+Theme’s，不管怎么样看看就好。</p>
 <h2 id="change-log">Change Log</h2>
 <ul>
+<li><p>250219：</p>
+<ul>
+<li>修好了 prismjs 插件 Line Highlight 和 Line Number
+调用顺序颠倒的问题，但这是 prismjs 自己的锅。</li>
+<li>换了个 logo，大步往前走！（虽然看起来像是跑路了？</li>
+<li>把搜索的背景和框框写完了，接下来继续写用户交互。</li>
+</ul></li>
 <li><p>250204：</p>
 <ul>
 <li>花费了两天时间，把 prismjs
@@ -133,7 +153,8 @@ Solarized Light 一模一样了。</li>
 </ul></li>
 <li><p>250121：</p>
 <ul>
-<li>因为我想所以给代码加了 word wrap。</li>
+<li>因为我想所以给代码加了 word wrap（250219
+update：太丑了，关了）。</li>
 <li>又修了一下目录的 padding。</li>
 <li>给空目录增加了提示。</li>
 <li>让 <code>&lt;mark&gt;</code> 看起来更像一个 mark。</li>
@@ -428,18 +449,15 @@ CSS。</p></li>
 <script src="/js/search.js"></script>
 
 <script type="text/javascript">
-	var search_path = "search.xml";
-	if (search_path.length == 0) {
-		search_path = "search.xml";
-	}
-	var path = "/" + search_path;
-	searchFunc(path, 'local-search-input', 'local-search-result');
+var search_path = "search.xml";
+if (search_path.length == 0) {
+    search_path = "search.xml";
+}
+var path = "/" + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
 </script>
 <!-- prism 相关配置 -->
-
-<script src="/js/prism.js"></script>
-
-
+<script type="text/javascript" src="/js/prism.js" defer></script>
 <!-- 代码块复制功能 -->
 <script type="text/javascript" src="/js/clipboard.min.js"></script>
 <script type="text/javascript" src="/js/clipboard-use.js"></script>
