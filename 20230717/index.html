@@ -160,61 +160,34 @@
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
-				<p>Solution to <a
-target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/756/D">CF756D Bacterial
-Melee</a>。</p>
+				<p>Solution to <a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/756/D">CF756D Bacterial Melee</a>。</p>
 <span id="more"></span>
 <hr />
 <p>给我整不会了。怎么处理平方？怎么控制参与总学生最多？其中一定又有什么我不知道的奇技淫巧。</p>
 <p>一切尽在连边。</p>
 <ul>
 <li><p>处理学生与社团间的选择关系</p>
-<p>把学生向社团连边。学生只能选取某社团一次，故容量为 <span
-class="math inline">\(1\)</span>。</p>
-<p>一个学生选取某个社团并不会立即对最终花费带来可计算的影响，因为最终花费由该社团参与的
-<strong>所有学生平方数</strong> 决定。</p>
-<p>故这一步我们先不慌计算社团的代价，只算参与社团本身需要的手续费 <span
-class="math inline">\(F_i\)</span>。但是需要注意到手续费是财务部的收入而非支出，故实际边权为
-<span
-class="math inline">\(-F_i\)</span>，计算答案时视作负支出（明显不会因此而产生负环，因此可以放心加边）。</p></li>
+<p>把学生向社团连边。学生只能选取某社团一次，故容量为 <span class="math inline">\(1\)</span>。</p>
+<p>一个学生选取某个社团并不会立即对最终花费带来可计算的影响，因为最终花费由该社团参与的 <strong>所有学生平方数</strong> 决定。</p>
+故这一步我们先不慌计算社团的代价，只算参与社团本身需要的手续费 <span class="math inline">\(F_i\)</span>。但是需要注意到手续费是财务部的收入而非支出，故实际边权为 <span class="math inline">\(-F_i\)</span>，计算答案时视作负支出（明显不会因此而产生负环，因此可以放心加边）。</li>
 <li><p>处理学生的选择数量上限</p>
-<p>学生最多只能选择 <span class="math inline">\(K\)</span>
-个社团，为保证这一点，我们将源点向学生连边，容量为 <span
-class="math inline">\(K\)</span>。</p>
-<p>很明显，代价也不在此处计算，故令费用为 <span
-class="math inline">\(0\)</span>。</p></li>
+<p>学生最多只能选择 <span class="math inline">\(K\)</span> 个社团，为保证这一点，我们将源点向学生连边，容量为 <span class="math inline">\(K\)</span>。</p>
+很明显，代价也不在此处计算，故令费用为 <span class="math inline">\(0\)</span>。</li>
 <li><p>保证代价最小</p>
 <p>一开始，我认为最小费用最大流一定会找到最小费用，这个处理是无意义的，后来被打脸了。</p>
-<p>我们若欲在此图中寻得最小费用最大流，则
-<strong>流一定最大</strong>。</p>
-<p>而学生的流入容量为 <span
-class="math inline">\(K\)</span>，为了满流，学生一定会尽可能多地选择社团，那么费用就会噌噌上涨。回到目标，即保证学生都选取至少一个社团时，支出最小。</p>
+<p>我们若欲在此图中寻得最小费用最大流，则 <strong>流一定最大</strong>。</p>
+<p>而学生的流入容量为 <span class="math inline">\(K\)</span>，为了满流，学生一定会尽可能多地选择社团，那么费用就会噌噌上涨。回到目标，即保证学生都选取至少一个社团时，支出最小。</p>
 <p>那我们只要给机会让学生可以只选取一个社团就好了（当然也可以是两个、三个……）。</p>
-<p>故让学生向终点连边，容量为 <span
-class="math inline">\(K-1\)</span>，那么学生可以在选取了所有比较赚的社团后就不再选了，选这条边达到满流。同样因为该边流量只有
-<span
-class="math inline">\(K-1\)</span>，学生为了满流就只能再选至少一个社团，满足题意。</p>
-<p>不选社团明显是没有手续费和社团支出的，故费用为 <span
-class="math inline">\(0\)</span>。</p></li>
+<p>故让学生向终点连边，容量为 <span class="math inline">\(K-1\)</span>，那么学生可以在选取了所有比较赚的社团后就不再选了，选这条边达到满流。同样因为该边流量只有 <span class="math inline">\(K-1\)</span>，学生为了满流就只能再选至少一个社团，满足题意。</p>
+不选社团明显是没有手续费和社团支出的，故费用为 <span class="math inline">\(0\)</span>。</li>
 <li><p>处理社团本身支出</p>
-<p>问题在于如何处理 <span class="math inline">\(a\)</span>
-这个平方项。</p>
+<p>问题在于如何处理 <span class="math inline">\(a\)</span> 这个平方项。</p>
 <p>对于平方，我们可以联想到许多数学知识，譬如完全平方、平方差等，这里用到了平方差。</p>
-<p>假如原来的代价是 <span class="math inline">\(C_i\times
-x^2\)</span>，又加入了一个人，那么费用会变成 <span
-class="math inline">\(C_i\times (x + 1)^2\)</span>。由平方差得两者之差为
-<span class="math inline">\(C_i\times (2\times x + 1)\)</span>。当 <span
-class="math inline">\(x - 1\)</span> 取为任意正整数时，<span
-class="math inline">\(2\times x + 1\)</span> 即为所有奇数。</p>
-<p>所以我们将社团向汇点连边，连很多条边，每条边表示
-<strong>新增一个团员的代价</strong>，容量为 <span
-class="math inline">\(1\)</span> 表示一个新增团员，费用为从 <span
-class="math inline">\(1\)</span> 开始，一直到 <span
-class="math inline">\(2\times (N - 1) + 1\)</span> 的所有奇数。</p></li>
+<p>假如原来的代价是 <span class="math inline">\(C_i\times x^2\)</span>，又加入了一个人，那么费用会变成 <span class="math inline">\(C_i\times (x + 1)^2\)</span>。由平方差得两者之差为 <span class="math inline">\(C_i\times (2\times x + 1)\)</span>。当 <span class="math inline">\(x - 1\)</span> 取为任意正整数时，<span class="math inline">\(2\times x + 1\)</span> 即为所有奇数。</p>
+<p>所以我们将社团向汇点连边，连很多条边，每条边表示 <strong>新增一个团员的代价</strong>，容量为 <span class="math inline">\(1\)</span> 表示一个新增团员，费用为从 <span class="math inline">\(1\)</span> 开始，一直到 <span class="math inline">\(2\times (N - 1) + 1\)</span> 的所有奇数。</p></li>
 </ul>
 <p>那么问题到这里就算处理完了。直接上费用流即可。</p>
-<p>不知道我的代码遭遇了哪家宇宙射线的侵蚀，Dinic 死活过不去，换成 EK
-就过了。同学们如果发现自己的 Dinic 过不了也可以试试换 EK。</p>
+<p>不知道我的代码遭遇了哪家宇宙射线的侵蚀，Dinic 死活过不去，换成 EK 就过了。同学们如果发现自己的 Dinic 过不了也可以试试换 EK。</p>
 <details>
 <pre class="cpp"><code>#define int long long
 namespace XSC062 &#123;
@@ -327,7 +300,7 @@ int main() &#123;
 			<div class="post footer">
 				<div id="hitokoto">
 					<h3 id="hitokoto-title">
-						一言 - Hitokoto
+						言论
 					</h3>
 					<div id="hitokoto-content">
 					</div>

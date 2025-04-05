@@ -158,91 +158,45 @@
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
-				<p>Solution to <a
-target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4813/problem/1">PKUSC2022
-Mahjong</a>。</p>
+				<p>Solution to <a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4813/problem/1">PKUSC2022 Mahjong</a>。</p>
 <span id="more"></span>
 <hr />
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1JB4y1R7AP/"
-class="uri">https://www.bilibili.com/video/BV1JB4y1R7AP/</a></p>
-<p>这里是 PKUSC 当时的讲解视频。听说可以证明本题一定有 <span
-class="math inline">\(\le 5\)</span> 的解。好神奇。</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1JB4y1R7AP/" class="uri">https://www.bilibili.com/video/BV1JB4y1R7AP/</a></p>
+<p>这里是 PKUSC 当时的讲解视频。听说可以证明本题一定有 <span class="math inline">\(\le 5\)</span> 的解。好神奇。</p>
 <hr />
-<p>就比如说我们爆搜，<span class="math inline">\(9^4\times 13^4\)</span>
-这个显然干不动对吧，所以我们考虑反过来 DP。</p>
-<p>我们先把字符串转化成计数数组，就是每种牌有多少片。不妨将
-<code>1m ~ 9s</code> 编号为 <span class="math inline">\(1\sim
-27\)</span>，记 <span class="math inline">\(g_i\)</span> 为编号为 <span
-class="math inline">\(i\)</span> 的牌的数量。</p>
-<p>为什么我们觉得 DP
-不好打呢？因为换牌操作可以将两个毫不相干的牌的数量更改，不好记录状态。我们不妨直接将换牌拆成
-<em>丢弃一张牌</em> 和 <em>借取令一张牌</em>
-两个操作。很显然这两个操作数量是一样的，因为我们的牌数量自始至终不变。</p>
-<p>对于比较简单的对子作为终局的情况，我们只关心对数是否为 <span
-class="math inline">\(7\)</span>，所以设计状态：<span
-class="math inline">\(dp_{i,j}\)</span> 表示前 <span
-class="math inline">\(i\)</span> 张牌中凑出 <span
-class="math inline">\(j\)</span> 个对子的最小代价。</p>
-<p>那么就分 <em>把当前牌丢一些 / 借一些拿去组对子</em> 和
-<em>直接丢弃当前牌</em> 两种方案。因为丢 / 借的数量是不确定的，直接
-<code>abs</code> 一下就好。刷表，有：</p>
+<p>就比如说我们爆搜，<span class="math inline">\(9^4\times 13^4\)</span> 这个显然干不动对吧，所以我们考虑反过来 DP。</p>
+<p>我们先把字符串转化成计数数组，就是每种牌有多少片。不妨将 <code>1m ~ 9s</code> 编号为 <span class="math inline">\(1\sim 27\)</span>，记 <span class="math inline">\(g_i\)</span> 为编号为 <span class="math inline">\(i\)</span> 的牌的数量。</p>
+<p>为什么我们觉得 DP 不好打呢？因为换牌操作可以将两个毫不相干的牌的数量更改，不好记录状态。我们不妨直接将换牌拆成 <em>丢弃一张牌</em> 和 <em>借取令一张牌</em> 两个操作。很显然这两个操作数量是一样的，因为我们的牌数量自始至终不变。</p>
+<p>对于比较简单的对子作为终局的情况，我们只关心对数是否为 <span class="math inline">\(7\)</span>，所以设计状态：<span class="math inline">\(dp_{i,j}\)</span> 表示前 <span class="math inline">\(i\)</span> 张牌中凑出 <span class="math inline">\(j\)</span> 个对子的最小代价。</p>
+<p>那么就分 <em>把当前牌丢一些 / 借一些拿去组对子</em> 和 <em>直接丢弃当前牌</em> 两种方案。因为丢 / 借的数量是不确定的，直接 <code>abs</code> 一下就好。刷表，有：</p>
 <p><span class="math display">\[
 dp_{i+1,j}=dp_{i,j}+g_{i+1}\\
 dp_{i+1,j+1}=dp_{i,j}+|g_{i+1}-2|
 \]</span></p>
-<p>最后我们的答案就来自 <span
-class="math inline">\(dp_{27,7}\)</span>。然后注意这里我们的终局是 14
-张牌 <del>你能秒我</del>，但起手只有 13
-张牌，所以其实会有一个额外的借牌操作，假设答案为 <span
-class="math inline">\(x\)</span>，那么其实 <span
-class="math inline">\(dp_{27,7}=2\times x+1\)</span>。</p>
+<p>最后我们的答案就来自 <span class="math inline">\(dp_{27,7}\)</span>。然后注意这里我们的终局是 14 张牌 <del>你能秒我</del>，但起手只有 13 张牌，所以其实会有一个额外的借牌操作，假设答案为 <span class="math inline">\(x\)</span>，那么其实 <span class="math inline">\(dp_{27,7}=2\times x+1\)</span>。</p>
 <hr />
 <p>有了对子的铺垫，面子手其实也还好。我们需要考虑的是对子和面子的个数。</p>
-<p>但是有个问题，对子只用借 / 丢当前花色，但面子可能是会借 / 丢下一个 /
-下下一个花色的。</p>
-<p>所以干脆全部记录到状态里，令 <span
-class="math inline">\(f_{i,j,k,a,b}\)</span> 表示当前在第 <span
-class="math inline">\(i\)</span> 个花色，凑成了 <span
-class="math inline">\(j\)</span> 个面子，<span
-class="math inline">\(k\)</span> 个对子，需要 <span
-class="math inline">\(a\)</span> 个 <span
-class="math inline">\(i+1\)</span>，<span
-class="math inline">\(b\)</span> 个 <span
-class="math inline">\(i+2\)</span>。注意因为表示丢借有负数不太容易，不如就直接设成需要的数量了。</p>
-<p>因为这个需要数量只是前面的花色对当前花色的需要 <span
-class="math inline">\(a\)</span>，我们还要满足当前花色
-<strong>自身</strong> 的需要 <span
-class="math inline">\(now\)</span>（也就是说当前花色一共需要 <span
-class="math inline">\(a+now\)</span> 张）。注意这里 <span
-class="math inline">\(a\)</span>
-张全部都是拿去借给前面的花色用的，自己不能用。</p>
+<p>但是有个问题，对子只用借 / 丢当前花色，但面子可能是会借 / 丢下一个 / 下下一个花色的。</p>
+<p>所以干脆全部记录到状态里，令 <span class="math inline">\(f_{i,j,k,a,b}\)</span> 表示当前在第 <span class="math inline">\(i\)</span> 个花色，凑成了 <span class="math inline">\(j\)</span> 个面子，<span class="math inline">\(k\)</span> 个对子，需要 <span class="math inline">\(a\)</span> 个 <span class="math inline">\(i+1\)</span>，<span class="math inline">\(b\)</span> 个 <span class="math inline">\(i+2\)</span>。注意因为表示丢借有负数不太容易，不如就直接设成需要的数量了。</p>
+<p>因为这个需要数量只是前面的花色对当前花色的需要 <span class="math inline">\(a\)</span>，我们还要满足当前花色 <strong>自身</strong> 的需要 <span class="math inline">\(now\)</span>（也就是说当前花色一共需要 <span class="math inline">\(a+now\)</span> 张）。注意这里 <span class="math inline">\(a\)</span> 张全部都是拿去借给前面的花色用的，自己不能用。</p>
 <ul>
-<li><p>对于 <span class="math inline">\(k=0\)</span> 且 <span
-class="math inline">\(now\ge 2\)</span>，此时可以从 <span
-class="math inline">\(now\)</span> 里拿两张出来凑对子，剩下的 <span
-class="math inline">\(now - 2\)</span> 因为肯定 <span
-class="math inline">\(\le
-2\)</span>，所以只能全部拿去凑顺子。所以有：</p>
-<p><span class="math display">\[
+<li><p>对于 <span class="math inline">\(k=0\)</span> 且 <span class="math inline">\(now\ge 2\)</span>，此时可以从 <span class="math inline">\(now\)</span> 里拿两张出来凑对子，剩下的 <span class="math inline">\(now - 2\)</span> 因为肯定 <span class="math inline">\(\le 2\)</span>，所以只能全部拿去凑顺子。所以有：</p>
+<span class="math display">\[
 f_{i+1,j+now-2,1,b+now-2, now-2}=f_{i,j,0,a,b}+|g_{i+1}-(a+now)|
-\]</span></p></li>
-<li><p>对于 <span class="math inline">\(now\ge
-3\)</span>，拿三张凑一面。有：</p>
-<p><span class="math display">\[
+\]</span></li>
+<li><p>对于 <span class="math inline">\(now\ge 3\)</span>，拿三张凑一面。有：</p>
+<span class="math display">\[
 f_{i+1,j+now-2,k,b+now-3,now-3}=f_{i,j,0,a,b}+|g_{i+1}-(a+now)|
-\]</span></p></li>
-<li><p>对于 <span class="math inline">\(now\ne
-0\)</span>，可以凑顺子，有：</p>
+\]</span></li>
+<li><p>对于 <span class="math inline">\(now\ne 0\)</span>，可以凑顺子，有：</p>
 <p><span class="math display">\[
 f_{i+1,j+now,k,b+now,now}=f_{i,j,0,a,b}+|g_{i+1}-(a+now)|
 \]</span></p>
-<p>注意不能跨花色借牌，也就是不能让 <span
-class="math inline">\(i=8/9/17/18/26/27\)</span>。</p></li>
+<p>注意不能跨花色借牌，也就是不能让 <span class="math inline">\(i=8/9/17/18/26/27\)</span>。</p></li>
 </ul>
 <p>答案就是 <span class="math inline">\(f_{27,4,1,0,0}\)</span>。</p>
 <hr />
-<p>然后这两个情况取一个 <span class="math inline">\(\min\)</span>
-就是答案。</p>
+<p>然后这两个情况取一个 <span class="math inline">\(\min\)</span> 就是答案。</p>
 <details>
 <pre class="cpp"><code>namespace XSC062 &#123;
 using namespace fastIO;
@@ -306,7 +260,7 @@ int main() &#123;
 			<div class="post footer">
 				<div id="hitokoto">
 					<h3 id="hitokoto-title">
-						一言 - Hitokoto
+						言论
 					</h3>
 					<div id="hitokoto-content">
 					</div>

@@ -128,8 +128,7 @@
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#a.-%E7%BE%8E%E5%91%B3%E3%81%97%E3%81%84%E7%BE%8E%E5%91%B3%E3%81%97%E3%81%84%E3%83%8F%E3%83%B3%E3%83%90%E3%83%BC%E3%82%B0"><span class="toc-text">A.
-美味しい美味しいハンバーグ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b.-shik-and-travel"><span class="toc-text">B. Shik and Travel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#d.-candy-piles"><span class="toc-text">D. Candy Piles</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#a.-%E7%BE%8E%E5%91%B3%E3%81%97%E3%81%84%E7%BE%8E%E5%91%B3%E3%81%97%E3%81%84%E3%83%8F%E3%83%B3%E3%83%90%E3%83%BC%E3%82%B0"><span class="toc-text">A. 美味しい美味しいハンバーグ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b.-shik-and-travel"><span class="toc-text">B. Shik and Travel</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#d.-candy-piles"><span class="toc-text">D. Candy Piles</span></a></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -157,23 +156,14 @@
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
-				<p>哭いた閃光が目に刺さる / お別かれの鐘が鳴る / 神が成した歴史の /
-結ぶ答えは砂の味がする</p>
+				<p>哭いた閃光が目に刺さる / お別かれの鐘が鳴る / 神が成した歴史の / 結ぶ答えは砂の味がする</p>
 <span id="more"></span>
 <hr />
-<h2 id="a.-美味しい美味しいハンバーグ">A.
-美味しい美味しいハンバーグ</h2>
-<p><a target="_blank" rel="noopener" href="https://vjudge.net/contest/669299#problem/A"
-class="uri">https://vjudge.net/contest/669299#problem/A</a></p>
-<p>有一个很神奇的随机化做法：我们从前往后串签子，最开始签子数为 <span
-class="math inline">\(0\)</span>，如果当前任何一个签子都没办法再串这一个就新增签子。如果没有签子可以用了，就说明这块肉不合法，挪到前
-<span class="math inline">\(k\)</span>
-块中的随机位置使其优先被选择。</p>
-<p>你会发现这个做法跑得很快，spdarkle 说因为 <span
-class="math inline">\(K\)</span>
-很小还保证有解，所以期望次数是非常对的。我太菜了他也没细说所以开摆。</p>
-<p>由于神秘原因，我的 <code>std::mt19937::operator()</code>
-如果外边不套一层 abs 就会起飞 <img src="/em/yun.gif" alt="晕" /></p>
+<h2 id="a.-美味しい美味しいハンバーグ">A. 美味しい美味しいハンバーグ</h2>
+<p><a target="_blank" rel="noopener" href="https://vjudge.net/contest/669299#problem/A" class="uri">https://vjudge.net/contest/669299#problem/A</a></p>
+<p>有一个很神奇的随机化做法：我们从前往后串签子，最开始签子数为 <span class="math inline">\(0\)</span>，如果当前任何一个签子都没办法再串这一个就新增签子。如果没有签子可以用了，就说明这块肉不合法，挪到前 <span class="math inline">\(k\)</span> 块中的随机位置使其优先被选择。</p>
+<p>你会发现这个做法跑得很快，spdarkle 说因为 <span class="math inline">\(K\)</span> 很小还保证有解，所以期望次数是非常对的。我太菜了他也没细说所以开摆。</p>
+<p>由于神秘原因，我的 <code>std::mt19937::operator()</code> 如果外边不套一层 abs 就会起飞 <img src="/em/yun.gif" alt="晕" /></p>
 <details>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
 int main() &#123;
@@ -220,38 +210,11 @@ int main() &#123;
 </details>
 <hr />
 <h2 id="b.-shik-and-travel">B. Shik and Travel</h2>
-<p><a target="_blank" rel="noopener" href="https://vjudge.net/contest/669299#problem/B"
-class="uri">https://vjudge.net/contest/669299#problem/B</a></p>
-<p>最小化最大，显然需要二分答案，check 打个 DP。具体怎么 DP
-呢？首先考虑暴力，设 <span class="math inline">\(f_{u, a, b}\)</span>
-表示在当前 <span class="math inline">\(mid\)</span> 的限制下，从 <span
-class="math inline">\(u\)</span> 出发到第一个叶子距离为 <span
-class="math inline">\(a\)</span>，最后一个距离为 <span
-class="math inline">\(b\)</span> 的可行性。那么有 <span
-class="math inline">\(f_{u,a,b} = (f_{l,a,i}\land
-f_{r,j,b})\lor  (f_{r,a,i}\land f_{l,j,b})\)</span>。</p>
-<p>先不说转移，状态数已经难以接受。所以我们从状态数入手，显然如果存在一个
-<span class="math inline">\(a&#39;\le a\)</span> 和 <span
-class="math inline">\(b&#39;\le b\)</span>，那么 <span
-class="math inline">\((a&#39;,b&#39;)\)</span>
-就是无用状态。也就是说，我们把所有有用的 <span class="math inline">\((a,
-b)\)</span> 按 <span class="math inline">\(a\)</span>
-从小到大排序，<span class="math inline">\(b\)</span>
-应该是单调递减的；考虑这个抽象的过程，相当于从头到尾遍历一串状态，在路上碰到的所有较大的
-<span class="math inline">\(b\)</span> 都会被当场丢弃。</p>
-<p>感性思考可以发现<mark>当我们试图让 <span
-class="math inline">\(b\)</span>
-最小的时候，这个状态最有用（即最不可能被丢弃）</mark>。对于一个 <span
-class="math inline">\(f_{l,a,i}\)</span>，我们找到能够转移的 <span
-class="math inline">\(f_{r,j,b_{\min}}\)</span>
-来转移。正确性很好证明，我们的 check
-只要求在根节点上存在任意合法状态，那只需要让最不可能被丢弃的不被丢弃即可，更可能被丢弃的状态是否被丢弃就不会产生影响了。</p>
-<p>优化后的状态数在 <span class="math inline">\(u\)</span> 上只会增加
-<span
-class="math inline">\(\min(|a_l|,|b_r|)+\min(|a_r|,|b_l|)\)</span>，即两个儿子上的状态数较小者，参考
-DSU on tree，是 <span class="math inline">\(O(n\log)\)</span>
-的。加上对状态排序的数据结构，复杂度 <span
-class="math inline">\(O(n\log^2 n\log V)\)</span>。</p>
+<p><a target="_blank" rel="noopener" href="https://vjudge.net/contest/669299#problem/B" class="uri">https://vjudge.net/contest/669299#problem/B</a></p>
+<p>最小化最大，显然需要二分答案，check 打个 DP。具体怎么 DP 呢？首先考虑暴力，设 <span class="math inline">\(f_{u, a, b}\)</span> 表示在当前 <span class="math inline">\(mid\)</span> 的限制下，从 <span class="math inline">\(u\)</span> 出发到第一个叶子距离为 <span class="math inline">\(a\)</span>，最后一个距离为 <span class="math inline">\(b\)</span> 的可行性。那么有 <span class="math inline">\(f_{u,a,b} = (f_{l,a,i}\land f_{r,j,b})\lor (f_{r,a,i}\land f_{l,j,b})\)</span>。</p>
+<p>先不说转移，状态数已经难以接受。所以我们从状态数入手，显然如果存在一个 <span class="math inline">\(a&#39;\le a\)</span> 和 <span class="math inline">\(b&#39;\le b\)</span>，那么 <span class="math inline">\((a&#39;,b&#39;)\)</span> 就是无用状态。也就是说，我们把所有有用的 <span class="math inline">\((a, b)\)</span> 按 <span class="math inline">\(a\)</span> 从小到大排序，<span class="math inline">\(b\)</span> 应该是单调递减的；考虑这个抽象的过程，相当于从头到尾遍历一串状态，在路上碰到的所有较大的 <span class="math inline">\(b\)</span> 都会被当场丢弃。</p>
+<p>感性思考可以发现<mark>当我们试图让 <span class="math inline">\(b\)</span> 最小的时候，这个状态最有用（即最不可能被丢弃）</mark>。对于一个 <span class="math inline">\(f_{l,a,i}\)</span>，我们找到能够转移的 <span class="math inline">\(f_{r,j,b_{\min}}\)</span> 来转移。正确性很好证明，我们的 check 只要求在根节点上存在任意合法状态，那只需要让最不可能被丢弃的不被丢弃即可，更可能被丢弃的状态是否被丢弃就不会产生影响了。</p>
+<p>优化后的状态数在 <span class="math inline">\(u\)</span> 上只会增加 <span class="math inline">\(\min(|a_l|,|b_r|)+\min(|a_r|,|b_l|)\)</span>，即两个儿子上的状态数较小者，参考 DSU on tree，是 <span class="math inline">\(O(n\log)\)</span> 的。加上对状态排序的数据结构，复杂度 <span class="math inline">\(O(n\log^2 n\log V)\)</span>。</p>
 <details>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
 const long long inf = 1e18;
@@ -313,8 +276,7 @@ int main() &#123;
 </details>
 <hr />
 <h2 id="d.-candy-piles">D. Candy Piles</h2>
-<p><a target="_blank" rel="noopener" href="https://vjudge.net/contest/669299#problem/D"
-class="uri">https://vjudge.net/contest/669299#problem/D</a></p>
+<p><a target="_blank" rel="noopener" href="https://vjudge.net/contest/669299#problem/D" class="uri">https://vjudge.net/contest/669299#problem/D</a></p>
 <p>不难发现我们可以把题意转化为，把所有列从大到小排列，每次可以选择删掉最左边一列或最下边一行，删空者胜。</p>
 <p>把该柱状图转化为网格图，定义边界为胜利点，对于非边界上的点，其一定可以往右走、往上走。若一个点上方、右侧点均为胜利点，此点为失败点；否则，此点为胜利点。</p>
 
@@ -323,7 +285,7 @@ class="uri">https://vjudge.net/contest/669299#problem/D</a></p>
 			<div class="post footer">
 				<div id="hitokoto">
 					<h3 id="hitokoto-title">
-						一言 - Hitokoto
+						言论
 					</h3>
 					<div id="hitokoto-content">
 					</div>

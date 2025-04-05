@@ -161,35 +161,19 @@
 				<p>人类不应该使用 <code>std::vector</code> 实现线段树的 2 个原因：</p>
 <span id="more"></span>
 <ol type="1">
-<li>当你的参数包含引用时，扩容操作，包括显式的 <code>resize()</code>
-和隐式的 <code>push_back()</code> 均会导致引用失效。</li>
-<li>当你的左值为引用时，由于 <code>=</code>
-左右计算顺序是不确定的（C++14），由于 1 中所述原因，引用可能失效。</li>
+<li>当你的参数包含引用时，扩容操作，包括显式的 <code>resize()</code> 和隐式的 <code>push_back()</code> 均会导致引用失效。</li>
+<li>当你的左值为引用时，由于 <code>=</code> 左右计算顺序是不确定的（C++14），由于 1 中所述原因，引用可能失效。</li>
 <li><code>terminate called after throwing an instance of 'std::bad_alloc' what():  std::bad_alloc</code></li>
 </ol>
-<p>笑点解析：首先通过「……的 2 个原因」暗示声明一个长度为 2 的
-<code>vector</code>，接着在试图访问第 3 个元素时抛出错误。</p>
-<p>什么？你说我的下标是从 1 开始的？恭喜你发现了 <code>vector</code>
-的第 0 个笑点。</p>
+<p>笑点解析：首先通过「……的 2 个原因」暗示声明一个长度为 2 的 <code>vector</code>，接着在试图访问第 3 个元素时抛出错误。</p>
+<p>什么？你说我的下标是从 1 开始的？恭喜你发现了 <code>vector</code> 的第 0 个笑点。</p>
 <hr />
 <h2 id="楼房重建">楼房重建</h2>
-<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4198"
-class="uri">https://www.luogu.com.cn/problem/P4198</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4198" class="uri">https://www.luogu.com.cn/problem/P4198</a></p>
 <p>考虑用线段树解决问题。难点在于如何合并两个区间的信息——直觉地，大区间的信息一定与两个子区间有关。</p>
-<p>考虑理想的情况：我们现在知道左右两边区间的答案序列。显然我们需要保留左边整段区间，对于左区间序列末的元素
-<span
-class="math inline">\(rv_l\)</span>，我们在右区间内找到第一个大于之的元素
-<span class="math inline">\(x\)</span>，从它开始的序列就是答案。</p>
-<p>反证法易得 <span class="math inline">\(x\)</span>
-一定在右区间答案序列内：若 <span class="math inline">\(x\)</span>
-不在答案序列内，则右区间内存在一个 <span
-class="math inline">\(&gt;x\)</span> 且位于 <span
-class="math inline">\(x\)</span> 之前的元素，那么 <span
-class="math inline">\(x\)</span> 就不是第一个 <span
-class="math inline">\(&gt;rv_l\)</span> 的元素，矛盾。</p>
-<p>那么现在对于左右序列未知的情况，我们取左区间的答案，再在右区间中单
-<span class="math inline">\(\log\)</span>
-查找能够接上去的区间长度，加起来即可。</p>
+<p>考虑理想的情况：我们现在知道左右两边区间的答案序列。显然我们需要保留左边整段区间，对于左区间序列末的元素 <span class="math inline">\(rv_l\)</span>，我们在右区间内找到第一个大于之的元素 <span class="math inline">\(x\)</span>，从它开始的序列就是答案。</p>
+<p>反证法易得 <span class="math inline">\(x\)</span> 一定在右区间答案序列内：若 <span class="math inline">\(x\)</span> 不在答案序列内，则右区间内存在一个 <span class="math inline">\(&gt;x\)</span> 且位于 <span class="math inline">\(x\)</span> 之前的元素，那么 <span class="math inline">\(x\)</span> 就不是第一个 <span class="math inline">\(&gt;rv_l\)</span> 的元素，矛盾。</p>
+<p>那么现在对于左右序列未知的情况，我们取左区间的答案，再在右区间中单 <span class="math inline">\(\log\)</span> 查找能够接上去的区间长度，加起来即可。</p>
 <p>题目只要求总区间答案，故不需要查询。动态开点可能需要小心处理一下。</p>
 <details>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
@@ -273,7 +257,7 @@ int main() &#123;
 			<div class="post footer">
 				<div id="hitokoto">
 					<h3 id="hitokoto-title">
-						一言 - Hitokoto
+						言论
 					</h3>
 					<div id="hitokoto-content">
 					</div>

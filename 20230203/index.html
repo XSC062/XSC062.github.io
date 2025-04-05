@@ -163,224 +163,113 @@
 				<hr class="dotted" style="margin-bottom: 0;">
 			
 			<div id="content">
-				<p>Solution to <a
-target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1733/D2">CF1733D2
-Zero-One (Hard Version)</a>。</p>
+				<p>Solution to <a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1733/D2">CF1733D2 Zero-One (Hard Version)</a>。</p>
 <span id="more"></span>
 <hr />
 <p>没做过简单版本，模拟赛上遇到，乍一看是个贪心，但贪心思维太弱想不到怎么贪。所以思考其他方法。</p>
-<p>下文称同时取反 <span class="math inline">\(a_i\)</span> 和 <span
-class="math inline">\(a_j\)</span> 的一次操作为「取反 <span
-class="math inline">\((a_i, a_j)\)</span>」，称 <span
-class="math inline">\(a_i=b_i\)</span> 的状态为「匹配」。</p>
+<p>下文称同时取反 <span class="math inline">\(a_i\)</span> 和 <span class="math inline">\(a_j\)</span> 的一次操作为「取反 <span class="math inline">\((a_i, a_j)\)</span>」，称 <span class="math inline">\(a_i=b_i\)</span> 的状态为「匹配」。</p>
 <hr />
 <h3 id="思维关键点">思维关键点</h3>
-<p>若我们想要将 <span class="math inline">\((a_i,a_j)\)</span>
-取反，我们可以怎么做？</p>
-<p>不难发现，分 <span class="math inline">\(a_i\)</span> 与 <span
-class="math inline">\(a_j\)</span> 相邻和不相邻两种情况：</p>
+<p>若我们想要将 <span class="math inline">\((a_i,a_j)\)</span> 取反，我们可以怎么做？</p>
+<p>不难发现，分 <span class="math inline">\(a_i\)</span> 与 <span class="math inline">\(a_j\)</span> 相邻和不相邻两种情况：</p>
 <ol type="1">
-<li><p><span class="math inline">\(a_i\)</span> 与 <span
-class="math inline">\(a_j\)</span> 相邻：</p>
+<li><p><span class="math inline">\(a_i\)</span> 与 <span class="math inline">\(a_j\)</span> 相邻：</p>
 <ol type="1">
 <li>直接取反，代价为 <span class="math inline">\(x\)</span>。</li>
-<li>寻找到一个与 <span class="math inline">\(a_i\)</span> 和 <span
-class="math inline">\(a_j\)</span> 都不相邻的 <span
-class="math inline">\(a_k\)</span>，先将 <span
-class="math inline">\((a_i,a_k)\)</span> 取反，再将 <span
-class="math inline">\((a_j,a_k)\)</span> 取反，代价为 <span
-class="math inline">\(2\times y\)</span>。</li>
+<li>寻找到一个与 <span class="math inline">\(a_i\)</span> 和 <span class="math inline">\(a_j\)</span> 都不相邻的 <span class="math inline">\(a_k\)</span>，先将 <span class="math inline">\((a_i,a_k)\)</span> 取反，再将 <span class="math inline">\((a_j,a_k)\)</span> 取反，代价为 <span class="math inline">\(2\times y\)</span>。</li>
 </ol></li>
-<li><p><span class="math inline">\(a_i\)</span> 与 <span
-class="math inline">\(a_j\)</span> 不相邻：</p>
+<li><p><span class="math inline">\(a_i\)</span> 与 <span class="math inline">\(a_j\)</span> 不相邻：</p>
 <ol type="1">
 <li>直接取反，代价为 <span class="math inline">\(y\)</span>。</li>
-<li>将 <span class="math inline">\((a_i,a_{i + 1}),(a_{i + 1}, a_{i +
-2}),\cdots,(a_{j - 1}, a_{j})\)</span> 取反，代价为 <span
-class="math inline">\((j - i)\times x\)</span>。</li>
+<li>将 <span class="math inline">\((a_i,a_{i + 1}),(a_{i + 1}, a_{i + 2}),\cdots,(a_{j - 1}, a_{j})\)</span> 取反，代价为 <span class="math inline">\((j - i)\times x\)</span>。</li>
 </ol></li>
 </ol>
-<p>接下来考虑另一个问题：我们要取反哪些 <span
-class="math inline">\((a_i,a_j)\)</span> 呢？</p>
-<p>假设现在有 <span class="math inline">\(a_p\)</span> 与 <span
-class="math inline">\(b_p\)</span> 不匹配，<span
-class="math inline">\(a_q\)</span> 与 <span
-class="math inline">\(b_q\)</span> 不匹配，那么我们肯定选择将 <span
-class="math inline">\((a_p,a_q)\)</span> 取反。</p>
-<p>原因很简单，假设有 <span
-class="math inline">\(a_k=b_k\)</span>，如果我们将 <span
-class="math inline">\((a_p,a_k)\)</span> 取反，那么 <span
-class="math inline">\(a_k\ne b_k\)</span>，我们需要额外的一次与 <span
-class="math inline">\(a_k\)</span> 有关的操作将其复原。如果我们挑选一个
-<span class="math inline">\(a_l=b_l\)</span>，并将 <span
-class="math inline">\((a_k,a_l)\)</span> 取反，那么 <span
-class="math inline">\(a_l\)</span> 与 <span
-class="math inline">\(b_l\)</span>
-又会不匹配，又需要一次操作；如果挑选一个 <span
-class="math inline">\(a_l\ne b_l\)</span>，并将 <span
-class="math inline">\((a_k,a_l)\)</span>
-取反，那么为什么不能在一开始就将 <span
-class="math inline">\((a_p,a_l)\)</span> 取反呢？此时的 <span
-class="math inline">\(a_k\)</span>
-相当于一个中继，而这种情况我们已经在取反 <span
-class="math inline">\((a_p,a_l)\)</span> 时考虑到了。</p>
-<p>也就是说，我们每次取反 <strong>只</strong> 选择两个无法与 <span
-class="math inline">\(b\)</span> 匹配的 <span
-class="math inline">\(a\)</span>。</p>
+<p>接下来考虑另一个问题：我们要取反哪些 <span class="math inline">\((a_i,a_j)\)</span> 呢？</p>
+<p>假设现在有 <span class="math inline">\(a_p\)</span> 与 <span class="math inline">\(b_p\)</span> 不匹配，<span class="math inline">\(a_q\)</span> 与 <span class="math inline">\(b_q\)</span> 不匹配，那么我们肯定选择将 <span class="math inline">\((a_p,a_q)\)</span> 取反。</p>
+<p>原因很简单，假设有 <span class="math inline">\(a_k=b_k\)</span>，如果我们将 <span class="math inline">\((a_p,a_k)\)</span> 取反，那么 <span class="math inline">\(a_k\ne b_k\)</span>，我们需要额外的一次与 <span class="math inline">\(a_k\)</span> 有关的操作将其复原。如果我们挑选一个 <span class="math inline">\(a_l=b_l\)</span>，并将 <span class="math inline">\((a_k,a_l)\)</span> 取反，那么 <span class="math inline">\(a_l\)</span> 与 <span class="math inline">\(b_l\)</span> 又会不匹配，又需要一次操作；如果挑选一个 <span class="math inline">\(a_l\ne b_l\)</span>，并将 <span class="math inline">\((a_k,a_l)\)</span> 取反，那么为什么不能在一开始就将 <span class="math inline">\((a_p,a_l)\)</span> 取反呢？此时的 <span class="math inline">\(a_k\)</span> 相当于一个中继，而这种情况我们已经在取反 <span class="math inline">\((a_p,a_l)\)</span> 时考虑到了。</p>
+<p>也就是说，我们每次取反 <strong>只</strong> 选择两个无法与 <span class="math inline">\(b\)</span> 匹配的 <span class="math inline">\(a\)</span>。</p>
 <p>那么，有没有一种情况，让我们无法选择两个无法匹配的值呢？</p>
 <p>那就是不匹配的值的数量有奇数个，才会让我们两个两个选的时候有元素落单。</p>
 <p>不妨思考一次取反操作所有可能的情况（假设不受上面的结论限制）：</p>
 <ol type="1">
 <li><p>取反一个匹配值和一个不匹配值</p>
-<p>此时匹配值变为非匹配，不匹配值变为匹配，不匹配的元素总数不变。</p></li>
+此时匹配值变为非匹配，不匹配值变为匹配，不匹配的元素总数不变。</li>
 <li><p>取反两个不匹配值</p>
-<p>两个不匹配值都变为匹配，不匹配元素的总数量增加 <span
-class="math inline">\(-2\)</span>。</p></li>
+两个不匹配值都变为匹配，不匹配元素的总数量增加 <span class="math inline">\(-2\)</span>。</li>
 <li><p>取反两个匹配值</p>
-<p>两个匹配值都变为非匹配，不匹配元素的总数量增加 <span
-class="math inline">\(2\)</span>。</p></li>
+<p>两个匹配值都变为非匹配，不匹配元素的总数量增加 <span class="math inline">\(2\)</span>。</p></li>
 </ol>
-<p>综上，一次操作对不匹配元素总数带来的更改只可能为 <span
-class="math inline">\(0,2,-2\)</span>，均为偶数。当不匹配元素为奇数时，必定无法将其更改至刚好为
-<span class="math inline">\(0\)</span>。此时输出 <span
-class="math inline">\(-1\)</span>。</p>
-<p>我们上面结论的可实现性也得到了保障：只取反两个不匹配的 <span
-class="math inline">\(a\)</span>，不会有元素落单。</p>
-<p>下文记从前往后第 <span class="math inline">\(i\)</span> 个与 <span
-class="math inline">\(b\)</span> 不匹配的 <span
-class="math inline">\(a\)</span> 的下标为 <span
-class="math inline">\(d_i\)</span>。</p>
+<p>综上，一次操作对不匹配元素总数带来的更改只可能为 <span class="math inline">\(0,2,-2\)</span>，均为偶数。当不匹配元素为奇数时，必定无法将其更改至刚好为 <span class="math inline">\(0\)</span>。此时输出 <span class="math inline">\(-1\)</span>。</p>
+<p>我们上面结论的可实现性也得到了保障：只取反两个不匹配的 <span class="math inline">\(a\)</span>，不会有元素落单。</p>
+<p>下文记从前往后第 <span class="math inline">\(i\)</span> 个与 <span class="math inline">\(b\)</span> 不匹配的 <span class="math inline">\(a\)</span> 的下标为 <span class="math inline">\(d_i\)</span>。</p>
 <hr />
 <h3 id="确定实现方法">确定实现方法</h3>
-<p>发现 <span class="math inline">\(\sum n\le 5\times
-10^3\)</span>，确定算法复杂度为 <span
-class="math inline">\(O(n^2)\)</span>。</p>
-<p>首先不难想到暴力搜索，每次枚举将哪一对 <span
-class="math inline">\((d_i, d_j)\)</span> 取反。</p>
-<p>亦或是使用 <code>bitset</code> 记录哪些非匹配值已被取反（被取反为
-<span class="math inline">\(1\)</span>，否则为 <span
-class="math inline">\(0\)</span>），枚举数对暴力 DP 更新最小值。</p>
+<p>发现 <span class="math inline">\(\sum n\le 5\times 10^3\)</span>，确定算法复杂度为 <span class="math inline">\(O(n^2)\)</span>。</p>
+<p>首先不难想到暴力搜索，每次枚举将哪一对 <span class="math inline">\((d_i, d_j)\)</span> 取反。</p>
+<p>亦或是使用 <code>bitset</code> 记录哪些非匹配值已被取反（被取反为 <span class="math inline">\(1\)</span>，否则为 <span class="math inline">\(0\)</span>），枚举数对暴力 DP 更新最小值。</p>
 <p>但以上两种方法铁定超时。</p>
 <p>受到上面两种方法的启发，扩展思维，我们发现：</p>
 <ul>
 <li><p>取反操作的顺序不会影响最终答案。</p>
-<p>因为每个数被取反的次数一定，最终结果也就一定。</p></li>
+因为每个数被取反的次数一定，最终结果也就一定。</li>
 <li><p>我们可以通过 DP 的方式寻找最小值。</p></li>
 </ul>
 <p>设计状态。</p>
-<p>不妨考虑让问题麻烦起来的是什么，对于 <span
-class="math inline">\(d_i\)</span> 与 <span
-class="math inline">\(d_j\)</span> 不相邻时的取反，我们无法得知 <span
-class="math inline">\(d_i\)</span> 需要哪一个 <span
-class="math inline">\(d_j\)</span>（而对于 <span
-class="math inline">\(d_i\)</span> 与 <span
-class="math inline">\(d_j\)</span> 相邻的情况，<span
-class="math inline">\(d_j\)</span> 就是 <span class="math inline">\(d_{i
-+ 1}\)</span>，位置是确定的）。</p>
-<p>但我们同时也发现，与相邻时的代价不同，不相邻时的操作代价与 <span
-class="math inline">\(i\)</span>，<span class="math inline">\(j\)</span>
-的具体值无关。</p>
-<p>所以不妨用 <span class="math inline">\(f_{i,j}\)</span>
-表示，已枚举到 <span class="math inline">\(d_i\)</span>，前面有 <span
-class="math inline">\(j\)</span> 个数需要后面
-<strong>与它们不相邻的数</strong> 用以和它们配对取反。</p>
-<p>假设已枚举到 <span class="math inline">\(d_i\)</span>，当前面有 <span
-class="math inline">\(s\)</span> 个数需要配对时，有以下的情况：</p>
+<p>不妨考虑让问题麻烦起来的是什么，对于 <span class="math inline">\(d_i\)</span> 与 <span class="math inline">\(d_j\)</span> 不相邻时的取反，我们无法得知 <span class="math inline">\(d_i\)</span> 需要哪一个 <span class="math inline">\(d_j\)</span>（而对于 <span class="math inline">\(d_i\)</span> 与 <span class="math inline">\(d_j\)</span> 相邻的情况，<span class="math inline">\(d_j\)</span> 就是 <span class="math inline">\(d_{i + 1}\)</span>，位置是确定的）。</p>
+<p>但我们同时也发现，与相邻时的代价不同，不相邻时的操作代价与 <span class="math inline">\(i\)</span>，<span class="math inline">\(j\)</span> 的具体值无关。</p>
+<p>所以不妨用 <span class="math inline">\(f_{i,j}\)</span> 表示，已枚举到 <span class="math inline">\(d_i\)</span>，前面有 <span class="math inline">\(j\)</span> 个数需要后面 <strong>与它们不相邻的数</strong> 用以和它们配对取反。</p>
+<p>假设已枚举到 <span class="math inline">\(d_i\)</span>，当前面有 <span class="math inline">\(s\)</span> 个数需要配对时，有以下的情况：</p>
 <ul>
-<li><p>当 <span class="math inline">\(s =
-1\)</span>，即只有一个数需要配对时：</p>
+<li><p>当 <span class="math inline">\(s = 1\)</span>，即只有一个数需要配对时：</p>
 <ul>
-<li><p>如果这个数是 <span class="math inline">\(d_{i -
-1}\)</span>，那么代价为 <span class="math inline">\(2\times
-y\)</span>。</p>
-<p>注意，这里只枚举了需要不相邻的数来配对的情况，相邻的情况将会另外计算，所以代价不能为
-<span class="math inline">\(x\)</span>。</p></li>
-<li><p>否则，代价为 <span class="math inline">\(y\)</span>。</p></li>
+<li><p>如果这个数是 <span class="math inline">\(d_{i - 1}\)</span>，那么代价为 <span class="math inline">\(2\times y\)</span>。</p>
+注意，这里只枚举了需要不相邻的数来配对的情况，相邻的情况将会另外计算，所以代价不能为 <span class="math inline">\(x\)</span>。</li>
+<li>否则，代价为 <span class="math inline">\(y\)</span>。</li>
 </ul></li>
-<li><p>当 <span class="math inline">\(s&gt;1\)</span>
-时，即有多个数需要配对时：</p>
-<p>不管 <span class="math inline">\(d_{i-1}\)</span>
-是否需要配对，我们都不选它。因为选它的代价是 <span
-class="math inline">\(2\times
-y\)</span>，而随便选另一个待配对数的代价都只有 <span
-class="math inline">\(y\)</span>。</p></li>
+<li><p>当 <span class="math inline">\(s&gt;1\)</span> 时，即有多个数需要配对时：</p>
+<p>不管 <span class="math inline">\(d_{i-1}\)</span> 是否需要配对，我们都不选它。因为选它的代价是 <span class="math inline">\(2\times y\)</span>，而随便选另一个待配对数的代价都只有 <span class="math inline">\(y\)</span>。</p></li>
 </ul>
 <p>那么问题来了，我咋知道它们相不相邻？</p>
-<p>再多开一维 <span class="math inline">\(0/1\)</span>
-状态，记录最后一个需要与其他后面的元素配对值是否是 <span
-class="math inline">\(a_{i-1}\)</span> 即可。</p>
-<p>假设现在已经枚举到 <span
-class="math inline">\(f_{i,j,0/1}\)</span>，即已枚举完 <span
-class="math inline">\(d_i\)</span>，有 <span
-class="math inline">\(j\)</span> 个元素需要配对。</p>
+<p>再多开一维 <span class="math inline">\(0/1\)</span> 状态，记录最后一个需要与其他后面的元素配对值是否是 <span class="math inline">\(a_{i-1}\)</span> 即可。</p>
+<p>假设现在已经枚举到 <span class="math inline">\(f_{i,j,0/1}\)</span>，即已枚举完 <span class="math inline">\(d_i\)</span>，有 <span class="math inline">\(j\)</span> 个元素需要配对。</p>
 <p>则更新 <span class="math inline">\(d_{i+1}\)</span> 的状态：</p>
 <ul>
-<li><p>若我们想要让 <span class="math inline">\(d_{i+1}\)</span>
-与后面的元素配对，则代价至少为 <span
-class="math inline">\(y\)</span>。至于是否会因为待配对元素相邻而额外增加
-<span class="math inline">\(y\)</span>
-的代价，我们在待配对元素处计算。</p>
-<p><span class="math display">\[
-f_{i+1,j+1,1}\gets\min(f_{i,j,0},f_{i,j,1}) + y
-\]</span></p></li>
-<li><p>若我们想要让 <span class="math inline">\(d_{i+1}\)</span>
-与其相邻的 <span class="math inline">\(a_{i+2}\)</span> 匹配，那么 <span
-class="math inline">\(d_{i+2}\)</span>
-就不需要再与后面的元素配对了，故最后一维为 <span
-class="math inline">\(0\)</span>。</p>
-<p><span class="math display">\[
-f_{i+2,j,0}\gets\min(f_{i,j,0},f_{i,j,1})+(d_{i+2}-d_{i+1})\times x
-\]</span></p></li>
-<li><p>如果我们想让 <span class="math inline">\(d_{i+1}\)</span>
-与前面的待配对元素配对：</p>
-<p>在此种大前提下，<span class="math inline">\(d_{i+1}\)</span>
-一定不需要与后面的元素配对，故最后一维为 <span
-class="math inline">\(0\)</span>。</p>
+<li><p>若我们想要让 <span class="math inline">\(d_{i+1}\)</span> 与后面的元素配对，则代价至少为 <span class="math inline">\(y\)</span>。至于是否会因为待配对元素相邻而额外增加 <span class="math inline">\(y\)</span> 的代价，我们在待配对元素处计算。</p>
+<span class="math display">\[
+ f_{i+1,j+1,1}\gets\min(f_{i,j,0},f_{i,j,1}) + y
+ \]</span></li>
+<li><p>若我们想要让 <span class="math inline">\(d_{i+1}\)</span> 与其相邻的 <span class="math inline">\(a_{i+2}\)</span> 匹配，那么 <span class="math inline">\(d_{i+2}\)</span> 就不需要再与后面的元素配对了，故最后一维为 <span class="math inline">\(0\)</span>。</p>
+<span class="math display">\[
+ f_{i+2,j,0}\gets\min(f_{i,j,0},f_{i,j,1})+(d_{i+2}-d_{i+1})\times x
+ \]</span></li>
+<li><p>如果我们想让 <span class="math inline">\(d_{i+1}\)</span> 与前面的待配对元素配对：</p>
+<p>在此种大前提下，<span class="math inline">\(d_{i+1}\)</span> 一定不需要与后面的元素配对，故最后一维为 <span class="math inline">\(0\)</span>。</p>
 <ul>
-<li><p>当 <span class="math inline">\(j=1\)</span> 且 <span
-class="math inline">\(d_i+1=d_{i+1}\)</span>
-时，即存在其相邻元素，且只有一个配对可选项时：</p>
+<li><p>当 <span class="math inline">\(j=1\)</span> 且 <span class="math inline">\(d_i+1=d_{i+1}\)</span> 时，即存在其相邻元素，且只有一个配对可选项时：</p>
 <ul>
-<li>如果这个数是 <span class="math inline">\(d_{i}\)</span>，则 <span
-class="math inline">\(d_{i+1}\)</span> 必须与相邻元素配对。</li>
+<li>如果这个数是 <span class="math inline">\(d_{i}\)</span>，则 <span class="math inline">\(d_{i+1}\)</span> 必须与相邻元素配对。</li>
 </ul>
 <p><span class="math display">\[
-f_{i+1,j-1,0}\gets f_{i,j,1}+y
-\]</span></p>
-<p>因为在计算 <span class="math inline">\(f_{i,j,1}\)</span>
-时已计算了一个 <span
-class="math inline">\(y\)</span>，所以此处只用加一个 <span
-class="math inline">\(y\)</span>。</p>
+ f_{i+1,j-1,0}\gets f_{i,j,1}+y
+ \]</span></p>
+因为在计算 <span class="math inline">\(f_{i,j,1}\)</span> 时已计算了一个 <span class="math inline">\(y\)</span>，所以此处只用加一个 <span class="math inline">\(y\)</span>。
 <ul>
 <li><p>否则，该元素完成配对，不产生任何代价。</p>
-<p><span class="math display">\[
-f_{i+1,j-1,0}\gets f_{i,j,0}
-\]</span></p></li>
+<span class="math display">\[
+ f_{i+1,j-1,0}\gets f_{i,j,0}
+ \]</span></li>
 </ul></li>
 <li><p>否则，随意选择前面的一个数。</p>
-<p>因为此时，要么前面有除了相邻元素的其他数可选，要么根本没有相邻元素，所以该数完成配对不会产生任何代价（因为
-<span class="math inline">\(y\)</span> 已经加过了）。</p>
+<p>因为此时，要么前面有除了相邻元素的其他数可选，要么根本没有相邻元素，所以该数完成配对不会产生任何代价（因为 <span class="math inline">\(y\)</span> 已经加过了）。</p>
 <p><span class="math display">\[
-f_{i+1,j-1,0}\gets \min(f_{i,j,0},f_{i,j,1})
-\]</span></p></li>
+ f_{i+1,j-1,0}\gets \min(f_{i,j,0},f_{i,j,1})
+ \]</span></p></li>
 </ul></li>
 </ul>
-<p>至此，全部情况讨论完毕。因为不能让最后一个元素再去与后面的元素配对，最终答案为
-<span class="math inline">\(f_{tot,0,0}\)</span>，其中 <span
-class="math inline">\(tot\)</span> 为 <span
-class="math inline">\(d\)</span> 数组长度。</p>
-<p>时间复杂度 <span class="math inline">\(O(n^2)\)</span>，空间复杂度
-<span class="math inline">\(O(n^2)\)</span>。</p>
-<p>因为 <span class="math inline">\(x,y\le
-10^9\)</span>，最坏情况下需要加 <span class="math inline">\(\dfrac
-n2\)</span> 次，故需要为 DP 数组开 <code>long long</code>。尽管热心人士
-@<a href="/user/428358">cqbztzl</a> 帮助我计算得出使用空间约为 300
-兆，但仍然会 MLE。</p>
-<p>不难发现，第一维枚举到 <span class="math inline">\(i\)</span>
-时，只需要更新第一维为 <span class="math inline">\(i+1\)</span> 和 <span
-class="math inline">\(i+2\)</span> 状态的值，而不需要其他任何 DP
-值，故将第一维模 <span class="math inline">\(3\)</span>，滚动为 <span
-class="math inline">\(0\sim 2\)</span>。</p>
+<p>至此，全部情况讨论完毕。因为不能让最后一个元素再去与后面的元素配对，最终答案为 <span class="math inline">\(f_{tot,0,0}\)</span>，其中 <span class="math inline">\(tot\)</span> 为 <span class="math inline">\(d\)</span> 数组长度。</p>
+<p>时间复杂度 <span class="math inline">\(O(n^2)\)</span>，空间复杂度 <span class="math inline">\(O(n^2)\)</span>。</p>
+<p>因为 <span class="math inline">\(x,y\le 10^9\)</span>，最坏情况下需要加 <span class="math inline">\(\dfrac n2\)</span> 次，故需要为 DP 数组开 <code>long long</code>。尽管热心人士 @<a href="/user/428358">cqbztzl</a> 帮助我计算得出使用空间约为 300 兆，但仍然会 MLE。</p>
+<p>不难发现，第一维枚举到 <span class="math inline">\(i\)</span> 时，只需要更新第一维为 <span class="math inline">\(i+1\)</span> 和 <span class="math inline">\(i+2\)</span> 状态的值，而不需要其他任何 DP 值，故将第一维模 <span class="math inline">\(3\)</span>，滚动为 <span class="math inline">\(0\sim 2\)</span>。</p>
 <hr />
 <pre class="cpp"><code>// 代码里可能有一些赛时的神秘注释 hhh
 namespace XSC062 &#123;
@@ -464,7 +353,7 @@ int main() &#123;
 			<div class="post footer">
 				<div id="hitokoto">
 					<h3 id="hitokoto-title">
-						一言 - Hitokoto
+						言论
 					</h3>
 					<div id="hitokoto-content">
 					</div>

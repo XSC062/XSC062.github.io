@@ -169,15 +169,11 @@
 				<p>想不到好标题了。</p>
 <span id="more"></span>
 <p>有句话怎么说来着，罗马不是一天建成的，是一天天建成的。</p>
-<p>还有什么，Do in Rome as the Romans’ do，还有一句，All roads leads to
-Rome。</p>
+<p>还有什么，Do in Rome as the Romans’ do，还有一句，All roads leads to Rome。</p>
 <hr />
 <h3 id="a.-连续的零-zero">A. 连续的零 zero</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4647/problem/1"
-class="uri">http://222.180.160.110:61235/contest/4647/problem/1</a></p>
-<p>做个前缀和，看看任意一个长度为 <span class="math inline">\(k\)</span>
-的区间中有几个 <span class="math inline">\(1\)</span>。复杂度 <span
-class="math inline">\(O(n)\)</span>。</p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4647/problem/1" class="uri">http://222.180.160.110:61235/contest/4647/problem/1</a></p>
+<p>做个前缀和，看看任意一个长度为 <span class="math inline">\(k\)</span> 的区间中有几个 <span class="math inline">\(1\)</span>。复杂度 <span class="math inline">\(O(n)\)</span>。</p>
 <details>
 <pre class="cpp"><code>namespace XSC062 &#123;
 using namespace fastIO;
@@ -203,58 +199,23 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="b.-反回文串-anti">B. 反回文串 anti</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4647/problem/2"
-class="uri">http://222.180.160.110:61235/contest/4647/problem/2</a></p>
-<p>当 <span class="math inline">\(n\)</span>
-为奇时，中间的元素一定和自己相等，故无解。</p>
-<p>当数量最多的一个字符个数超过 <span class="math inline">\(\dfrac
-n2\)</span> 时，由鸽巢得无解。</p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4647/problem/2" class="uri">http://222.180.160.110:61235/contest/4647/problem/2</a></p>
+<p>当 <span class="math inline">\(n\)</span> 为奇时，中间的元素一定和自己相等，故无解。</p>
+<p>当数量最多的一个字符个数超过 <span class="math inline">\(\dfrac n2\)</span> 时，由鸽巢得无解。</p>
 <p>剩下的情况一定有解。</p>
 <details>
-<summary>
-证明
-</summary>
-<p>可以找到一种合法的构造方式。我们列出一个列数为 <span
-class="math inline">\(2\)</span>，行数为 <span
-class="math inline">\(\dfrac n2\)</span>
-的表格，将所有相同字母排列在一起，按照从左到右，从上到下的方式将字母填入表格，最后将第
-<span class="math inline">\(i\)</span> 行第一列的字母填入 <span
-class="math inline">\(a_i\)</span>，第 <span
-class="math inline">\(i\)</span> 行第二列的字母填入 <span
-class="math inline">\(a_{n-i+1}\)</span>，即可完成构造。</p>
-<p>一种字母只在第一列或第二列出现当然合法，如果从第一列持续到第二列，因为任意字母出现次数不超过
-<span class="math inline">\(\dfrac n2\)</span>
-次，所以同一行的两列不会出现同一种字母。</p>
+<p><summary>证明</summary></p>
+<p>可以找到一种合法的构造方式。我们列出一个列数为 <span class="math inline">\(2\)</span>，行数为 <span class="math inline">\(\dfrac n2\)</span> 的表格，将所有相同字母排列在一起，按照从左到右，从上到下的方式将字母填入表格，最后将第 <span class="math inline">\(i\)</span> 行第一列的字母填入 <span class="math inline">\(a_i\)</span>，第 <span class="math inline">\(i\)</span> 行第二列的字母填入 <span class="math inline">\(a_{n-i+1}\)</span>，即可完成构造。</p>
+<p>一种字母只在第一列或第二列出现当然合法，如果从第一列持续到第二列，因为任意字母出现次数不超过 <span class="math inline">\(\dfrac n2\)</span> 次，所以同一行的两列不会出现同一种字母。</p>
 <p>这叫什么，有字证明。</p>
 <p><del>感觉可以拿去出一道类似于「找到字符串字典序最小的反回文串」之类的小水题</del></p>
 </details>
 <p>然后现在我们知道有解了，怎么找到最优解呢。</p>
-<p>比如有一组 <span class="math inline">\((a_i,a_{n-i+1})=(\texttt a,
-\texttt a)\)</span>，还有一组 <span class="math inline">\((a_j,
-a_{n-j+1})=(\texttt b, \texttt b)\)</span>，那我们直接把 <span
-class="math inline">\(a_i\)</span> 和 <span
-class="math inline">\(a_j\)</span> 交换，皆大欢喜。</p>
-<p>这就说明我们需要把值不相等的非法 <span
-class="math inline">\(a_i\)</span> 与 <span
-class="math inline">\(a_j\)</span> 配对。</p>
-<p>然后我们就可以沿用证明中的构造方式，分组配对，一定最优，每组代价为
-<span class="math inline">\(1\)</span>。</p>
-<p>同一行两个值 <span class="math inline">\(v\)</span>
-相等，因为已经最优了，所以不能再在非法串中寻找答案。应该找合法对中某个值交换，每组代价为
-<span
-class="math inline">\(2\)</span>。具体和谁交换我们不用担心，只要找到一组
-<span class="math inline">\((a_i,a_{n-i+1})\)</span> 满足 <span
-class="math inline">\(a_i\ne v\)</span> 且 <span
-class="math inline">\(a_{n-i+1}\ne v\)</span> 就可以了，然后我们又知道
-<span class="math inline">\(v\)</span> 的个数 <span
-class="math inline">\(\ne \dfrac n2\)</span>，假设 <span
-class="math inline">\(\dfrac n2\)</span> 对中每队都有至少一个 <span
-class="math inline">\(v\)</span>，由于当前这一对有两个相同的 <span
-class="math inline">\(v\)</span>，那么 <span
-class="math inline">\(v\)</span> 的个数就会大于 <span
-class="math inline">\(\dfrac n2\)</span>，矛盾了，所以一定能找到。</p>
-<p>对于非法总对数是奇数的情况，我们要钦定一个非法对强制让其和合法对交换，贪心一下取非法对数量最多的
-<span class="math inline">\(v\)</span> 的某一对最优。</p>
+<p>比如有一组 <span class="math inline">\((a_i,a_{n-i+1})=(\texttt a, \texttt a)\)</span>，还有一组 <span class="math inline">\((a_j, a_{n-j+1})=(\texttt b, \texttt b)\)</span>，那我们直接把 <span class="math inline">\(a_i\)</span> 和 <span class="math inline">\(a_j\)</span> 交换，皆大欢喜。</p>
+<p>这就说明我们需要把值不相等的非法 <span class="math inline">\(a_i\)</span> 与 <span class="math inline">\(a_j\)</span> 配对。</p>
+<p>然后我们就可以沿用证明中的构造方式，分组配对，一定最优，每组代价为 <span class="math inline">\(1\)</span>。</p>
+<p>同一行两个值 <span class="math inline">\(v\)</span> 相等，因为已经最优了，所以不能再在非法串中寻找答案。应该找合法对中某个值交换，每组代价为 <span class="math inline">\(2\)</span>。具体和谁交换我们不用担心，只要找到一组 <span class="math inline">\((a_i,a_{n-i+1})\)</span> 满足 <span class="math inline">\(a_i\ne v\)</span> 且 <span class="math inline">\(a_{n-i+1}\ne v\)</span> 就可以了，然后我们又知道 <span class="math inline">\(v\)</span> 的个数 <span class="math inline">\(\ne \dfrac n2\)</span>，假设 <span class="math inline">\(\dfrac n2\)</span> 对中每队都有至少一个 <span class="math inline">\(v\)</span>，由于当前这一对有两个相同的 <span class="math inline">\(v\)</span>，那么 <span class="math inline">\(v\)</span> 的个数就会大于 <span class="math inline">\(\dfrac n2\)</span>，矛盾了，所以一定能找到。</p>
+<p>对于非法总对数是奇数的情况，我们要钦定一个非法对强制让其和合法对交换，贪心一下取非法对数量最多的 <span class="math inline">\(v\)</span> 的某一对最优。</p>
 <details>
 <pre class="cpp"><code>namespace XSC062 &#123;
 using namespace fastIO;
@@ -313,34 +274,16 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="c.-除与减-divsub">C. 除与减 divsub</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4647/problem/3"
-class="uri">http://222.180.160.110:61235/contest/4647/problem/3</a></p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4647/problem/3" class="uri">http://222.180.160.110:61235/contest/4647/problem/3</a></p>
 <p>小数学，还好。</p>
-<p>假设 <span class="math inline">\(n=d\times k^p\)</span>，其中 <span
-class="math inline">\(k\nmid d\)</span>，那么我们分两种情况讨论。</p>
+<p>假设 <span class="math inline">\(n=d\times k^p\)</span>，其中 <span class="math inline">\(k\nmid d\)</span>，那么我们分两种情况讨论。</p>
 <ol type="1">
-<li><p><span class="math inline">\(p=0\)</span>，即 <span
-class="math inline">\(k\nmid n\)</span>，那么 <span
-class="math inline">\(n\bmod k=1\)</span>，即 <span
-class="math inline">\(k\mid (n-1)\)</span>。</p>
-<p>这个时候问 <span class="math inline">\(k\)</span>
-的个数就相当于是在问 <span class="math inline">\(n-1\)</span> 除 <span
-class="math inline">\(1\)</span> 以外的因子个数。假设 <span
-class="math inline">\(n-1={x_1}^{p_1}{x_2}^{p_2}\cdots
-{x_m}^{p_m}\)</span>，那么答案为 <span class="math inline">\((\prod
-p_i+1)-1\)</span>，减去的是 <span
-class="math inline">\(1\)</span>。</p></li>
-<li><p><span class="math inline">\(p\ne 0\)</span>，<span
-class="math inline">\(k\mid n\)</span>。</p>
-<p>这个时候好像并没有什么好的转化。好消息是 <span
-class="math inline">\(n\)</span> 的范围是 <span
-class="math inline">\(10^{12}\)</span>，根号枚举因数复杂度跑得过。所以我们就可以暴力判定
-<span class="math inline">\(n\)</span> 的所有因数是否满足条件。</p></li>
+<li><p><span class="math inline">\(p=0\)</span>，即 <span class="math inline">\(k\nmid n\)</span>，那么 <span class="math inline">\(n\bmod k=1\)</span>，即 <span class="math inline">\(k\mid (n-1)\)</span>。</p>
+这个时候问 <span class="math inline">\(k\)</span> 的个数就相当于是在问 <span class="math inline">\(n-1\)</span> 除 <span class="math inline">\(1\)</span> 以外的因子个数。假设 <span class="math inline">\(n-1={x_1}^{p_1}{x_2}^{p_2}\cdots {x_m}^{p_m}\)</span>，那么答案为 <span class="math inline">\((\prod p_i+1)-1\)</span>，减去的是 <span class="math inline">\(1\)</span>。</li>
+<li><p><span class="math inline">\(p\ne 0\)</span>，<span class="math inline">\(k\mid n\)</span>。</p>
+<p>这个时候好像并没有什么好的转化。好消息是 <span class="math inline">\(n\)</span> 的范围是 <span class="math inline">\(10^{12}\)</span>，根号枚举因数复杂度跑得过。所以我们就可以暴力判定 <span class="math inline">\(n\)</span> 的所有因数是否满足条件。</p></li>
 </ol>
-<p>时间复杂度，<span class="math inline">\(O(\sqrt n\times \log
-n)\)</span>，枚举因数是根号，算次数（也就是算 <span
-class="math inline">\(d\)</span>）是 <span
-class="math inline">\(\log\)</span>。</p>
+<p>时间复杂度，<span class="math inline">\(O(\sqrt n\times \log n)\)</span>，枚举因数是根号，算次数（也就是算 <span class="math inline">\(d\)</span>）是 <span class="math inline">\(\log\)</span>。</p>
 <details>
 <pre class="cpp"><code>#define int long long
 namespace XSC062 &#123;
@@ -379,16 +322,12 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="d.-图书管理员-librarian">D. 图书管理员 librarian</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4647/problem/4"
-class="uri">http://222.180.160.110:61235/contest/4647/problem/4</a></p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4647/problem/4" class="uri">http://222.180.160.110:61235/contest/4647/problem/4</a></p>
 <p>[SDOI2008] 郁闷的小 J。</p>
 <p>关于这个，我们发现自己不会考场现冲主席树。哎，打 CDQ 又怕写挂。</p>
 <p>我们发现这道题的修改都是单点的，询问也只关于某一种颜色，不同的颜色之间没有影响。</p>
-<p>于是我们可以把操作离线下来，初始视作将某颜色在某位置增加，修改视作将某颜色在某位置删除，将另一颜色在该位置增加，将所有操作按颜色离散化分类然后
-<code>vector</code> 下来，对于所有颜色从前到后树状数组做一遍操作就能
-<span class="math inline">\(O(n\log n+q\log n)\)</span> 解决。</p>
-<p>树状数组清空是肯定不能 <code>memset</code>
-的，复杂度不对。那么怎么办呢？把所有操作撤回去就可以了。</p>
+<p>于是我们可以把操作离线下来，初始视作将某颜色在某位置增加，修改视作将某颜色在某位置删除，将另一颜色在该位置增加，将所有操作按颜色离散化分类然后 <code>vector</code> 下来，对于所有颜色从前到后树状数组做一遍操作就能 <span class="math inline">\(O(n\log n+q\log n)\)</span> 解决。</p>
+<p>树状数组清空是肯定不能 <code>memset</code> 的，复杂度不对。那么怎么办呢？把所有操作撤回去就可以了。</p>
 <p>顺带一提我是洛谷上最优解。</p>
 <details>
 <pre class="cpp"><code>namespace XSC062 &#123;
@@ -467,56 +406,24 @@ int main() &#123;
 <p>E 会单独开一篇。</p>
 <hr />
 <h3 id="f.-树-tree">F. 树 tree</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4647/problem/6"
-class="uri">http://222.180.160.110:61235/contest/4647/problem/6</a></p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4647/problem/6" class="uri">http://222.180.160.110:61235/contest/4647/problem/6</a></p>
 <p>CF916E。</p>
 <p>大分讨给我整不会了，更给我整不会的是下来过后发现这只是个小分讨。</p>
-<p>更新子树和子树查询我们都会。换根 DP
-我们也都写过，都知道换根并不会对子树结构产生大的影响。所以应当是能根据已知信息推测出子树在原树上对应的点集的。</p>
-<p>记 <span class="math inline">\(r\)</span> 为当前树根，<span
-class="math inline">\(\text {LCA}(x,y)\)</span> 为 <span
-class="math inline">\(x,y\)</span> 在 <span
-class="math inline">\(1\)</span> 为根时的 LCA，<span
-class="math inline">\(\text {LCA}&#39;(x,y)\)</span> 表示 <span
-class="math inline">\(x,y\)</span> 在 <span
-class="math inline">\(r\)</span> 为根时的 LCA。</p>
-<p>那么对于 <span class="math inline">\(\text
-{LCA}&#39;(x,y)\)</span>，肯定是要讨论 <span
-class="math inline">\(x,y\)</span> 和 <span
-class="math inline">\(r\)</span> 的位置关系的。</p>
+<p>更新子树和子树查询我们都会。换根 DP 我们也都写过，都知道换根并不会对子树结构产生大的影响。所以应当是能根据已知信息推测出子树在原树上对应的点集的。</p>
+<p>记 <span class="math inline">\(r\)</span> 为当前树根，<span class="math inline">\(\text {LCA}(x,y)\)</span> 为 <span class="math inline">\(x,y\)</span> 在 <span class="math inline">\(1\)</span> 为根时的 LCA，<span class="math inline">\(\text {LCA}&#39;(x,y)\)</span> 表示 <span class="math inline">\(x,y\)</span> 在 <span class="math inline">\(r\)</span> 为根时的 LCA。</p>
+<p>那么对于 <span class="math inline">\(\text {LCA}&#39;(x,y)\)</span>，肯定是要讨论 <span class="math inline">\(x,y\)</span> 和 <span class="math inline">\(r\)</span> 的位置关系的。</p>
 <ol type="1">
-<li><span class="math inline">\(\text {LCA}(x,y)\)</span> 是 <span
-class="math inline">\(r\)</span> 的子孙。此时 <span
-class="math inline">\(\text {LCA}&#39;(x,y) = \text
-{LCA}(x,y)\)</span>。</li>
-<li><span class="math inline">\(\text {LCA}(x,y)\)</span> 是 <span
-class="math inline">\(r\)</span> 的祖先。那么说明至少有一个点不是 <span
-class="math inline">\(r\)</span> 的子孙。此时 <span
-class="math inline">\(\text {LCA}(x,y)&#39;\)</span> 的值为 <span
-class="math inline">\(r\)</span> 为另一个点的 LCA。</li>
+<li><span class="math inline">\(\text {LCA}(x,y)\)</span> 是 <span class="math inline">\(r\)</span> 的子孙。此时 <span class="math inline">\(\text {LCA}&#39;(x,y) = \text {LCA}(x,y)\)</span>。</li>
+<li><span class="math inline">\(\text {LCA}(x,y)\)</span> 是 <span class="math inline">\(r\)</span> 的祖先。那么说明至少有一个点不是 <span class="math inline">\(r\)</span> 的子孙。此时 <span class="math inline">\(\text {LCA}(x,y)&#39;\)</span> 的值为 <span class="math inline">\(r\)</span> 为另一个点的 LCA。</li>
 </ol>
-<p>整理可得 <span class="math inline">\(\text {LCA}&#39;(x,y)\)</span>
-是 <span class="math inline">\(\text {LCA}(x,y)\)</span>、<span
-class="math inline">\(\text {LCA}(x,r)\)</span> 和 <span
-class="math inline">\(\text {LCA}(y,r)\)</span> 中的深度最大者。</p>
-<p>对于以 <span class="math inline">\(r\)</span> 为根时的子树 <span
-class="math inline">\(x\)</span>：</p>
+<p>整理可得 <span class="math inline">\(\text {LCA}&#39;(x,y)\)</span> 是 <span class="math inline">\(\text {LCA}(x,y)\)</span>、<span class="math inline">\(\text {LCA}(x,r)\)</span> 和 <span class="math inline">\(\text {LCA}(y,r)\)</span> 中的深度最大者。</p>
+<p>对于以 <span class="math inline">\(r\)</span> 为根时的子树 <span class="math inline">\(x\)</span>：</p>
 <ol type="1">
 <li><span class="math inline">\(x=r\)</span>，此时子树为整棵树。</li>
-<li><span class="math inline">\(\text {LCA}(x,r)\ne x\)</span>，即 <span
-class="math inline">\(r\)</span> 不为 <span
-class="math inline">\(x\)</span> 的子孙，此时子树就是以 <span
-class="math inline">\(1\)</span> 为根是的子树 <span
-class="math inline">\(x\)</span>。</li>
-<li><span class="math inline">\(\text {LCA}(x,y)=x\)</span>，即 <span
-class="math inline">\(r\)</span> 为 <span
-class="math inline">\(x\)</span> 的子孙，此时子树是整棵树除开 <span
-class="math inline">\(x\)</span> 包含 <span
-class="math inline">\(r\)</span>
-的儿子及其子孙。修改和查询的时候容斥一下就好。这个时候的子树倍增跳一下就能找到。</li>
+<li><span class="math inline">\(\text {LCA}(x,r)\ne x\)</span>，即 <span class="math inline">\(r\)</span> 不为 <span class="math inline">\(x\)</span> 的子孙，此时子树就是以 <span class="math inline">\(1\)</span> 为根是的子树 <span class="math inline">\(x\)</span>。</li>
+<li><span class="math inline">\(\text {LCA}(x,y)=x\)</span>，即 <span class="math inline">\(r\)</span> 为 <span class="math inline">\(x\)</span> 的子孙，此时子树是整棵树除开 <span class="math inline">\(x\)</span> 包含 <span class="math inline">\(r\)</span> 的儿子及其子孙。修改和查询的时候容斥一下就好。这个时候的子树倍增跳一下就能找到。</li>
 </ol>
-<p>然后就是常规线段树维护了。时间复杂度 <span
-class="math inline">\(O(n\log n)\)</span>。</p>
+<p>然后就是常规线段树维护了。时间复杂度 <span class="math inline">\(O(n\log n)\)</span>。</p>
 <details>
 <pre class="cpp"><code>namespace XSC062 &#123;
 using namespace fastIO;
@@ -695,7 +602,7 @@ int main() &#123;
 			<div class="post footer">
 				<div id="hitokoto">
 					<h3 id="hitokoto-title">
-						一言 - Hitokoto
+						言论
 					</h3>
 					<div id="hitokoto-content">
 					</div>

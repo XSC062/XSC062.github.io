@@ -72,14 +72,6 @@ function setDetailsSummary() {
 		}
 	}
 }
-// Details 优化 2：下滑式动画
-// 实时监视 details 的打开状态，用到了 MutationObserver
-// function detailsAnimation() {
-// 	var de = document.getElementsByTagName("details");
-// }
-// function $(Nid) {
-//     return document.getElementById(Nid);
-// }
 
 // 标题优化：hover 时显示锚
 function setTitleAnchor() {

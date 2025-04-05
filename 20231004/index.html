@@ -158,75 +158,31 @@
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
-				<p>Solution to <a
-target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4273/problem/1">情景剧</a>。</p>
+				<p>Solution to <a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4273/problem/1">情景剧</a>。</p>
 <span id="more"></span>
 <hr />
 <h3 id="a.-情景剧">A. 情景剧</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4273/problem/1"
-class="uri">http://222.180.160.110:61235/contest/4273/problem/1</a></p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4273/problem/1" class="uri">http://222.180.160.110:61235/contest/4273/problem/1</a></p>
 <blockquote>
 <p>给定序列，求任取一段区间，区间最大值、区间最小值、区间长度之积的最大值。</p>
-<p><span class="math inline">\(N\le 2\times 10^6\)</span>，值域为 <span
-class="math inline">\(10^9\)</span>。</p>
+<p><span class="math inline">\(N\le 2\times 10^6\)</span>，值域为 <span class="math inline">\(10^9\)</span>。</p>
 </blockquote>
-<p>对于 <span class="math inline">\(a_i\)</span>，假设它是 <span
-class="math inline">\([X_i, Y_i]\)</span> 内的最大值，且 <span
-class="math inline">\([X_i, Y_i]\)</span> 是该条件下的极大区间；</p>
-<p>相似地，对于 <span class="math inline">\(a_j\)</span>，假设它是 <span
-class="math inline">\([P_j, Q_j]\)</span> 内的最小值，且 <span
-class="math inline">\([P_j, Q_j]\)</span> 是该条件下的极大区间；</p>
-<p>则对于 <span class="math inline">\(a_i\)</span>
-作为区间内最大值，<span class="math inline">\(a_j\)</span>
-作为区间内最小值的情况，满足该条件的区间为 <span
-class="math inline">\([\max(X_i, P_j), \min(Y_i, Q_j)]\)</span>，答案为
-<span class="math inline">\(k=a_i \times a_j \times [\min(Y_i, Q_j) -
-\max(X_i, P_j) + 1]\)</span>。我们的目标就是最大化 <span
-class="math inline">\(k\)</span>。</p>
+<p>对于 <span class="math inline">\(a_i\)</span>，假设它是 <span class="math inline">\([X_i, Y_i]\)</span> 内的最大值，且 <span class="math inline">\([X_i, Y_i]\)</span> 是该条件下的极大区间；</p>
+<p>相似地，对于 <span class="math inline">\(a_j\)</span>，假设它是 <span class="math inline">\([P_j, Q_j]\)</span> 内的最小值，且 <span class="math inline">\([P_j, Q_j]\)</span> 是该条件下的极大区间；</p>
+<p>则对于 <span class="math inline">\(a_i\)</span> 作为区间内最大值，<span class="math inline">\(a_j\)</span> 作为区间内最小值的情况，满足该条件的区间为 <span class="math inline">\([\max(X_i, P_j), \min(Y_i, Q_j)]\)</span>，答案为 <span class="math inline">\(k=a_i \times a_j \times [\min(Y_i, Q_j) - \max(X_i, P_j) + 1]\)</span>。我们的目标就是最大化 <span class="math inline">\(k\)</span>。</p>
 <p>两个不固定的值，并且不能拆给斜优做，所以考虑将其中一个变得「固定」。</p>
-<p>观察数组，我们发现，对于数组中的最大值 <span
-class="math inline">\(a_m\)</span>，有 <span class="math inline">\(X_m =
-1,Y_m=n\)</span>。那么此时选取 <span class="math inline">\(a_m\)</span>
-作为区间最大值，选取任意数 <span class="math inline">\(a_j\)</span>
-作为最小值。这样做可以保证由 <span class="math inline">\(i\)</span>
-带来的影响都是最优的，只用枚举 <span class="math inline">\(j\)</span>
-并求解即可。此时的答案就是 <span class="math inline">\(a_m\times
-a_j\times (Q_j-P_j + 1)\)</span>。</p>
-<p>我们上述条件成立的前提是 <span class="math inline">\(i\)</span> 在
-<span class="math inline">\([P_j, Q_j]\)</span> 内且 <span
-class="math inline">\(j\)</span> 在 <span class="math inline">\([X_i,
-Y_i]\)</span> 内。当 <span class="math inline">\(i\)</span> 取 <span
-class="math inline">\(m\)</span>
-时后者显然成立，但很容易构造出来情况让前者不成立。比如说
-<code>15 1 5</code>，当 <span class="math inline">\(j=3\)</span>
-时就会得到错误的答案。</p>
-<p>受刚才的思考启发，取 <span class="math inline">\([P_j, Q_j]\)</span>
-内的最大值作为 <span class="math inline">\(i\)</span>。此时有 <span
-class="math inline">\(X_i\le P_j\le Q_j \le
-Y_j\)</span>，答案为区间内最优。</p>
-<p>接下来需要求解 <span class="math inline">\(P_j\)</span> 和 <span
-class="math inline">\(Q_j\)</span>。观察数据范围，应该是 <span
-class="math inline">\(O(n)\)</span>
-做法。不难想到单调栈，可惜我不会，所以采用同样是 <span
-class="math inline">\(O(n)\)</span> 的悬线法（<a
-href="/20220927">我的博客：有关悬线法的介绍</a>）。</p>
-<p>那么怎么求 <span class="math inline">\([P_j,Q_j]\)</span>
-内的最大值呢？当遇到这种求解区间与左右端点一致，并且待求满足可加性的情况时，我们可以在悬线的时候一起求解。当悬线跨越一个区间时，我们直接用这个已求解区间的最大值更新当前求的最大值。</p>
+<p>观察数组，我们发现，对于数组中的最大值 <span class="math inline">\(a_m\)</span>，有 <span class="math inline">\(X_m = 1,Y_m=n\)</span>。那么此时选取 <span class="math inline">\(a_m\)</span> 作为区间最大值，选取任意数 <span class="math inline">\(a_j\)</span> 作为最小值。这样做可以保证由 <span class="math inline">\(i\)</span> 带来的影响都是最优的，只用枚举 <span class="math inline">\(j\)</span> 并求解即可。此时的答案就是 <span class="math inline">\(a_m\times a_j\times (Q_j-P_j + 1)\)</span>。</p>
+<p>我们上述条件成立的前提是 <span class="math inline">\(i\)</span> 在 <span class="math inline">\([P_j, Q_j]\)</span> 内且 <span class="math inline">\(j\)</span> 在 <span class="math inline">\([X_i, Y_i]\)</span> 内。当 <span class="math inline">\(i\)</span> 取 <span class="math inline">\(m\)</span> 时后者显然成立，但很容易构造出来情况让前者不成立。比如说 <code>15 1 5</code>，当 <span class="math inline">\(j=3\)</span> 时就会得到错误的答案。</p>
+<p>受刚才的思考启发，取 <span class="math inline">\([P_j, Q_j]\)</span> 内的最大值作为 <span class="math inline">\(i\)</span>。此时有 <span class="math inline">\(X_i\le P_j\le Q_j \le Y_j\)</span>，答案为区间内最优。</p>
+<p>接下来需要求解 <span class="math inline">\(P_j\)</span> 和 <span class="math inline">\(Q_j\)</span>。观察数据范围，应该是 <span class="math inline">\(O(n)\)</span> 做法。不难想到单调栈，可惜我不会，所以采用同样是 <span class="math inline">\(O(n)\)</span> 的悬线法（<a href="/20220927">我的博客：有关悬线法的介绍</a>）。</p>
+<p>那么怎么求 <span class="math inline">\([P_j,Q_j]\)</span> 内的最大值呢？当遇到这种求解区间与左右端点一致，并且待求满足可加性的情况时，我们可以在悬线的时候一起求解。当悬线跨越一个区间时，我们直接用这个已求解区间的最大值更新当前求的最大值。</p>
 <p>左右分别求最大值（注意要用两个数组分别记录，防止错误更新），最后取两者较大作为最终区间内最大值即可。</p>
 <p>最终时间复杂度 <span class="math inline">\(O(n)\)</span>。</p>
 <details>
-<summary>
-🌼 鲜花
-</summary>
+<p><summary>🌼 鲜花</summary></p>
 <p>不知道为什么听别人说很卡，不卡啊，我一个点 250ms。</p>
-<p>啊什么你们打的 <span class="math inline">\(O(n\log
-n)\)</span>？因为单调栈信息断层不能维护区间内最大值？菜。那我必须把这篇发出来嘲讽你们了。兔子说要是不打
-<code>fread</code> Lemon 上就会起飞，我说我打了，我还疑惑 <span
-class="math inline">\(O(n)\)</span> 跑 <code>2e6</code>
-普通快读怎么会寄呢。一问，啊，带 <span
-class="math inline">\(\log\)</span>，菜。</p>
-<p>啊什么谭委员带 <span class="math inline">\(\log\)</span> 一个点只要
-500ms？那也比我慢，菜。</p>
+<p>啊什么你们打的 <span class="math inline">\(O(n\log n)\)</span>？因为单调栈信息断层不能维护区间内最大值？菜。那我必须把这篇发出来嘲讽你们了。兔子说要是不打 <code>fread</code> Lemon 上就会起飞，我说我打了，我还疑惑 <span class="math inline">\(O(n)\)</span> 跑 <code>2e6</code> 普通快读怎么会寄呢。一问，啊，带 <span class="math inline">\(\log\)</span>，菜。</p>
+<p>啊什么谭委员带 <span class="math inline">\(\log\)</span> 一个点只要 500ms？那也比我慢，菜。</p>
 </details>
 <p>说起来这是我头一次用悬线解决不在矩阵上，还要维护信息的题，之前并没有细想过单调栈和悬线可维护的信息差异，这次算是误打误撞做对了。</p>
 <p>注意到数据范围，应该要开 <code>__int128</code> 吧。</p>
@@ -267,11 +223,8 @@ int main() &#123;
 </details>
 <hr />
 <p><em>upd on 240704</em></p>
-<p>我们在 <a href="/20220927">这篇博客</a>
-中提到了悬线的本质是笛卡尔树，而本题就是其链上爬山维护数据的一个优秀体现，也是因为这一点，应该更加深切地认识到悬线包含式的访问顺序使之维护的数据类型应和倍增
-/ 树状数组等类似。</p>
-<p>所以说到可维护数据的复杂程度，笛卡尔树严格大于悬线严格大于单调栈好吧
-<img src="/em/dy.gif" /></p>
+<p>我们在 <a href="/20220927">这篇博客</a> 中提到了悬线的本质是笛卡尔树，而本题就是其链上爬山维护数据的一个优秀体现，也是因为这一点，应该更加深切地认识到悬线包含式的访问顺序使之维护的数据类型应和倍增 / 树状数组等类似。</p>
+<p>所以说到可维护数据的复杂程度，笛卡尔树严格大于悬线严格大于单调栈好吧 <img src="/em/dy.gif" /></p>
 <p>虽然现在全世界都知道我是悬线魔怔人了 <img src="/em/dy.gif" /></p>
 
 			</div>
@@ -279,7 +232,7 @@ int main() &#123;
 			<div class="post footer">
 				<div id="hitokoto">
 					<h3 id="hitokoto-title">
-						一言 - Hitokoto
+						言论
 					</h3>
 					<div id="hitokoto-content">
 					</div>

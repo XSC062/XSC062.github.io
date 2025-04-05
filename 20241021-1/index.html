@@ -160,61 +160,21 @@
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
-				<p><em>半端な生命の関数を / 少々ここらでオーバーライド /
-…したい所だけど現実は / そうそう上手くはいかないようで</em></p>
+				<p><em>半端な生命の関数を / 少々ここらでオーバーライド / …したい所だけど現実は / そうそう上手くはいかないようで</em></p>
 <span id="more"></span>
 <hr />
-<p>把重链剖分选的 siz
-最大的儿子换成高度最大的儿子就是长剖了。同样具有一些美妙的性质。</p>
+<p>把重链剖分选的 siz 最大的儿子换成高度最大的儿子就是长剖了。同样具有一些美妙的性质。</p>
 <ul>
-<li><p>任意点到根节点经过的链数最劣为 <span class="math inline">\(\sqrt
-n\)</span>。</p>
-<p>就、挺显然的，考虑构造一条经过了 <span class="math inline">\(\sqrt
-n+1\)</span> 条链的路径，会发现无论如何都构造不出来。</p>
-<p>这点也决定了长剖和重剖走的不是一条赛道，更多的应该是处理一些和深度有关的神秘场景下的问题？有的博客说可以解决一些子树问题（类似于
-dsu on tree 那样的）？（存疑）</p></li>
-<li><p>任意点 <span class="math inline">\(x\)</span> 的 <span
-class="math inline">\(k\)</span> 级祖先 <span
-class="math inline">\(fa\)</span> 所在链长 <span
-class="math inline">\(\ge k\)</span>。</p>
-<p>考虑反证。若 <span class="math inline">\(fa\)</span> 所在链长度 <span
-class="math inline">\(&lt;k\)</span>，则 <span
-class="math inline">\(fa\to x\)</span>
-更优，矛盾。故原命题成立。</p></li>
+<li><p>任意点到根节点经过的链数最劣为 <span class="math inline">\(\sqrt n\)</span>。</p>
+<p>就、挺显然的，考虑构造一条经过了 <span class="math inline">\(\sqrt n+1\)</span> 条链的路径，会发现无论如何都构造不出来。</p>
+这点也决定了长剖和重剖走的不是一条赛道，更多的应该是处理一些和深度有关的神秘场景下的问题？有的博客说可以解决一些子树问题（类似于 dsu on tree 那样的）？（存疑）</li>
+<li><p>任意点 <span class="math inline">\(x\)</span> 的 <span class="math inline">\(k\)</span> 级祖先 <span class="math inline">\(fa\)</span> 所在链长 <span class="math inline">\(\ge k\)</span>。</p>
+<p>考虑反证。若 <span class="math inline">\(fa\)</span> 所在链长度 <span class="math inline">\(&lt;k\)</span>，则 <span class="math inline">\(fa\to x\)</span> 更优，矛盾。故原命题成立。</p></li>
 </ul>
 <hr />
-<p>长剖的一个典型应用是 <span class="math inline">\(O(n\log
-n)-O(1)\)</span> 求 <span class="math inline">\(k\)</span>
-级祖先。先考虑相对暴力的做法，可以 <span class="math inline">\(O(n\sqrt
-n)\)</span> 预处理每个点的 <span class="math inline">\(1\sim \sqrt
-n\)</span> 级祖先然后块间块内随便跳一跳就是 <span
-class="math inline">\(O(\sqrt n)\)</span> 的单次查询了。</p>
-<p>把这个暴力结合「任意点 <span class="math inline">\(k\)</span>
-级祖先所在链长 <span class="math inline">\(\ge
-k\)</span>」的性质，有一个很神奇（疯癫）的做法：令 <span
-class="math inline">\(r=\dfrac k2\)</span>，那么有 <span
-class="math inline">\(x\)</span> 的 <span
-class="math inline">\(r\)</span> 级祖先所在链长 <span
-class="math inline">\(\ge r\)</span>，假设我们现在已经知道 <span
-class="math inline">\(r\)</span> 级祖先 <span
-class="math inline">\(fa_r\)</span>，预处理出链内点序列、链顶向上的链长个祖先（这个摊出来是
-<span class="math inline">\(O(n)\)</span> 的），就可以直接 <span
-class="math inline">\(\mathcal O(1)\)</span> 访问到 <span
-class="math inline">\(fa_k\)</span>。</p>
-<p>那么问题来了，怎么找到 <span class="math inline">\(fa_r\)</span>
-呢？这看似是个递归的问题，实际上我们发现 <span
-class="math inline">\(r\)</span> 的取值只需要 <span
-class="math inline">\(\ge \dfrac k2\)</span>
-即可，所以又有一个很神奇（疯癫）的做法，我们对于 <span
-class="math inline">\(1\sim n\)</span> 的每一个 <span
-class="math inline">\(k\)</span>，找到其最高二进制位 <span
-class="math inline">\(r\)</span>（显然对于所有 <span
-class="math inline">\(k\)</span>，不同 <span
-class="math inline">\(r\)</span> 的个数为 <span
-class="math inline">\(\log n\)</span>），对于每个点，预处理出其 <span
-class="math inline">\(\log n\)</span> 个不同的 <span
-class="math inline">\(r\)</span>
-级祖先。显然这个就是我们很熟悉的倍增了。</p>
+<p>长剖的一个典型应用是 <span class="math inline">\(O(n\log n)-O(1)\)</span> 求 <span class="math inline">\(k\)</span> 级祖先。先考虑相对暴力的做法，可以 <span class="math inline">\(O(n\sqrt n)\)</span> 预处理每个点的 <span class="math inline">\(1\sim \sqrt n\)</span> 级祖先然后块间块内随便跳一跳就是 <span class="math inline">\(O(\sqrt n)\)</span> 的单次查询了。</p>
+<p>把这个暴力结合「任意点 <span class="math inline">\(k\)</span> 级祖先所在链长 <span class="math inline">\(\ge k\)</span>」的性质，有一个很神奇（疯癫）的做法：令 <span class="math inline">\(r=\dfrac k2\)</span>，那么有 <span class="math inline">\(x\)</span> 的 <span class="math inline">\(r\)</span> 级祖先所在链长 <span class="math inline">\(\ge r\)</span>，假设我们现在已经知道 <span class="math inline">\(r\)</span> 级祖先 <span class="math inline">\(fa_r\)</span>，预处理出链内点序列、链顶向上的链长个祖先（这个摊出来是 <span class="math inline">\(O(n)\)</span> 的），就可以直接 <span class="math inline">\(\mathcal O(1)\)</span> 访问到 <span class="math inline">\(fa_k\)</span>。</p>
+<p>那么问题来了，怎么找到 <span class="math inline">\(fa_r\)</span> 呢？这看似是个递归的问题，实际上我们发现 <span class="math inline">\(r\)</span> 的取值只需要 <span class="math inline">\(\ge \dfrac k2\)</span> 即可，所以又有一个很神奇（疯癫）的做法，我们对于 <span class="math inline">\(1\sim n\)</span> 的每一个 <span class="math inline">\(k\)</span>，找到其最高二进制位 <span class="math inline">\(r\)</span>（显然对于所有 <span class="math inline">\(k\)</span>，不同 <span class="math inline">\(r\)</span> 的个数为 <span class="math inline">\(\log n\)</span>），对于每个点，预处理出其 <span class="math inline">\(\log n\)</span> 个不同的 <span class="math inline">\(r\)</span> 级祖先。显然这个就是我们很熟悉的倍增了。</p>
 <details>
 <pre class="cpp"><code>for (int i = 1, mx = 0; i &lt;= n; ++i) &#123;
     if (i &gt;= (1 &lt;&lt; mx) * 2)
@@ -273,7 +233,7 @@ auto ask = [&amp;](int x, int k) &#123;
 			<div class="post footer">
 				<div id="hitokoto">
 					<h3 id="hitokoto-title">
-						一言 - Hitokoto
+						言论
 					</h3>
 					<div id="hitokoto-content">
 					</div>

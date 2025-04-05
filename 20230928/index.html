@@ -158,74 +158,26 @@
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
-				<p>Solution to <a
-target="_blank" rel="noopener" href="https://vjudge.net/contest/583230#problem/B">颜色</a>。</p>
+				<p>Solution to <a target="_blank" rel="noopener" href="https://vjudge.net/contest/583230#problem/B">颜色</a>。</p>
 <span id="more"></span>
 <hr />
 <h3 id="b---颜色">B - 颜色</h3>
-<p><a target="_blank" rel="noopener" href="https://vjudge.net/contest/583230#problem/B"
-class="uri">https://vjudge.net/contest/583230#problem/B</a></p>
+<p><a target="_blank" rel="noopener" href="https://vjudge.net/contest/583230#problem/B" class="uri">https://vjudge.net/contest/583230#problem/B</a></p>
 <p>颜色删完过后剩下的肯定是一段区间。</p>
 <p>那么区间外的所有颜色都会被删掉，如果要满足题目条件的话，删掉的颜色不能出现在区间内。</p>
 <p>那么就可以有这么一个题意的转化：寻找区间的个数，满足区间内的颜色只出现在区间内。</p>
 <p>然后你可能就要问了，不是还要满足区间外的所有颜色都不出现在区间内吗。但是你想想，要是它出现在区间内了，它作为区间内的颜色，不就不满足我们上面说的那条规则了吗。</p>
-<p>这个转化是非常厉害的。那么这个时候有一个显而易见暴力做法，我们记录一个颜色在整个序列中出现的第一个位置（记为
-<span class="math inline">\(L_x\)</span>）和最后一个位置（记作 <span
-class="math inline">\(R_x\)</span>），然后枚举每一个区间 <span
-class="math inline">\([i,
-j]\)</span>，再枚举其中的每一个颜色，看看有没有超出去就好，复杂度 <span
-class="math inline">\(O(n^3)\)</span>。</p>
+<p>这个转化是非常厉害的。那么这个时候有一个显而易见暴力做法，我们记录一个颜色在整个序列中出现的第一个位置（记为 <span class="math inline">\(L_x\)</span>）和最后一个位置（记作 <span class="math inline">\(R_x\)</span>），然后枚举每一个区间 <span class="math inline">\([i, j]\)</span>，再枚举其中的每一个颜色，看看有没有超出去就好，复杂度 <span class="math inline">\(O(n^3)\)</span>。</p>
 <details>
-<summary>
-对纯暴力的一点小优化
-</summary>
-上述区间内枚举过程转化为判定区间是否满足 <span
-class="math inline">\({L_x}_{\min} \ge i\)</span> 且 <span
-class="math inline">\({R_x}_{\max} \le
-j\)</span>，采用数据结构维护，就可以优化到 <span
-class="math inline">\(O(n^2\log)\)</span>。为什么要专门提一嘴这个呢，因为这个模型我没想到。我真
-NB。
+<summary>对纯暴力的一点小优化</summary> 上述区间内枚举过程转化为判定区间是否满足 <span class="math inline">\({L_x}_{\min} \ge i\)</span> 且 <span class="math inline">\({R_x}_{\max} \le j\)</span>，采用数据结构维护，就可以优化到 <span class="math inline">\(O(n^2\log)\)</span>。为什么要专门提一嘴这个呢，因为这个模型我没想到。我真 NB。
 </details>
 <p>接下来又是一个我想不到的模型。我们发现复杂度瓶颈出在枚举区间上，所以考虑通过固定区间右端点，用较小的复杂度直接求解满足条件的左端点数量来解决问题。为什么不是固定左端点呢？</p>
 <p>「因为题解都是写的固定右端点。」 0# 如是说。</p>
-<p>对于正在枚举的右端点 <span class="math inline">\(j\)</span>
-右边的颜色 <span
-class="math inline">\(x\)</span>，我们记录它们上一次出现的位置 <span
-class="math inline">\(p_x\)</span>，并用线段树找到范围内最右值 <span
-class="math inline">\((p_x)_{\max}\)</span>，那么左端点 <span
-class="math inline">\(i&gt;(p_x)_{\max}\)</span>。取 <span
-class="math inline">\(i&#39;=(p_x)_{\max}+1\)</span>，这样我们就初步得到了一个
-<span class="math inline">\([i&#39;,
-j]\)</span>。相对于纯暴力的做法，<span class="math inline">\(R_x\le
-j\)</span> 的等价条件已经满足，但还有一个条件，就是 <span
-class="math inline">\(L_x\)</span> 不能小于 <span
-class="math inline">\(i\)</span>。</p>
-<p>为了方便数据结构维护 <span
-class="math inline">\(p_x\)</span>，我们逆序枚举 <span
-class="math inline">\(j\)</span>，这样又可以得到一个性质：<span
-class="math inline">\(i&#39;\)</span>
-单调不降。这个时候我们逆向思维，处理出对于每个 <span
-class="math inline">\(i\ge i&#39;\)</span>，其能够到的最远的 <span
-class="math inline">\(j\)</span>，记为 <span
-class="math inline">\(f_i\)</span>，那么我们对于 <span
-class="math inline">\(f_i\)</span>
-建一个权值线段树，然后在枚举过程中查询权值在 <span
-class="math inline">\([j, +\infty)\)</span> 的 <span
-class="math inline">\(i\)</span>
-的个数就是答案。由于求的是个数，所以可以对超出范围的 <span
-class="math inline">\(i\)</span> 对应的 <span
-class="math inline">\(f_i\)</span> 进行删除操作。</p>
-<p>那么 <span class="math inline">\(f_i\)</span>
-又该怎么求呢？暴力地再建一个权值线段树维护 <span
-class="math inline">\(L_x\)</span>，在 <span
-class="math inline">\((-\infty, i)\)</span> 权值范围内查询下标 <span
-class="math inline">\(k\)</span> 的最小值，此时的 <span
-class="math inline">\(k\)</span> 就是 <span
-class="math inline">\(f_i\)</span>。</p>
-<p>因为 0# 讲课的时候我在开飞机，所以我也不知道 0#
-是不是这么讲的，总之我这么做应该能做出来，就是要维护的东西实在有亿点点多。</p>
-<p>但是注意到一个线段树和两个权值线段树维护的大区间其实是一样的，所以我们只用一个线段树同时维护三个信息就好。最后时间复杂度
-<span class="math inline">\(O(n\log n)\)</span>。</p>
+<p>对于正在枚举的右端点 <span class="math inline">\(j\)</span> 右边的颜色 <span class="math inline">\(x\)</span>，我们记录它们上一次出现的位置 <span class="math inline">\(p_x\)</span>，并用线段树找到范围内最右值 <span class="math inline">\((p_x)_{\max}\)</span>，那么左端点 <span class="math inline">\(i&gt;(p_x)_{\max}\)</span>。取 <span class="math inline">\(i&#39;=(p_x)_{\max}+1\)</span>，这样我们就初步得到了一个 <span class="math inline">\([i&#39;, j]\)</span>。相对于纯暴力的做法，<span class="math inline">\(R_x\le j\)</span> 的等价条件已经满足，但还有一个条件，就是 <span class="math inline">\(L_x\)</span> 不能小于 <span class="math inline">\(i\)</span>。</p>
+<p>为了方便数据结构维护 <span class="math inline">\(p_x\)</span>，我们逆序枚举 <span class="math inline">\(j\)</span>，这样又可以得到一个性质：<span class="math inline">\(i&#39;\)</span> 单调不降。这个时候我们逆向思维，处理出对于每个 <span class="math inline">\(i\ge i&#39;\)</span>，其能够到的最远的 <span class="math inline">\(j\)</span>，记为 <span class="math inline">\(f_i\)</span>，那么我们对于 <span class="math inline">\(f_i\)</span> 建一个权值线段树，然后在枚举过程中查询权值在 <span class="math inline">\([j, +\infty)\)</span> 的 <span class="math inline">\(i\)</span> 的个数就是答案。由于求的是个数，所以可以对超出范围的 <span class="math inline">\(i\)</span> 对应的 <span class="math inline">\(f_i\)</span> 进行删除操作。</p>
+<p>那么 <span class="math inline">\(f_i\)</span> 又该怎么求呢？暴力地再建一个权值线段树维护 <span class="math inline">\(L_x\)</span>，在 <span class="math inline">\((-\infty, i)\)</span> 权值范围内查询下标 <span class="math inline">\(k\)</span> 的最小值，此时的 <span class="math inline">\(k\)</span> 就是 <span class="math inline">\(f_i\)</span>。</p>
+<p>因为 0# 讲课的时候我在开飞机，所以我也不知道 0# 是不是这么讲的，总之我这么做应该能做出来，就是要维护的东西实在有亿点点多。</p>
+<p>但是注意到一个线段树和两个权值线段树维护的大区间其实是一样的，所以我们只用一个线段树同时维护三个信息就好。最后时间复杂度 <span class="math inline">\(O(n\log n)\)</span>。</p>
 <details>
 <pre class="cpp"><code>namespace XSC062 &#123;
 using namespace fastIO;
@@ -320,7 +272,7 @@ int main() &#123;
 			<div class="post footer">
 				<div id="hitokoto">
 					<h3 id="hitokoto-title">
-						一言 - Hitokoto
+						言论
 					</h3>
 					<div id="hitokoto-content">
 					</div>

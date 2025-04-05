@@ -128,8 +128,7 @@
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#e.-another-minimum-spanning-tree"><span class="toc-text">E. Another Minimum Spanning
-Tree</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#e.-another-minimum-spanning-tree"><span class="toc-text">E. Another Minimum Spanning Tree</span></a></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -162,90 +161,42 @@ Tree</span></a></li></ol>
 				<p>如题。</p>
 <span id="more"></span>
 <hr />
-<h3 id="e.-another-minimum-spanning-tree">E. Another Minimum Spanning
-Tree</h3>
+<h3 id="e.-another-minimum-spanning-tree">E. Another Minimum Spanning Tree</h3>
 <p>http://222.180.160.110:61235/contest/4940/problem/5</p>
-<p>曼哈顿最小距离生成树。给定 <span class="math inline">\(n\)</span>
-个已知坐标的点，两两之间可连权值为曼哈顿距离的边，需求最小生成树。</p>
-<p>有一引理：以任意一点为顶点的大小为 <span class="math inline">\(\dfrac
-\pi8\)</span>
-、且一条边与坐标轴重合的角覆盖的范围中，与该点曼哈顿距离最小的点才有可能与此点连边。</p>
+<p>曼哈顿最小距离生成树。给定 <span class="math inline">\(n\)</span> 个已知坐标的点，两两之间可连权值为曼哈顿距离的边，需求最小生成树。</p>
+<p>有一引理：以任意一点为顶点的大小为 <span class="math inline">\(\dfrac \pi8\)</span> 、且一条边与坐标轴重合的角覆盖的范围中，与该点曼哈顿距离最小的点才有可能与此点连边。</p>
 <p>概括说来便是以该点为原点建系，沿坐标轴米字划分。</p>
 <details>
-<summary>
-浅证
-</summary>
-<p>首先需认识到，若 <span
-class="math inline">\(w(x,y)&lt;w(x,z)\)</span> 且 <span
-class="math inline">\(w(y,z)&lt;w(x,z)\)</span>，则边 <span
-class="math inline">\(E(x,z)\)</span> 不在最小生成树中。</p>
+<p><summary>浅证</summary></p>
+<p>首先需认识到，若 <span class="math inline">\(w(x,y)&lt;w(x,z)\)</span> 且 <span class="math inline">\(w(y,z)&lt;w(x,z)\)</span>，则边 <span class="math inline">\(E(x,z)\)</span> 不在最小生成树中。</p>
 <figure>
-<img src="1.png" alt="示意图" />
-<figcaption aria-hidden="true">示意图</figcaption>
+<img src="1.png" alt="示意图" /><figcaption>示意图</figcaption>
 </figure>
-<p>考虑有如上 <span class="math inline">\(A,B,C\)</span> 三点。不妨设
-<span class="math inline">\(d(A,B)\le d(A,C)\)</span>。其中 <span
-class="math inline">\(d\)</span> 为曼哈顿距离。</p>
-<p>由图易知 <span class="math inline">\(x_B,y_B,x_C,y_C&gt;0\)</span> 且
-<span class="math inline">\(y_B-x_B,y_C-x_C&gt;0\)</span>。讨论 <span
-class="math inline">\(B\)</span> 与 <span
-class="math inline">\(C\)</span> 位置关系。下文的 <span
-class="math inline">\(x,y\)</span> 均相对 <span
-class="math inline">\(A\)</span> 而言。</p>
+<p>考虑有如上 <span class="math inline">\(A,B,C\)</span> 三点。不妨设 <span class="math inline">\(d(A,B)\le d(A,C)\)</span>。其中 <span class="math inline">\(d\)</span> 为曼哈顿距离。</p>
+<p>由图易知 <span class="math inline">\(x_B,y_B,x_C,y_C&gt;0\)</span> 且 <span class="math inline">\(y_B-x_B,y_C-x_C&gt;0\)</span>。讨论 <span class="math inline">\(B\)</span> 与 <span class="math inline">\(C\)</span> 位置关系。下文的 <span class="math inline">\(x,y\)</span> 均相对 <span class="math inline">\(A\)</span> 而言。</p>
 <ul>
-<li><p><span class="math inline">\(x_B&gt;x_C\)</span> 且 <span
-class="math inline">\(y_B&gt;y_c\)</span>：</p>
-<p>此时 <span
-class="math inline">\(d(A,B)&gt;d(B,C)\)</span>，与题设不符，舍去。</p></li>
-<li><p><span class="math inline">\(x_B&gt;x_C\)</span> 且 <span
-class="math inline">\(y_B&lt;y_C\)</span>：</p>
-<p>此时 <span
-class="math inline">\(d(A,B)=x_B+y_B,d(B,C)=x_B-x_C+y_C-y_B,d(A,C)=x_C+y_C\)</span>。由作差法得
-<span class="math inline">\(d(B,C)-d(A,C)=x_B-y_B-2\times
-x_C\)</span>，由 <span
-class="math inline">\(x_B-y_B&lt;0,x_C&gt;0\)</span>，<span
-class="math inline">\(d(B,C)&lt;d(A,C)\)</span>。</p>
-<p>由于 <span class="math inline">\(d(A,B),d(B,C)&lt;d(A,C)\)</span>，故
-<span class="math inline">\(A\)</span> 一定不与 <span
-class="math inline">\(C\)</span> 连边。</p></li>
-<li><p><span class="math inline">\(x_B&lt;x_C\)</span> 且 <span
-class="math inline">\(y_B&gt;y_C\)</span>：</p>
-<p>与上一种情况同理。</p></li>
-<li><p><span class="math inline">\(x_B&lt;x_C\)</span> 且 <span
-class="math inline">\(y_B&lt;y_C\)</span>：</p>
-<p>此时有 <span class="math inline">\(d(A,C)=d(A,B)+d(B,C)\)</span>，则
-<span class="math inline">\(A\)</span> 一定不与 <span
-class="math inline">\(C\)</span> 连边。</p></li>
+<li><p><span class="math inline">\(x_B&gt;x_C\)</span> 且 <span class="math inline">\(y_B&gt;y_c\)</span>：</p>
+此时 <span class="math inline">\(d(A,B)&gt;d(B,C)\)</span>，与题设不符，舍去。</li>
+<li><p><span class="math inline">\(x_B&gt;x_C\)</span> 且 <span class="math inline">\(y_B&lt;y_C\)</span>：</p>
+<p>此时 <span class="math inline">\(d(A,B)=x_B+y_B,d(B,C)=x_B-x_C+y_C-y_B,d(A,C)=x_C+y_C\)</span>。由作差法得 <span class="math inline">\(d(B,C)-d(A,C)=x_B-y_B-2\times x_C\)</span>，由 <span class="math inline">\(x_B-y_B&lt;0,x_C&gt;0\)</span>，<span class="math inline">\(d(B,C)&lt;d(A,C)\)</span>。</p>
+由于 <span class="math inline">\(d(A,B),d(B,C)&lt;d(A,C)\)</span>，故 <span class="math inline">\(A\)</span> 一定不与 <span class="math inline">\(C\)</span> 连边。</li>
+<li><p><span class="math inline">\(x_B&lt;x_C\)</span> 且 <span class="math inline">\(y_B&gt;y_C\)</span>：</p>
+与上一种情况同理。</li>
+<li><p><span class="math inline">\(x_B&lt;x_C\)</span> 且 <span class="math inline">\(y_B&lt;y_C\)</span>：</p>
+此时有 <span class="math inline">\(d(A,C)=d(A,B)+d(B,C)\)</span>，则 <span class="math inline">\(A\)</span> 一定不与 <span class="math inline">\(C\)</span> 连边。</li>
 </ul>
 </details>
-<p>如此一来，边数便降低到了 <span class="math inline">\(O(n)\)</span>
-水平。</p>
-<p>此外，如何识别每个点周围每 <span class="math inline">\(\dfrac
-\pi8\)</span> 的最近点便是问题所在。</p>
-<p>由于坐标可以变换，此处仅考虑顶点为 <span
-class="math inline">\(A\)</span>，始边沿 <span
-class="math inline">\(y\)</span> 轴正方向，终边沿 <span
-class="math inline">\(k=1\)</span> 的区域。则对于区域内的点 <span
-class="math inline">\(B\)</span>，易知 <span
-class="math inline">\(x_B\geqslant x_A,y_B-y_A\geqslant
-x_B-x_A\)</span>。</p>
-<p>后一条规则分离变量则有 <span class="math inline">\(y_B-x_B\geqslant
-y_A-x_A\)</span>，那么问题转化为二维偏序，其中待求为最小 <span
-class="math inline">\(x_B+y_B\)</span>，可以用树状数组离散解决。</p>
-<p><del>由于边是双向的，将问题在平面任意连续 <span
-class="math inline">\(\dfrac \pi 2\)</span>
-范围内进行四次坐标转化即可。</del></p>
+<p>如此一来，边数便降低到了 <span class="math inline">\(O(n)\)</span> 水平。</p>
+<p>此外，如何识别每个点周围每 <span class="math inline">\(\dfrac \pi8\)</span> 的最近点便是问题所在。</p>
+<p>由于坐标可以变换，此处仅考虑顶点为 <span class="math inline">\(A\)</span>，始边沿 <span class="math inline">\(y\)</span> 轴正方向，终边沿 <span class="math inline">\(k=1\)</span> 的区域。则对于区域内的点 <span class="math inline">\(B\)</span>，易知 <span class="math inline">\(x_B\geqslant x_A,y_B-y_A\geqslant x_B-x_A\)</span>。</p>
+<p>后一条规则分离变量则有 <span class="math inline">\(y_B-x_B\geqslant y_A-x_A\)</span>，那么问题转化为二维偏序，其中待求为最小 <span class="math inline">\(x_B+y_B\)</span>，可以用树状数组离散解决。</p>
+<p><del>由于边是双向的，将问题在平面任意连续 <span class="math inline">\(\dfrac \pi 2\)</span> 范围内进行四次坐标转化即可。</del></p>
 <p><del>其实并不一定要连续，只要该区域与其旋转一百八十度后的图形的并可以覆盖整个平面即可。这么看来是不是只能连续。</del></p>
-<p>我们会发现旋转 <span class="math inline">\(\dfrac \pi 8\)</span>
-这个我们在整数域上做不到啊。所以我们考虑旋转 +
-翻折，最后整出来差不多这个图形：</p>
+<p>我们会发现旋转 <span class="math inline">\(\dfrac \pi 8\)</span> 这个我们在整数域上做不到啊。所以我们考虑旋转 + 翻折，最后整出来差不多这个图形：</p>
 <figure>
-<img src="2.png" alt="示意图" />
-<figcaption aria-hidden="true">示意图</figcaption>
+<img src="2.png" alt="示意图" /><figcaption>示意图</figcaption>
 </figure>
-<p>然后由于我们发现这些点关于 <span class="math inline">\(A\)</span>
-的关系（是通过 <span class="math inline">\(A\)</span>
-翻折还是旋转得来的）并不中心对称啊，所以呢就要委屈一下写满八个方向了。</p>
+<p>然后由于我们发现这些点关于 <span class="math inline">\(A\)</span> 的关系（是通过 <span class="math inline">\(A\)</span> 翻折还是旋转得来的）并不中心对称啊，所以呢就要委屈一下写满八个方向了。</p>
 <details>
 <pre class="cpp"><code>namespace XSC062 &#123;
 using namespace fastIO;
@@ -413,7 +364,7 @@ int main() &#123;
 			<div class="post footer">
 				<div id="hitokoto">
 					<h3 id="hitokoto-title">
-						一言 - Hitokoto
+						言论
 					</h3>
 					<div id="hitokoto-content">
 					</div>

@@ -170,30 +170,17 @@
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
-				<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5169">SAM 杂题</a> + <a
-target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5170">NOIPS8</a> + <a
-target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5175">周考</a> 选讲。</p>
+				<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5169">SAM 杂题</a> + <a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5170">NOIPS8</a> + <a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5175">周考</a> 选讲。</p>
 <p>看看这个标签列表长度就知道这三天做的题有多杂。</p>
 <span id="more"></span>
 <hr />
 <h3 id="d.-字符串">D. 字符串</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5169/problem/4"
-class="uri">http://222.180.160.110:61235/contest/5169/problem/4</a></p>
-<p>和 SA 的做法一样，先二分 <span class="math inline">\(s_{c\sim
-d}\)</span> 的前缀长度 <span class="math inline">\(mid\)</span>，只需
-check <span class="math inline">\(s_{c \sim c + mid - 1}\)</span> 是否在
-<span class="math inline">\(s_{a\sim b}\)</span> 中出现过。</p>
-<p>考虑怎么快速 check。从 <span class="math inline">\(c\)</span>
-一步一步跳到 <span class="math inline">\(c+mid-1\)</span>
-显然会起飞，考虑到查询是静态的，我们事先预处理一下然后倍增地跳即可。</p>
-<p>此时只需看当前状态的 <span class="math inline">\(\text
-{endpos}\)</span> 是否在 <span class="math inline">\([a + mid - 1,
-b]\)</span> 出现过。</p>
-<p>因为这个不能用最大最小简单代替，所以就到了我们喜闻乐见的线段树合并环节。将插入后的每个单点
-<span class="math inline">\(\text {endpos}\)</span>
-在权值线段树上更新，在 parent tree 上暴力线段树合并即可。</p>
-<p>之前一直有一个误区，就是觉得线段树合并是一次性的，比如用 A 树和 B
-树并出来了 C 树之后，A 树和 B 树的数据就无效了。</p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5169/problem/4" class="uri">http://222.180.160.110:61235/contest/5169/problem/4</a></p>
+<p>和 SA 的做法一样，先二分 <span class="math inline">\(s_{c\sim d}\)</span> 的前缀长度 <span class="math inline">\(mid\)</span>，只需 check <span class="math inline">\(s_{c \sim c + mid - 1}\)</span> 是否在 <span class="math inline">\(s_{a\sim b}\)</span> 中出现过。</p>
+<p>考虑怎么快速 check。从 <span class="math inline">\(c\)</span> 一步一步跳到 <span class="math inline">\(c+mid-1\)</span> 显然会起飞，考虑到查询是静态的，我们事先预处理一下然后倍增地跳即可。</p>
+<p>此时只需看当前状态的 <span class="math inline">\(\text {endpos}\)</span> 是否在 <span class="math inline">\([a + mid - 1, b]\)</span> 出现过。</p>
+<p>因为这个不能用最大最小简单代替，所以就到了我们喜闻乐见的线段树合并环节。将插入后的每个单点 <span class="math inline">\(\text {endpos}\)</span> 在权值线段树上更新，在 parent tree 上暴力线段树合并即可。</p>
+<p>之前一直有一个误区，就是觉得线段树合并是一次性的，比如用 A 树和 B 树并出来了 C 树之后，A 树和 B 树的数据就无效了。</p>
 <p>但这显然是很荒谬的，同样因为我们的查询是静态的，所以完全可以用一种类似于可持久化的方式，建立一些新的点表示合并后的信息状态点，一些可以保留的点就保留作儿子。</p>
 <p>在对应的状态上查询即可。</p>
 <details>
@@ -338,24 +325,13 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="f.-security">F. Security</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5169/problem/6"
-class="uri">http://222.180.160.110:61235/contest/5169/problem/6</a></p>
-<p>对我们来说应该是会 D 就会 F 的。所以只打了
-10min。在此嘲讽一下打了很久很久很久很久很久很久很久很久很久很久的这个
-zwb 同学。</p>
-<p>首先考虑一个大家喜闻乐见的 DFS
-求最小字典序。显然地，如果存在和当前位相等的字符，那么优先跳相等字符，进入下一层深搜；否则找到最小的更大字符，然后直接
-out。</p>
-<p>此时 SAM 就是我们用来判断 <span class="math inline">\(S_{l,
-r}\)</span>
-中是否存在某状态的工具了。甚至比上一题简单，因为不用写二分和倍增。</p>
-<p>值得注意的是如果 <span class="math inline">\(S_{l, r}\)</span> 包含
-<span class="math inline">\(T\)</span>
-那么还要在后面随便加一个字符以字典序保证严格大于 <span
-class="math inline">\(T\)</span>。</p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5169/problem/6" class="uri">http://222.180.160.110:61235/contest/5169/problem/6</a></p>
+<p>对我们来说应该是会 D 就会 F 的。所以只打了 10min。在此嘲讽一下打了很久很久很久很久很久很久很久很久很久很久的这个 zwb 同学。</p>
+<p>首先考虑一个大家喜闻乐见的 DFS 求最小字典序。显然地，如果存在和当前位相等的字符，那么优先跳相等字符，进入下一层深搜；否则找到最小的更大字符，然后直接 out。</p>
+<p>此时 SAM 就是我们用来判断 <span class="math inline">\(S_{l, r}\)</span> 中是否存在某状态的工具了。甚至比上一题简单，因为不用写二分和倍增。</p>
+<p>值得注意的是如果 <span class="math inline">\(S_{l, r}\)</span> 包含 <span class="math inline">\(T\)</span> 那么还要在后面随便加一个字符以字典序保证严格大于 <span class="math inline">\(T\)</span>。</p>
 <details>
-<p>值得注意的是因为我写的太丑了以至于在 CF 上会光荣 MLE
-#46。然后分屏左半边看我代码右半边写的 rybp 却没有。啧。为什么呢。</p>
+<p>值得注意的是因为我写的太丑了以至于在 CF 上会光荣 MLE #46。然后分屏左半边看我代码右半边写的 rybp 却没有。啧。为什么呢。</p>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
 const int maxm = 35;
 const int maxn = 6e5 + 5;
@@ -500,45 +476,23 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="a.-六出祁山">A. 六出祁山</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5170/problem/1"
-class="uri">http://222.180.160.110:61235/contest/5170/problem/1</a></p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5170/problem/1" class="uri">http://222.180.160.110:61235/contest/5170/problem/1</a></p>
 <p>是能用贪心拿 60pts 的 DP 题 /tuu</p>
-<p>需要先把暴力的式子写出来。设 <span class="math inline">\(f_{i,
-j}\)</span> 为将 <span class="math inline">\(i\)</span> 山修改高度为
-<span class="math inline">\(j\)</span> 的代价，则：</p>
+<p>需要先把暴力的式子写出来。设 <span class="math inline">\(f_{i, j}\)</span> 为将 <span class="math inline">\(i\)</span> 山修改高度为 <span class="math inline">\(j\)</span> 的代价，则：</p>
 <p><span class="math display">\[
-f_{i, j} = \min\limits_{k\in [j-d, j+d]}\left\{f_{i-1, k}\right\} + |h_i
-- j|
+f_{i, j} = \min\limits_{k\in [j-d, j+d]}\left\{f_{i-1, k}\right\} + |h_i - j|
 \]</span></p>
-<p>注意到可以单调队列优化。但是这样做复杂度还是 <span
-class="math inline">\(O(nV)\)</span> 的，根本原因在于第二维这个 <span
-class="math inline">\(V\)</span> 的状态数太多了。</p>
-<p>根据直觉，最后 <span class="math inline">\(j\)</span> 的值应为 <span
-class="math inline">\(k+d\)</span> 或 <span
-class="math inline">\(k-d\)</span> 或 <span
-class="math inline">\(a_i\)</span>。也就是说，我们可以认为，合法的状态数为所有的
-<span class="math inline">\(a_i+x\times d, x\in[-n, n]\)</span>。</p>
+<p>注意到可以单调队列优化。但是这样做复杂度还是 <span class="math inline">\(O(nV)\)</span> 的，根本原因在于第二维这个 <span class="math inline">\(V\)</span> 的状态数太多了。</p>
+<p>根据直觉，最后 <span class="math inline">\(j\)</span> 的值应为 <span class="math inline">\(k+d\)</span> 或 <span class="math inline">\(k-d\)</span> 或 <span class="math inline">\(a_i\)</span>。也就是说，我们可以认为，合法的状态数为所有的 <span class="math inline">\(a_i+x\times d, x\in[-n, n]\)</span>。</p>
 <details>
-<summary>
-正确性证明……
-</summary>
+<p><summary>正确性证明……</summary></p>
 <p>考虑全部更改完后的结束状态，即最后的最优状态。</p>
-<p>考虑所有山中最矮的山 <span
-class="math inline">\(i\)</span>，此山的高度要么为 <span
-class="math inline">\(h_i\)</span>，要么为前一座山的高度 <span
-class="math inline">\(-d\)</span>，要么为后一座山的高度 <span
-class="math inline">\(-d\)</span>。</p>
+<p>考虑所有山中最矮的山 <span class="math inline">\(i\)</span>，此山的高度要么为 <span class="math inline">\(h_i\)</span>，要么为前一座山的高度 <span class="math inline">\(-d\)</span>，要么为后一座山的高度 <span class="math inline">\(-d\)</span>。</p>
 <p>考虑第二矮的山，以此类推即可。</p>
 </details>
-<p>将第二维的状态集大小减少为 <span
-class="math inline">\(O(n^2)\)</span>，总时间复杂度为 <span
-class="math inline">\(O(n^3)\)</span>。</p>
+<p>将第二维的状态集大小减少为 <span class="math inline">\(O(n^2)\)</span>，总时间复杂度为 <span class="math inline">\(O(n^3)\)</span>。</p>
 <details>
-<p>需注意到因为 <span class="math inline">\(a_i+x\times d\)</span> 中的
-<span class="math inline">\(x\)</span> 范围为 <span
-class="math inline">\([-n, n]\)</span> 共 <span
-class="math inline">\(2\times n\)</span>，所以 DP 数组第二维大小一定要开
-<span class="math inline">\(2\times n^2\)</span> 呀！！！</p>
+<p>需注意到因为 <span class="math inline">\(a_i+x\times d\)</span> 中的 <span class="math inline">\(x\)</span> 范围为 <span class="math inline">\([-n, n]\)</span> 共 <span class="math inline">\(2\times n\)</span>，所以 DP 数组第二维大小一定要开 <span class="math inline">\(2\times n^2\)</span> 呀！！！</p>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
 using ll = long long;
 const int maxn = 305;
@@ -587,17 +541,13 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="b.-水淹七军">B. 水淹七军</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5170/problem/2"
-class="uri">http://222.180.160.110:61235/contest/5170/problem/2</a></p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5170/problem/2" class="uri">http://222.180.160.110:61235/contest/5170/problem/2</a></p>
 <p>容易发现最后连出来一定是没有环的。所以一定是一个 DAG。</p>
-<p>我们知道状态压缩是会遍历到每一种情况的，所以我们可以假设当前的 DAG
-就是该状态下的最优。</p>
-<p>至于这个「最优」如何定义就要交给我们了。我们不妨强制认为这个 DAG
-是按层序遍历得到的，也就是说连续遍历到的点属于同一层（这里的层是指某点到任意源点的最长路长度）。</p>
+<p>我们知道状态压缩是会遍历到每一种情况的，所以我们可以假设当前的 DAG 就是该状态下的最优。</p>
+<p>至于这个「最优」如何定义就要交给我们了。我们不妨强制认为这个 DAG 是按层序遍历得到的，也就是说连续遍历到的点属于同一层（这里的层是指某点到任意源点的最长路长度）。</p>
 <p>显然只有一组相互之间没有任何连边的点才能组成同一层。不妨枚举点集然后暴力转移，转移时记录路径即可。</p>
 <details>
-<p>注意到在写这玩意儿的时候我还不会 <a
-href="/2024/05/17/20240517/">状压枚举子集</a>，所以枚举子集的部分可能打得比较抽象。</p>
+<p>注意到在写这玩意儿的时候我还不会 <a href="/2024/05/17/20240517/">状压枚举子集</a>，所以枚举子集的部分可能打得比较抽象。</p>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
 const int maxn = 25;
 const int inf = 0x3f3f3f3f;
@@ -686,19 +636,11 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="c.-煮酒论英雄">C. 煮酒论英雄</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5170/problem/3"
-class="uri">http://222.180.160.110:61235/contest/5170/problem/3</a></p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5170/problem/3" class="uri">http://222.180.160.110:61235/contest/5170/problem/3</a></p>
 <p>注意到如果存在串被其他串包含那么直接将其毙掉就可以了。</p>
-<p>对于相互不完全包含的串，我们令 <span class="math inline">\(mx_{i, j,
-0/1, 0/1}\)</span> 表示将正序 / 逆序的 <span
-class="math inline">\(i\)</span> 串拼到正序 / 逆序的 <span
-class="math inline">\(j\)</span>
-串之前，两者共用相接公共部分的串长。这个可以用字符串哈希暴力求。</p>
+<p>对于相互不完全包含的串，我们令 <span class="math inline">\(mx_{i, j, 0/1, 0/1}\)</span> 表示将正序 / 逆序的 <span class="math inline">\(i\)</span> 串拼到正序 / 逆序的 <span class="math inline">\(j\)</span> 串之前，两者共用相接公共部分的串长。这个可以用字符串哈希暴力求。</p>
 <p>用状压枚举拼接顺序，求得最小总串长即可。</p>
-<p>注意如果去掉被包含串后 <span class="math inline">\(n=1\)</span>
-时需直接输出串的 border；以及答案需和 <span
-class="math inline">\(2\)</span> 取 <span
-class="math inline">\(\max\)</span>。</p>
+<p>注意如果去掉被包含串后 <span class="math inline">\(n=1\)</span> 时需直接输出串的 border；以及答案需和 <span class="math inline">\(2\)</span> 取 <span class="math inline">\(\max\)</span>。</p>
 <p>实现起来又臭又长，但实际上思路确实非常简单。</p>
 <details>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
@@ -821,19 +763,13 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="a.-捏斑马">A. 捏斑马</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5175/problem/1"
-class="uri">http://222.180.160.110:61235/contest/5175/problem/1</a></p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5175/problem/1" class="uri">http://222.180.160.110:61235/contest/5175/problem/1</a></p>
 <p>王博王博博.jpg</p>
 <p>我甚至不会（）甚至贺了一下王博儿的代码，发现我是 SB（）</p>
-<p>翻转 +
-拼接本质上就是首尾相接。我们把字符串整个拼到自己后边儿，然后任取一段长度为
-<span class="math inline">\(n\)</span>
-的串就可以得到一个倒过来的操作后的字符串。</p>
+<p>翻转 + 拼接本质上就是首尾相接。我们把字符串整个拼到自己后边儿，然后任取一段长度为 <span class="math inline">\(n\)</span> 的串就可以得到一个倒过来的操作后的字符串。</p>
 <p>注意到可以操作很多次。但是既然我们操作后的串也可以在这个拼接后的串中找到了，那么其实多次操作后的也行。</p>
-<p>所以呢我们在拼接后的串种枚举每一个长度为 <span
-class="math inline">\(n\)</span> 的串计算答案即可。</p>
-<p>具体怎么算呢？注意到只看开头，也就是在新串中只看离我们当前枚举的右端点最近的那一段，所以我们打一个双指针，看这一段是否在右移后仍然合法，如果非法就把答案区间左端点更新为右端点自己。以及注意到左右端点的距离不能超过
-<span class="math inline">\(n\)</span>。</p>
+<p>所以呢我们在拼接后的串种枚举每一个长度为 <span class="math inline">\(n\)</span> 的串计算答案即可。</p>
+<p>具体怎么算呢？注意到只看开头，也就是在新串中只看离我们当前枚举的右端点最近的那一段，所以我们打一个双指针，看这一段是否在右移后仍然合法，如果非法就把答案区间左端点更新为右端点自己。以及注意到左右端点的距离不能超过 <span class="math inline">\(n\)</span>。</p>
 <details>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
 int res;
@@ -861,66 +797,23 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="d.-链状闪电">D. 链状闪电</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5175/problem/4"
-class="uri">http://222.180.160.110:61235/contest/5175/problem/4</a></p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5175/problem/4" class="uri">http://222.180.160.110:61235/contest/5175/problem/4</a></p>
 <p>莫名其妙且又臭又长的根号做法。</p>
 <p>容易发现一个怪被杀掉了序列就会裂开成两段连续子序列，以及最先被杀掉的怪物一定血量最少。在裂开来的两段连续子序列中也满足此规律，以此类推。</p>
-<p>考虑对序列建立笛卡尔树。令树根为 <span
-class="math inline">\(rt\)</span>，当前攻击力为 <span
-class="math inline">\(k\)</span>，记 <span class="math inline">\(t_{x,
-k}=\left\lceil \dfrac {h_x}k
-\right\rceil\)</span>，即不考虑其他条件时击倒 <span
-class="math inline">\(x\)</span> 所需次数。</p>
-<p>那么对于 <span class="math inline">\(rt\)</span> 的左、右儿子 <span
-class="math inline">\(l,r\)</span>，单考虑这三个怪物所需的总击倒次数，容易发现为
-<span
-class="math inline">\(t_{rt,k}+(t_{l,k}-t_{rt,k})+(t_{r,k}-t_{rt,k})\)</span>。</p>
-<p>对于 <span class="math inline">\(l\)</span>
-引导的子树，此时的实际已攻击次数为 <span
-class="math inline">\(t_{l,k}\)</span>；所以对于 <span
-class="math inline">\(l\)</span> 的左右儿子 <span
-class="math inline">\(l&#39;,r&#39;\)</span>，击倒这两个怪物的所需次数为
-<span class="math inline">\((t_{l&#39;,k} -
-t_{l,k})+(t_{r&#39;,k}-t_{l,k})\)</span>。<span
-class="math inline">\(r\)</span> 引导的子树同理。</p>
-<p>所以我们就可以知道，如果存在树边 <span class="math inline">\(u\to
-v\)</span>，那么击倒 <span class="math inline">\(v\)</span> 的所需次数为
-<span class="math inline">\(t_{v,k}-t_{u,k}\)</span>；特别地，击倒 <span
-class="math inline">\(rt\)</span> 的所需次数为 <span
-class="math inline">\(t_{rt,k}\)</span>。</p>
-<p>那么我们就可以通过一次 <span class="math inline">\(O(n)\)</span>
-的树上 DFS 对于一个 <span class="math inline">\(k\)</span>
-找到答案了。</p>
-<p>那么对于 <span class="math inline">\(2\times 10^4\)</span>
-范围内的所有 <span
-class="math inline">\(k\)</span>，应该怎么办呢？这个时候就要利用 <span
-class="math inline">\(t\)</span> 的性质进行根号分治了。</p>
+<p>考虑对序列建立笛卡尔树。令树根为 <span class="math inline">\(rt\)</span>，当前攻击力为 <span class="math inline">\(k\)</span>，记 <span class="math inline">\(t_{x, k}=\left\lceil \dfrac {h_x}k \right\rceil\)</span>，即不考虑其他条件时击倒 <span class="math inline">\(x\)</span> 所需次数。</p>
+<p>那么对于 <span class="math inline">\(rt\)</span> 的左、右儿子 <span class="math inline">\(l,r\)</span>，单考虑这三个怪物所需的总击倒次数，容易发现为 <span class="math inline">\(t_{rt,k}+(t_{l,k}-t_{rt,k})+(t_{r,k}-t_{rt,k})\)</span>。</p>
+<p>对于 <span class="math inline">\(l\)</span> 引导的子树，此时的实际已攻击次数为 <span class="math inline">\(t_{l,k}\)</span>；所以对于 <span class="math inline">\(l\)</span> 的左右儿子 <span class="math inline">\(l&#39;,r&#39;\)</span>，击倒这两个怪物的所需次数为 <span class="math inline">\((t_{l&#39;,k} - t_{l,k})+(t_{r&#39;,k}-t_{l,k})\)</span>。<span class="math inline">\(r\)</span> 引导的子树同理。</p>
+<p>所以我们就可以知道，如果存在树边 <span class="math inline">\(u\to v\)</span>，那么击倒 <span class="math inline">\(v\)</span> 的所需次数为 <span class="math inline">\(t_{v,k}-t_{u,k}\)</span>；特别地，击倒 <span class="math inline">\(rt\)</span> 的所需次数为 <span class="math inline">\(t_{rt,k}\)</span>。</p>
+<p>那么我们就可以通过一次 <span class="math inline">\(O(n)\)</span> 的树上 DFS 对于一个 <span class="math inline">\(k\)</span> 找到答案了。</p>
+<p>那么对于 <span class="math inline">\(2\times 10^4\)</span> 范围内的所有 <span class="math inline">\(k\)</span>，应该怎么办呢？这个时候就要利用 <span class="math inline">\(t\)</span> 的性质进行根号分治了。</p>
 <ul>
-<li><p>对于 <span class="math inline">\(k\le \sqrt {2\times
-10^4}\)</span>，我们大可以直接做这么多次 DFS 得到答案；</p></li>
-<li><p>对于 <span class="math inline">\(k&gt;\sqrt {2\times
-10^4}\)</span>：</p>
-<p>我们容易发现最终的结果是若干个 <span class="math inline">\(t\)</span>
-的值相加减得到的，而每个 <span class="math inline">\(t\)</span> 的权值
-<span class="math inline">\(cnt\)</span>
-取决于其在笛卡尔树上的儿子个数，有多少就在 <span
-class="math inline">\(1\)</span> 的基础上减去多少。</p>
-<p>由于 <span class="math inline">\(t\)</span>
-实在过于特殊，考虑整除分块 / 数论分块。对于每个 <span
-class="math inline">\(x\)</span>，对于任意 <span
-class="math inline">\(k&#39;\in (\sqrt {2\times 10^4}, 2\times
-10^4]\)</span>，可能的 <span class="math inline">\(t\)</span> 值只有
-<span class="math inline">\(\sqrt {2\times 10^4 }\)</span>
-种。计算出对于每个 <span class="math inline">\(t&#39;\)</span>，满足
-<span class="math inline">\(\left\lceil \dfrac {h_x}{k&#39;}
-\right\rceil=t&#39;\)</span> 的 <span
-class="math inline">\(k&#39;\)</span> 范围，对该范围 <span
-class="math inline">\(k&#39;\)</span> 的答案区间加上 <span
-class="math inline">\(t&#39;\times cnt\)</span> 即可，可以使用差分。</p>
+<li><p>对于 <span class="math inline">\(k\le \sqrt {2\times 10^4}\)</span>，我们大可以直接做这么多次 DFS 得到答案；</p></li>
+<li><p>对于 <span class="math inline">\(k&gt;\sqrt {2\times 10^4}\)</span>：</p>
+<p>我们容易发现最终的结果是若干个 <span class="math inline">\(t\)</span> 的值相加减得到的，而每个 <span class="math inline">\(t\)</span> 的权值 <span class="math inline">\(cnt\)</span> 取决于其在笛卡尔树上的儿子个数，有多少就在 <span class="math inline">\(1\)</span> 的基础上减去多少。</p>
+<p>由于 <span class="math inline">\(t\)</span> 实在过于特殊，考虑整除分块 / 数论分块。对于每个 <span class="math inline">\(x\)</span>，对于任意 <span class="math inline">\(k&#39;\in (\sqrt {2\times 10^4}, 2\times 10^4]\)</span>，可能的 <span class="math inline">\(t\)</span> 值只有 <span class="math inline">\(\sqrt {2\times 10^4 }\)</span> 种。计算出对于每个 <span class="math inline">\(t&#39;\)</span>，满足 <span class="math inline">\(\left\lceil \dfrac {h_x}{k&#39;} \right\rceil=t&#39;\)</span> 的 <span class="math inline">\(k&#39;\)</span> 范围，对该范围 <span class="math inline">\(k&#39;\)</span> 的答案区间加上 <span class="math inline">\(t&#39;\times cnt\)</span> 即可，可以使用差分。</p>
 <p>至此，就可以在一次 DFS 内解决这种情况下的问题。</p></li>
 </ul>
-<p>总时间复杂度为 <span class="math inline">\(O(n\sqrt {2\times
-10^4})\)</span>。</p>
+<p>总时间复杂度为 <span class="math inline">\(O(n\sqrt {2\times 10^4})\)</span>。</p>
 <details>
 <p>值得注意的是，我在做这道题的时候并没有意识到自己用到了笛卡尔树，</p>
 <p>所以代码中笛卡尔树的建树部分可能长得特别抽象（</p>
@@ -1013,21 +906,14 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="f.-弹飞绵羊">F. 弹飞绵羊</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5175/problem/6"
-class="uri">http://222.180.160.110:61235/contest/5175/problem/6</a></p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5175/problem/6" class="uri">http://222.180.160.110:61235/contest/5175/problem/6</a></p>
 <p>很棒可持久化分块，使我 lxl 旋转。</p>
 <p>笑话：赛后 5s 才交上去。然后 A 了。</p>
 <p>我们猜大家都会普通的弹飞绵羊这道题。就是块间暴力跳嘛。</p>
 <p>这里给一个我自己整的简单实现方法。</p>
-<p>我们把分出来的块视作若干个无关联的散块并纳入块集合；对于每一个版本，用一个大小为
-<span class="math inline">\(\sqrt n\)</span> 的 <span
-class="math inline">\(id\)</span>
-数组记录每一位置的块在块集合中对应的位置。</p>
+<p>我们把分出来的块视作若干个无关联的散块并纳入块集合；对于每一个版本，用一个大小为 <span class="math inline">\(\sqrt n\)</span> 的 <span class="math inline">\(id\)</span> 数组记录每一位置的块在块集合中对应的位置。</p>
 <p>然后该怎么搞怎么搞即可。</p>
-<p>P.S. 有的死脑袋 zwb 坚定不移地信仰 lxl
-神教于是决定用可持久化平衡树实现可持久化分块，结果当然是因为多了个 <span
-class="math inline">\(\log\)</span>
-被卡飞了，最后气急败坏慌不择路恼羞成怒抄起了我们的代码。</p>
+<p>P.S. 有的死脑袋 zwb 坚定不移地信仰 lxl 神教于是决定用可持久化平衡树实现可持久化分块，结果当然是因为多了个 <span class="math inline">\(\log\)</span> 被卡飞了，最后气急败坏慌不择路恼羞成怒抄起了我们的代码。</p>
 <details>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
 const int maxk = 320;
@@ -1122,7 +1008,7 @@ int&amp; devicer::val(int x) &#123;
 			<div class="post footer">
 				<div id="hitokoto">
 					<h3 id="hitokoto-title">
-						一言 - Hitokoto
+						言论
 					</h3>
 					<div id="hitokoto-content">
 					</div>

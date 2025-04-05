@@ -158,29 +158,18 @@
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
-				<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4434">NOIP S</a> &amp;
-<a target="_blank" rel="noopener" href="https://vjudge.net/contest/594162">计数杂题</a>。</p>
+				<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4434">NOIP S</a> &amp; <a target="_blank" rel="noopener" href="https://vjudge.net/contest/594162">计数杂题</a>。</p>
 <span id="more"></span>
 <hr />
 <h3 id="a.-卡门">A. 卡门</h3>
-<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6370"
-class="uri">https://www.luogu.com.cn/problem/P6370</a></p>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4434/problem/1"
-class="uri">http://222.180.160.110:61235/contest/4434/problem/1</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6370" class="uri">https://www.luogu.com.cn/problem/P6370</a></p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4434/problem/1" class="uri">http://222.180.160.110:61235/contest/4434/problem/1</a></p>
 <p>我们惊讶地发现全场没多少人会做绿题。</p>
 <hr />
-<p>就是说呢，我们把它「滚动到相邻行然后落下」的过程直接变成「往左下 /
-右下滚」。那么球掉下去的过程呢，就可以理解为它是一直一次往下掉一格的，然后每一次掉落呢，会根据实际情况往左
-/ 往右 / 直着掉。</p>
-<p>所以我们可以直接用 <span class="math inline">\(m\)</span> 个长度为
-<span class="math inline">\(n\)</span> 的序列，记录从每 <span
-class="math inline">\(1\sim m\)</span>
-列扔下去的情况。然后我们很容易可以知道，如果任意两个序列发生了交汇，那么从交汇点开始至序列结束呢，这两个序列的内容都是完全一样的。因为之前序列长什么样子，完全不会对之后产生影响。所以一旦有任意一个状态是一样的，后面都会是一样的。</p>
+<p>就是说呢，我们把它「滚动到相邻行然后落下」的过程直接变成「往左下 / 右下滚」。那么球掉下去的过程呢，就可以理解为它是一直一次往下掉一格的，然后每一次掉落呢，会根据实际情况往左 / 往右 / 直着掉。</p>
+<p>所以我们可以直接用 <span class="math inline">\(m\)</span> 个长度为 <span class="math inline">\(n\)</span> 的序列，记录从每 <span class="math inline">\(1\sim m\)</span> 列扔下去的情况。然后我们很容易可以知道，如果任意两个序列发生了交汇，那么从交汇点开始至序列结束呢，这两个序列的内容都是完全一样的。因为之前序列长什么样子，完全不会对之后产生影响。所以一旦有任意一个状态是一样的，后面都会是一样的。</p>
 <p>所以呢，一旦我们跟着计划好的路线走，却发现走不动了，那就说明从走不动的位置开始，到原定路线结束，这些位置都会被封掉。所以这个时候我们直接重新计算路线就好了。</p>
-<p>对于这 <span class="math inline">\(m\)</span>
-列，就算每一列预定路线上的每个位置都被占了一次，也只会被更改 <span
-class="math inline">\(n\times m\)</span> 次；总体时间复杂度只有 <span
-class="math inline">\(O(nm^2)\)</span>。然后又由于不可能跑满，其实是完全没有问题，甚至跑得出溜快的。</p>
+<p>对于这 <span class="math inline">\(m\)</span> 列，就算每一列预定路线上的每个位置都被占了一次，也只会被更改 <span class="math inline">\(n\times m\)</span> 次；总体时间复杂度只有 <span class="math inline">\(O(nm^2)\)</span>。然后又由于不可能跑满，其实是完全没有问题，甚至跑得出溜快的。</p>
 <details>
 <pre class="cpp"><code>namespace XSC062 &#123;
 using namespace fastIO;
@@ -239,56 +228,20 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="b.-商人">B. 商人</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4434/problem/2"
-class="uri">http://222.180.160.110:61235/contest/4434/problem/2</a></p>
-<p>首先忽略图中的环带来的问题，假设 <span
-class="math inline">\(f_u\)</span> 表示从 <span
-class="math inline">\(u\)</span> 点出发的答案，不难想到 DP 式 <span
-class="math inline">\(f_u = \min\{\max(f_v-p_{(u,v)},
-r_{(u,v)})\}\)</span>。</p>
-<p>那么问题来了，图中是会有环的，不能简单地去更新 DP
-值。我们首先考虑「根源」，每一个 <span
-class="math inline">\(f_u\)</span> 一定都是由另一个 <span
-class="math inline">\(f_v\)</span> 转移得到的，那么一定会存在一个已知的
-<span class="math inline">\(f_u\)</span>，不由其他任何 <span
-class="math inline">\(f_v\)</span> 得到。</p>
-<p>考虑一个环中 <span class="math inline">\(r\)</span> 最大的一条边
-<span class="math inline">\((u,v)\)</span>。假设图中只有这一个环，那么
-<span class="math inline">\(f_u\)</span> 的值一定为 <span
-class="math inline">\(r\)</span>，因为 <span
-class="math inline">\(p\)</span>
-只能为非负。这样「根源」就被我们找到了。接下来进一步考虑转移方法。</p>
-<p>一个点 <span class="math inline">\(u\)</span> 只能被其相连的点 <span
-class="math inline">\(v\)</span> 更新，那么当且仅当所有 <span
-class="math inline">\(f_v\)</span> 都是确定的，<span
-class="math inline">\(f_u\)</span> 才能被确定，进而去更新 <span
-class="math inline">\(u\)</span>
-的前驱。这让我们想到了拓扑排序。如果我们将所有边反向，那么上面的过程几乎就是拓扑排序。</p>
-<p>为了保证任意一个环上的「根源」都能最先被确定，我们按照按 <span
-class="math inline">\(r\)</span>
-从大到小遍历每一条边的方式处理问题。对于每一条边 <span
-class="math inline">\((u,v)\)</span>，我们都假设它是「根源」并用 <span
-class="math inline">\(r_{(u,v)}\)</span> 更新 <span
-class="math inline">\(f_u\)</span>。我们其实并不关心 <span
-class="math inline">\(u\)</span>
-是否是我们刚刚定义的形式上的「根源」，毕竟，只要 <span
-class="math inline">\(f_u\)</span> 能被 <span
-class="math inline">\(r_{(u,v)}\)</span>
-更新，它就能算作广义上的，<strong>当前时刻的</strong>「根源」。</p>
-<p>我们在一开始将出度为 <span
-class="math inline">\(0\)</span>（反图上就是入度为 <span
-class="math inline">\(0\)</span>）的点全部加入队列，在每次加边的时候进行拓扑排序。每次一条边以任意形式被「使用」后，都要打标记删除并不能再访问，以保证转移的正确性和高效。如果一条边被「使用」，分两种情况：</p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4434/problem/2" class="uri">http://222.180.160.110:61235/contest/4434/problem/2</a></p>
+<p>首先忽略图中的环带来的问题，假设 <span class="math inline">\(f_u\)</span> 表示从 <span class="math inline">\(u\)</span> 点出发的答案，不难想到 DP 式 <span class="math inline">\(f_u = \min\{\max(f_v-p_{(u,v)}, r_{(u,v)})\}\)</span>。</p>
+<p>那么问题来了，图中是会有环的，不能简单地去更新 DP 值。我们首先考虑「根源」，每一个 <span class="math inline">\(f_u\)</span> 一定都是由另一个 <span class="math inline">\(f_v\)</span> 转移得到的，那么一定会存在一个已知的 <span class="math inline">\(f_u\)</span>，不由其他任何 <span class="math inline">\(f_v\)</span> 得到。</p>
+<p>考虑一个环中 <span class="math inline">\(r\)</span> 最大的一条边 <span class="math inline">\((u,v)\)</span>。假设图中只有这一个环，那么 <span class="math inline">\(f_u\)</span> 的值一定为 <span class="math inline">\(r\)</span>，因为 <span class="math inline">\(p\)</span> 只能为非负。这样「根源」就被我们找到了。接下来进一步考虑转移方法。</p>
+<p>一个点 <span class="math inline">\(u\)</span> 只能被其相连的点 <span class="math inline">\(v\)</span> 更新，那么当且仅当所有 <span class="math inline">\(f_v\)</span> 都是确定的，<span class="math inline">\(f_u\)</span> 才能被确定，进而去更新 <span class="math inline">\(u\)</span> 的前驱。这让我们想到了拓扑排序。如果我们将所有边反向，那么上面的过程几乎就是拓扑排序。</p>
+<p>为了保证任意一个环上的「根源」都能最先被确定，我们按照按 <span class="math inline">\(r\)</span> 从大到小遍历每一条边的方式处理问题。对于每一条边 <span class="math inline">\((u,v)\)</span>，我们都假设它是「根源」并用 <span class="math inline">\(r_{(u,v)}\)</span> 更新 <span class="math inline">\(f_u\)</span>。我们其实并不关心 <span class="math inline">\(u\)</span> 是否是我们刚刚定义的形式上的「根源」，毕竟，只要 <span class="math inline">\(f_u\)</span> 能被 <span class="math inline">\(r_{(u,v)}\)</span> 更新，它就能算作广义上的，<strong>当前时刻的</strong>「根源」。</p>
+<p>我们在一开始将出度为 <span class="math inline">\(0\)</span>（反图上就是入度为 <span class="math inline">\(0\)</span>）的点全部加入队列，在每次加边的时候进行拓扑排序。每次一条边以任意形式被「使用」后，都要打标记删除并不能再访问，以保证转移的正确性和高效。如果一条边被「使用」，分两种情况：</p>
 <ol type="1">
 <li><p>更新「根源」：</p>
-<p>这个时候这条边已经发挥了它的所有作用了，作为
-<strong>当前时刻的</strong>「根源」，这条边的源点在未来至少不会再经由这一条边被更新。故可以删除。</p></li>
+这个时候这条边已经发挥了它的所有作用了，作为 <strong>当前时刻的</strong>「根源」，这条边的源点在未来至少不会再经由这一条边被更新。故可以删除。</li>
 <li><p>拓扑排序中转移：</p>
-<p>一个点被加入队列，说明它的 DP
-值是确定的，那么就不用拿一个已经确定的值多次更新另一个 DP
-值。故可以删除。</p></li>
+<p>一个点被加入队列，说明它的 DP 值是确定的，那么就不用拿一个已经确定的值多次更新另一个 DP 值。故可以删除。</p></li>
 </ol>
-<p>所以正确性是可以保证的。类拓扑排序的结构也保证了算法复杂度 <span
-class="math inline">\(O(n+m)\)</span>。</p>
+<p>所以正确性是可以保证的。类拓扑排序的结构也保证了算法复杂度 <span class="math inline">\(O(n+m)\)</span>。</p>
 <details>
 <pre class="cpp"><code>#define int long long
 namespace XSC062 &#123;
@@ -364,23 +317,11 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="a---gerald-and-giant-chess">A - Gerald and Giant Chess</h3>
-<p><a target="_blank" rel="noopener" href="https://vjudge.net/contest/594162#problem/A"
-class="uri">https://vjudge.net/contest/594162#problem/A</a></p>
-<p>这个呢，一道简单的数数题，但是因为我忘了 DP
-容斥怎么打了所以自行思考了很久很久很久，还差最后一点点想出来的时候放弃了去抄题解
-/cf</p>
-<p>就是，这种「限制通行」的 DP
-容斥（名字是我现场起的）类型的数数题有一种通法，就是首先我们只计算非法方案然后减掉。</p>
-<p>那么非法方案怎么算呢？令 <span class="math inline">\(f_i\)</span>
-表示一个非法点都不经过，到达 <span class="math inline">\(i\)</span>
-这个非法点的方案数，那么有 <span
-class="math inline">\(f_i=calc(s,i)-\sum f_j\times
-calc(j,i)\)</span>，其中 <span class="math inline">\(s\)</span>
-是起点，<span class="math inline">\(calc(j,i)\)</span> 是从 <span
-class="math inline">\(j\to i\)</span>
-的方案数。这样就能不重不漏地枚举完所有情况了。</p>
-<p>我们把 <span class="math inline">\((n,m)\)</span>
-也视作一个非法点然后代入 DP 即可得到答案。</p>
+<p><a target="_blank" rel="noopener" href="https://vjudge.net/contest/594162#problem/A" class="uri">https://vjudge.net/contest/594162#problem/A</a></p>
+<p>这个呢，一道简单的数数题，但是因为我忘了 DP 容斥怎么打了所以自行思考了很久很久很久，还差最后一点点想出来的时候放弃了去抄题解 /cf</p>
+<p>就是，这种「限制通行」的 DP 容斥（名字是我现场起的）类型的数数题有一种通法，就是首先我们只计算非法方案然后减掉。</p>
+<p>那么非法方案怎么算呢？令 <span class="math inline">\(f_i\)</span> 表示一个非法点都不经过，到达 <span class="math inline">\(i\)</span> 这个非法点的方案数，那么有 <span class="math inline">\(f_i=calc(s,i)-\sum f_j\times calc(j,i)\)</span>，其中 <span class="math inline">\(s\)</span> 是起点，<span class="math inline">\(calc(j,i)\)</span> 是从 <span class="math inline">\(j\to i\)</span> 的方案数。这样就能不重不漏地枚举完所有情况了。</p>
+<p>我们把 <span class="math inline">\((n,m)\)</span> 也视作一个非法点然后代入 DP 即可得到答案。</p>
 <details>
 <pre class="cpp"><code>#define int long long
 namespace XSC062 &#123;
@@ -453,7 +394,7 @@ int main() &#123;
 			<div class="post footer">
 				<div id="hitokoto">
 					<h3 id="hitokoto-title">
-						一言 - Hitokoto
+						言论
 					</h3>
 					<div id="hitokoto-content">
 					</div>

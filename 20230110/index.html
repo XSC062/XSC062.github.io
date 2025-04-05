@@ -163,30 +163,16 @@
 				<hr class="dotted" style="margin-bottom: 0;">
 			
 			<div id="content">
-				<p>Solution to<a
-target="_blank" rel="noopener" href="http://222.180.160.110:61235/problem/59">「SCOI2016」背单词</a>。</p>
+				<p>Solution to<a target="_blank" rel="noopener" href="http://222.180.160.110:61235/problem/59">「SCOI2016」背单词</a>。</p>
 <span id="more"></span>
 <hr />
 <p>题解 P3294。</p>
 <p>我们看到字典树这个标签，下意识想到了前缀。</p>
-<p>但是题目让我们求后缀，所以我们把所有字符串先 <code>reverse</code>
-一下，将问题转化为前缀，方便描述。</p>
+<p>但是题目让我们求后缀，所以我们把所有字符串先 <code>reverse</code> 一下，将问题转化为前缀，方便描述。</p>
 <hr />
-<p>我们发现，因为 <span class="math inline">\(y &lt; x \le
-n\)</span>，所以三种情况的花费排序为 <span
-class="math inline">\(x-y&lt;x&lt;n\times n\)</span>。</p>
-<p>不难发现，我们可以很简单地通过「把某单词的所有前缀单词放到它之前」消除开销为
-<span class="math inline">\(n\times n\)</span>
-的情况。此时开销最劣情况下为 <span
-class="math inline">\(\sum\limits_{i=1}^ni &lt; n\times n\)</span>。</p>
-<p>接下来，问题在于怎样在满足「把某单词的所有前缀单词放到它之前」的条件下，最小化开销。不难发现，当我们去除第一种情况后，剩下的
-<span class="math inline">\(x\)</span> 和 <span
-class="math inline">\(x-y\)</span> 都包含 <span
-class="math inline">\(x\)</span> 项，也就是说，我们只需要最小化 <span
-class="math inline">\(\sum -y\)</span> 的值，也就是最大化 <span
-class="math inline">\(\sum y\)</span> 的值。而 <span
-class="math inline">\(\sum x\)</span> 为定值 <span
-class="math inline">\(\sum\limits_{i=1}^ni\)</span>。</p>
+<p>我们发现，因为 <span class="math inline">\(y &lt; x \le n\)</span>，所以三种情况的花费排序为 <span class="math inline">\(x-y&lt;x&lt;n\times n\)</span>。</p>
+<p>不难发现，我们可以很简单地通过「把某单词的所有前缀单词放到它之前」消除开销为 <span class="math inline">\(n\times n\)</span> 的情况。此时开销最劣情况下为 <span class="math inline">\(\sum\limits_{i=1}^ni &lt; n\times n\)</span>。</p>
+<p>接下来，问题在于怎样在满足「把某单词的所有前缀单词放到它之前」的条件下，最小化开销。不难发现，当我们去除第一种情况后，剩下的 <span class="math inline">\(x\)</span> 和 <span class="math inline">\(x-y\)</span> 都包含 <span class="math inline">\(x\)</span> 项，也就是说，我们只需要最小化 <span class="math inline">\(\sum -y\)</span> 的值，也就是最大化 <span class="math inline">\(\sum y\)</span> 的值。而 <span class="math inline">\(\sum x\)</span> 为定值 <span class="math inline">\(\sum\limits_{i=1}^ni\)</span>。</p>
 <p><strong>关于处理方式：不难发现一个单词的最长前缀单词最多只有一个，但以该单词为最长前缀单词的单词可能有多个，联想到树。</strong></p>
 <p><strong>我们将每个单词的最长前缀和该单词连边，会得到一个森林。</strong></p>
 <p>不妨先考虑问题的简化，假设有两条链（即，不会同时存在多个单词，使得它们的最长前缀单词相同），应该如何安排其顺序。</p>
@@ -202,27 +188,14 @@ class="math inline">\(\sum\limits_{i=1}^ni\)</span>。</p>
 <hr />
 <p>接下来对猜想进行证明。</p>
 <p>假设现在已有一条链。我们只有把整条链连在一起，短单词放到长单词前面这一种方法。</p>
-<p>然后新来了一个不属于这条链的节点，明显，因为节点不管放到哪里，其
-<span class="math inline">\(y\)</span> 值不变，但会改变已有链的 <span
-class="math inline">\(y\)</span> 值，所以放到最前面最优。</p>
-<p>又来了一个节点，和刚才新增的节点属于同一条链，一样，不管这个节点何去何从，其
-<span class="math inline">\(y\)</span> 不变，但放在越前面，后面的节点的
-<span class="math inline">\(y\)</span> 值增加得越多。</p>
-<p>以此类推可得到结论，同一条链放到一起。短链放到长链前面也是比较好想的。假设有两条链，短链长度为
-<span class="math inline">\(a\)</span>，长链长度为 <span
-class="math inline">\(b\)</span>，放置起点为 <span
-class="math inline">\(l\)</span>，则前短后长和钱长后短的 y 之和分别为
-<span class="math inline">\(\dfrac{(l + l + a - 2) \times (a - 1) + (l +
-a + l + a + b - 2) \times (b - 1)} 2\)</span> 和 <span
-class="math inline">\(\dfrac{(l + l + b - 2) \times (b - 1) + (l + b + l
-+ b + a - 2) \times (b - 1)}
-2\)</span>（运用等差数列求和公式），解不等式可得前短后长一定更优。</p>
+<p>然后新来了一个不属于这条链的节点，明显，因为节点不管放到哪里，其 <span class="math inline">\(y\)</span> 值不变，但会改变已有链的 <span class="math inline">\(y\)</span> 值，所以放到最前面最优。</p>
+<p>又来了一个节点，和刚才新增的节点属于同一条链，一样，不管这个节点何去何从，其 <span class="math inline">\(y\)</span> 不变，但放在越前面，后面的节点的 <span class="math inline">\(y\)</span> 值增加得越多。</p>
+<p>以此类推可得到结论，同一条链放到一起。短链放到长链前面也是比较好想的。假设有两条链，短链长度为 <span class="math inline">\(a\)</span>，长链长度为 <span class="math inline">\(b\)</span>，放置起点为 <span class="math inline">\(l\)</span>，则前短后长和钱长后短的 y 之和分别为 <span class="math inline">\(\dfrac{(l + l + a - 2) \times (a - 1) + (l + a + l + a + b - 2) \times (b - 1)} 2\)</span> 和 <span class="math inline">\(\dfrac{(l + l + b - 2) \times (b - 1) + (l + b + l + b + a - 2) \times (b - 1)} 2\)</span>（运用等差数列求和公式），解不等式可得前短后长一定更优。</p>
 <p>接下来是从链扩展到树。那么我们想到了什么？树链剖分。</p>
 <p>我们化用树剖思想，以最轻边为剖分条件，将树划分为有顺序的链，按照上述方式排列其顺序即可。</p>
 <p>此时我们记录下每个单词的直系父亲（即其最长前缀单词），在唯一序列中模拟计分操作，即可得到答案。</p>
 <hr />
-<p>为了方便，可将所有入度为 <span class="math inline">\(0\)</span>
-的点与一个虚点相连，将森林转化为树。</p>
+<p>为了方便，可将所有入度为 <span class="math inline">\(0\)</span> 的点与一个虚点相连，将森林转化为树。</p>
 <p>注意 <code>long long</code>。</p>
 <details>
 <pre class="cpp"><code>namespace XSC062 &#123;
@@ -310,7 +283,7 @@ int main() &#123;
 			<div class="post footer">
 				<div id="hitokoto">
 					<h3 id="hitokoto-title">
-						一言 - Hitokoto
+						言论
 					</h3>
 					<div id="hitokoto-content">
 					</div>

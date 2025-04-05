@@ -160,20 +160,15 @@
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
-				<p><a
-target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3820">费用流入门练习</a>。</p>
+				<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3820">费用流入门练习</a>。</p>
 <span id="more"></span>
 <hr />
 <h3 id="a.-订货">A. 订货</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3820/problem/1"
-class="uri">http://222.180.160.110:61235/contest/3820/problem/1</a></p>
-<p>这个带继承关系的模型很熟悉，想到了 <a
-target="_blank" rel="noopener" href="https://www.cnblogs.com/XSC062/p/17548925.html">猪</a>
-那一题。所以我们试着仿照这个方式来建图。</p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3820/problem/1" class="uri">http://222.180.160.110:61235/contest/3820/problem/1</a></p>
+<p>这个带继承关系的模型很熟悉，想到了 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/XSC062/p/17548925.html">猪</a> 那一题。所以我们试着仿照这个方式来建图。</p>
 <p>题目提到了单位费用，这简直就是直接把边的费用拍你脸上嘲讽。</p>
 <p>我们拉一个大源点，朝每个月连一条容量为无穷大、费用为当月购买单位费用的边，表示每个月的购买。</p>
-<p>拉一个大汇点，每个月朝它连一条容量为当月需求量、费用为 <span
-class="math inline">\(0\)</span> 的边，表示每个月的需求。</p>
+<p>拉一个大汇点，每个月朝它连一条容量为当月需求量、费用为 <span class="math inline">\(0\)</span> 的边，表示每个月的需求。</p>
 <p>再让每个月朝下一个月连一条容量为仓库容量、费用为贮存费用的边，表示继承。跑一个最小费用最大流即可。</p>
 <details>
 <pre class="cpp"><code>#define int long long
@@ -265,28 +260,14 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="b.-网络扩容">B. 网络扩容</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3820/problem/2"
-class="uri">http://222.180.160.110:61235/contest/3820/problem/2</a></p>
-<p>鉴于一道费用流不会无缘无故先让你求一遍最大流，我们先持观望态度，暂且认为最大流对题目有提示作用
-<del>而不是说这道题就是个缝合怪</del></p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3820/problem/2" class="uri">http://222.180.160.110:61235/contest/3820/problem/2</a></p>
+<p>鉴于一道费用流不会无缘无故先让你求一遍最大流，我们先持观望态度，暂且认为最大流对题目有提示作用 <del>而不是说这道题就是个缝合怪</del></p>
 <p>其实看完题我们就悟了，这怎么这么像上下界网络流那个差量网络呀，要不我们试试这么干？</p>
-<p>我们先求得普通网络中的最大流，然后每条边减去流量，就成为了一个「差量网络
-Pro」。那么我们现在就要通过扩容让该网络中的最大流变为 <span
-class="math inline">\(K\)</span>。对于扩容的操作，不难想到把每条边的边权设为正无穷，然后费用设为扩容费用。</p>
-<p>现在有了一个问题：原图中未留满的边，在现在的新网络中的残余容量应该如何处理呢？很简单，我们就把它当作已经扩过了这么多容，通过拆边操作拆出来一条容量为原图中残余容量、费用为
-<span
-class="math inline">\(0\)</span>「会员通道」，那么算法就会优先选择这条边。</p>
-<p>怎么去控制流量为 <span
-class="math inline">\(K\)</span>？联想到之前的拆边操作，我们考虑拆点。在
-<span class="math inline">\(1\)</span> 和 <span
-class="math inline">\(N\)</span> 中任选一个拆开作为新的源点 /
-汇点，新点和旧点之间的容量为 <span
-class="math inline">\(K\)</span>、费用为 <span
-class="math inline">\(0\)</span> 即可。</p>
+<p>我们先求得普通网络中的最大流，然后每条边减去流量，就成为了一个「差量网络 Pro」。那么我们现在就要通过扩容让该网络中的最大流变为 <span class="math inline">\(K\)</span>。对于扩容的操作，不难想到把每条边的边权设为正无穷，然后费用设为扩容费用。</p>
+<p>现在有了一个问题：原图中未留满的边，在现在的新网络中的残余容量应该如何处理呢？很简单，我们就把它当作已经扩过了这么多容，通过拆边操作拆出来一条容量为原图中残余容量、费用为 <span class="math inline">\(0\)</span>「会员通道」，那么算法就会优先选择这条边。</p>
+<p>怎么去控制流量为 <span class="math inline">\(K\)</span>？联想到之前的拆边操作，我们考虑拆点。在 <span class="math inline">\(1\)</span> 和 <span class="math inline">\(N\)</span> 中任选一个拆开作为新的源点 / 汇点，新点和旧点之间的容量为 <span class="math inline">\(K\)</span>、费用为 <span class="math inline">\(0\)</span> 即可。</p>
 <p>然后跑一个最小费用最大流就行。<del>该说不说题目的正解思路引导做得还挺好的</del></p>
-<p>其实注意到在跑完最大流之后，所有正向边的残余容量已经求得，只要在跑最大流时令所有边的费用为
-<span
-class="math inline">\(0\)</span>（毕竟最大流不关心费用），就可以沿用原图，只加新边再跑费用流。</p>
+<p>其实注意到在跑完最大流之后，所有正向边的残余容量已经求得，只要在跑最大流时令所有边的费用为 <span class="math inline">\(0\)</span>（毕竟最大流不关心费用），就可以沿用原图，只加新边再跑费用流。</p>
 <details>
 <pre class="cpp"><code>#define int long long
 namespace XSC062 &#123;
@@ -428,20 +409,12 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="c.-航班安排">C. 航班安排</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3820/problem/3"
-class="uri">http://222.180.160.110:61235/contest/3820/problem/3</a></p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3820/problem/3" class="uri">http://222.180.160.110:61235/contest/3820/problem/3</a></p>
 <p>很简单一个道理，时间的具体值对我们来说并不重要。能到就是能到，不能到就是不能到。</p>
 <p>边权矩阵也并不是全部有用，这条边和任务有关系吗？没有，那就当它是空气。</p>
 <p>那什么会对我们产生限制？飞机数量。故容量由飞机数量决定。什么是我们要最大化的值？收益，故我们的费用是支出。</p>
-<p>如果飞机能在一个任务结束之后，在另一个任务开始之前飞过去，那就将两个任务连边，容量为
-<span
-class="math inline">\(1\)</span>，费用为两点间花费。特别地，应将机场拆为大源点和大汇点，并在二者中任选其一拆点（和
-T2 类似），好作出 <span class="math inline">\(K\)</span>
-的流量限制。</p>
-<p>还有一个小细节，对于一个任务的流量我们也要加以约束，不然碰到流入
-<span class="math inline">\(2\)</span> 流出 <span
-class="math inline">\(2\)</span>
-这种平衡但不合法的情况就不行了，所以对于任务我们也要按老套路拆点。</p>
+<p>如果飞机能在一个任务结束之后，在另一个任务开始之前飞过去，那就将两个任务连边，容量为 <span class="math inline">\(1\)</span>，费用为两点间花费。特别地，应将机场拆为大源点和大汇点，并在二者中任选其一拆点（和 T2 类似），好作出 <span class="math inline">\(K\)</span> 的流量限制。</p>
+<p>还有一个小细节，对于一个任务的流量我们也要加以约束，不然碰到流入 <span class="math inline">\(2\)</span> 流出 <span class="math inline">\(2\)</span> 这种平衡但不合法的情况就不行了，所以对于任务我们也要按老套路拆点。</p>
 <details>
 <pre class="cpp"><code>#define int long long
 namespace XSC062 &#123;
@@ -561,35 +534,13 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="d.-修车">D. 修车</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3820/problem/4"
-class="uri">http://222.180.160.110:61235/contest/3820/problem/4</a></p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3820/problem/4" class="uri">http://222.180.160.110:61235/contest/3820/problem/4</a></p>
 <p>顾客数一定，所谓平均等待时间不过是个幌子，只需要求得最小等待总时间。</p>
-<p>技术人员不能同时修两辆车，<span class="math inline">\(M\)</span>
-的范围又这么小，不往拆点想都难。可问题来了，怎么拆呢？</p>
-<p>我一开始的想法是，用点 <span class="math inline">\((i, j)\)</span>
-表示人 <span class="math inline">\(i\)</span> 修车 <span
-class="math inline">\(j\)</span>，但是这样建图怎样也无法达到目的。</p>
-<p>于是我添加了一个维度 <span class="math inline">\(k\)</span>，用点
-<span class="math inline">\((i, j, k)\)</span> 表示人 <span
-class="math inline">\(i\)</span> 修车 <span
-class="math inline">\(j\)</span>，并且这是他修的倒数第 <span
-class="math inline">\(k\)</span>
-辆车，这样建图就轻而易举了。但接下来就面临了一个问题：这数据范围跑不过。于是乎审视我们的点，其实
-<span class="math inline">\(j\)</span> 这个维度是可以被合并的，只保留
-<span class="math inline">\((i,
-k)\)</span>，因为不可能存在两辆车同时为人 <span
-class="math inline">\(i\)</span> 的倒数第 <span
-class="math inline">\(k\)</span> 辆车。</p>
-<p>故将大源点和每辆车连边，容量为 <span
-class="math inline">\(1\)</span>，费用为 <span
-class="math inline">\(0\)</span>；将每辆车 <span
-class="math inline">\(j\)</span> 和每个 <span class="math inline">\((i,
-k)\)</span> 连边，容量为 <span class="math inline">\(1\)</span>，费用为
-<span class="math inline">\(T_{i, j}\times k\)</span>。</p>
-<p>这里有一点点费用提前计算的意思，所以就直接将每个 <span
-class="math inline">\((i, j)\)</span> 和大汇点连边，容量为 <span
-class="math inline">\(1\)</span>，费用为 <span
-class="math inline">\(0\)</span>。</p>
+<p>技术人员不能同时修两辆车，<span class="math inline">\(M\)</span> 的范围又这么小，不往拆点想都难。可问题来了，怎么拆呢？</p>
+<p>我一开始的想法是，用点 <span class="math inline">\((i, j)\)</span> 表示人 <span class="math inline">\(i\)</span> 修车 <span class="math inline">\(j\)</span>，但是这样建图怎样也无法达到目的。</p>
+<p>于是我添加了一个维度 <span class="math inline">\(k\)</span>，用点 <span class="math inline">\((i, j, k)\)</span> 表示人 <span class="math inline">\(i\)</span> 修车 <span class="math inline">\(j\)</span>，并且这是他修的倒数第 <span class="math inline">\(k\)</span> 辆车，这样建图就轻而易举了。但接下来就面临了一个问题：这数据范围跑不过。于是乎审视我们的点，其实 <span class="math inline">\(j\)</span> 这个维度是可以被合并的，只保留 <span class="math inline">\((i, k)\)</span>，因为不可能存在两辆车同时为人 <span class="math inline">\(i\)</span> 的倒数第 <span class="math inline">\(k\)</span> 辆车。</p>
+<p>故将大源点和每辆车连边，容量为 <span class="math inline">\(1\)</span>，费用为 <span class="math inline">\(0\)</span>；将每辆车 <span class="math inline">\(j\)</span> 和每个 <span class="math inline">\((i, k)\)</span> 连边，容量为 <span class="math inline">\(1\)</span>，费用为 <span class="math inline">\(T_{i, j}\times k\)</span>。</p>
+<p>这里有一点点费用提前计算的意思，所以就直接将每个 <span class="math inline">\((i, j)\)</span> 和大汇点连边，容量为 <span class="math inline">\(1\)</span>，费用为 <span class="math inline">\(0\)</span>。</p>
 <details>
 <pre class="cpp"><code>#define int long long
 namespace XSC062 &#123;
@@ -686,18 +637,9 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="e.-连连看">E. 连连看</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3820/problem/5"
-class="uri">http://222.180.160.110:61235/contest/3820/problem/5</a></p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3820/problem/5" class="uri">http://222.180.160.110:61235/contest/3820/problem/5</a></p>
 <p>样例已经告诉了我们事实：小心删数，因为会有数同时出现在多组勾股数中。</p>
-<p>还是熟悉的单点 <span class="math inline">\(1\)</span>
-流量限制，故拆点为入点和出点，入点连大源点容量为 <span
-class="math inline">\(1\)</span> 费用为 <span
-class="math inline">\(0\)</span>，出点连大汇点容量为 <span
-class="math inline">\(1\)</span> 费用为 <span
-class="math inline">\(0\)</span>，满足条件的 <span
-class="math inline">\(x\)</span> 和 <span
-class="math inline">\(y\)</span>
-我们为了不整细节就暴力地连双向边然后跑最大费用最大流。</p>
+<p>还是熟悉的单点 <span class="math inline">\(1\)</span> 流量限制，故拆点为入点和出点，入点连大源点容量为 <span class="math inline">\(1\)</span> 费用为 <span class="math inline">\(0\)</span>，出点连大汇点容量为 <span class="math inline">\(1\)</span> 费用为 <span class="math inline">\(0\)</span>，满足条件的 <span class="math inline">\(x\)</span> 和 <span class="math inline">\(y\)</span> 我们为了不整细节就暴力地连双向边然后跑最大费用最大流。</p>
 <p>由于双向边这个神必操作，最后的最大流和最大费用都会翻倍，输出的时候要减半。</p>
 <details>
 <pre class="cpp"><code>#define int long long
@@ -808,7 +750,7 @@ int main() &#123;
 			<div class="post footer">
 				<div id="hitokoto">
 					<h3 id="hitokoto-title">
-						一言 - Hitokoto
+						言论
 					</h3>
 					<div id="hitokoto-content">
 					</div>

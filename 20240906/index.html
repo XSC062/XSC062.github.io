@@ -158,45 +158,24 @@
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
-				<p>现在是 10 题。虽然看着很掉价，但是写够了 10 就改成 20
-题。以此类推，免得我摆烂（）</p>
+				<p>现在是 10 题。虽然看着很掉价，但是写够了 10 就改成 20 题。以此类推，免得我摆烂（）</p>
 <p>自用向，不写太详细，把破题点写出来就差不多了。哦哦这里的破题是动词不是名词。</p>
 <span id="more"></span>
 <hr />
 <h3 id="字符合并">1. 字符合并</h3>
-<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3736"
-class="uri">https://www.luogu.com.cn/problem/P3736</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3736" class="uri">https://www.luogu.com.cn/problem/P3736</a></p>
 <p><strong>状压</strong>，<strong>区间 DP</strong>。</p>
-<p>注意到 <span class="math inline">\(k\)</span> 只有 <span
-class="math inline">\(8\)</span>，独特的输入方式也引导我们注意到状态数为
-<span class="math inline">\(10^2\)</span>
-级别。合并的背景又让我们本能想到区间 DP，所以刚好盲猜这题是个 <span
-class="math inline">\(O(2^k\times n^2)\)</span> 的区间状压 DP。</p>
+<p>注意到 <span class="math inline">\(k\)</span> 只有 <span class="math inline">\(8\)</span>，独特的输入方式也引导我们注意到状态数为 <span class="math inline">\(10^2\)</span> 级别。合并的背景又让我们本能想到区间 DP，所以刚好盲猜这题是个 <span class="math inline">\(O(2^k\times n^2)\)</span> 的区间状压 DP。</p>
 <ul>
-<li><p>然后我觉得最神的一个地方是什么呢？最后的答案一定是一个长度小于
-<span class="math inline">\(k\)</span>
-的串，<mark>每位展开还原，可以知道，每个合并操作选取的区间互不相交。</mark></p>
-<p>看起来很蠢很显然，但这是我们 <span class="math inline">\(n^2\)</span>
-区间 DP 的基础啊（（（</p></li>
+<li><p>然后我觉得最神的一个地方是什么呢？最后的答案一定是一个长度小于 <span class="math inline">\(k\)</span> 的串，<mark>每位展开还原，可以知道，每个合并操作选取的区间互不相交。</mark></p>
+<p>看起来很蠢很显然，但这是我们 <span class="math inline">\(n^2\)</span> 区间 DP 的基础啊（（（</p></li>
 </ul>
-<p>然后我们区间 DP 套路，枚举对于 <span
-class="math inline">\([l,r]\)</span>
-最左边一位，然后就可以开始大力转移了。</p>
-<p>但是这里我们会发现，这一位原本的样子有点多，可以任何一个 <span
-class="math inline">\(1 + d\times (k-1)\)</span>，所以只能再来一层 <span
-class="math inline">\(\dfrac nk\)</span> 地枚举，极限情况是个有点难绷的
-3e9，作为正解只能说这个数据范围的提示性有点令人难评了。</p>
-<p>本来我实现着实现着把自己整懵了：<code>00000</code> 和 <code>0</code>
-压出来都是
-<code>0</code>，但二者代表的含义显然不同，又无法简单区别。但其实<mark>长度为
-<span class="math inline">\(1+d\times (k-1)\)</span> 的区间和长度为
-<span class="math inline">\(d\)</span>
-的最终结果是一一对应的，所以在我们设计的包含了区间作右端点的状态中，压出来的就是我们想要的那个。</mark></p>
+<p>然后我们区间 DP 套路，枚举对于 <span class="math inline">\([l,r]\)</span> 最左边一位，然后就可以开始大力转移了。</p>
+<p>但是这里我们会发现，这一位原本的样子有点多，可以任何一个 <span class="math inline">\(1 + d\times (k-1)\)</span>，所以只能再来一层 <span class="math inline">\(\dfrac nk\)</span> 地枚举，极限情况是个有点难绷的 3e9，作为正解只能说这个数据范围的提示性有点令人难评了。</p>
+<p>本来我实现着实现着把自己整懵了：<code>00000</code> 和 <code>0</code> 压出来都是 <code>0</code>，但二者代表的含义显然不同，又无法简单区别。但其实<mark>长度为 <span class="math inline">\(1+d\times (k-1)\)</span> 的区间和长度为 <span class="math inline">\(d\)</span> 的最终结果是一一对应的，所以在我们设计的包含了区间作右端点的状态中，压出来的就是我们想要的那个。</mark></p>
 <details>
-<p>这里的实现比<strong>所有</strong>我找到的题解都更像人打出来的。导致我想对比疗法都找不到合适的代码
-<img src="/em/lh.gif" /></p>
-<p>换言之，这最像是一份通常的区间 DP
-代码，不存在其他题解中乱七八糟的填表啊相互影响啊之类的恶心 feature。</p>
+<p>这里的实现比<strong>所有</strong>我找到的题解都更像人打出来的。导致我想对比疗法都找不到合适的代码 <img src="/em/lh.gif" /></p>
+<p>换言之，这最像是一份通常的区间 DP 代码，不存在其他题解中乱七八糟的填表啊相互影响啊之类的恶心 feature。</p>
 <p>sto rybp orz</p>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
 const int maxn = 305;
@@ -252,89 +231,35 @@ int main() &#123;
 </details>
 <hr />
 <p>其实一开始挺担心会不会因为写博客影响做题时间之类的。</p>
-<p>后来发现我可以看知乎看一个上午然后代码动都不动一下，反正不想做题的时候也不能强制让自己做题，那不如写写博客算了
-<img src="/em/lh.gif" /></p>
+<p>后来发现我可以看知乎看一个上午然后代码动都不动一下，反正不想做题的时候也不能强制让自己做题，那不如写写博客算了 <img src="/em/lh.gif" /></p>
 <hr />
 <h3 id="mod-mod-mod">2. Mod Mod Mod</h3>
-<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/889/problem/E"
-class="uri">https://codeforces.com/contest/889/problem/E</a></p>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/889/problem/E" class="uri">https://codeforces.com/contest/889/problem/E</a></p>
 <p><strong>技巧 / 特殊性质类 DP</strong>。</p>
-<p>小神题。注意到题意可以转化为，找到一个 <span
-class="math inline">\(x\)</span>，最大化：</p>
+<p>小神题。注意到题意可以转化为，找到一个 <span class="math inline">\(x\)</span>，最大化：</p>
 <p><span class="math display">\[
-x\bmod a_1 + x\bmod a_1\bmod a_2 + \cdots + x\bmod a_1\bmod
-a_2\bmod\cdots\bmod a_n.
+x\bmod a_1 + x\bmod a_1\bmod a_2 + \cdots + x\bmod a_1\bmod a_2\bmod\cdots\bmod a_n.
 \]</span></p>
-<p>简称 <span class="math inline">\(x\bmod a_1\bmod a_2\bmod \cdots\bmod
-a_i\)</span> 的值为 <span class="math inline">\(f_i\)</span>。</p>
-<p>这个时候我们不难注意到，<span class="math inline">\(f_i\)</span>
-肯定是单调不升的。形象化地，整个 <span class="math inline">\(f\)</span>
-序列肯定是由若干个单调下降的段组成的。并且，必定存在至少一个 <span
-class="math inline">\(i\)</span>，使得 <span class="math inline">\(f_i =
-a_i-1\)</span>，否则可以将所有 <span class="math inline">\(f_i\gets
-f_i+1\)</span>，同时 <span class="math inline">\(\sum f\gets (\sum f) +
-n\)</span>。</p>
-<p>这启示我们关注 <span class="math inline">\(f_i\)</span>
-的值域。假设已经确定了 <span class="math inline">\(f\)</span>
-序列的一个前缀 <span class="math inline">\(f_1\sim i\)</span>，对于任意
-<span class="math inline">\(0\le k\le
-f_{\min}\)</span>（注意由于单调不降，<span
-class="math inline">\(f_{\min} = f_i\)</span>），我们可以将所有 <span
-class="math inline">\(f_j\gets f_j-k\)</span>，得到一个新的合法的 <span
-class="math inline">\(f&#39;_{1\sim i}\)</span>。</p>
-<p>形象化地，将 <span class="math inline">\(f_{1\sim i}\)</span>
-想象为一个逐渐降低的柱状图，任意切去了一个高度的底部，并且这个高度不高于最矮的元素（即第
-<span class="math inline">\(i\)</span> 个元素）。</p>
-<p>这时候有一个很美妙的性质，就是我们<mark>对于切之前和切之后的柱状图，其
-<strong>最矮元素以上的部分</strong>
-长得完全相同</mark>。然后就是神中神之 DP
-状态设计。很难想象是在什么样的精神状态下凑出来这种神奇状态的，可能是某种我不了解的
-trick？</p>
-<p>令 <span class="math inline">\(dp_{i, j}\)</span> 表示对于前缀 <span
-class="math inline">\(f_{1, i}\)</span>，当切去的高度为 <span
-class="math inline">\(0\sim j\)</span>
-时，<strong>最矮元素以上的部分</strong> 的和都为 <span
-class="math inline">\(dp_{i, j}\)</span>。那么易得 <span
-class="math inline">\(\sum f_{1\sim i}=j\times i + dp_{i,
-j}\)</span>。</p>
-<p>考虑转移。假设已知所有 <span class="math inline">\(dp_{i - 1,
-j}\)</span>，需转移到 <span
-class="math inline">\(i\)</span>，我们有三种转移路径：</p>
+<p>简称 <span class="math inline">\(x\bmod a_1\bmod a_2\bmod \cdots\bmod a_i\)</span> 的值为 <span class="math inline">\(f_i\)</span>。</p>
+<p>这个时候我们不难注意到，<span class="math inline">\(f_i\)</span> 肯定是单调不升的。形象化地，整个 <span class="math inline">\(f\)</span> 序列肯定是由若干个单调下降的段组成的。并且，必定存在至少一个 <span class="math inline">\(i\)</span>，使得 <span class="math inline">\(f_i = a_i-1\)</span>，否则可以将所有 <span class="math inline">\(f_i\gets f_i+1\)</span>，同时 <span class="math inline">\(\sum f\gets (\sum f) + n\)</span>。</p>
+<p>这启示我们关注 <span class="math inline">\(f_i\)</span> 的值域。假设已经确定了 <span class="math inline">\(f\)</span> 序列的一个前缀 <span class="math inline">\(f_1\sim i\)</span>，对于任意 <span class="math inline">\(0\le k\le f_{\min}\)</span>（注意由于单调不降，<span class="math inline">\(f_{\min} = f_i\)</span>），我们可以将所有 <span class="math inline">\(f_j\gets f_j-k\)</span>，得到一个新的合法的 <span class="math inline">\(f&#39;_{1\sim i}\)</span>。</p>
+<p>形象化地，将 <span class="math inline">\(f_{1\sim i}\)</span> 想象为一个逐渐降低的柱状图，任意切去了一个高度的底部，并且这个高度不高于最矮的元素（即第 <span class="math inline">\(i\)</span> 个元素）。</p>
+<p>这时候有一个很美妙的性质，就是我们<mark>对于切之前和切之后的柱状图，其 <strong>最矮元素以上的部分</strong> 长得完全相同</mark>。然后就是神中神之 DP 状态设计。很难想象是在什么样的精神状态下凑出来这种神奇状态的，可能是某种我不了解的 trick？</p>
+<p>令 <span class="math inline">\(dp_{i, j}\)</span> 表示对于前缀 <span class="math inline">\(f_{1, i}\)</span>，当切去的高度为 <span class="math inline">\(0\sim j\)</span> 时，<strong>最矮元素以上的部分</strong> 的和都为 <span class="math inline">\(dp_{i, j}\)</span>。那么易得 <span class="math inline">\(\sum f_{1\sim i}=j\times i + dp_{i, j}\)</span>。</p>
+<p>考虑转移。假设已知所有 <span class="math inline">\(dp_{i - 1, j}\)</span>，需转移到 <span class="math inline">\(i\)</span>，我们有三种转移路径：</p>
 <ol type="1">
 <li><p><span class="math inline">\(j &lt; a_i\)</span>：</p>
-<p>对 <span class="math inline">\(a_i\)</span>
-取模取不动，不会产生任何影响。<span class="math inline">\(dp_{i, j}\gets
-dp_{i - 1, j}\)</span>。</p></li>
+对 <span class="math inline">\(a_i\)</span> 取模取不动，不会产生任何影响。<span class="math inline">\(dp_{i, j}\gets dp_{i - 1, j}\)</span>。</li>
 <li><p><span class="math inline">\(j\ge a_i\)</span>：</p>
 <ul>
-<li><p>让 <span class="math inline">\(i\)</span> 承担 <span
-class="math inline">\(f_i=a_i-1\)</span> 的责任。我们从 <span
-class="math inline">\(0\sim j\)</span> 中找到一个满足 <span
-class="math inline">\(j&#39;\bmod a_i=a_i-1\)</span> 的 <span
-class="math inline">\(j&#39;\)</span>，<span
-class="math inline">\(j&#39;\)</span> 肯定是越大越好，故 <span
-class="math inline">\(j&#39;=(\left\lfloor \dfrac
-{j}{a_i}\right\rfloor-1)\times a_i+(a_i-1)\)</span>。</p>
-<p>此时便有 <span class="math inline">\(dp_{i, a_i-1}\gets dp_{i - 1,
-j&#39;} + [j&#39; - (a_i-1)]\times (i-1)\)</span>。</p></li>
-<li><p>盲猜 <span class="math inline">\(0\sim i - 1\)</span> 或 <span
-class="math inline">\(i+1\sim n\)</span> 中会出现承担 <span
-class="math inline">\(f_{i&#39;}=a_{i&#39;-1}\)</span> 的 <span
-class="math inline">\(i&#39;\)</span>，故按照 <span
-class="math inline">\(j\)</span> 取最大来转移。</p>
-<p>此时有 <span class="math inline">\(dp_{i, j\bmod
-a_i}=dp_{i-1,j}+(j-j\bmod a_i)\times (i-1)\)</span>。</p></li>
+<li><p>让 <span class="math inline">\(i\)</span> 承担 <span class="math inline">\(f_i=a_i-1\)</span> 的责任。我们从 <span class="math inline">\(0\sim j\)</span> 中找到一个满足 <span class="math inline">\(j&#39;\bmod a_i=a_i-1\)</span> 的 <span class="math inline">\(j&#39;\)</span>，<span class="math inline">\(j&#39;\)</span> 肯定是越大越好，故 <span class="math inline">\(j&#39;=(\left\lfloor \dfrac {j}{a_i}\right\rfloor-1)\times a_i+(a_i-1)\)</span>。</p>
+此时便有 <span class="math inline">\(dp_{i, a_i-1}\gets dp_{i - 1, j&#39;} + [j&#39; - (a_i-1)]\times (i-1)\)</span>。</li>
+<li><p>盲猜 <span class="math inline">\(0\sim i - 1\)</span> 或 <span class="math inline">\(i+1\sim n\)</span> 中会出现承担 <span class="math inline">\(f_{i&#39;}=a_{i&#39;-1}\)</span> 的 <span class="math inline">\(i&#39;\)</span>，故按照 <span class="math inline">\(j\)</span> 取最大来转移。</p>
+<p>此时有 <span class="math inline">\(dp_{i, j\bmod a_i}=dp_{i-1,j}+(j-j\bmod a_i)\times (i-1)\)</span>。</p></li>
 </ul></li>
 </ol>
-<p>答案即为 <span class="math inline">\(\max\{j\times n+dp_{n,
-j}\}\)</span>。由于不存在 <span class="math inline">\(f_i=a_i-1\)</span>
-的 <span class="math inline">\(f\)</span>
-肯定比存在的要劣，所以我们肯定选到的是正确的答案。</p>
-<p>注意到每个 <span class="math inline">\(i\)</span> 只会新增 <span
-class="math inline">\(a_i-1\)</span> 一个状态，故状态总数为 <span
-class="math inline">\(O(n)\)</span>。把 <span
-class="math inline">\(dp\)</span> 开成 map 就可以 <span
-class="math inline">\(O(n\log n)\)</span> 地解决问题。</p>
+<p>答案即为 <span class="math inline">\(\max\{j\times n+dp_{n, j}\}\)</span>。由于不存在 <span class="math inline">\(f_i=a_i-1\)</span> 的 <span class="math inline">\(f\)</span> 肯定比存在的要劣，所以我们肯定选到的是正确的答案。</p>
+<p>注意到每个 <span class="math inline">\(i\)</span> 只会新增 <span class="math inline">\(a_i-1\)</span> 一个状态，故状态总数为 <span class="math inline">\(O(n)\)</span>。把 <span class="math inline">\(dp\)</span> 开成 map 就可以 <span class="math inline">\(O(n\log n)\)</span> 地解决问题。</p>
 <details>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
 int main() &#123;
@@ -376,27 +301,11 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="stalinsort-algorithm">3. StalinSort Algorithm</h3>
-<p><a target="_blank" rel="noopener" href="https://qoj.ac/problem/1456"
-class="uri">https://qoj.ac/problem/1456</a></p>
+<p><a target="_blank" rel="noopener" href="https://qoj.ac/problem/1456" class="uri">https://qoj.ac/problem/1456</a></p>
 <p>你会发现<mark>删最少 = 留最多</mark>。</p>
-<p>考虑 <span class="math inline">\(i\)</span> 能够转移到的 <span
-class="math inline">\(j(j&gt;i)\)</span> 需满足的条件。若令 <span
-class="math inline">\(nex_p\)</span> 表示 <span
-class="math inline">\(p\)</span> 之后第一个值比 <span
-class="math inline">\(a_p\)</span> 大的元素，则 <span
-class="math inline">\(j\in [nex_i, nex_{nex_i})\)</span> 且 <span
-class="math inline">\(a_j&gt;a_i\)</span>。</p>
-<p><mark>赛时误认为右端点为 <span class="math inline">\(i\)</span>
-之后第二个值比 <span class="math inline">\(a_i\)</span>
-大的元素，导致完全寄掉。</mark></p>
-<p>时间复杂度 <span
-class="math inline">\(O(n^2)\)</span>，考虑优化。<mark>注意到如果只有
-<span class="math inline">\(j\in [nex_i, nex_{nex_i})\)</span>
-这个条件很容易用线段树维护，考虑消去 <span
-class="math inline">\(a_j&gt;a_i\)</span> 的影响。故考虑按 <span
-class="math inline">\(a\)</span> <strong>从小到大</strong> 的顺序选取
-<span class="math inline">\(i\)</span>，因为当前最小的 <span
-class="math inline">\(i\)</span> 一定已经被刷完表了</mark>。</p>
+<p>考虑 <span class="math inline">\(i\)</span> 能够转移到的 <span class="math inline">\(j(j&gt;i)\)</span> 需满足的条件。若令 <span class="math inline">\(nex_p\)</span> 表示 <span class="math inline">\(p\)</span> 之后第一个值比 <span class="math inline">\(a_p\)</span> 大的元素，则 <span class="math inline">\(j\in [nex_i, nex_{nex_i})\)</span> 且 <span class="math inline">\(a_j&gt;a_i\)</span>。</p>
+<p><mark>赛时误认为右端点为 <span class="math inline">\(i\)</span> 之后第二个值比 <span class="math inline">\(a_i\)</span> 大的元素，导致完全寄掉。</mark></p>
+<p>时间复杂度 <span class="math inline">\(O(n^2)\)</span>，考虑优化。<mark>注意到如果只有 <span class="math inline">\(j\in [nex_i, nex_{nex_i})\)</span> 这个条件很容易用线段树维护，考虑消去 <span class="math inline">\(a_j&gt;a_i\)</span> 的影响。故考虑按 <span class="math inline">\(a\)</span> <strong>从小到大</strong> 的顺序选取 <span class="math inline">\(i\)</span>，因为当前最小的 <span class="math inline">\(i\)</span> 一定已经被刷完表了</mark>。</p>
 <p>时间复杂度 <span class="math inline">\(O(n\log n)\)</span>。</p>
 <details>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
@@ -498,59 +407,27 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="merge-triplets">4. Merge Triplets</h3>
-<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/agc043/tasks/agc043_d"
-class="uri">https://atcoder.jp/contests/agc043/tasks/agc043_d</a></p>
+<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/agc043/tasks/agc043_d" class="uri">https://atcoder.jp/contests/agc043/tasks/agc043_d</a></p>
 <p>由于要对合法的最终序列进行计数，考虑最终序列的性质。</p>
-<p>若序列中 <span
-class="math inline">\(a_{i+1}&lt;a_i\)</span>，则说明在某一组中，值为
-<span class="math inline">\(a_i\)</span> 的元素下一个就是 <span
-class="math inline">\(a_{i+1}\)</span>。否则，因 <span
-class="math inline">\(a_{i+1}\)</span> 可选且比 <span
-class="math inline">\(a_i\)</span> 小，<span
-class="math inline">\(a_{i+1}\)</span> 应排在 <span
-class="math inline">\(a_i\)</span> 前面。</p>
-<p>否则，<span class="math inline">\(a_{i+1}\)</span> 既可以与 <span
-class="math inline">\(a_i\)</span> 不在同一组，也可以是 <span
-class="math inline">\(a_i\)</span> 的下一个元素。</p>
-<p>一组最多三个元素，也就是说，不能出现 <span
-class="math inline">\(a_i&gt;a_{i+1},a_{i+2},a_{i+3}\)</span> 的情况。而
-<span class="math inline">\(N=1\)</span> 时序列长度只有 <span
-class="math inline">\(3\)</span>，这就是为什么样例一的答案为 <span
-class="math inline">\(3!\)</span>。</p>
-<p>但这个限制并不能排除所有非法情况。<span
-class="math inline">\(N=2\)</span> 时暴搜我们目前限制下的解，共有 276
-个，比答案中的 261 个要多，说明包含了其他非法解。</p>
-<p>暴搜输出并观察，易得这 15 个非法序列即为满足目前限制且存在 <span
-class="math inline">\(3\)</span> 个 <span
-class="math inline">\(i\)</span>，满足 <span
-class="math inline">\(a_i&gt;a_{i+1}\)</span> 且 <span
-class="math inline">\(a_i&lt;a_{i+2}\)</span>
-的所有序列，<mark>由前面的推导，必须分为三个长度为 2
-的组，而我们要求的是长度为 3
-的组。显然无法用前者组合得到后者</mark>。</p>
-<p>在我们第一个条件的限制下，必须被分到同一组的数的连续长度，只有 <span
-class="math inline">\(1,2,3\)</span> 三种。而：</p>
+<p>若序列中 <span class="math inline">\(a_{i+1}&lt;a_i\)</span>，则说明在某一组中，值为 <span class="math inline">\(a_i\)</span> 的元素下一个就是 <span class="math inline">\(a_{i+1}\)</span>。否则，因 <span class="math inline">\(a_{i+1}\)</span> 可选且比 <span class="math inline">\(a_i\)</span> 小，<span class="math inline">\(a_{i+1}\)</span> 应排在 <span class="math inline">\(a_i\)</span> 前面。</p>
+<p>否则，<span class="math inline">\(a_{i+1}\)</span> 既可以与 <span class="math inline">\(a_i\)</span> 不在同一组，也可以是 <span class="math inline">\(a_i\)</span> 的下一个元素。</p>
+<p>一组最多三个元素，也就是说，不能出现 <span class="math inline">\(a_i&gt;a_{i+1},a_{i+2},a_{i+3}\)</span> 的情况。而 <span class="math inline">\(N=1\)</span> 时序列长度只有 <span class="math inline">\(3\)</span>，这就是为什么样例一的答案为 <span class="math inline">\(3!\)</span>。</p>
+<p>但这个限制并不能排除所有非法情况。<span class="math inline">\(N=2\)</span> 时暴搜我们目前限制下的解，共有 276 个，比答案中的 261 个要多，说明包含了其他非法解。</p>
+<p>暴搜输出并观察，易得这 15 个非法序列即为满足目前限制且存在 <span class="math inline">\(3\)</span> 个 <span class="math inline">\(i\)</span>，满足 <span class="math inline">\(a_i&gt;a_{i+1}\)</span> 且 <span class="math inline">\(a_i&lt;a_{i+2}\)</span> 的所有序列，<mark>由前面的推导，必须分为三个长度为 2 的组，而我们要求的是长度为 3 的组。显然无法用前者组合得到后者</mark>。</p>
+<p>在我们第一个条件的限制下，必须被分到同一组的数的连续长度，只有 <span class="math inline">\(1,2,3\)</span> 三种。而：</p>
 <ul>
 <li>长度为 3 的对答案合法性无影响；</li>
 <li>而长度为 1 的既可以和 2 组为一组，也可以和其他两个 1 组为一组；</li>
 <li>长度为 2 的只能和 1 组成一组。</li>
 </ul>
-<p><mark>这时，我们发现所有限制都指向长度为 2 的段，其总个数不能比长度为
-1 的段多。</mark></p>
+<p><mark>这时，我们发现所有限制都指向长度为 2 的段，其总个数不能比长度为 1 的段多。</mark></p>
 <p>于是乎，上述限制可总结为两点：</p>
 <ol type="1">
-<li>若令所有满足 <span class="math inline">\(a_l&gt;\max\{a_{l\sim
-r}\}\)</span>
-的极大区间为一段（易证每段互不重合且覆盖全序列），那么其长度不能超过
-3。</li>
+<li>若令所有满足 <span class="math inline">\(a_l&gt;\max\{a_{l\sim r}\}\)</span> 的极大区间为一段（易证每段互不重合且覆盖全序列），那么其长度不能超过 3。</li>
 <li>其中，长度为 2 的个数不能比长度为 1 的个数多。</li>
 </ol>
-<p><mark>令 <span class="math inline">\(f_{i, j}\)</span>
-表示若当前枚举的最后一段右端点为 <span
-class="math inline">\(i\)</span>，长度为 1 的段比长度为 2 的段多 <span
-class="math inline">\(j\)</span> 的方案数。</mark></p>
-<p>最后答案即为 <span class="math inline">\(\sum\limits_{j=0}^n f_{i,
-j}\)</span>。</p>
+<p><mark>令 <span class="math inline">\(f_{i, j}\)</span> 表示若当前枚举的最后一段右端点为 <span class="math inline">\(i\)</span>，长度为 1 的段比长度为 2 的段多 <span class="math inline">\(j\)</span> 的方案数。</mark></p>
+<p>最后答案即为 <span class="math inline">\(\sum\limits_{j=0}^n f_{i, j}\)</span>。</p>
 <details>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
 int main() &#123;
@@ -584,25 +461,11 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="runaway-quail">5. Runaway Quail</h3>
-<p><a target="_blank" rel="noopener" href="https://qoj.ac/problem/5978"
-class="uri">https://qoj.ac/problem/5978</a></p>
+<p><a target="_blank" rel="noopener" href="https://qoj.ac/problem/5978" class="uri">https://qoj.ac/problem/5978</a></p>
 <p>容易发现鸡的奔跑方向从始至终不会变，如果我们要从往左追变成往右追，显而易见地我们会<mark>在追上右边第一只鸡前经过原点</mark>，反之同理。</p>
-<p>那么有一个很神奇的状态设计，设 <span
-class="math inline">\(f_{i,j}\)</span> 为追上了左边速度第 <span
-class="math inline">\(1\sim i - 1\)</span> 大的所有鸡和右边速度第 <span
-class="math inline">\(1\sim j - 1\)</span>
-大的所有鸡，然后跑回原点的最小时间，这样我们就不用记录这个非常难记录的当前位置信息，对于速度排名
-<span class="math inline">\(\ge i,j\)</span>
-的所有鸡，当前是否追上我们并不关心——<mark>如果其位置比较远，那么我们会在后续转移中再考虑；如果其位置比较近，在解决速度排名
-<span class="math inline">\(&lt;i,j\)</span>
-的鸡时就已经抓住</mark>。</p>
-<p><mark>我们 <span class="math inline">\(\mathcal O(n)\)</span>
-枚举上一次反向是在抓住哪一只鸡时，然后让中间全部同向跑即可</mark>。</p>
-<p>也就是说，假设我们要用 <span class="math inline">\(f_{i,j}\)</span>
-更新 <span class="math inline">\(f_{k,j}\)</span>（<span
-class="math inline">\(k&lt;i\)</span>），那么只需要更新抓住速度排名
-<span class="math inline">\(i\sim k+1\)</span>
-中跑得最远的一只鸡所需额外时间。按速度排序后可以线性算代价。</p>
+<p>那么有一个很神奇的状态设计，设 <span class="math inline">\(f_{i,j}\)</span> 为追上了左边速度第 <span class="math inline">\(1\sim i - 1\)</span> 大的所有鸡和右边速度第 <span class="math inline">\(1\sim j - 1\)</span> 大的所有鸡，然后跑回原点的最小时间，这样我们就不用记录这个非常难记录的当前位置信息，对于速度排名 <span class="math inline">\(\ge i,j\)</span> 的所有鸡，当前是否追上我们并不关心——<mark>如果其位置比较远，那么我们会在后续转移中再考虑；如果其位置比较近，在解决速度排名 <span class="math inline">\(&lt;i,j\)</span> 的鸡时就已经抓住</mark>。</p>
+<p><mark>我们 <span class="math inline">\(\mathcal O(n)\)</span> 枚举上一次反向是在抓住哪一只鸡时，然后让中间全部同向跑即可</mark>。</p>
+<p>也就是说，假设我们要用 <span class="math inline">\(f_{i,j}\)</span> 更新 <span class="math inline">\(f_{k,j}\)</span>（<span class="math inline">\(k&lt;i\)</span>），那么只需要更新抓住速度排名 <span class="math inline">\(i\sim k+1\)</span> 中跑得最远的一只鸡所需额外时间。按速度排序后可以线性算代价。</p>
 <details>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
 const long double eps = 1e-12;
@@ -673,7 +536,7 @@ int main() &#123;
 			<div class="post footer">
 				<div id="hitokoto">
 					<h3 id="hitokoto-title">
-						一言 - Hitokoto
+						言论
 					</h3>
 					<div id="hitokoto-content">
 					</div>

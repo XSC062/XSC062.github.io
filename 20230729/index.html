@@ -162,9 +162,7 @@
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
-				<p>Solution to <a
-target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3825/problem/7">BZOJ2406
-矩阵</a>。</p>
+				<p>Solution to <a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3825/problem/7">BZOJ2406 矩阵</a>。</p>
 <span id="more"></span>
 <hr />
 <blockquote>
@@ -174,38 +172,20 @@ target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3825/p
 <p>此时无声胜有声。</p>
 <hr />
 <h3 id="f.bzoj2406矩阵">F.「BZOJ2406」矩阵</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3825/problem/7"
-class="uri">http://222.180.160.110:61235/contest/3825/problem/7</a></p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3825/problem/7" class="uri">http://222.180.160.110:61235/contest/3825/problem/7</a></p>
 <p>这是头一次见识到把矩阵和网络流结合在一起的题目。不过这种处理方式也是我们在学习二分图时的常客了：把行和列连边表示某一元素。</p>
-<p>我们发现 <span class="math inline">\(B_{i, j}\)</span>
-有给定的上下界，故我们考虑 <strong>上下界网络流</strong>。那怎么去表示
-<span class="math inline">\(B_{i, j}\)</span>
-呢？这就要联系到我们刚刚说过的连边方式：用边 <span
-class="math inline">\(i\to j\)</span> 的流量来表示 <span
-class="math inline">\(B_{i, j}\)</span>，有 <span
-class="math inline">\([L, R]\)</span> 的上下界。</p>
-<p>可是我们除了 <span class="math inline">\([L,R]\)</span>
-的限制，还有最大值这个条件呀，怎么办呢？</p>
-<p>注意到题目要求最大的最小，自然想到二分答案。设答案为 <span
-class="math inline">\(x\)</span>，则我们需要保证每行每列的答案都 <span
-class="math inline">\(\le
-x\)</span>。每行每列，这刚好是我们的建点方式。这对点本身作出了要求，这套路我们熟，让大源点向行连边、列向大汇点连边就好。</p>
-<p>那么这些边的上下界怎么办呢？我们已知 <span
-class="math inline">\(|S_A-S_B|\le x\)</span>，那么变形得：</p>
+<p>我们发现 <span class="math inline">\(B_{i, j}\)</span> 有给定的上下界，故我们考虑 <strong>上下界网络流</strong>。那怎么去表示 <span class="math inline">\(B_{i, j}\)</span> 呢？这就要联系到我们刚刚说过的连边方式：用边 <span class="math inline">\(i\to j\)</span> 的流量来表示 <span class="math inline">\(B_{i, j}\)</span>，有 <span class="math inline">\([L, R]\)</span> 的上下界。</p>
+<p>可是我们除了 <span class="math inline">\([L,R]\)</span> 的限制，还有最大值这个条件呀，怎么办呢？</p>
+<p>注意到题目要求最大的最小，自然想到二分答案。设答案为 <span class="math inline">\(x\)</span>，则我们需要保证每行每列的答案都 <span class="math inline">\(\le x\)</span>。每行每列，这刚好是我们的建点方式。这对点本身作出了要求，这套路我们熟，让大源点向行连边、列向大汇点连边就好。</p>
+<p>那么这些边的上下界怎么办呢？我们已知 <span class="math inline">\(|S_A-S_B|\le x\)</span>，那么变形得：</p>
 <p><span class="math display">\[
 \begin{cases}
 S_B\ge S_A-x &amp;(S_B \le S_A) \\
 S_B\le S_A+x &amp;(S_B \ge S_A)
 \end{cases}
 \]</span></p>
-<p>照理来说，两行的符号相反，我们现在已经得到了一个具有对称美的上下界：<span
-class="math inline">\(S_A-x\le S_B\le
-S_A+x\)</span>，就应该速速连边了，可是我怎么看都觉得不舒坦：这个不等式可是带条件的，就这么直接拿来做上下界真的没问题吗？</p>
-<p><del>答案是没问题，因为我看的题解是这么写的</del>
-本着探索求真精神，我们考虑尊重原不等式（因为原不等式的每一行刚好也有两个相反的符号），将这些边拆成两条，一条的上下界是
-<span class="math inline">\([S_A-x, S_A]\)</span>，另一条是 <span
-class="math inline">\([S_A,S_A+x]\)</span>。6。我明白题解为什么这么写了，一个的下界就是另一个的上界，那直接合并不就行了，这个
-naive trick 题解都不屑于写出来。</p>
+<p>照理来说，两行的符号相反，我们现在已经得到了一个具有对称美的上下界：<span class="math inline">\(S_A-x\le S_B\le S_A+x\)</span>，就应该速速连边了，可是我怎么看都觉得不舒坦：这个不等式可是带条件的，就这么直接拿来做上下界真的没问题吗？</p>
+<p><del>答案是没问题，因为我看的题解是这么写的</del> 本着探索求真精神，我们考虑尊重原不等式（因为原不等式的每一行刚好也有两个相反的符号），将这些边拆成两条，一条的上下界是 <span class="math inline">\([S_A-x, S_A]\)</span>，另一条是 <span class="math inline">\([S_A,S_A+x]\)</span>。6。我明白题解为什么这么写了，一个的下界就是另一个的上界，那直接合并不就行了，这个 naive trick 题解都不屑于写出来。</p>
 <p>然后跑个可行流就可以了。注意要保证边的下界为非负。</p>
 <details>
 <pre class="cpp"><code>#define int long long
@@ -344,7 +324,7 @@ int main() &#123;
 			<div class="post footer">
 				<div id="hitokoto">
 					<h3 id="hitokoto-title">
-						一言 - Hitokoto
+						言论
 					</h3>
 					<div id="hitokoto-content">
 					</div>

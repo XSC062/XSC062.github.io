@@ -160,80 +160,20 @@
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
-				<p>Sotution to <a
-target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/258/C">CF258C Little
-Elephant and LCM</a>。</p>
+				<p>Sotution to <a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/258/C">CF258C Little Elephant and LCM</a>。</p>
 <span id="more"></span>
 <hr />
-<p>0#：那么这个 pn 可以等于什么？它只能等于 pm。（露出看到 plmm
-一般的猥琐坏笑）</p>
+<p>0#：那么这个 pn 可以等于什么？它只能等于 pm。（露出看到 plmm 一般的猥琐坏笑）</p>
 <hr />
-<p>方便起见，下面 <span class="math inline">\(b_{\text{lcm}}\)</span>
-的意思就是 <span
-class="math inline">\(\text{lcm}\{b_1,b_2,\cdots,b_n\}\)</span>，<span
-class="math inline">\(\max\)</span> 什么的也同理。</p>
-<p>首先我们都能反应过来，如果 <span
-class="math inline">\(b_{\text{lcm}}=b_{\max}\)</span>，那么 <span
-class="math inline">\(b\)</span> 中的最大值就得是 <span
-class="math inline">\(b_{\text {lcm}}\)</span>，而其他元素都得是 <span
-class="math inline">\(b_{\max}\)</span> 的因数。</p>
-<p>既然涉及到求 <span class="math inline">\(b_{\max}\)</span>
-的因数，那我们势必避免不了枚举 <span
-class="math inline">\(b_{\max}\)</span>。我一开始陷入了一个
-trick：我并不知道 <span class="math inline">\(b_{\max}\)</span>
-应该处于哪一个位置。但其实这不重要，它对我们最后的方案没有影响，有影响的是「有多少个位置可以取到当前枚举的
-<span class="math inline">\(b_{\max}\)</span>」。</p>
-<p>对于当前枚举的 <span class="math inline">\(b_{\max}\)</span>（假设为
-<span class="math inline">\(k\)</span>），我们找到它的所有因数 <span
-class="math inline">\(p_1\sim
-p_m\)</span>，按从小到大的顺序排列。对于一个 <span
-class="math inline">\(a_i\)</span>，当且仅当 <span
-class="math inline">\(a_i\ge p_j\)</span> 时，<span
-class="math inline">\(a_i\)</span> 可以选择 <span
-class="math inline">\(p_j\)</span>。那么我们找到 <span
-class="math inline">\(a_i\)</span> 可以选到的最大的 <span
-class="math inline">\(p_j\)</span>，此时 <span
-class="math inline">\(a_i\)</span> 的选择就是 <span
-class="math inline">\(p_1\sim p_j\)</span>，共 <span
-class="math inline">\(j\)</span> 种。</p>
-<p>那么我们在外面已经有一层枚举 <span class="math inline">\(k\)</span>
-的循环的前提下，再遍历 <span class="math inline">\(a\)</span>
-数组无疑是会起飞的，我们考虑倒过来，遍历 <span
-class="math inline">\(p\)</span>，对于每个 <span
-class="math inline">\(p_j\)</span>，找到它是多少个 <span
-class="math inline">\(a_i\)</span> 的最大选择（假设为 <span
-class="math inline">\(x_j\)</span>），那么对于 <span
-class="math inline">\(p_j\)</span>，它贡献的答案就是 <span
-class="math inline">\(j^{x_j}\)</span>。</p>
-<p><span class="math inline">\(x_j\)</span>
-的计算也不难，我们用两个二分找到满足 <span class="math inline">\(p_j\le
-a_i &lt; p_j + 1\)</span> 的 <span class="math inline">\(a_i\)</span>
-数量就可以了。那么总方案数就是 <span class="math inline">\(\prod
-j^{x_j}\)</span>。</p>
-<p>但是别忘了还有 <span class="math inline">\(k\)</span> 为 <span
-class="math inline">\(b_{\max}\)</span> 的限制。找到 <span
-class="math inline">\(x_m\)</span>，怎么去满足至少有一个 <span
-class="math inline">\(a_i=k\)</span>
-呢？一个微型容斥，用总方案数减去一个 <span
-class="math inline">\(k\)</span>
-都没有的方案数。那么就规定了每个可以取到 <span
-class="math inline">\(k\)</span> 的数都必须不取 <span
-class="math inline">\(k\)</span>，本来有 <span
-class="math inline">\(m\)</span> 种选择，现在只剩下 <span
-class="math inline">\(m−1\)</span> 种，所以答案就是 <span
-class="math inline">\((m−1)^{x_m}\)</span>，容斥后为 <span
-class="math inline">\(m^{x_m}−(m−1)^{x_m}\)</span>。</p>
-<p>对于 <span class="math inline">\(b_{\max}=k\)</span>，最终结果为
-<span class="math inline">\((\prod\limits_{j=1}^{m−1}j^{x_j})\times
-(m^{x_m}−(m−1)^{x_m})\)</span>。加法原理把所有 <span
-class="math inline">\(k\)</span> 的情况加起来即可。</p>
-<p>对于时间复杂度，枚举 <span class="math inline">\(k\)</span> 是 <span
-class="math inline">\(O(V)\)</span> 的，找因数是 <span
-class="math inline">\(O(\sqrt V)\)</span> 的，枚举 <span
-class="math inline">\(p_j\)</span> 是 <span class="math inline">\(\log
-V\)</span> 的，二分是 <span class="math inline">\(\log n\)</span>
-的。所以最终时间复杂度为 <span class="math inline">\(O(V\times
-\max\{\sqrt V,\log V\times \log n\})\)</span>。</p>
+<p>方便起见，下面 <span class="math inline">\(b_{\text{lcm}}\)</span> 的意思就是 <span class="math inline">\(\text{lcm}\{b_1,b_2,\cdots,b_n\}\)</span>，<span class="math inline">\(\max\)</span> 什么的也同理。</p>
+<p>首先我们都能反应过来，如果 <span class="math inline">\(b_{\text{lcm}}=b_{\max}\)</span>，那么 <span class="math inline">\(b\)</span> 中的最大值就得是 <span class="math inline">\(b_{\text {lcm}}\)</span>，而其他元素都得是 <span class="math inline">\(b_{\max}\)</span> 的因数。</p>
+<p>既然涉及到求 <span class="math inline">\(b_{\max}\)</span> 的因数，那我们势必避免不了枚举 <span class="math inline">\(b_{\max}\)</span>。我一开始陷入了一个 trick：我并不知道 <span class="math inline">\(b_{\max}\)</span> 应该处于哪一个位置。但其实这不重要，它对我们最后的方案没有影响，有影响的是「有多少个位置可以取到当前枚举的 <span class="math inline">\(b_{\max}\)</span>」。</p>
+<p>对于当前枚举的 <span class="math inline">\(b_{\max}\)</span>（假设为 <span class="math inline">\(k\)</span>），我们找到它的所有因数 <span class="math inline">\(p_1\sim p_m\)</span>，按从小到大的顺序排列。对于一个 <span class="math inline">\(a_i\)</span>，当且仅当 <span class="math inline">\(a_i\ge p_j\)</span> 时，<span class="math inline">\(a_i\)</span> 可以选择 <span class="math inline">\(p_j\)</span>。那么我们找到 <span class="math inline">\(a_i\)</span> 可以选到的最大的 <span class="math inline">\(p_j\)</span>，此时 <span class="math inline">\(a_i\)</span> 的选择就是 <span class="math inline">\(p_1\sim p_j\)</span>，共 <span class="math inline">\(j\)</span> 种。</p>
+<p>那么我们在外面已经有一层枚举 <span class="math inline">\(k\)</span> 的循环的前提下，再遍历 <span class="math inline">\(a\)</span> 数组无疑是会起飞的，我们考虑倒过来，遍历 <span class="math inline">\(p\)</span>，对于每个 <span class="math inline">\(p_j\)</span>，找到它是多少个 <span class="math inline">\(a_i\)</span> 的最大选择（假设为 <span class="math inline">\(x_j\)</span>），那么对于 <span class="math inline">\(p_j\)</span>，它贡献的答案就是 <span class="math inline">\(j^{x_j}\)</span>。</p>
+<p><span class="math inline">\(x_j\)</span> 的计算也不难，我们用两个二分找到满足 <span class="math inline">\(p_j\le a_i &lt; p_j + 1\)</span> 的 <span class="math inline">\(a_i\)</span> 数量就可以了。那么总方案数就是 <span class="math inline">\(\prod j^{x_j}\)</span>。</p>
+<p>但是别忘了还有 <span class="math inline">\(k\)</span> 为 <span class="math inline">\(b_{\max}\)</span> 的限制。找到 <span class="math inline">\(x_m\)</span>，怎么去满足至少有一个 <span class="math inline">\(a_i=k\)</span> 呢？一个微型容斥，用总方案数减去一个 <span class="math inline">\(k\)</span> 都没有的方案数。那么就规定了每个可以取到 <span class="math inline">\(k\)</span> 的数都必须不取 <span class="math inline">\(k\)</span>，本来有 <span class="math inline">\(m\)</span> 种选择，现在只剩下 <span class="math inline">\(m−1\)</span> 种，所以答案就是 <span class="math inline">\((m−1)^{x_m}\)</span>，容斥后为 <span class="math inline">\(m^{x_m}−(m−1)^{x_m}\)</span>。</p>
+<p>对于 <span class="math inline">\(b_{\max}=k\)</span>，最终结果为 <span class="math inline">\((\prod\limits_{j=1}^{m−1}j^{x_j})\times (m^{x_m}−(m−1)^{x_m})\)</span>。加法原理把所有 <span class="math inline">\(k\)</span> 的情况加起来即可。</p>
+<p>对于时间复杂度，枚举 <span class="math inline">\(k\)</span> 是 <span class="math inline">\(O(V)\)</span> 的，找因数是 <span class="math inline">\(O(\sqrt V)\)</span> 的，枚举 <span class="math inline">\(p_j\)</span> 是 <span class="math inline">\(\log V\)</span> 的，二分是 <span class="math inline">\(\log n\)</span> 的。所以最终时间复杂度为 <span class="math inline">\(O(V\times \max\{\sqrt V,\log V\times \log n\})\)</span>。</p>
 <details>
 <pre class="cpp"><code>#define int long long
 namespace XSC062 &#123;
@@ -293,7 +233,7 @@ int main() &#123;
 			<div class="post footer">
 				<div id="hitokoto">
 					<h3 id="hitokoto-title">
-						一言 - Hitokoto
+						言论
 					</h3>
 					<div id="hitokoto-content">
 					</div>

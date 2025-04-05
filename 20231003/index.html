@@ -168,56 +168,21 @@
 <p>哈哈哈，我自找的。以此为证，A 一道题磕一片！！！</p>
 <hr />
 <h3 id="a.-修改序列">A. 修改序列</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4268/problem/1"
-class="uri">http://222.180.160.110:61235/contest/4268/problem/1</a></p>
-<p>注意到一增一减，全数列的和 <span class="math inline">\(s\)</span>
-不变，考虑这一点带来的提示。</p>
-<p>假设最后要求一部分数为 <span
-class="math inline">\(p\)</span>，另一部分为 <span
-class="math inline">\(p+1\)</span>，那么有 <span class="math inline">\(p
-= \lfloor \dfrac sn \rfloor\)</span>，<span
-class="math inline">\(p+1\)</span> 的数量 <span
-class="math inline">\(c_r=s\bmod n\)</span>，<span
-class="math inline">\(p\)</span> 的数量 <span
-class="math inline">\(c_l=n-c_r\)</span>。</p>
-<p>那么我们让 <span class="math inline">\(\le p\)</span> 的变成 <span
-class="math inline">\(p\)</span>，<span class="math inline">\(\ge p +
-1\)</span> 的变成 <span class="math inline">\(p +
-1\)</span>。直接求两数距离，最后将总和除以二即为答案、</p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4268/problem/1" class="uri">http://222.180.160.110:61235/contest/4268/problem/1</a></p>
+<p>注意到一增一减，全数列的和 <span class="math inline">\(s\)</span> 不变，考虑这一点带来的提示。</p>
+<p>假设最后要求一部分数为 <span class="math inline">\(p\)</span>，另一部分为 <span class="math inline">\(p+1\)</span>，那么有 <span class="math inline">\(p = \lfloor \dfrac sn \rfloor\)</span>，<span class="math inline">\(p+1\)</span> 的数量 <span class="math inline">\(c_r=s\bmod n\)</span>，<span class="math inline">\(p\)</span> 的数量 <span class="math inline">\(c_l=n-c_r\)</span>。</p>
+<p>那么我们让 <span class="math inline">\(\le p\)</span> 的变成 <span class="math inline">\(p\)</span>，<span class="math inline">\(\ge p + 1\)</span> 的变成 <span class="math inline">\(p + 1\)</span>。直接求两数距离，最后将总和除以二即为答案、</p>
 <details>
-<summary>
-正确性证明…
-</summary>
+<p><summary>正确性证明…</summary></p>
 <p>这样做的最优性毫无疑问，问题无非就在于这么做的正确性，换言之，为什么一定能找到合法的操作序列还原我们的求解过程。</p>
-<p>将原数列分为两部分，数值 <span class="math inline">\(\le p\)</span>
-的（记为 <span class="math inline">\(X\)</span>）和数值 <span
-class="math inline">\(\ge p + 1\)</span> 的（记为 <span
-class="math inline">\(Y\)</span>）。</p>
-<p>再把我们的目标状态分为两部分，数值 <span class="math inline">\(=
-p\)</span> 的（记为 <span class="math inline">\(A\)</span>）和 数值
-<span class="math inline">\(=p + 1\)</span> 的（记为 <span
-class="math inline">\(B\)</span>）。</p>
-<p>那么有 <span
-class="math inline">\(\begin{cases}X+Y=s\\A+B=s\end{cases}\)</span>，由等式的基本性质得
-<span class="math inline">\(X-A+Y-B = 0\)</span>，移项得 <span
-class="math inline">\(Y-B=A-X\)</span>。也就是说，<span
-class="math inline">\(Y\)</span> 部分与 <span
-class="math inline">\(p+1\)</span> 的差的总和正好等于 <span
-class="math inline">\(X\)</span> 部分与 <span
-class="math inline">\(p\)</span> 的差的总和。</p>
+<p>将原数列分为两部分，数值 <span class="math inline">\(\le p\)</span> 的（记为 <span class="math inline">\(X\)</span>）和数值 <span class="math inline">\(\ge p + 1\)</span> 的（记为 <span class="math inline">\(Y\)</span>）。</p>
+<p>再把我们的目标状态分为两部分，数值 <span class="math inline">\(= p\)</span> 的（记为 <span class="math inline">\(A\)</span>）和 数值 <span class="math inline">\(=p + 1\)</span> 的（记为 <span class="math inline">\(B\)</span>）。</p>
+<p>那么有 <span class="math inline">\(\begin{cases}X+Y=s\\A+B=s\end{cases}\)</span>，由等式的基本性质得 <span class="math inline">\(X-A+Y-B = 0\)</span>，移项得 <span class="math inline">\(Y-B=A-X\)</span>。也就是说，<span class="math inline">\(Y\)</span> 部分与 <span class="math inline">\(p+1\)</span> 的差的总和正好等于 <span class="math inline">\(X\)</span> 部分与 <span class="math inline">\(p\)</span> 的差的总和。</p>
 <p>这个时候我们的正确性就有了保证。</p>
-<p>这个时候你可能就有疑问了，<span class="math inline">\(X,Y\)</span>
-中的元素个数和 <span class="math inline">\(A,B\)</span>
-中的元素个数并不对应，怎么办呢？</p>
-<p>我们发现上面的原理式并不会随元素个数的变化而变化，所以依然可以用它来解答这个问题。没有人规定
-<span class="math inline">\(Y-B\)</span> 和 <span
-class="math inline">\(A-X\)</span> 不能为负，为负时我们把 <span
-class="math inline">\(A\)</span> 中塞不下的 <span
-class="math inline">\(X\)</span> 拿到 <span
-class="math inline">\(B\)</span> 里面去即可，反之同理。</p>
+<p>这个时候你可能就有疑问了，<span class="math inline">\(X,Y\)</span> 中的元素个数和 <span class="math inline">\(A,B\)</span> 中的元素个数并不对应，怎么办呢？</p>
+<p>我们发现上面的原理式并不会随元素个数的变化而变化，所以依然可以用它来解答这个问题。没有人规定 <span class="math inline">\(Y-B\)</span> 和 <span class="math inline">\(A-X\)</span> 不能为负，为负时我们把 <span class="math inline">\(A\)</span> 中塞不下的 <span class="math inline">\(X\)</span> 拿到 <span class="math inline">\(B\)</span> 里面去即可，反之同理。</p>
 </details>
-<p>那么代码还是很好写的。时间复杂度 <span
-class="math inline">\(O(n)\)</span>。</p>
+<p>那么代码还是很好写的。时间复杂度 <span class="math inline">\(O(n)\)</span>。</p>
 <details>
 <pre class="cpp"><code>namespace XSC062 &#123;
 using namespace fastIO;
@@ -246,15 +211,10 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="b.-knuth-表示法">B. Knuth 表示法</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4268/problem/2"
-class="uri">http://222.180.160.110:61235/contest/4268/problem/2</a></p>
-<p>模拟。输入的数用 <code>map</code> 转化为 <span
-class="math inline">\(10\)</span>
-的次幂形式，然后幂次直接相加即表示指数相乘。</p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4268/problem/2" class="uri">http://222.180.160.110:61235/contest/4268/problem/2</a></p>
+<p>模拟。输入的数用 <code>map</code> 转化为 <span class="math inline">\(10\)</span> 的次幂形式，然后幂次直接相加即表示指数相乘。</p>
 <p>最后按位数从大到小将次幂形式转化为字符串、再按位数从小到大输出。</p>
-<p>注意到开头的字符串不是 <code>one</code> 就是
-<code>ten</code>，需要在没有抽出来 <code>ten</code> 的时候补
-<code>one</code>。</p>
+<p>注意到开头的字符串不是 <code>one</code> 就是 <code>ten</code>，需要在没有抽出来 <code>ten</code> 的时候补 <code>one</code>。</p>
 <details>
 <pre class="cpp"><code>namespace XSC062 &#123;
 using namespace fastIO;
@@ -292,38 +252,20 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="c.-魔力塔">C. 魔力塔</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4268/problem/3"
-class="uri">http://222.180.160.110:61235/contest/4268/problem/3</a></p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4268/problem/3" class="uri">http://222.180.160.110:61235/contest/4268/problem/3</a></p>
 <p>神奇的线段树优化建图。这拿来放 T3？不合适吧。</p>
-<p>很好想到对于 <span class="math inline">\(a_i\ne -1\)</span>，连边
-<span class="math inline">\(i\to a_i\)</span>；否则，连边 <span
-class="math inline">\(i\to x(x\in [i+1,\min(i + k,n+1)])\)</span>。BFS
-遍历，复杂度 <span class="math inline">\(O(n\times k)\)</span>。</p>
-<p>问题在于无用边太多，例如 <span class="math inline">\(i\)</span> 和
-<span class="math inline">\(i+1\)</span> 共同可达的点有整整 <span
-class="math inline">\(k-1\)</span> 个，造成大量浪费。</p>
-<p>考虑到实际进入 BFS 的点只有 <span class="math inline">\(n\)</span>
-个，及由传送门构成的连通块均呈棒棒糖状（即链套环），我们直接优化掉 <span
-class="math inline">\(a_i=-1\)</span> 时的连边。使用线段树查询 <span
-class="math inline">\([i+1,\min(i + k,n+1)]\)</span>
-内的所有剩余点，连边入队并从线段树中删除。</p>
-<p>这样，每个点只会入队一次（忽视无用环），时间复杂度控制在 <span
-class="math inline">\(O(n\log n)\)</span>，<span
-class="math inline">\(\log\)</span> 来源于线段树，写得不好就是 <span
-class="math inline">\(\log^2\)</span>，写得好一点就只有一个。</p>
+<p>很好想到对于 <span class="math inline">\(a_i\ne -1\)</span>，连边 <span class="math inline">\(i\to a_i\)</span>；否则，连边 <span class="math inline">\(i\to x(x\in [i+1,\min(i + k,n+1)])\)</span>。BFS 遍历，复杂度 <span class="math inline">\(O(n\times k)\)</span>。</p>
+<p>问题在于无用边太多，例如 <span class="math inline">\(i\)</span> 和 <span class="math inline">\(i+1\)</span> 共同可达的点有整整 <span class="math inline">\(k-1\)</span> 个，造成大量浪费。</p>
+<p>考虑到实际进入 BFS 的点只有 <span class="math inline">\(n\)</span> 个，及由传送门构成的连通块均呈棒棒糖状（即链套环），我们直接优化掉 <span class="math inline">\(a_i=-1\)</span> 时的连边。使用线段树查询 <span class="math inline">\([i+1,\min(i + k,n+1)]\)</span> 内的所有剩余点，连边入队并从线段树中删除。</p>
+<p>这样，每个点只会入队一次（忽视无用环），时间复杂度控制在 <span class="math inline">\(O(n\log n)\)</span>，<span class="math inline">\(\log\)</span> 来源于线段树，写得不好就是 <span class="math inline">\(\log^2\)</span>，写得好一点就只有一个。</p>
 <details>
-<summary>
-然而…
-</summary>
+<p><summary>然而…</summary></p>
 <p>会 T，因为常数太大了。</p>
-<p>所以我们需要另一种 <span class="math inline">\(\log\)</span>
-的做法，并且短小精悍。</p>
-<p>用 <code>set</code> 存储所有未入队的点，每次 <code>lower_bound</code>
-并依次弹出、入队。</p>
+<p>所以我们需要另一种 <span class="math inline">\(\log\)</span> 的做法，并且短小精悍。</p>
+<p>用 <code>set</code> 存储所有未入队的点，每次 <code>lower_bound</code> 并依次弹出、入队。</p>
 </details>
 <p>用迭代器的话代码很短，美汁汁。</p>
-<p>时间复杂度 <span class="math inline">\(O(n\log
-n)\)</span>，但等我先磕片药先。</p>
+<p>时间复杂度 <span class="math inline">\(O(n\log n)\)</span>，但等我先磕片药先。</p>
 <details>
 <pre class="cpp"><code>namespace XSC062 &#123;
 using namespace fastIO;
@@ -362,28 +304,14 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="d.-卡牌游戏">D. 卡牌游戏</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4268/problem/4"
-class="uri">http://222.180.160.110:61235/contest/4268/problem/4</a></p>
-<p>怎么说呢，爆搜可以拿 80pts！！！然而正解是区间
-DP，哭唧唧。他这个数据范围给得很神奇，让人只会往搜索上面想。</p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4268/problem/4" class="uri">http://222.180.160.110:61235/contest/4268/problem/4</a></p>
+<p>怎么说呢，爆搜可以拿 80pts！！！然而正解是区间 DP，哭唧唧。他这个数据范围给得很神奇，让人只会往搜索上面想。</p>
 <p>摧毁操作是一换一，不会更改串长，而入栈操作会增加初始串的长度。</p>
-<p>所以我们考虑 <strong>逆序 DP</strong>，从最终状态入手，用 <span
-class="math inline">\(f_{x, i, j}\)</span> 表示是否可以使用一个字符
-<span class="math inline">\(x\)</span> 经过一系列操作消掉 <span
-class="math inline">\(w_{i\sim j}\)</span>。</p>
-<p>那么明显若一条摧毁操作为可用字符 <span
-class="math inline">\(a\)</span> 摧毁 <span
-class="math inline">\(w_i\)</span>，有 <span class="math inline">\(f_{a,
-i, i} = 1\)</span>。</p>
-<p>若一条入栈操作为用字符 <span class="math inline">\(a\)</span> 换字符
-<span class="math inline">\(b,c\)</span>，枚举区间断点 <span
-class="math inline">\(k\)</span>，有 <span class="math inline">\(f_{a,
-i, j} = f_{b, i, k} \times f_{c, k + 1, j}\)</span>。</p>
-<p>最后答案为 <span class="math inline">\(f_{\texttt
-S,i,|w_i|}\)</span>。</p>
-<p>注意循环顺序，区间的枚举应在字符的枚举之外。最终时间复杂度 <span
-class="math inline">\(O(T\times |w_i|^3\times
-N_2)\)</span>，注意到字母的枚举属于常数。胶囊好吃滴捏。</p>
+<p>所以我们考虑 <strong>逆序 DP</strong>，从最终状态入手，用 <span class="math inline">\(f_{x, i, j}\)</span> 表示是否可以使用一个字符 <span class="math inline">\(x\)</span> 经过一系列操作消掉 <span class="math inline">\(w_{i\sim j}\)</span>。</p>
+<p>那么明显若一条摧毁操作为可用字符 <span class="math inline">\(a\)</span> 摧毁 <span class="math inline">\(w_i\)</span>，有 <span class="math inline">\(f_{a, i, i} = 1\)</span>。</p>
+<p>若一条入栈操作为用字符 <span class="math inline">\(a\)</span> 换字符 <span class="math inline">\(b,c\)</span>，枚举区间断点 <span class="math inline">\(k\)</span>，有 <span class="math inline">\(f_{a, i, j} = f_{b, i, k} \times f_{c, k + 1, j}\)</span>。</p>
+<p>最后答案为 <span class="math inline">\(f_{\texttt S,i,|w_i|}\)</span>。</p>
+<p>注意循环顺序，区间的枚举应在字符的枚举之外。最终时间复杂度 <span class="math inline">\(O(T\times |w_i|^3\times N_2)\)</span>，注意到字母的枚举属于常数。胶囊好吃滴捏。</p>
 <details>
 <pre class="cpp"><code>namespace XSC062 &#123;
 using namespace fastIO;
@@ -435,17 +363,14 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="e.-生长树">E. 生长树</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4268/problem/5"
-class="uri">http://222.180.160.110:61235/contest/4268/problem/5</a></p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4268/problem/5" class="uri">http://222.180.160.110:61235/contest/4268/problem/5</a></p>
 <p>一道很菜的题。我们发现有子树操作，第一时间想到树剖，那么接下来要考虑的内容就是线段树如何维护。</p>
-<p>题意换句话说就是往下数 0 代是加，数 1 代是减，数 2
-代是加，以此类推。那么不难想到奇偶性。</p>
+<p>题意换句话说就是往下数 0 代是加，数 1 代是减，数 2 代是加，以此类推。那么不难想到奇偶性。</p>
 <p>如果起点的深度是奇数，那么子树中所有奇数深度权值增加，偶数深度权值减少，反之同理。</p>
 <p>但是我们操作线段树的时候怎么知道点在树中的深度奇偶性呢？我们只能在线段树外才知道呀。</p>
 <p>所以观察询问，询问是单点的，所以我们知道了，可以只在线段树外对奇偶性进行处理。简单来说，假设更改起点深度为奇数，那么增加整个子树的「奇加偶减计数器」；反之，增加整个子树的「奇减偶加计数器」。</p>
 <p>最后查询的时候，如果该点深度为奇，那么答案为对应的「奇加偶减计数器」减去「奇减偶加计数器」的值，反之同理。</p>
-<p>做到最后发现根本不用树剖，就是一个 DFN 上线段树。时间复杂度 <span
-class="math inline">\(O(m\log n)\)</span>。</p>
+<p>做到最后发现根本不用树剖，就是一个 DFN 上线段树。时间复杂度 <span class="math inline">\(O(m\log n)\)</span>。</p>
 <p>胶囊真好吃！！！</p>
 <details>
 <pre class="cpp"><code>namespace XSC062 &#123;
@@ -579,59 +504,24 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="f.-单词">F. 单词</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4268/problem/6"
-class="uri">http://222.180.160.110:61235/contest/4268/problem/6</a></p>
-<p><span class="math inline">\(n \le 20\)</span>，考虑状压。用 <span
-class="math inline">\(f_x\)</span> 表示状态为 <span
-class="math inline">\(x\)</span> 时的最小代价，其中 <span
-class="math inline">\(x\)</span> 是字符串合法情况的状态压缩。</p>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4268/problem/6" class="uri">http://222.180.160.110:61235/contest/4268/problem/6</a></p>
+<p><span class="math inline">\(n \le 20\)</span>，考虑状压。用 <span class="math inline">\(f_x\)</span> 表示状态为 <span class="math inline">\(x\)</span> 时的最小代价，其中 <span class="math inline">\(x\)</span> 是字符串合法情况的状态压缩。</p>
 <p>对于每一个待满足的串，枚举去满足它的哪一位，那么满足方式分两种情况：</p>
 <ul>
-<li><p>把它变成一个新的值</p></li>
+<li>把它变成一个新的值</li>
 <li><p>把和它重合的变成新的值</p>
-<p>我们注意到 <span class="math inline">\(n \le 20 \le
-26\)</span>，所以一定能找到一种方法让每个串的这一位都不一样。</p>
+<p>我们注意到 <span class="math inline">\(n \le 20 \le 26\)</span>，所以一定能找到一种方法让每个串的这一位都不一样。</p>
 <p>接着，反正我们都要改这一位了，那就贪心地把要改的全部改成完全不一样的。那么这些要改的串也在这一位上满足了条件。</p></li>
 </ul>
-<p>所以，假设对于状态 <span class="math inline">\(i\)</span>，有串 <span
-class="math inline">\(j\)</span> 未满足，枚举位置 <span
-class="math inline">\(k\)</span>，有：</p>
+<p>所以，假设对于状态 <span class="math inline">\(i\)</span>，有串 <span class="math inline">\(j\)</span> 未满足，枚举位置 <span class="math inline">\(k\)</span>，有：</p>
 <pre class="cpp"><code>f[i | (1 &lt;&lt; (j - 1))] = min(f[i | (1 &lt;&lt; (j - 1))], f[i] + a[j][k]); 
 f[i | lac[j][k]] = min(f[i | lac[j][k]], f[i] + mx[j][k]);</code></pre>
-<p>其中 <code>lac[j][k]</code> 和 <code>mx[j][k]</code>
-都是预处理出来的值。<code>lac[j][k]</code> 表示与第 <span
-class="math inline">\(j\)</span> 个串的第 <span
-class="math inline">\(k\)</span>
-位相同串的状态压缩；<code>mx[j][k]</code> 表示通过第二种方式将 <span
-class="math inline">\(j\)</span> 串的第 <span
-class="math inline">\(k\)</span> 位变得合法的最小费用。</p>
-<p><code>lac[j][k]</code> 的求法没有任何疑问，主要是在
-<code>mx[j][k]</code> 上。注意到假设这一位上有 <span
-class="math inline">\(x\)</span> 个串与 <span
-class="math inline">\(j\)</span> 串的第 <span
-class="math inline">\(k\)</span>
-位相同（包括其本身），而我们只需要将这当中的 <span
-class="math inline">\(x-1\)</span>
-个变成两两不同的全新字符就可以同时满足这 <span
-class="math inline">\(x\)</span>
-串的条件，那我们为什么不把不动的这一个串设置为 <span
-class="math inline">\(x\)</span> 个串中改这一位代价最大的那个呢？</p>
-<p>那么问题来了。我们枚举状态、枚举状态中的每一个
-<code>0</code>，枚举每一个串的每一位，实际上是 <span
-class="math inline">\(O(n\times m\times 2^n)\)</span>
-的。虽然跑不满，但这个时间复杂度仍然是有问题的。我们需要优化。</p>
-<p>我们枚举的是状态中的每一个 <code>0</code>，假设我们的状态是
-<code>000</code>，我们的解决方案是将三个 <code>0</code>
-位置的方案共同处理，表示为 <code>'0--'</code> + <code>'-0-'</code> +
-<code>'--0'</code>。但实际上，我们只用实际求解一个 <code>0</code>
-位置的答案，表示为 <code>'0--'</code> + <code>'-00'</code> 。</p>
-<p>也就是说，我们原本需要枚举每一个状态为 <code>0</code> 的 <span
-class="math inline">\(j\)</span> 并用 <span
-class="math inline">\(O(m)\)</span>
-的时间进行计算，现在我们碰到一个状态为 <code>0</code> 的 <span
-class="math inline">\(j\)</span> 就开始计算，得到完全相同的答案。</p>
-<p>很 NB 并且很实用的优化，已加入 <a
-href="/20231117/">下饭操作合集</a>。</p>
+<p>其中 <code>lac[j][k]</code> 和 <code>mx[j][k]</code> 都是预处理出来的值。<code>lac[j][k]</code> 表示与第 <span class="math inline">\(j\)</span> 个串的第 <span class="math inline">\(k\)</span> 位相同串的状态压缩；<code>mx[j][k]</code> 表示通过第二种方式将 <span class="math inline">\(j\)</span> 串的第 <span class="math inline">\(k\)</span> 位变得合法的最小费用。</p>
+<p><code>lac[j][k]</code> 的求法没有任何疑问，主要是在 <code>mx[j][k]</code> 上。注意到假设这一位上有 <span class="math inline">\(x\)</span> 个串与 <span class="math inline">\(j\)</span> 串的第 <span class="math inline">\(k\)</span> 位相同（包括其本身），而我们只需要将这当中的 <span class="math inline">\(x-1\)</span> 个变成两两不同的全新字符就可以同时满足这 <span class="math inline">\(x\)</span> 串的条件，那我们为什么不把不动的这一个串设置为 <span class="math inline">\(x\)</span> 个串中改这一位代价最大的那个呢？</p>
+<p>那么问题来了。我们枚举状态、枚举状态中的每一个 <code>0</code>，枚举每一个串的每一位，实际上是 <span class="math inline">\(O(n\times m\times 2^n)\)</span> 的。虽然跑不满，但这个时间复杂度仍然是有问题的。我们需要优化。</p>
+<p>我们枚举的是状态中的每一个 <code>0</code>，假设我们的状态是 <code>000</code>，我们的解决方案是将三个 <code>0</code> 位置的方案共同处理，表示为 <code>'0--'</code> + <code>'-0-'</code> + <code>'--0'</code>。但实际上，我们只用实际求解一个 <code>0</code> 位置的答案，表示为 <code>'0--'</code> + <code>'-00'</code> 。</p>
+<p>也就是说，我们原本需要枚举每一个状态为 <code>0</code> 的 <span class="math inline">\(j\)</span> 并用 <span class="math inline">\(O(m)\)</span> 的时间进行计算，现在我们碰到一个状态为 <code>0</code> 的 <span class="math inline">\(j\)</span> 就开始计算，得到完全相同的答案。</p>
+<p>很 NB 并且很实用的优化，已加入 <a href="/20231117/">下饭操作合集</a>。</p>
 <details>
 <pre class="cpp"><code>namespace XSC062 &#123;
 using namespace fastIO;
@@ -694,8 +584,7 @@ int main() &#123;
 <p>没了。这次主要问题出在 T5。T3 估计真的想不到，先不强求自己。</p>
 <p>这次学到的新知识：</p>
 <ul>
-<li>对于子集合并最优性的问题，可以用单点 + 集合代替集合 +
-集合枚举。</li>
+<li>对于子集合并最优性的问题，可以用单点 + 集合代替集合 + 集合枚举。</li>
 </ul>
 
 			</div>
@@ -703,7 +592,7 @@ int main() &#123;
 			<div class="post footer">
 				<div id="hitokoto">
 					<h3 id="hitokoto-title">
-						一言 - Hitokoto
+						言论
 					</h3>
 					<div id="hitokoto-content">
 					</div>

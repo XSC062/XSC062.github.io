@@ -162,121 +162,57 @@
 <span id="more"></span>
 <hr />
 <h3 id="状压枚举子集">状压枚举子集</h3>
-<p>需求：对于 <strong>每一个</strong> 长度为 <span
-class="math inline">\(n\)</span> 的二进制状态 <span
-class="math inline">\(s\)</span>，枚举其子状态 <span
-class="math inline">\(\{ t \mid t \operatorname{bitand} s = t
-\}\)</span>。</p>
-<p>直接枚举所有长度为 <span class="math inline">\(n\)</span> 的状态
-<span class="math inline">\(t&#39;\)</span>，然后判定是否满足 <span
-class="math inline">\(t&#39; \operatorname{bitand} s =
-t\)</span>，总时间复杂度是 <span
-class="math inline">\(O(2^{2n})\)</span> 的。考虑优化。</p>
-<p>考虑对于所有 <span class="math inline">\(2^n\)</span> 种状态 <span
-class="math inline">\(s\)</span>，假如有一种方式能够不重不漏地枚举出它们中每一个的所有子状态，那么总时间复杂度是多少呢？</p>
-<p>把所有数对 <span class="math inline">\((s, t)\)</span>
-排列在一起。那么对于 <span class="math inline">\(n\)</span> 位中的每一位
-<span class="math inline">\(i\)</span>，枚举每一个 <span
-class="math inline">\((s&#39;, t&#39;)\)</span>。</p>
+<p>需求：对于 <strong>每一个</strong> 长度为 <span class="math inline">\(n\)</span> 的二进制状态 <span class="math inline">\(s\)</span>，枚举其子状态 <span class="math inline">\(\{ t \mid t \operatorname{bitand} s = t \}\)</span>。</p>
+<p>直接枚举所有长度为 <span class="math inline">\(n\)</span> 的状态 <span class="math inline">\(t&#39;\)</span>，然后判定是否满足 <span class="math inline">\(t&#39; \operatorname{bitand} s = t\)</span>，总时间复杂度是 <span class="math inline">\(O(2^{2n})\)</span> 的。考虑优化。</p>
+<p>考虑对于所有 <span class="math inline">\(2^n\)</span> 种状态 <span class="math inline">\(s\)</span>，假如有一种方式能够不重不漏地枚举出它们中每一个的所有子状态，那么总时间复杂度是多少呢？</p>
+<p>把所有数对 <span class="math inline">\((s, t)\)</span> 排列在一起。那么对于 <span class="math inline">\(n\)</span> 位中的每一位 <span class="math inline">\(i\)</span>，枚举每一个 <span class="math inline">\((s&#39;, t&#39;)\)</span>。</p>
 <p>那么存在以下几种可能性：</p>
 <ol type="1">
-<li><span
-class="math inline">\({s&#39;}_i=1,{t&#39;}_i=1\)</span>；</li>
-<li><span class="math inline">\({s&#39;}_i=1,
-{t&#39;}_i=0\)</span>；</li>
-<li><span class="math inline">\({s&#39;}_i=0, {t&#39;}_i =
-0\)</span>。</li>
+<li><span class="math inline">\({s&#39;}_i=1,{t&#39;}_i=1\)</span>；</li>
+<li><span class="math inline">\({s&#39;}_i=1, {t&#39;}_i=0\)</span>；</li>
+<li><span class="math inline">\({s&#39;}_i=0, {t&#39;}_i = 0\)</span>。</li>
 </ol>
-<p>假如我们用 <span class="math inline">\(o_i=0,1,2\)</span>
-分别代表第一、二、三种情况，完全可以用长度为 <span
-class="math inline">\(n\)</span> 的三进制状态 <span
-class="math inline">\(o\)</span> 还原数对 <span
-class="math inline">\((s, t)\)</span>。</p>
-<p>由于这个 <span class="math inline">\((s, t)\)</span>
-序列中肯定没有完全相同的元素，也就是说，对于每一个 <span
-class="math inline">\((s, t)\)</span>，其 <span
-class="math inline">\(o\)</span> 都各不相同。</p>
-<p>因此，<span class="math inline">\((s, t)\)</span> 的数目不超过 <span
-class="math inline">\(3^n\)</span>（更准确地，二者值相等）。</p>
-<p>又因为对于 <span class="math inline">\(3^n\)</span> 个 <span
-class="math inline">\(o\)</span>，每个都可以还原出合法状态，所以总的
-<span class="math inline">\((s, t)\)</span> 数目应恰好为 <span
-class="math inline">\(3^n\)</span>。</p>
-<p>也就是说，假如有一种方式能够不重不漏地枚举出每一个 <span
-class="math inline">\(s\)</span> 的所有子状态 <span
-class="math inline">\(t\)</span>，可以做到均摊 <span
-class="math inline">\(O(3^n)\)</span>。</p>
+<p>假如我们用 <span class="math inline">\(o_i=0,1,2\)</span> 分别代表第一、二、三种情况，完全可以用长度为 <span class="math inline">\(n\)</span> 的三进制状态 <span class="math inline">\(o\)</span> 还原数对 <span class="math inline">\((s, t)\)</span>。</p>
+<p>由于这个 <span class="math inline">\((s, t)\)</span> 序列中肯定没有完全相同的元素，也就是说，对于每一个 <span class="math inline">\((s, t)\)</span>，其 <span class="math inline">\(o\)</span> 都各不相同。</p>
+<p>因此，<span class="math inline">\((s, t)\)</span> 的数目不超过 <span class="math inline">\(3^n\)</span>（更准确地，二者值相等）。</p>
+<p>又因为对于 <span class="math inline">\(3^n\)</span> 个 <span class="math inline">\(o\)</span>，每个都可以还原出合法状态，所以总的 <span class="math inline">\((s, t)\)</span> 数目应恰好为 <span class="math inline">\(3^n\)</span>。</p>
+<p>也就是说，假如有一种方式能够不重不漏地枚举出每一个 <span class="math inline">\(s\)</span> 的所有子状态 <span class="math inline">\(t\)</span>，可以做到均摊 <span class="math inline">\(O(3^n)\)</span>。</p>
 <p>接下来探讨这种枚举方式。直接给出结论：</p>
 <pre class="cpp"><code>for (int t = s; t; t = (t - 1) &amp; s);</code></pre>
-<p>其实不难理解。从 <span class="math inline">\(t\)</span> 的定义出发即
-<span class="math inline">\(t \operatorname{bitand} s =
-t\)</span>，重点理解 <span class="math inline">\(t\gets (t -
-1)\operatorname{bitand} s\)</span> 这一步。</p>
+<p>其实不难理解。从 <span class="math inline">\(t\)</span> 的定义出发即 <span class="math inline">\(t \operatorname{bitand} s = t\)</span>，重点理解 <span class="math inline">\(t\gets (t - 1)\operatorname{bitand} s\)</span> 这一步。</p>
 <p>分两种情况讨论：</p>
 <ol type="1">
-<li><p><span class="math inline">\(t-1\)</span> 较 <span
-class="math inline">\(t\)</span> 发生退位：</p>
-<p>因为只减 <span
-class="math inline">\(1\)</span>，所以末位一定发生退位。</p>
-<p>如果发生连续退位，一定是因为末端有连续的 <span
-class="math inline">\(0\)</span>。对于第一个 <span
-class="math inline">\(1\)</span>（记为第 <span
-class="math inline">\(j\)</span> 位），已经枚举完了在 <span
-class="math inline">\(j\)</span>
-及更高位固定在当前状态下的所有状态。</p>
+<li><p><span class="math inline">\(t-1\)</span> 较 <span class="math inline">\(t\)</span> 发生退位：</p>
+<p>因为只减 <span class="math inline">\(1\)</span>，所以末位一定发生退位。</p>
+<p>如果发生连续退位，一定是因为末端有连续的 <span class="math inline">\(0\)</span>。对于第一个 <span class="math inline">\(1\)</span>（记为第 <span class="math inline">\(j\)</span> 位），已经枚举完了在 <span class="math inline">\(j\)</span> 及更高位固定在当前状态下的所有状态。</p>
 <p>则应有：</p>
 <ul>
-<li>比 <span class="math inline">\(j\)</span>
-更高的数位，未受到退位带来的连续影响的位不变；</li>
-<li>第 <span class="math inline">\(j\)</span> 位 <span
-class="math inline">\(1\to 0\)</span>；</li>
-<li>从第 <span class="math inline">\(j\)</span> 位一直到末位都有 <span
-class="math inline">\(0\to 1\)</span>。</li>
+<li>比 <span class="math inline">\(j\)</span> 更高的数位，未受到退位带来的连续影响的位不变；</li>
+<li>第 <span class="math inline">\(j\)</span> 位 <span class="math inline">\(1\to 0\)</span>；</li>
+<li>从第 <span class="math inline">\(j\)</span> 位一直到末位都有 <span class="math inline">\(0\to 1\)</span>。</li>
 </ul>
-<p>此时与 <span class="math inline">\(s\)</span> 进行 <span
-class="math inline">\(\operatorname{bitand}\)</span>，得到比 <span
-class="math inline">\(j\)</span> 更高的数位不变、<span
-class="math inline">\(j\)</span> 位 <span class="math inline">\(1\to
-0\)</span>、比 <span class="math inline">\(j\)</span> 更低的数位变为抵着
-<span class="math inline">\(s\)</span> 对应数位的最大状态。</p>
-<p>综上，这是比 <span class="math inline">\(t\)</span>
-小的第一个合法状态。</p></li>
-<li><p><span class="math inline">\(t-1\)</span> 较 <span
-class="math inline">\(t\)</span> 不发生退位：</p>
-<p>根据上面的讨论，其实就是末位不退位，即末位 <span
-class="math inline">\(1\to 0\)</span>。显然是比 <span
-class="math inline">\(t\)</span> 更小的第一个合法状态。</p></li>
+<p>此时与 <span class="math inline">\(s\)</span> 进行 <span class="math inline">\(\operatorname{bitand}\)</span>，得到比 <span class="math inline">\(j\)</span> 更高的数位不变、<span class="math inline">\(j\)</span> 位 <span class="math inline">\(1\to 0\)</span>、比 <span class="math inline">\(j\)</span> 更低的数位变为抵着 <span class="math inline">\(s\)</span> 对应数位的最大状态。</p>
+综上，这是比 <span class="math inline">\(t\)</span> 小的第一个合法状态。</li>
+<li><p><span class="math inline">\(t-1\)</span> 较 <span class="math inline">\(t\)</span> 不发生退位：</p>
+<p>根据上面的讨论，其实就是末位不退位，即末位 <span class="math inline">\(1\to 0\)</span>。显然是比 <span class="math inline">\(t\)</span> 更小的第一个合法状态。</p></li>
 </ol>
 <p>综上，实现了从大到小依次枚举合法状态，因此不重不漏。</p>
 <hr />
 <h3 id="枚举补集">枚举补集</h3>
-<p>看了几个比较抽象的博客，但是我觉得不如直接把 <span
-class="math inline">\(s\)</span> 异或一下 <span
-class="math inline">\(2^n-1\)</span> 然后枚举子集。</p>
+<p>看了几个比较抽象的博客，但是我觉得不如直接把 <span class="math inline">\(s\)</span> 异或一下 <span class="math inline">\(2^n-1\)</span> 然后枚举子集。</p>
 <hr />
 <h3 id="子集和-高维前缀和">子集和 / 高维前缀和</h3>
-<p>首先理解一下什么是高维前缀和。实际上全称应为边长为 <span
-class="math inline">\(2\)</span>
-的高维空间前缀和。其实就是求所有状态的子集和，运用了前缀和的思想故唤高位前缀和
-/ 逐维前缀和。</p>
-<p>即在 <span class="math inline">\(n=2\)</span>
-的情况下，我们发现我们可以将 <span class="math inline">\(k\)</span>
-维前缀和看作在 <span class="math inline">\(k\)</span>
-位二进制数上做子集元素求和。显然根据枚举子集有 <span
-class="math inline">\(3^k\)</span> 的做法，但还能更快。</p>
-<p>对于状态 <span
-class="math inline">\(u\)</span>，考虑枚举其每一维上的值，则 <span
-class="math inline">\(s_u=a_u+\sum s_{u\bigoplus
-2^i}\)</span>。易发现这可以不重不漏地覆盖所有子集。</p>
-<p>这种思想在一些状态压缩的题目中也有应用，具体见 <a
-href="/20231117#1">此</a>。</p>
+<p>首先理解一下什么是高维前缀和。实际上全称应为边长为 <span class="math inline">\(2\)</span> 的高维空间前缀和。其实就是求所有状态的子集和，运用了前缀和的思想故唤高位前缀和 / 逐维前缀和。</p>
+<p>即在 <span class="math inline">\(n=2\)</span> 的情况下，我们发现我们可以将 <span class="math inline">\(k\)</span> 维前缀和看作在 <span class="math inline">\(k\)</span> 位二进制数上做子集元素求和。显然根据枚举子集有 <span class="math inline">\(3^k\)</span> 的做法，但还能更快。</p>
+<p>对于状态 <span class="math inline">\(u\)</span>，考虑枚举其每一维上的值，则 <span class="math inline">\(s_u=a_u+\sum s_{u\bigoplus 2^i}\)</span>。易发现这可以不重不漏地覆盖所有子集。</p>
+<p>这种思想在一些状态压缩的题目中也有应用，具体见 <a href="/20231117#1">此</a>。</p>
 
 			</div>
 			<hr class="dotted">
 			<div class="post footer">
 				<div id="hitokoto">
 					<h3 id="hitokoto-title">
-						一言 - Hitokoto
+						言论
 					</h3>
 					<div id="hitokoto-content">
 					</div>

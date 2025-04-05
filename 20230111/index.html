@@ -165,38 +165,22 @@
 				<hr class="dotted" style="margin-bottom: 0;">
 			
 			<div id="content">
-				<p>Solution to<a
-target="_blank" rel="noopener" href="http://222.180.160.110:61235/problem/8965">「NOI2005」瑰丽华尔兹</a>。</p>
+				<p>Solution to<a target="_blank" rel="noopener" href="http://222.180.160.110:61235/problem/8965">「NOI2005」瑰丽华尔兹</a>。</p>
 <span id="more"></span>
 <hr />
 <p>单调队列优化 DP。</p>
 <p>不难发现，题意可转化为：</p>
-<p>从 <span class="math inline">\((x,y)\)</span> 出发，按顺序向 <span
-class="math inline">\(d_i\)</span> 方向移动 <span
-class="math inline">\([0,t_i−s_i+1]\)</span> 距离，问最大移动距离。</p>
-<p>为了方便描述，我们把一次「向 <span class="math inline">\(d_i\)</span>
-方向移动 <span class="math inline">\([0,t_i−s_i+1]\)</span>
-距离」的操作称为「一步」。</p>
-<p>设计状态。不难发现位置信息必须出现在 DP
-的维度中（因为当前位置会影响下一步滑动的距离），而其他信息均不会对下一步滑动产生影响。</p>
-<p>故可令 <span class="math inline">\(f_{i,j}\)</span>
-表示完成当前次滑动后，从起点滑动到 <span
-class="math inline">\((i,j)\)</span> 可得到的最大滑动距离。</p>
+<p>从 <span class="math inline">\((x,y)\)</span> 出发，按顺序向 <span class="math inline">\(d_i\)</span> 方向移动 <span class="math inline">\([0,t_i−s_i+1]\)</span> 距离，问最大移动距离。</p>
+<p>为了方便描述，我们把一次「向 <span class="math inline">\(d_i\)</span> 方向移动 <span class="math inline">\([0,t_i−s_i+1]\)</span> 距离」的操作称为「一步」。</p>
+<p>设计状态。不难发现位置信息必须出现在 DP 的维度中（因为当前位置会影响下一步滑动的距离），而其他信息均不会对下一步滑动产生影响。</p>
+<p>故可令 <span class="math inline">\(f_{i,j}\)</span> 表示完成当前次滑动后，从起点滑动到 <span class="math inline">\((i,j)\)</span> 可得到的最大滑动距离。</p>
 <p>以方向上为例，可列 DP 式：</p>
 <p><span class="math display">\[
 f_{i,j}=\max_{i&lt;k≤i+(ti−si+1)}\{f_{k,j}+k−i\}
 \]</span></p>
 <p>此时可枚举每一列的所有状态，使用单调队列优化。</p>
-<p>但实际操作中会出现问题。因为单调队列从下向上更新状态时，<span
-class="math inline">\(f_{k,j}\)</span> 会比 <span
-class="math inline">\(f_{i,j}\)</span> 先更新（参考 01
-背包倒序枚举容量），导致每一「步」会重复被走很多次。但单调队列的特性限制了我们只能从下向上枚举，此时可新开一个数组记录
-<span class="math inline">\(f\)</span> 当次被更新之前的值。</p>
-<p>障碍物如何处理呢？我们知道，如果 <span
-class="math inline">\((i,j)\)</span>
-下面某一位置有障碍物，那么障碍物下面所有的 <span
-class="math inline">\((k,j)\)</span> 都不能用于更新 <span
-class="math inline">\(f_{i,j}\)</span>（因为被挡住了滑不上来）。所以我们在从下往上枚举时，遇到障碍物就清空单调队列即可。</p>
+<p>但实际操作中会出现问题。因为单调队列从下向上更新状态时，<span class="math inline">\(f_{k,j}\)</span> 会比 <span class="math inline">\(f_{i,j}\)</span> 先更新（参考 01 背包倒序枚举容量），导致每一「步」会重复被走很多次。但单调队列的特性限制了我们只能从下向上枚举，此时可新开一个数组记录 <span class="math inline">\(f\)</span> 当次被更新之前的值。</p>
+<p>障碍物如何处理呢？我们知道，如果 <span class="math inline">\((i,j)\)</span> 下面某一位置有障碍物，那么障碍物下面所有的 <span class="math inline">\((k,j)\)</span> 都不能用于更新 <span class="math inline">\(f_{i,j}\)</span>（因为被挡住了滑不上来）。所以我们在从下往上枚举时，遇到障碍物就清空单调队列即可。</p>
 <p>下、左、右方向的处理方式类似。</p>
 <p>只需顺序执行操作，根据当前操作方向对应处理即可。</p>
 <details>
@@ -325,7 +309,7 @@ int main() &#123;
 			<div class="post footer">
 				<div id="hitokoto">
 					<h3 id="hitokoto-title">
-						一言 - Hitokoto
+						言论
 					</h3>
 					<div id="hitokoto-content">
 					</div>
