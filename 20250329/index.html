@@ -128,7 +128,7 @@
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#emiya-%E5%AE%B6%E6%98%8E%E5%A4%A9%E7%9A%84%E9%A5%AD"><span class="toc-text">Emiya 家明天的饭</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nim-counting"><span class="toc-text">Nim Counting</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#binary-table"><span class="toc-text">Binary Table</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hard-nim"><span class="toc-text">Hard Nim</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%90%E9%9B%86%E5%8D%B7%E7%A7%AF"><span class="toc-text">子集卷积</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%9E%E5%8C%BA%E5%88%92%E5%88%86"><span class="toc-text">州区划分</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#emiya-%E5%AE%B6%E6%98%8E%E5%A4%A9%E7%9A%84%E9%A5%AD"><span class="toc-text">Emiya 家明天的饭</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nim-counting"><span class="toc-text">Nim Counting</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#binary-table"><span class="toc-text">Binary Table</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hard-nim"><span class="toc-text">Hard Nim</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%90%E9%9B%86%E5%8D%B7%E7%A7%AF"><span class="toc-text">子集卷积</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%9E%E5%8C%BA%E5%88%92%E5%88%86"><span class="toc-text">州区划分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b---sum-the-fibonacci"><span class="toc-text">B - Sum the Fibonacci</span></a></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -150,6 +150,8 @@
 			</span>
 			<div id="posttags" class="dotted border">
 				
+					
+						<a href="/tags/高维前缀和/" class="citem">高维前缀和</a>
 					
 						<a href="/tags/FWT/" class="citem">FWT</a>
 					
@@ -529,7 +531,7 @@ int main() &#123;
 <p>那么枚举每一个点集判定是否合法，再令 <span class="math inline">\(f_{i}={w_i}^{-p}\times\sum\limits_{j\cup k = i\land j\cap k=\varnothing}f_{j}\times {w_k}^p\)</span>。</p>
 <p>发现后面那个 sigma 里面是一个简单的子集卷积；但是我们发现前面有一个和 <span class="math inline">\(i\)</span> 有关的常数，导致没办法直接卷 <span class="math inline">\(n\)</span> 次。</p>
 <p>但我们发现这个 DP 其实是有一定隐含条件的——都是按照 <span class="math inline">\(\text{ctz}\)</span> 从小到大转移。考虑子集卷积的第一维，得到 <span class="math inline">\(FWT_{f_i}\)</span> 后先 IFWT 回来，乘上 <span class="math inline">\({w_i}^{-p}\)</span>，再 FWT 回去即可。考察子集卷积的结构，发现这个是可以想办法套进去的。</p>
-<p>复杂度 <span class="math inline">\(O(n^2\cdot 2^n)\)</span>。</p>
+<p>复杂度 <a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc400/tasks/abc400_c"><span class="math inline">\(O(n^2\cdot 2^n)\)</span></a>。</p>
 <details>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
 const int mod = 998244353;
@@ -621,6 +623,94 @@ int main() &#123;
             (f[i][j] *= inv[j]) %= mod;
     &#125;
     std::cout &lt;&lt; f[n][l - 1] &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="b---sum-the-fibonacci">B - Sum the Fibonacci</h2>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/914/G" class="uri">https://codeforces.com/problemset/problem/914/G</a></p>
+<p>首先，对于每个元素的 <span class="math inline">\(cnt\)</span> 是好做的——做一次子集卷积得到 <span class="math inline">\(cnt_1(a\cup b)\)</span>，做一次 xor-FWT 得到 <span class="math inline">\(cnt_2(d\oplus e)\)</span>，中间的 <span class="math inline">\(cnt(c)\)</span> 就是原样。</p>
+<p>值得注意的是可以在一次 and-FWT 后把 <span class="math inline">\(cnt,cnt_1,cnt_2\)</span> 直接卷起来——由矩阵乘法结合律得（哈哈大笑了）。但怎么把 <span class="math inline">\(f\)</span> 塞进去呢？如果你拥有小学生的数学水平，你可以很容易地想到直接在 <span class="math inline">\(cnt,cnt_1,cnt_2\)</span> IFWT 后的结果分别对位乘上 <span class="math inline">\(f\)</span> 即可，很可惜我并没有这样的数学能力 <img src="/em/kt.gif" /></p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int N = 17;
+const int mod = 1e9 + 7;
+using arr = std::vector&lt;long long&gt;;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n, l;
+    std::cin &gt;&gt; n, l = 1 &lt;&lt; N;
+    std::vector&lt;int&gt; a(n + 1);
+    arr f(l), cnt(l), cnt1(l), cnt2(l);
+    for (int i = 1; i &lt;= n; ++i)
+        std::cin &gt;&gt; a[i], ++cnt[a[i]];
+    f[0] = 0ll, f[1] = 1ll;
+    for (int i = 2; i &lt; l; ++i)
+        f[i] = (f[i - 1] + f[i - 2]) % mod;
+    auto qkp = [&amp;](long long x, int y = mod - 2) &#123;
+        auto res = 1ll;
+        for (; y; (x *= x) %= mod, y &gt;&gt;= 1)
+            if (y &amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &#125;;
+    const int inv2 = qkp(2ll);
+    std::vector&lt;arr&gt; mT(2, arr(2)), mI(2, arr(2));
+    auto calc = [&amp;](arr a, arr &amp;f, std::vector&lt;arr&gt; &amp;w) &#123;
+        f = a;
+        for (int len = 2; len &lt;= l; len &lt;&lt;= 1)
+            for (int i = 0; i &lt; l; i += len)
+                for (int p = i, q = i + len / 2; q &lt; i + len; ++p, ++q)
+                    std::tie(f[p], f[q]) = std::make_tuple((f[p] * w[0][0] + f[q] * w[0][1]) % mod, (f[p] * w[1][0] + f[q] * w[1][1]) % mod);
+        return;
+    &#125;;
+    &#123; // orFWT
+        mT[0][0] = 1ll, mT[0][1] = 0ll, mT[1][0] = 1ll, mT[1][1] = 1ll;
+        mI[0][0] = 1ll, mI[0][1] = 0ll, mI[1][0] = mod - 1ll, mI[1][1] = 1ll;
+        std::vector&lt;arr&gt; u(N + 1, arr(l)), d(N + 1, arr(l));
+        for (int i = 0; i &lt; l; ++i)
+            u[__builtin_popcount(i)][i] = cnt[i];
+        for (int i = 0; i &lt;= N; ++i)
+            calc(u[i], u[i], mT);
+        for (int i = 0; i &lt;= N; ++i) &#123;
+            for (int j = 0; j &lt; l; ++j)
+                for (int k = 0; k &lt;= i; ++k)
+                    (d[i][j] += u[k][j] * u[i - k][j]) %= mod;
+            calc(d[i], d[i], mI);
+        &#125;
+        for (int i = 0; i &lt; l; ++i)
+            cnt1[i] = d[__builtin_popcount(i)][i] * f[i] % mod;
+    &#125;
+    &#123; // xor FWT
+        mT[0][0] = 1ll, mT[0][1] = 1ll, mT[1][0] = 1ll, mT[1][1] = mod - 1ll;
+        mI[0][0] = mI[0][1] = mI[1][0] = inv2, mI[1][1] = mod - inv2;
+        calc(cnt, cnt2, mT);
+        for (int i = 0; i &lt; l; ++i)
+            (cnt2[i] *= cnt2[i]) %= mod;
+        calc(cnt2, cnt2, mI);
+        for (int i = 0; i &lt; l; ++i)
+            (cnt2[i] *= f[i]) %= mod;
+    &#125;
+    &#123; // andFWT
+        mT[0][0] = 0ll, mT[0][1] = 1ll, mT[1][0] = 1ll, mT[1][1] = 1ll;
+        mI[0][0] = mod - 1ll, mI[0][1] = 1ll, mI[1][0] = 1ll, mI[1][1] = 0ll;
+        for (int i = 0; i &lt; l; ++i) // 这一步要放在 FWT 之前，原因显然 🤗
+            (cnt[i] *= f[i]) %= mod;
+        calc(cnt2, cnt2, mT), calc(cnt1, cnt1, mT), calc(cnt, cnt, mT);
+        for (int i = 0; i &lt; l; ++i)
+            cnt[i] = cnt[i] * cnt1[i] % mod * cnt2[i] % mod % mod;
+        calc(cnt, cnt, mI);
+    &#125;
+    long long res = 0ll;
+    for (int i = 0; i &lt; N; ++i)
+        (res += cnt[1 &lt;&lt; i] % mod) %= mod;
+    std::cout &lt;&lt; res &lt;&lt; &#39;\n&#39;;
     return 0;
 &#125;</code></pre>
 </details>

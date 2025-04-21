@@ -128,7 +128,7 @@
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E5%8E%8B%E6%9E%9A%E4%B8%BE%E5%AD%90%E9%9B%86"><span class="toc-text">状压枚举子集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE%E8%A1%A5%E9%9B%86"><span class="toc-text">枚举补集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E9%9B%86%E5%92%8C-%E9%AB%98%E7%BB%B4%E5%89%8D%E7%BC%80%E5%92%8C"><span class="toc-text">子集和 &#x2F; 高维前缀和</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E5%8E%8B%E6%9E%9A%E4%B8%BE%E5%AD%90%E9%9B%86"><span class="toc-text">状压枚举子集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE%E8%A1%A5%E9%9B%86"><span class="toc-text">枚举补集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E9%9B%86%E5%92%8C-%E9%AB%98%E7%BB%B4%E5%89%8D%E7%BC%80%E5%92%8C"><span class="toc-text">子集和 &#x2F; 高维前缀和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E7%BB%B4%E5%90%8E%E7%BC%80%E5%92%8C"><span class="toc-text">高维后缀和</span></a></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -152,6 +152,8 @@
 				
 					
 						<a href="/tags/状压/" class="citem">状压</a>
+					
+						<a href="/tags/高维前缀和/" class="citem">高维前缀和</a>
 					
 				
 			</div>
@@ -204,8 +206,21 @@
 <h3 id="子集和-高维前缀和">子集和 / 高维前缀和</h3>
 <p>首先理解一下什么是高维前缀和。实际上全称应为边长为 <span class="math inline">\(2\)</span> 的高维空间前缀和。其实就是求所有状态的子集和，运用了前缀和的思想故唤高位前缀和 / 逐维前缀和。</p>
 <p>即在 <span class="math inline">\(n=2\)</span> 的情况下，我们发现我们可以将 <span class="math inline">\(k\)</span> 维前缀和看作在 <span class="math inline">\(k\)</span> 位二进制数上做子集元素求和。显然根据枚举子集有 <span class="math inline">\(3^k\)</span> 的做法，但还能更快。</p>
-<p>对于状态 <span class="math inline">\(u\)</span>，考虑枚举其每一维上的值，则 <span class="math inline">\(s_u=a_u+\sum s_{u\bigoplus 2^i}\)</span>。易发现这可以不重不漏地覆盖所有子集。</p>
+<pre class="cpp"><code>std::copy(a.begin(), a.end(), s.begin());
+for (int i = 0; i &lt; k; ++i)
+    for (int j = 0; j &lt; l; ++j)
+        if ((j &gt;&gt; i) &amp; 1)
+            s[j] += s[j ^ (1 &lt;&lt; i)];</code></pre>
+<p>先枚举 <span class="math inline">\(i\)</span> 是因为使用高维前缀和的题目一般时限卡得比较死，需要使用内存连续访问尽量减小常数。</p>
+<p>对于状态 <span class="math inline">\(j\)</span>，考虑枚举其每一维上的值，则 <span class="math inline">\(s_j=a_j+\sum s_{j\bigoplus 2^i}\)</span>。易发现这可以不重不漏地覆盖所有子集。</p>
 <p>这种思想在一些状态压缩的题目中也有应用，具体见 <a href="/20231117#1">此</a>。</p>
+<h3 id="高维后缀和">高维后缀和</h3>
+<p>从大往小枚举 <span class="math inline">\(j\)</span>，对于 <span class="math inline">\(j\)</span> 中值为 <code>false</code> 的维 <span class="math inline">\(i\)</span>，令 <span class="math inline">\(s_j=a_j+\sum s_{j+2^i}\)</span> 即可。</p>
+<pre class="cpp"><code>std::copy(a.begin(), a.end(), s.begin());
+for (int i = 0; i &lt; k; ++i)
+    for (int j = l - 1; ~j; --j)
+        if (!((j &gt;&gt; i) &amp; 1))
+            s[j] += s[j ^ (1 &lt;&lt; i)];</code></pre>
 
 			</div>
 			<hr class="dotted">

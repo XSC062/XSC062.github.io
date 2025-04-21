@@ -13,7 +13,7 @@
 <!-- 网站标题 -->
 <title>
 	
-		pn、pm 和 plmm -
+		杂题 -
 	
 	XSC062 的博客
 </title>
@@ -128,7 +128,7 @@
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#a---t-shirt"><span class="toc-text">A - T-shirt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b---two-melodies"><span class="toc-text">B - Two Melodies</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c---%E5%B7%A1%E9%80%BB"><span class="toc-text">C - 巡逻</span></a></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -136,97 +136,85 @@
 			<span id="postcon">
 				<span id="postinfo">
 					<div class="ui post title">
-						<div id="fortitle" data-content="pn、pm 和 plmm">
-							pn、pm 和 plmm
+						<div id="fortitle" data-content="杂题">
+							杂题
 						</div>
 						<div class="ui title background">
 						</div>
 					</div>
 					<span id="date">
 						<i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
-						2023-08-13
+						2025-04-21
 					</span>
 				</span>
 			</span>
 			<div id="posttags" class="dotted border">
 				
-					
-						<a href="/tags/二分/" class="citem">二分</a>
-					
-						<a href="/tags/容斥原理/" class="citem">容斥原理</a>
-					
+					<span style="color: #888;">暂无标签</span>
 				
 			</div>
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
-				<p>Sotution to <a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/258/C">CF258C Little Elephant and LCM</a>。</p>
+				<figure>
+<img src="/20250421/neko.png" alt="猫" style="width: 75px">
+<figcaption>
+猫
+</figcaption>
+</figure>
 <span id="more"></span>
 <hr />
-<p>0#：那么这个 pn 可以等于什么？它只能等于 pm。（露出看到 plmm 一般的猥琐坏笑）</p>
+<h2 id="a---t-shirt">A - T-shirt</h2>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/183/D" class="uri">https://codeforces.com/problemset/problem/183/D</a></p>
+<p>如果知道一个衣服序列，怎么算出期望呢？</p>
 <hr />
-<p>方便起见，下面 <span class="math inline">\(b_{\text{lcm}}\)</span> 的意思就是 <span class="math inline">\(\text{lcm}\{b_1,b_2,\cdots,b_n\}\)</span>，<span class="math inline">\(\max\)</span> 什么的也同理。</p>
-<p>首先我们都能反应过来，如果 <span class="math inline">\(b_{\text{lcm}}=b_{\max}\)</span>，那么 <span class="math inline">\(b\)</span> 中的最大值就得是 <span class="math inline">\(b_{\text {lcm}}\)</span>，而其他元素都得是 <span class="math inline">\(b_{\max}\)</span> 的因数。</p>
-<p>既然涉及到求 <span class="math inline">\(b_{\max}\)</span> 的因数，那我们势必避免不了枚举 <span class="math inline">\(b_{\max}\)</span>。我一开始陷入了一个 trick：我并不知道 <span class="math inline">\(b_{\max}\)</span> 应该处于哪一个位置。但其实这不重要，它对我们最后的方案没有影响，有影响的是「有多少个位置可以取到当前枚举的 <span class="math inline">\(b_{\max}\)</span>」。</p>
-<p>对于当前枚举的 <span class="math inline">\(b_{\max}\)</span>（假设为 <span class="math inline">\(k\)</span>），我们找到它的所有因数 <span class="math inline">\(p_1\sim p_m\)</span>，按从小到大的顺序排列。对于一个 <span class="math inline">\(a_i\)</span>，当且仅当 <span class="math inline">\(a_i\ge p_j\)</span> 时，<span class="math inline">\(a_i\)</span> 可以选择 <span class="math inline">\(p_j\)</span>。那么我们找到 <span class="math inline">\(a_i\)</span> 可以选到的最大的 <span class="math inline">\(p_j\)</span>，此时 <span class="math inline">\(a_i\)</span> 的选择就是 <span class="math inline">\(p_1\sim p_j\)</span>，共 <span class="math inline">\(j\)</span> 种。</p>
-<p>那么我们在外面已经有一层枚举 <span class="math inline">\(k\)</span> 的循环的前提下，再遍历 <span class="math inline">\(a\)</span> 数组无疑是会起飞的，我们考虑倒过来，遍历 <span class="math inline">\(p\)</span>，对于每个 <span class="math inline">\(p_j\)</span>，找到它是多少个 <span class="math inline">\(a_i\)</span> 的最大选择（假设为 <span class="math inline">\(x_j\)</span>），那么对于 <span class="math inline">\(p_j\)</span>，它贡献的答案就是 <span class="math inline">\(j^{x_j}\)</span>。</p>
-<p><span class="math inline">\(x_j\)</span> 的计算也不难，我们用两个二分找到满足 <span class="math inline">\(p_j\le a_i &lt; p_j + 1\)</span> 的 <span class="math inline">\(a_i\)</span> 数量就可以了。那么总方案数就是 <span class="math inline">\(\prod j^{x_j}\)</span>。</p>
-<p>但是别忘了还有 <span class="math inline">\(k\)</span> 为 <span class="math inline">\(b_{\max}\)</span> 的限制。找到 <span class="math inline">\(x_m\)</span>，怎么去满足至少有一个 <span class="math inline">\(a_i=k\)</span> 呢？一个微型容斥，用总方案数减去一个 <span class="math inline">\(k\)</span> 都没有的方案数。那么就规定了每个可以取到 <span class="math inline">\(k\)</span> 的数都必须不取 <span class="math inline">\(k\)</span>，本来有 <span class="math inline">\(m\)</span> 种选择，现在只剩下 <span class="math inline">\(m−1\)</span> 种，所以答案就是 <span class="math inline">\((m−1)^{x_m}\)</span>，容斥后为 <span class="math inline">\(m^{x_m}−(m−1)^{x_m}\)</span>。</p>
-<p>对于 <span class="math inline">\(b_{\max}=k\)</span>，最终结果为 <span class="math inline">\((\prod\limits_{j=1}^{m−1}j^{x_j})\times (m^{x_m}−(m−1)^{x_m})\)</span>。加法原理把所有 <span class="math inline">\(k\)</span> 的情况加起来即可。</p>
-<p>对于时间复杂度，枚举 <span class="math inline">\(k\)</span> 是 <span class="math inline">\(O(V)\)</span> 的，找因数是 <span class="math inline">\(O(\sqrt V)\)</span> 的，枚举 <span class="math inline">\(p_j\)</span> 是 <span class="math inline">\(\log V\)</span> 的，二分是 <span class="math inline">\(\log n\)</span> 的。所以最终时间复杂度为 <span class="math inline">\(O(V\times \max\{\sqrt V,\log V\times \log n\})\)</span>。</p>
+<h2 id="b---two-melodies">B - Two Melodies</h2>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/813/D" class="uri">https://codeforces.com/problemset/problem/813/D</a></p>
+<p>如果设 <span class="math inline">\(f_{i,j}\)</span> 表示第一个以 <span class="math inline">\(i\)</span> 结尾，第二个以 <span class="math inline">\(j\)</span> 结尾的方案数，就会有一个弊端——假设现在有 <span class="math inline">\(i&gt;j\)</span>，又假设有 <span class="math inline">\(j&lt;j&#39;&lt;i\)</span>，那么就不可以直接把 <span class="math inline">\(f_{i,j}\)</span> 转移到 <span class="math inline">\(f_{i,j&#39;}\)</span>，因为 <span class="math inline">\(j&#39;\)</span> 可能已经被第一个选过了。但如果从 <span class="math inline">\(i\)</span> 转移就没有这样的问题（不管 <span class="math inline">\(i&#39;\)</span> 是比 <span class="math inline">\(j\)</span> 大还是比 <span class="math inline">\(j\)</span> 小）。</p>
+<p>那就可以固定从较大的一维转移，也可以枚举所有情况。但是这样就会有一个问题，这是一个 <span class="math inline">\(n^3\)</span> 的过程，而且对于不单调的内层 <span class="math inline">\(j\)</span>，维护它的数值只能用带 <span class="math inline">\(\log\)</span> 的数据结构优化，似乎不太过得了；但 <span class="math inline">\(i\)</span> 却可以前缀优化。</p>
+<p>其实，两个组是无序的，这意味着可以强制 <span class="math inline">\(i&gt;j\)</span> 再从 <span class="math inline">\(i\)</span> 转移；这个时候转移就和 <span class="math inline">\(j\)</span> 没有太大的关系了，可以把 <span class="math inline">\(j\)</span> 放到外层，对 <span class="math inline">\(i\)</span> 前缀优化。可能需要注意边界的处理。</p>
 <details>
-<pre class="cpp"><code>#define int long long
-namespace XSC062 &#123;
-using namespace fastIO;
-const int mod = 1e9 + 7;
-const int maxn = 1e5 + 5;
-int a[maxn];
-int n, mx, ans, res;
-int qkp(int x, int y) &#123;
-    int res = 1;
-    while (y) &#123;
-        if (y &amp; 1) (res *= x) %= mod;
-        (x *= x) %= mod, y &gt;&gt;= 1;
-    &#125;
-    return res;
-&#125;
-int max(int x, int y) &#123; return x &gt; y ? x : y; &#125;
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
 int main() &#123;
-    read(n);
-    for (int i = 1; i &lt;= n; ++i) 
-        read(a[i]), mx = max(mx, a[i]);
-    std::sort(a + 1, a + n + 1);
-    for (int k = 1; k &lt;= mx; ++k) &#123;
-        res = 1;
-        std::vector&lt;int&gt; p;
-        p.push_back(-1); // 占位符，方便下标对齐 
-        for (int i = 1; i * i &lt;= k; ++i) &#123;
-            if (k % i == 0) &#123;
-                p.push_back(i);
-                if (i * i != k) p.push_back(k / i);
-            &#125;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n, res = 0;
+    std::cin &gt;&gt; n;
+    std::vector&lt;int&gt; a(n + 1);
+    for (int i = 1; i &lt;= n; ++i)
+        std::cin &gt;&gt; a[i];
+    std::vector&lt;std::vector&lt;int&gt; &gt; f(n + 1, std::vector&lt;int&gt; (n + 1));
+    for (int j = 0; j &lt; n; ++j) &#123;
+        std::vector&lt;int&gt; mx(100002), mmx(7);
+        for (int i = 1; i &lt; j; ++i) &#123;
+            mx[a[i]] = std::max(mx[a[i]], f[j][i]);
+            mmx[a[i] % 7] = std::max(mmx[a[i] % 7], f[j][i]);
         &#125;
-        std::sort(p.begin() + 1, p.end());
-        // 先算前 m - 1 个 
-        int m = p.size() - 1;
-        for (int j = 1; j &lt;= m - 1; ++j) &#123;
-            int l, r, x;
-            l = std::lower_bound(a + 1, a + n + 1, p[j]) - a;
-            r = std::lower_bound(a + 1, a + n + 1, p[j + 1]) - a - 1;
-            x = r - l + 1, (res *= qkp(j, x)) %= mod;
+        for (int i = j + 1; i &lt;= n; ++i) &#123;
+            f[i][j] = std::max(&#123; !!i + !!j, mx[a[i] - 1] + 1, mx[a[i] + 1] + 1, mmx[a[i] % 7] + 1, f[j][0] + 1 &#125;);
+            mx[a[i]] = std::max(mx[a[i]], f[i][j]);
+            mmx[a[i] % 7] = std::max(mmx[a[i] % 7], f[i][j]);
+            // printf(&quot;f[%d][%d] = %d\n&quot;, i, j, f[i][j]);
+            res = std::max(res, f[i][j]);
         &#125;
-        int l, r, x;
-        l = std::lower_bound(a + 1, a + n + 1, p[m]) - a;
-        r = n, x = r - l + 1;
-        (res *= (qkp(m, x) - qkp(m - 1, x))) %= mod;
-        (ans += res) %= mod;
     &#125;
-    print((ans + mod) % mod, &#39;\n&#39;);
+    std::cout &lt;&lt; res &lt;&lt; &#39;\n&#39;;
     return 0;
-&#125;
-&#125; // namespace XSC062
-#undef int</code></pre>
+&#125;</code></pre>
 </details>
+<hr />
+<h2 id="c---巡逻">C - 巡逻</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3629" class="uri">https://www.luogu.com.cn/problem/P3629</a></p>
+<p>你可能需要注意：目的是遍历所有边而非所有点。</p>
+<p><span class="math inline">\(K=1\)</span> 的时候，环上除了关键边的所有边经过次数会减 <span class="math inline">\(1\)</span>。所以选树的直径就可以最优。</p>
+<p><span class="math inline">\(K=2\)</span> 的时候，答案是 <span class="math inline">\(2\times (m + 2)\)</span> 减去两个边构成的环的大小 <span class="math inline">\(L\)</span>。那么就只需要最大化 <span class="math inline">\(L\)</span> 了。</p>
+<p>其实是在树上任选两个没有祖孙关系的点 <span class="math inline">\(x,y\)</span>，找到它们不相交的最长儿子链和次长儿子链，要这四条链加起来最长。<span class="math inline">\(x\)</span> 和 <span class="math inline">\(y\)</span> 其实无关，分别找就可以了。</p>
+<p>当 <span class="math inline">\(x\)</span> 与 <span class="math inline">\(y\)</span> 重合时可能会退化（？）成两个环，取树上任意 <span class="math inline">\(x\)</span> 子树和补集里面可以构成的最大环就可以了。</p>
 
 			</div>
 			<hr class="dotted">
@@ -243,17 +231,11 @@ int main() &#123;
 				<div class="button flex">
 					<div id="prev">
 						
-							<!-- 吐槽，为啥还需要加 / -->
-							<a href="/20230928/">
-								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
-								颜色
-							</a>
-						
 					</div>
 					<div id="next">
 						
-							<a href="/20230729/">
-								矩阵
+							<a href="/20250419/">
+								网格图路径计数
 								<i class="fas fa-angle-double-right" style="margin-left: 10px;"></i>
 							</a>
 						

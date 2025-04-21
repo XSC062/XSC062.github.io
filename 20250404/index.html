@@ -597,7 +597,61 @@ int main() &#123;
 <li>DFN 在 <span class="math inline">\(v\)</span> 之前 / 之后，且 <span class="math inline">\(s\le \dfrac {n-s_v}2\)</span> 的权值。</li>
 </ol>
 <p>记录询问的 DFN 区间，离线（？）下来按照 <span class="math inline">\(n&#39;\)</span> 排序，随便用个 DFN 上的 DS 统计一下即可。但 <span class="math inline">\(u\)</span> 侧的 <span class="math inline">\(s&#39;_{fa}\)</span> 会发生变化，没办法离线处理，考虑<mark>费用提前计算消除误差——找到比 <span class="math inline">\(\dfrac {n-s_v}2\)</span> 大，但减去 <span class="math inline">\(s_v\)</span> 后比之小的 <span class="math inline">\(fa\)</span> 提前处理</mark>。</p>
-<p><mark>发现由于 <span class="math inline">\(s\)</span> 随着 <span class="math inline">\(fa\)</span> 往上是单调递增的，满足这个条件的 <span class="math inline">\(fa\)</span> 是连续的。</mark>用树上倍增框出左右端点，用类似 <span class="math inline">\(dep\)</span> 的记录方法记录权值前缀和，减出来就能算出费用。那么就可以 <span class="math inline">\(O(n\log)\)</span> 的解决问题了。</p>
+<p><mark>发现由于 <span class="math inline">\(s\)</span> 随着 <span class="math inline">\(fa\)</span> 往上是单调递增的，满足这个条件的 <span class="math inline">\(fa\)</span> 是连续的。</mark>用树上倍增框出上下端点 <span class="math inline">\((fa_p\to fa_q]\)</span> 进行费用提前计算。那么就可以 <span class="math inline">\(O(n\log)\)</span> 的解决问题了。</p>
+<details>
+<p><summary>具体地，如何提前计算？</summary></p>
+<p>记 <span class="math inline">\(diw_x\)</span> 为从 <span class="math inline">\(1\)</span> 到 <span class="math inline">\(x\)</span> 的路径上所有点 <span class="math inline">\(s\cdot w\)</span> 之和。</p>
+<p>那么有：</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">项</th>
+<th style="text-align: center;">真实值</th>
+<th style="text-align: center;">计算值</th>
+<th style="text-align: center;"><span class="math inline">\(\sum\Delta\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(x\notin\{fa\}\land x\notin\{son\}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(w_x\cdot \min(s_x,n&#39;-s_x)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(w_x\cdot \min(s_x,n&#39;-s_x)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(x\in[1\to fa_p]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(w_x\cdot (s_x - s_v)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(w_x\cdot s_x\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(-dis_p\times s_v\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(x\in (fa_p\to fa_q]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(w_x\cdot (n-s_x)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(w_x\cdot s_x\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n\times(dis_q-dis_p)-2\times (diw_q - diw_p)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(x\in(fa_q,v)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(w_x\cdot (n-s_x)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(w_x\cdot (n-s_x-s_v)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(s_v\cdot (dis_u-dis_q)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(x\in \{son\}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(w_x\cdot \min(s_x,n&#39;-s_x)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(w_x\cdot \min(s_x,n&#39;-s_x)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>即需将答案 <strong>减去</strong> <span class="math inline">\(n\times(dis_q-dis_p)-2\times (diw_q - diw_p)+s_v\cdot (dis_u-dis_q-dis_p)\)</span>。</p>
+</details>
 <details>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
 int main() &#123;
@@ -668,8 +722,7 @@ int main() &#123;
                                 q = f[q][j];
                         q = f[q][0];
                     &#125;
-                    res[i] -= (sw - s[i]) * (dis[q] - dis[p]) - (diw[q] - diw[p]) + (dis[x] - 2 * dis[p]) * s[i];
-                    res[i] += (diw[q] - diw[p]);
+                    res[i] -= sw * (dis[q] - dis[p]) - 2 * (diw[q] - diw[p]) + (dis[x] - dis[p] - dis[q]) * s[i];
                     DFS(i, x);
                 &#125;
             return;
@@ -731,6 +784,12 @@ int main() &#123;
 				</div>
 				<div class="button flex">
 					<div id="prev">
+						
+							<!-- 吐槽，为啥还需要加 / -->
+							<a href="/20250407/">
+								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
+								组合计数
+							</a>
 						
 					</div>
 					<div id="next">
