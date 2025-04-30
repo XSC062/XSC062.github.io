@@ -13,7 +13,7 @@
 <!-- 网站标题 -->
 <title>
 	
-		学习小组 -
+		连通图计数 -
 	
 	XSC062 的博客
 </title>
@@ -136,164 +136,31 @@
 			<span id="postcon">
 				<span id="postinfo">
 					<div class="ui post title">
-						<div id="fortitle" data-content="学习小组">
-							学习小组
+						<div id="fortitle" data-content="连通图计数">
+							连通图计数
 						</div>
 						<div class="ui title background">
 						</div>
 					</div>
 					<span id="date">
 						<i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
-						2023-07-17
+						2025-04-30
 					</span>
 				</span>
 			</span>
 			<div id="posttags" class="dotted border">
 				
 					
-						<a href="/tags/网络流/" class="citem">网络流</a>
-					
-						<a href="/tags/费用流/" class="citem">费用流</a>
+						<a href="/tags/计数/" class="citem">计数</a>
 					
 				
 			</div>
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
-				<p>Solution to <a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/756/D">CF756D Bacterial Melee</a>。</p>
-<span id="more"></span>
-<hr />
-<p>给我整不会了。怎么处理平方？怎么控制参与总学生最多？其中一定又有什么我不知道的奇技淫巧。</p>
-<p>一切尽在连边。</p>
-<ul>
-<li><p>处理学生与社团间的选择关系</p>
-<p>把学生向社团连边。学生只能选取某社团一次，故容量为 <span class="math inline">\(1\)</span>。</p>
-<p>一个学生选取某个社团并不会立即对最终花费带来可计算的影响，因为最终花费由该社团参与的 <strong>所有学生平方数</strong> 决定。</p>
-故这一步我们先不慌计算社团的代价，只算参与社团本身需要的手续费 <span class="math inline">\(F_i\)</span>。但是需要注意到手续费是财务部的收入而非支出，故实际边权为 <span class="math inline">\(-F_i\)</span>，计算答案时视作负支出（明显不会因此而产生负环，因此可以放心加边）。</li>
-<li><p>处理学生的选择数量上限</p>
-<p>学生最多只能选择 <span class="math inline">\(K\)</span> 个社团，为保证这一点，我们将源点向学生连边，容量为 <span class="math inline">\(K\)</span>。</p>
-很明显，代价也不在此处计算，故令费用为 <span class="math inline">\(0\)</span>。</li>
-<li><p>保证代价最小</p>
-<p>一开始，我认为最小费用最大流一定会找到最小费用，这个处理是无意义的，后来被打脸了。</p>
-<p>我们若欲在此图中寻得最小费用最大流，则 <strong>流一定最大</strong>。</p>
-<p>而学生的流入容量为 <span class="math inline">\(K\)</span>，为了满流，学生一定会尽可能多地选择社团，那么费用就会噌噌上涨。回到目标，即保证学生都选取至少一个社团时，支出最小。</p>
-<p>那我们只要给机会让学生可以只选取一个社团就好了（当然也可以是两个、三个……）。</p>
-<p>故让学生向终点连边，容量为 <span class="math inline">\(K-1\)</span>，那么学生可以在选取了所有比较赚的社团后就不再选了，选这条边达到满流。同样因为该边流量只有 <span class="math inline">\(K-1\)</span>，学生为了满流就只能再选至少一个社团，满足题意。</p>
-不选社团明显是没有手续费和社团支出的，故费用为 <span class="math inline">\(0\)</span>。</li>
-<li><p>处理社团本身支出</p>
-<p>问题在于如何处理 <span class="math inline">\(a\)</span> 这个平方项。</p>
-<p>对于平方，我们可以联想到许多数学知识，譬如完全平方、平方差等，这里用到了平方差。</p>
-<p>假如原来的代价是 <span class="math inline">\(C_i\times x^2\)</span>，又加入了一个人，那么费用会变成 <span class="math inline">\(C_i\times (x + 1)^2\)</span>。由平方差得两者之差为 <span class="math inline">\(C_i\times (2\times x + 1)\)</span>。当 <span class="math inline">\(x - 1\)</span> 取为任意正整数时，<span class="math inline">\(2\times x + 1\)</span> 即为所有奇数。</p>
-<p>所以我们将社团向汇点连边，连很多条边，每条边表示 <strong>新增一个团员的代价</strong>，容量为 <span class="math inline">\(1\)</span> 表示一个新增团员，费用为从 <span class="math inline">\(1\)</span> 开始，一直到 <span class="math inline">\(2\times (N - 1) + 1\)</span> 的所有奇数。</p></li>
-</ul>
-<p>那么问题到这里就算处理完了。直接上费用流即可。</p>
-<p>不知道我的代码遭遇了哪家宇宙射线的侵蚀，Dinic 死活过不去，换成 EK 就过了。同学们如果发现自己的 Dinic 过不了也可以试试换 EK。</p>
-<details>
-<pre class="cpp"><code>#define int long long
-namespace XSC062 &#123;
-using namespace fastIO;
-const int maxn = 405;
-const int inf = 1e18;
-const int maxm = 5e5 + 5;
-struct _ &#123;
-    int v, c, w, n;
-    _() &#123;&#125;
-    _(int v1, int c1, int w1, int n1) &#123;
-        v = v1, c = c1, w = w1, n = n1;
-    &#125;
-&#125;;
-_ u[maxm];
-bool inq[maxn];
-int n, m, k, x, res;
-int gs, gt, tot = 1;
-int c[maxn], f[maxn];
-int h[maxn], dis[maxn];
-int fl[maxn], pre[maxn];
-int min(int x, int y) &#123;
-    return x &lt; y ? x : y;
-&#125;
-bool SPFA(int s, int n) &#123;
-    std::queue&lt;int&gt; q;
-    std::fill(dis + 1, dis + n + 1, inf);
-    q.push(s), dis[s] = 0, inq[s] = 1;
-    pre[s] = inf, pre[gt] = 0, fl[s] = inf;
-    while (!q.empty()) &#123;
-        int f = q.front();
-        q.pop(), inq[f] = 0;
-        for (int i = h[f]; i; i = u[i].n) &#123;
-            if (u[i].c == 0)
-                continue;
-            int v = u[i].v, w = u[i].w;
-            if (dis[v] &gt; dis[f] + w) &#123;
-                pre[v] = i ^ 1;
-                dis[v] = dis[f] + w;
-                fl[v] = min(fl[f], u[i].c);
-                if (!inq[v])
-                    inq[v] = 1, q.push(v);
-            &#125;
-        &#125;
-    &#125;
-    return pre[gt];
-&#125;
-void SSP(int s, int n) &#123;
-    int p, mn, d;
-    while (SPFA(s, n)) &#123;
-        mn = fl[gt], d = 0;
-        for (p = gt; p != s; p = u[pre[p]].v) &#123;
-            u[pre[p]].c += mn;
-            u[pre[p] ^ 1].c -= mn;
-            d += u[pre[p] ^ 1].w;
-        &#125;
-        res += mn * d;
-    &#125;
-    return;
-&#125;
-void add(int x, int y, int c, int w) &#123;
-    u[++tot] = _(y, c, w, h[x]);
-    h[x] = tot;
-    return;
-&#125;
-void readx(int &amp;x) &#123;
-    char ch = nec();
-    while (ch != &#39;0&#39; &amp;&amp; ch != &#39;1&#39;)
-        ch = nec();
-    x = ch - &#39;0&#39;;
-    return;
-&#125;
-int main() &#123;
-    read(n), read(m), read(k);
-    gs = n + m + 1, gt = gs + 1;
-    for (int i = 1; i &lt;= m; ++i) &#123;
-        read(c[i]);
-        for (int j = 0; j &lt; n; ++j) &#123;
-            add(i + n, gt, 1,
-                    (2 * j + 1) * c[i]);
-            add(gt, i + n, 0,
-                    -(2 * j + 1) * c[i]);
-        &#125;
-    &#125;
-    for (int i = 1; i &lt;= m; ++i)
-        read(f[i]);
-    for (int i = 1; i &lt;= n; ++i) &#123;
-        add(gs, i, k, 0);
-        add(i, gs, 0, 0);
-        add(i, gt, k - 1, 0);
-        add(gt, i, 0, 0);
-        for (int j = 1; j &lt;= m; ++j) &#123;
-            readx(x);
-            if (x == 1) &#123;
-                add(i, j + n, 1, -f[j]); // 负代价
-                add(j + n, i, 0, f[j]);
-            &#125;
-        &#125;
-    &#125;
-    SSP(gs, gt);
-    print(res, &#39;\n&#39;);
-    return 0;
-&#125;
-&#125; // namespace XSC062
-#undef int</code></pre>
-</details>
+				<!-- <figure>
+<img src="/20250430/neko.png" alt="猫" style="width: 75px"><figcaption>猫</figcaption>
+</figure> -->
 
 			</div>
 			<hr class="dotted">
@@ -310,17 +177,11 @@ int main() &#123;
 				<div class="button flex">
 					<div id="prev">
 						
-							<!-- 吐槽，为啥还需要加 / -->
-							<a href="/20230720/">
-								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
-								费用流练习
-							</a>
-						
 					</div>
 					<div id="next">
 						
-							<a href="/20230527/">
-								中国剩余定理
+							<a href="/20250421/">
+								杂题
 								<i class="fas fa-angle-double-right" style="margin-left: 10px;"></i>
 							</a>
 						

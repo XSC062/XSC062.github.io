@@ -128,7 +128,7 @@
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#a---t-shirt"><span class="toc-text">A - T-shirt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b---two-melodies"><span class="toc-text">B - Two Melodies</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c---%E5%B7%A1%E9%80%BB"><span class="toc-text">C - 巡逻</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#a---t-shirt"><span class="toc-text">A - T-shirt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b---two-melodies"><span class="toc-text">B - Two Melodies</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cf633f-the-chocolate-spree"><span class="toc-text">CF633F The Chocolate Spree</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c---%E5%B7%A1%E9%80%BB"><span class="toc-text">C - 巡逻</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#d---%E7%9E%AC%E9%97%B4%E4%BC%A0%E9%80%81-teleport"><span class="toc-text">D - 瞬间传送 &#x2F; Teleport</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#e.-two-tanks"><span class="toc-text">E. Two Tanks</span></a></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -150,7 +150,13 @@
 			</span>
 			<div id="posttags" class="dotted border">
 				
-					<span style="color: #888;">暂无标签</span>
+					
+						<a href="/tags/DP/" class="citem">DP</a>
+					
+						<a href="/tags/贪心/" class="citem">贪心</a>
+					
+						<a href="/tags/均摊/" class="citem">均摊</a>
+					
 				
 			</div>
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
@@ -208,13 +214,258 @@ int main() &#123;
 &#125;</code></pre>
 </details>
 <hr />
+<h2 id="cf633f-the-chocolate-spree">CF633F The Chocolate Spree</h2>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/633/F" class="uri">https://codeforces.com/problemset/problem/633/F</a></p>
+<p>数性 DP 求直径的时候，有一种方法是找到每个点下面的最大两条不交链。</p>
+<p>这里也可以有类似的求法。假设答案出现在子树 <span class="math inline">\(u\)</span> 中（下面的 <span class="math inline">\(v_i\)</span> 都是 <span class="math inline">\(u\)</span> 的直接儿子），可以讨论 <span class="math inline">\(u\)</span> 参与构成两条路径的情况：</p>
+<ol type="1">
+<li>不参与构成任何一条路径，答案是 <span class="math inline">\(v_1,v_2\)</span> 子树中的最长路径之和。</li>
+<li><p>参与构成其中一条：</p>
+<ol type="1">
+<li>这一条与子树 <span class="math inline">\(v\)</span> 完全相离，答案是 <span class="math inline">\(v\)</span> 中最长路径，和 <span class="math inline">\(u\)</span> 下面不经过 <span class="math inline">\(v\)</span> 的最大两条不交链。</li>
+<li>这一条有一支来自 <span class="math inline">\(v\)</span> 子树，但和 <span class="math inline">\(v\)</span> 中最长路径没有重合的点。答案是 <span class="math inline">\(u\)</span> 的点权、<span class="math inline">\(u\)</span> 下面不经过 <span class="math inline">\(v\)</span> 的最大链、<span class="math inline">\(v\)</span> 中一条路径（不经过 <span class="math inline">\(v\)</span>）和 <span class="math inline">\(v\)</span> 下面一条链之和的最大值；</li>
+<li>这一条两支都来自 <span class="math inline">\(v\)</span> 子树：有重合，不可能发生。</li>
+</ol></li>
+<li><p>参与构成其中两条，答案是 <span class="math inline">\(u\)</span> 下面最长的四条链：路径重复经过 <span class="math inline">\(u\)</span>，不可能发生。</p></li>
+</ol>
+<p><img src="2.png" /></p>
+<p>可以记录 <span class="math inline">\(u\)</span> 下方最大的四条不交链、<span class="math inline">\(u\)</span> 中选取一条不经过 <span class="math inline">\(u\)</span> 的路径和 <span class="math inline">\(u\)</span> 下方一条链之和的最大值、<span class="math inline">\(u\)</span> 中最长路径求解。</p>
+<details>
+<pre class="cpp language-cpp" data-line="42-44"><code class="cpp langauage-cpp">#include &lt;bits/stdc++.h>
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(".in", "r", stdin);
+    std::freopen(".out", "w", stdout);
+#endif
+    int n;
+    std::cin >> n;
+    std::vector&lt;int> a(n + 1);
+    std::vector&lt;std::vector&lt;int> > g(n + 1);
+    for (int i = 1; i <= n; ++i)
+        std::cin >> a[i];
+    for (int i = 1, x, y; i < n; ++i) &#123;
+        std::cin >> x >> y;
+        g[x].push_back(y), g[y].push_back(x);
+    &#125;
+    auto res(0ll);
+    std::vector&lt;long long> s(n + 1), w(n + 1);
+    std::vector&lt;std::vector&lt;std::pair&lt;long long, int> > > f(n + 1, std::vector&lt;std::pair&lt;long long, int> > (4));
+    std::function&lt;void(int, int)> DFS = [&](int x, int fa) &#123;
+        f[x][0] = &#123; 0, x &#125;;
+        w[x] = s[x] = a[x];
+        for (auto i : g[x])
+            if (i != fa) &#123;
+                DFS(i, x);
+                &#123;
+                    if (f[i][0].first + a[i] > f[x][3].first)
+                        f[x][3].first = f[i][0].first + a[i], f[x][3].second = i;
+                    std::sort(f[x].begin(), f[x].end(), std::greater&lt;std::pair&lt;long long, int> > ());
+                &#125;
+                w[x] = std::max(w[x], w[i] + a[x]);
+            &#125;
+        auto mx(0ll);
+        for (auto i : g[x])
+            if (i != fa) &#123;
+                s[x] = std::max(&#123; s[x], s[i], f[x][0].first + f[x][1].first + a[x] &#125;);
+                w[x] = std::max(w[x], (f[x][0].second != i ? f[x][0] : f[x][1]).first + s[i] + a[x]);
+                res = std::max(&#123; res,
+                    mx + s[i], // 情况 1
+                    (f[x][0].second == i ? f[x][1].first + f[x][2].first : (f[x][1].second == i ? f[x][0].first + f[x][2].first : f[x][0].first + f[x][1].first)) + s[i] + a[x], // 情况 2.1
+                    (f[x][0].second == i ? f[x][1].first : f[x][0].first) + w[i] + a[x], // 情况 2.2
+                &#125;);
+                mx = std::max(mx, s[i]);
+            &#125;
+    //     printf("%d: res = %lld\n  f: \n", a[x], res);
+    //     for (int i = 0; i < 4; ++i)
+    //         printf("    [%d] %lld\n", f[x][i].second, f[x][i].first);
+    //     printf("  s: %lld\n  w: %lld\n", s[x], w[x]);
+    &#125;;
+    DFS(1, -1);
+    std::cout << res << '\n';
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
 <h2 id="c---巡逻">C - 巡逻</h2>
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3629" class="uri">https://www.luogu.com.cn/problem/P3629</a></p>
 <p>你可能需要注意：目的是遍历所有边而非所有点。</p>
 <p><span class="math inline">\(K=1\)</span> 的时候，环上除了关键边的所有边经过次数会减 <span class="math inline">\(1\)</span>。所以选树的直径就可以最优。</p>
-<p><span class="math inline">\(K=2\)</span> 的时候，答案是 <span class="math inline">\(2\times (m + 2)\)</span> 减去两个边构成的环的大小 <span class="math inline">\(L\)</span>。那么就只需要最大化 <span class="math inline">\(L\)</span> 了。</p>
-<p>其实是在树上任选两个没有祖孙关系的点 <span class="math inline">\(x,y\)</span>，找到它们不相交的最长儿子链和次长儿子链，要这四条链加起来最长。<span class="math inline">\(x\)</span> 和 <span class="math inline">\(y\)</span> 其实无关，分别找就可以了。</p>
-<p>当 <span class="math inline">\(x\)</span> 与 <span class="math inline">\(y\)</span> 重合时可能会退化（？）成两个环，取树上任意 <span class="math inline">\(x\)</span> 子树和补集里面可以构成的最大环就可以了。</p>
+<p><span class="math inline">\(K=2\)</span> 的时候，答案是 <span class="math inline">\(2\times (m + 2)\)</span> 减去两个边构成的环的 <em>并集减交集</em> 大小 <span class="math inline">\(L\)</span>。环实际上是不存在的，<span class="math inline">\(L\)</span> 其实是两条路径 <em>并集减交集</em> 再加上两条新边的值。</p>
+<p>两条路径有交的时候，可以等效成无交的情况：</p>
+<p><img src="1.png" /></p>
+<p>就划归成上一个问题了。注意此时情况 3 可能发生；同时情况 2.2 可以选取经过 <span class="math inline">\(v\)</span> 的路径。</p>
+<details>
+<pre class="cpp language-cpp" data-line="55-56,64-67"><code class="cpp langauage-cpp">#include &lt;bits/stdc++.h>
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(".in", "r", stdin);
+    std::freopen(".out", "w", stdout);
+#endif
+    int n, k;
+    std::cin >> n >> k;
+    std::vector&lt;std::vector&lt;int> > g(n + 1);
+    for (int i = 1, x, y; i < n; ++i) &#123;
+        std::cin >> x >> y;
+        g[x].push_back(y), g[y].push_back(x);
+    &#125;
+    int res = 0;
+    if (k == 1) &#123;
+        std::vector&lt;std::vector&lt;std::pair&lt;int, int> > > f(n + 1, std::vector&lt;std::pair&lt;int, int> > (2));
+        std::function&lt;void(int, int)> DFS = [&](int x, int fa) &#123;
+            f[x][0] = &#123; 0, x &#125;;
+            for (auto i : g[x])
+                if (i != fa) &#123;
+                    DFS(i, x);
+                    &#123;
+                        if (f[i][0].first + 1 > f[x][1].first)
+                            f[x][1].first = f[i][0].first + 1, f[x][1].second = i;
+                        std::sort(f[x].begin(), f[x].end(), std::greater&lt;std::pair&lt;int, int> > ());
+                    &#125;
+                &#125;
+            res = std::max(res, f[x][0].first + f[x][1].first);
+        &#125;;
+        DFS(1, -1);
+        std::cout << 2 * n - res - 1 << '\n';
+    &#125;
+    else &#123;
+        std::vector&lt;int> s(n + 1), w(n + 1);
+        std::vector&lt;std::vector&lt;std::pair&lt;int, int> > > f(n + 1, std::vector&lt;std::pair&lt;int, int> > (4));
+        std::function&lt;void(int, int)> DFS = [&](int x, int fa) &#123;
+            f[x][0] = &#123; 0, x &#125;;
+            for (auto i : g[x])
+                if (i != fa) &#123;
+                    DFS(i, x);
+                    &#123;
+                        if (f[i][0].first + 1 > f[x][3].first)
+                            f[x][3].first = f[i][0].first + 1, f[x][3].second = i;
+                        std::sort(f[x].begin(), f[x].end(), std::greater&lt;std::pair&lt;int, int> > ());
+                    &#125;
+                    w[x] = std::max(w[x], w[i] + 1);
+                &#125;
+            &#123;
+                int t = 0;
+                for (auto [v, id] : f[x])
+                    t += v;
+                res = std::max(res, t); // 情况 3
+                w[x] = std::max(w[x], t - f[x][3].first); // 路径可经过 u
+            &#125;
+            int mx = 0;
+            for (auto i : g[x])
+                if (i != fa) &#123;
+                    s[x] = std::max(&#123; s[x], s[i], f[x][0].first + f[x][1].first &#125;);
+                    w[x] = std::max(w[x], (f[x][0].second != i ? f[x][0] : f[x][1]).first + std::max(s[i], f[i][0].first + 1));
+                    res = std::max(&#123; res,
+                        mx + s[i], // 情况 1
+                        (f[x][0].second == i ? f[x][1].first + f[x][2].first : (f[x][1].second == i ? f[x][0].first + f[x][2].first : f[x][0].first + f[x][1].first)) + s[i], // 情况 2.1
+                        (f[x][0].second == i ? f[x][1].first : f[x][0].first) + w[i] + 1, // 情况 2.2
+                    &#125;);
+                    mx = std::max(mx, s[i]);
+                &#125;
+        &#125;;
+        DFS(1, -1);
+        std::cout << 2 * (n + 1) - res - 2 << '\n';
+    &#125;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="d---瞬间传送-teleport">D - 瞬间传送 / Teleport</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P11915" class="uri">https://www.luogu.com.cn/problem/P11915</a></p>
+<p>需要观察到一个很厉害的贪心策略：如果钦定所有点的距离不大于 <span class="math inline">\(r\)</span>，且存在 <span class="math inline">\(d(i,j)&gt;r\)</span>。<strong>假设</strong> 一种满足条件的新边是 <span class="math inline">\((u,v)\)</span>（由于两者无序，不妨钦定 <span class="math inline">\(d(i,u)&lt;d(i,v)\)</span>），可以进行讨论：</p>
+<ol type="1">
+<li><p><span class="math inline">\(d(j,v)&lt;d(j,u)\)</span>：</p>
+此时最优路径为 <span class="math inline">\(i\to u\to v\to j\)</span>，判断一下这种方案是否不大于 <span class="math inline">\(r\)</span> 就可以了。</li>
+<li><p><span class="math inline">\(d(j,v)\ge d(j, u)\)</span>：</p>
+<p>此时不管是走 <span class="math inline">\(i\to u\to v\to j\)</span> 还是 <span class="math inline">\(i\to v\to u\to j\)</span> 都不如走已经存在的 <span class="math inline">\(i\to u\to j\)</span> 这条路径，也就是说如果要走新边，代价是一定比原距离大，更是比 <span class="math inline">\(r\)</span> 大的；也就是说，<span class="math inline">\((u,v)\)</span> 不能解决 <span class="math inline">\((i,j)\)</span> 之间的问题，假设就不成立了。</p></li>
+</ol>
+<p>综上，只需要判断 <span class="math inline">\(i\to u\to v\to j\le r\)</span> 是否成立，就可以判断 <span class="math inline">\((u,v)\)</span> 是否合法。从大到小枚举 <span class="math inline">\(r\)</span>，同时维护当前依然合法的 <span class="math inline">\((u,v)\)</span>（显然是有单调性的），对于不合法的 <span class="math inline">\((i,j)\)</span>，枚举每个 <span class="math inline">\(i\)</span>，维护 <span class="math inline">\(\max\{d(v,j)\}\)</span>，精细实现（主要是利用各种均摊）一下就能 <span class="math inline">\(O(n^3)\)</span>。</p>
+<p>这里具体提一下需要摊的几个点：</p>
+<ol type="1">
+<li>枚举到 <span class="math inline">\(r\)</span> 的时候用所有 <span class="math inline">\(d(i,j)=r+1\)</span> 把 <span class="math inline">\(v\)</span> 在 <span class="math inline">\(i\)</span> 处的最大 <span class="math inline">\(d(v,j)\)</span> 更新，方便后面 <span class="math inline">\(O(n)\)</span> 地 check。摊出来是 <span class="math inline">\(O(n^3)\)</span> 的。</li>
+<li>枚举仍然处在合法队列里的 <span class="math inline">\((u,v)\)</span>，如果 check 合法，就说明对于当前 <span class="math inline">\(r\)</span> 至少存在一个合法解，就可以 <code>break</code> 了；否则，把 <span class="math inline">\((u,v)\)</span> 弹出，继续 check 下一条边。这样每条边只会被弹出一次，而未弹出边的 check 次数最多是 <span class="math inline">\(O(n)\)</span>；加上 <span class="math inline">\(O(n)\)</span> 的 check，摊出来是 <span class="math inline">\(O(n^3)\)</span> 的。</li>
+</ol>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int inf = 0x3f3f3f3f;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int T;
+    for (std::cin &gt;&gt; T; T--; ) &#123;
+        int n;
+        std::cin &gt;&gt; n;
+        std::vector&lt;std::vector&lt;int&gt; &gt; g(n + 1, std::vector&lt;int&gt; (n + 1, inf));
+        for (int i = 1; i &lt;= n; ++i)
+            for (int j = 1; j &lt;= n; ++j) &#123;
+                char t;
+                std::cin &gt;&gt; t;
+                if (t == &#39;1&#39; || i == j)
+                    g[i][j] = t - &#39;0&#39;;
+            &#125;
+        for (int k = 1; k &lt;= n; ++k)
+            for (int i = 1; i &lt;= n; ++i)
+                if (i != k)
+                    for (int j = 1; j &lt;= n; ++j)
+                        if (j != i &amp;&amp; j != k)
+                            g[i][j] = std::min(g[i][j], g[i][k] + g[k][j]);
+        std::queue&lt;std::pair&lt;int, int&gt; &gt; q;
+        std::vector&lt;std::vector&lt;std::pair&lt;int, int&gt; &gt; &gt; p(n + 1);
+        std::vector&lt;std::vector&lt;int&gt; &gt; mx(n + 1, std::vector&lt;int&gt; (n + 1));
+        for (int i = 1; i &lt; n; ++i)
+            for (int j = i + 1; j &lt;= n; ++j) &#123;
+                q.emplace(i, j);
+                p[g[i][j] - 1].emplace_back(i, j);
+            &#125;
+        auto check = [&amp;](int u, int v, int r) &#123;
+            for (int i = 1; i &lt;= n; ++i) &#123;
+                if (g[u][i] &gt; g[v][i])
+                    std::swap(u, v);
+                if (g[u][i] + mx[v][i] &gt; r)
+                    return false;
+            &#125;
+            return true;
+        &#125;;
+        for (int r = n; r &gt;= -1; --r) &#123;
+            for (auto [i, j] : p[r])
+                for (int v = 1; v &lt;= n; ++v) &#123;
+                    mx[v][i] = std::max(mx[v][i], g[v][j]);
+                    mx[v][j] = std::max(mx[v][j], g[v][i]);
+                &#125;
+            for (; !q.empty(); ) &#123;
+                auto [u, v] = q.front();
+                if (!check(u, v, r))
+                    q.pop();
+                else
+                    break;
+            &#125;
+            if (q.empty()) &#123;
+                std::cout &lt;&lt; r + 1 &lt;&lt; &#39;\n&#39;;
+                break;
+            &#125;
+        &#125;
+    &#125;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="e.-two-tanks">E. Two Tanks</h2>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1809/E" class="uri">https://codeforces.com/problemset/problem/1809/E</a></p>
+<p>果然还是不会简单 DP <img src="/em/ll.gif" /></p>
+<p>可以观察到如果总水量相同，且某个时刻两种初始状态当前是相同状态，那么以后它们也会是相同状态。但光凭这个好像还是不太能做出来的样子 <img src="/em/kt.gif" /></p>
+<p>这里大概算一个定式，对于类似这种两个元素总和不变的问题，可以把两个元素的容量画到数轴上，原点表示分界，当前水为一条定长线段，倒水就相当于左右平移这条线段：</p>
+<p><img src="3.png" /></p>
+<p>需要意识到，<mark></mark></p>
 
 			</div>
 			<hr class="dotted">
@@ -230,6 +481,12 @@ int main() &#123;
 				</div>
 				<div class="button flex">
 					<div id="prev">
+						
+							<!-- 吐槽，为啥还需要加 / -->
+							<a href="/20250430/">
+								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
+								连通图计数
+							</a>
 						
 					</div>
 					<div id="next">
