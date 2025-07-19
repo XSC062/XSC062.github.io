@@ -68,11 +68,14 @@
 
 	<!-- 搜索 -->
 <div id="search-bg">
-	<div id="search-box"></div>
-	<!-- <div class="form-group">
-		<input type="text" id="local-search-input" name="q" results="0" placeholder="search" class="st-search-input st-default-search-input form-control"/>
-	</div>  
-	<div id="local-search-result"></div> -->
+	<div id="search-box">
+		<input type="text" id="search-input" placeholder="Type to search...">
+		<div id="search-results"></div>
+		<p>恭喜你触发了这个 box，由于我还没有写关闭键，你只能通过刷新页面来关闭它。非常抱歉 ;-)</p>
+		<p>为了证明我没有摆烂，在这里放一个进度：</p>
+		<p>- 250715：尝试实现搜索功能，初步成功，能够搜索到包含关键词的文章了（也能关掉了）。不知道为啥输入 123 可以匹配所有文章，但是输入 1234 就一篇都匹配不上。</p>
+		<p>- 250716：尝试加入关键词上下文来 de 上面的 bug，然后把 js 写成史了，现在这个框框并不具备搜索功能（也不具备关闭功能） :-(</p>
+	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
@@ -86,7 +89,8 @@
 	<!-- 右对齐部分导航 -->
 	<script>
 		function toSearch() {
-			$("#search-bg, #search-bg *").css("z-index", "1002");
+			// goto search.ejs
+			$("#search-bg, #search-bg *").css("z-index", "1002"); 
 			$("#search-bg, #search-bg *").css("opacity", "100%");
 		}
 	</script>
@@ -128,7 +132,7 @@
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98%E5%9C%9F%E8%B1%AA%E8%81%AA%E8%A6%81%E8%AF%B7%E5%AE%A2"><span class="toc-text">例题：土豪聪要请客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#e.-%E7%8E%89%E8%9F%BE%E5%AE%AB-city-game-%E5%9F%8E%E5%B8%82%E6%B8%B8%E6%88%8F"><span class="toc-text">E. 玉蟾宫 &#x2F; City Game &#x2F; 城市游戏</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E4%B8%80%E6%AD%A5%E5%9C%B0%E6%82%AC%E7%BA%BF%E6%B3%95%E4%B8%8E%E5%8D%95%E8%B0%83%E6%A0%88"><span class="toc-text">进一步地，悬线法与单调栈？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8E%E7%AC%9B%E5%8D%A1%E5%B0%94%E6%A0%91%E7%9A%84%E5%85%B3%E8%81%94"><span class="toc-text">与笛卡尔树的关联</span></a>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%E5%9C%9F%E8%B1%AA%E8%81%AA%E8%A6%81%E8%AF%B7%E5%AE%A2"><span class="toc-text">引入：土豪聪要请客</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E7%8E%89%E8%9F%BE%E5%AE%AB-city-game-%E5%9F%8E%E5%B8%82%E6%B8%B8%E6%88%8F"><span class="toc-text">例：玉蟾宫 &#x2F; City Game &#x2F; 城市游戏</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%82%AC%E7%BA%BF%E6%B3%95%E8%83%BD%E7%BB%B4%E6%8A%A4%E7%9A%84%E6%95%B0%E6%8D%AE%E7%89%B9%E7%82%B9"><span class="toc-text">悬线法能维护的数据特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E4%B8%80%E6%AD%A5%E5%9C%B0%E6%82%AC%E7%BA%BF%E6%B3%95%E4%B8%8E%E5%8D%95%E8%B0%83%E6%A0%88"><span class="toc-text">进一步地，悬线法与单调栈？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8E%E7%AC%9B%E5%8D%A1%E5%B0%94%E6%A0%91%E7%9A%84%E5%85%B3%E8%81%94"><span class="toc-text">与笛卡尔树的关联</span></a></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -167,7 +171,7 @@
 <span id="more"></span>
 <p>本文中的「单调栈」均指依赖于顺序维护信息的工具，单纯利用单调性质作为数据结构独立存在的单调栈不在本篇文章 <strong>批判</strong> 范围之内。</p>
 <hr />
-<h3 id="例题土豪聪要请客">例题：土豪聪要请客</h3>
+<h2 id="引入土豪聪要请客">引入：土豪聪要请客</h2>
 <p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/2870/problem/4" class="uri">http://222.180.160.110:61235/contest/2870/problem/4</a></p>
 <p>题意简述：给定一个 <span class="math inline">\(n\times m\)</span> 的矩阵，其中有一部分地方有障碍。在整个地图上找到周长最大的、不包含障碍的矩形。</p>
 <p>输入一个由 <code>.</code>（空地）和 <code>X</code>（障碍）组成的矩阵，输出最大矩形周长减 <span class="math inline">\(1\)</span>。</p>
@@ -249,7 +253,7 @@ int main() &#123;
 </details>
 <hr />
 <p>上述处理 <span class="math inline">\(s\)</span> 数组的「竖向压缩」技巧是处理矩阵类悬线法题目的常用技巧，这里使用另一道题来举例子。</p>
-<h3 id="e.-玉蟾宫-city-game-城市游戏">E. 玉蟾宫 / City Game / 城市游戏</h3>
+<h3 id="例玉蟾宫-city-game-城市游戏">例：玉蟾宫 / City Game / 城市游戏</h3>
 <p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/1655/problem/2" class="uri">http://222.180.160.110:61235/contest/1655/problem/2</a></p>
 <p>这道题和上一道非常相似，只需改变求答案的式子即可。</p>
 <details>
@@ -293,6 +297,7 @@ int main() &#123;
 &#125; // namespace XSC062</code></pre>
 </details>
 <hr />
+<h2 id="悬线法能维护的数据特点">悬线法能维护的数据特点</h2>
 <p>值得注意的是，悬线法仅指求解最远左右端点的技巧。</p>
 <p>同时可以维护过程中的其它信息，例如 <a href="/20231004">情景剧</a> 一题。链接中有详细叙述，此处略。</p>
 <p>根据本题带来的启发，我们认识到悬线可在求解过程中维护的内容更多。</p>
@@ -327,7 +332,7 @@ for (int i = n; i; --i) &#123;
 <hr />
 <p>进一步从笛卡尔树出发，探究悬线法能够循环内维护的数据特点。</p>
 <p>为何是循环内维护？因为循环外维护就只能从左右的直接儿子进行更新，那和笛卡尔树就没有区别了。</p>
-<p>但其实结果是没什么可探究的，因为其经过的节点——自己左子树下最右端链——实在不具有什么特殊性，它们所对应的区间——从 <span class="math inline">\([l_i, i - 1]\)</span> 到 <span class="math inline">\([i - 1, i - 1]\)</span> 也看不出什么值得研究的，更何况可以被笛卡尔树更具象地代替。</p>
+<p>但其实结果是没什么可探究的，因为其经过的节点——自己左子树下最右端链——实在不具有什么特殊性，它们所对应的区间——从 <span class="math inline">\([l_i, i - 1]\)</span> 到 <span class="math inline">\([i - 1, i - 1]\)</span> 也看不出什么值得研究的，更何况可以被笛卡尔树更具象地代替；如果你要从前缀最值的角度出发，那就没意思了，完全等价于单调栈。</p>
 <p>所以我们认为这次悬线法的开发最终以失败告终，<del>不然它早被别人开发了</del>，我在此能给出的意见是，可以用悬线法完成矩形题目等不需要笛卡尔树树形结构的问题，至于其他，甚至包括上面提到的 <a href="/20231004">情景剧</a> 一题，都可以直接上笛卡尔树。</p>
 <p>但笛卡尔树的建树我还是肯定会用悬线的！毕竟照应开头，我不会单调栈 <img src="/em/dy.gif" alt="得意" /></p>
 
@@ -514,13 +519,6 @@ for (int i = n; i; --i) &#123;
 
 <script src="/js/search.js"></script>
 
-<script type="text/javascript">
-var search_path = "search.xml";
-if (search_path.length == 0) {
-    search_path = "search.xml";
-}
-var path = "/" + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
 </script>
 <!-- prism 相关配置 -->
 <script type="text/javascript" src="/js/prism.js" defer></script>

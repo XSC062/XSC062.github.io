@@ -13,7 +13,7 @@
 <!-- 网站标题 -->
 <title>
 	
-		长链剖分 学习笔记【咕】 -
+		长链剖分 学习笔记 -
 	
 	XSC062 的博客
 </title>
@@ -68,11 +68,14 @@
 
 	<!-- 搜索 -->
 <div id="search-bg">
-	<div id="search-box"></div>
-	<!-- <div class="form-group">
-		<input type="text" id="local-search-input" name="q" results="0" placeholder="search" class="st-search-input st-default-search-input form-control"/>
-	</div>  
-	<div id="local-search-result"></div> -->
+	<div id="search-box">
+		<input type="text" id="search-input" placeholder="Type to search...">
+		<div id="search-results"></div>
+		<p>恭喜你触发了这个 box，由于我还没有写关闭键，你只能通过刷新页面来关闭它。非常抱歉 ;-)</p>
+		<p>为了证明我没有摆烂，在这里放一个进度：</p>
+		<p>- 250715：尝试实现搜索功能，初步成功，能够搜索到包含关键词的文章了（也能关掉了）。不知道为啥输入 123 可以匹配所有文章，但是输入 1234 就一篇都匹配不上。</p>
+		<p>- 250716：尝试加入关键词上下文来 de 上面的 bug，然后把 js 写成史了，现在这个框框并不具备搜索功能（也不具备关闭功能） :-(</p>
+	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
@@ -86,7 +89,8 @@
 	<!-- 右对齐部分导航 -->
 	<script>
 		function toSearch() {
-			$("#search-bg, #search-bg *").css("z-index", "1002");
+			// goto search.ejs
+			$("#search-bg, #search-bg *").css("z-index", "1002"); 
 			$("#search-bg, #search-bg *").css("opacity", "100%");
 		}
 	</script>
@@ -128,7 +132,7 @@
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AE%B9-%E6%80%A7%E8%B4%A8"><span class="toc-text">内容 &amp; 性质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%82-k-%E7%BA%A7%E7%A5%96%E5%85%88"><span class="toc-text">求 k 级祖先</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96-dp"><span class="toc-text">优化 DP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#p5904-poi-2014-hot-hotels-%E5%8A%A0%E5%BC%BA%E7%89%88"><span class="toc-text">P5904 [POI 2014] HOT-Hotels 加强版</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cf1585g-poachers"><span class="toc-text">CF1585G Poachers</span></a></li></ol></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -136,8 +140,8 @@
 			<span id="postcon">
 				<span id="postinfo">
 					<div class="ui post title">
-						<div id="fortitle" data-content="长链剖分 学习笔记【咕】">
-							长链剖分 学习笔记【咕】
+						<div id="fortitle" data-content="长链剖分 学习笔记">
+							长链剖分 学习笔记
 						</div>
 						<div class="ui title background">
 						</div>
@@ -160,21 +164,23 @@
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
-				<p><em>半端な生命の関数を / 少々ここらでオーバーライド / …したい所だけど現実は / そうそう上手くはいかないようで</em></p>
+				<p><em>半端な生命の関数を / 少々ここらでオーバーライド</em></p>
 <span id="more"></span>
 <hr />
+<h2 id="内容-性质">内容 &amp; 性质</h2>
 <p>把重链剖分选的 siz 最大的儿子换成高度最大的儿子就是长剖了。同样具有一些美妙的性质。</p>
 <ul>
 <li><p>任意点到根节点经过的链数最劣为 <span class="math inline">\(\sqrt n\)</span>。</p>
-<p>就、挺显然的，考虑构造一条经过了 <span class="math inline">\(\sqrt n+1\)</span> 条链的路径，会发现无论如何都构造不出来。</p>
-这点也决定了长剖和重剖走的不是一条赛道，更多的应该是处理一些和深度有关的神秘场景下的问题？有的博客说可以解决一些子树问题（类似于 dsu on tree 那样的）？（存疑）</li>
+<p>考虑构造一条经过了 <span class="math inline">\(\sqrt n+1\)</span> 条链的路径，发现构造不出来。得证。（？）</p>
+这点也决定了长剖和重剖走的不是一条赛道，更多的是处理一些和深度有关的场景下的问题。用法有点像 dsu on tree。</li>
 <li><p>任意点 <span class="math inline">\(x\)</span> 的 <span class="math inline">\(k\)</span> 级祖先 <span class="math inline">\(fa\)</span> 所在链长 <span class="math inline">\(\ge k\)</span>。</p>
 <p>考虑反证。若 <span class="math inline">\(fa\)</span> 所在链长度 <span class="math inline">\(&lt;k\)</span>，则 <span class="math inline">\(fa\to x\)</span> 更优，矛盾。故原命题成立。</p></li>
 </ul>
 <hr />
+<h2 id="求-k-级祖先">求 k 级祖先</h2>
 <p>长剖的一个典型应用是 <span class="math inline">\(O(n\log n)-O(1)\)</span> 求 <span class="math inline">\(k\)</span> 级祖先。先考虑相对暴力的做法，可以 <span class="math inline">\(O(n\sqrt n)\)</span> 预处理每个点的 <span class="math inline">\(1\sim \sqrt n\)</span> 级祖先然后块间块内随便跳一跳就是 <span class="math inline">\(O(\sqrt n)\)</span> 的单次查询了。</p>
-<p>把这个暴力结合「任意点 <span class="math inline">\(k\)</span> 级祖先所在链长 <span class="math inline">\(\ge k\)</span>」的性质，有一个很神奇（疯癫）的做法：令 <span class="math inline">\(r=\dfrac k2\)</span>，那么有 <span class="math inline">\(x\)</span> 的 <span class="math inline">\(r\)</span> 级祖先所在链长 <span class="math inline">\(\ge r\)</span>，假设我们现在已经知道 <span class="math inline">\(r\)</span> 级祖先 <span class="math inline">\(fa_r\)</span>，预处理出链内点序列、链顶向上的链长个祖先（这个摊出来是 <span class="math inline">\(O(n)\)</span> 的），就可以直接 <span class="math inline">\(\mathcal O(1)\)</span> 访问到 <span class="math inline">\(fa_k\)</span>。</p>
-<p>那么问题来了，怎么找到 <span class="math inline">\(fa_r\)</span> 呢？这看似是个递归的问题，实际上我们发现 <span class="math inline">\(r\)</span> 的取值只需要 <span class="math inline">\(\ge \dfrac k2\)</span> 即可，所以又有一个很神奇（疯癫）的做法，我们对于 <span class="math inline">\(1\sim n\)</span> 的每一个 <span class="math inline">\(k\)</span>，找到其最高二进制位 <span class="math inline">\(r\)</span>（显然对于所有 <span class="math inline">\(k\)</span>，不同 <span class="math inline">\(r\)</span> 的个数为 <span class="math inline">\(\log n\)</span>），对于每个点，预处理出其 <span class="math inline">\(\log n\)</span> 个不同的 <span class="math inline">\(r\)</span> 级祖先。显然这个就是我们很熟悉的倍增了。</p>
+<p>把这个暴力结合「任意点 <span class="math inline">\(k\)</span> 级祖先所在链长 <span class="math inline">\(\ge k\)</span>」的性质，令 <span class="math inline">\(r=\dfrac k2\)</span>，那么 <span class="math inline">\(x\)</span> 的 <span class="math inline">\(r\)</span> 级祖先所在链长 <span class="math inline">\(\ge r\)</span>。假设我们现在已经知道 <span class="math inline">\(r\)</span> 级祖先 <span class="math inline">\(fa_r\)</span>，预处理出链内点序列、链顶向上的链长个祖先（均摊 <span class="math inline">\(O(n)\)</span>），就可以 <span class="math inline">\(O(1)\)</span> 访问 <span class="math inline">\(fa_k\)</span>。</p>
+<p>怎么找到 <span class="math inline">\(fa_r\)</span> 呢？这看似是递归的问题，实际上发现 <span class="math inline">\(r\)</span> 的取值只需 <span class="math inline">\(\ge \dfrac k2\)</span>，对于 <span class="math inline">\(1\sim n\)</span> 的每一个 <span class="math inline">\(k\)</span>，找到其最高二进制位 <span class="math inline">\(r\)</span>（显然 <span class="math inline">\(r\)</span> 的可能取值有 <span class="math inline">\(\log n\)</span> 种），对于每个点，预处理出其 <span class="math inline">\(\log n\)</span> 个不同的 <span class="math inline">\(r\)</span> 级祖先。这个就是倍增了。</p>
 <details>
 <pre class="cpp"><code>for (int i = 1, mx = 0; i &lt;= n; ++i) &#123;
     if (i &gt;= (1 &lt;&lt; mx) * 2)
@@ -227,6 +233,155 @@ auto ask = [&amp;](int x, int k) &#123;
     return anc[top[x]][k - (1 &lt;&lt; to[k]) - (dep[x] - dep[top[x]])];
 &#125;;</code></pre>
 </details>
+<hr />
+<h2 id="优化-dp">优化 DP</h2>
+<blockquote>
+<p>yly：管它这那的，只要是有关深度直接上长剖就是了。</p>
+</blockquote>
+<p>我还想上呢，怎么上啊？？？</p>
+<hr />
+<h3 id="p5904-poi-2014-hot-hotels-加强版">P5904 [POI 2014] HOT-Hotels 加强版</h3>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5904" class="uri">https://www.luogu.com.cn/problem/P5904</a></p>
+<p>首先 <del>不难</del> 得到 <span class="math inline">\(O(n^2)\)</span> 做法：显然存在一个点到三个点距离相等。这个点既可能是它们的 LCA，也可能是其中一个点的子孙，另外两个点的 LCA。总之在 LCA 处统计答案是可行的。</p>
+<p>令 <span class="math inline">\(f_{i,j}\)</span> 表示 <span class="math inline">\(i\)</span> 子树中距离 <span class="math inline">\(i\)</span> 为 <span class="math inline">\(j\)</span> 的点数；<span class="math inline">\(g_{i,j}\)</span> 表示 <span class="math inline">\(i\)</span> 子树中距离 <span class="math inline">\(i\)</span> 为 <span class="math inline">\(j\)</span>、或者距 LCA 为 <span class="math inline">\(d\)</span> 且 LCA 距离 <span class="math inline">\(i\)</span> 为 <span class="math inline">\(d-j\)</span> 的点对数；随便做就可以了。</p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n;
+    std::cin &gt;&gt; n;
+    std::vector&lt;std::vector&lt;int&gt; &gt; g1(n + 1);
+    for (int i = 1, x, y; i &lt; n; ++i) &#123;
+        std::cin &gt;&gt; x &gt;&gt; y;
+        g1[x].push_back(y), g1[y].push_back(x);
+    &#125;
+    auto res(0ll);
+    std::vector&lt;int&gt; h(n + 1);
+    std::vector&lt;std::vector&lt;long long&gt; &gt; f(n + 1), g(n + 1);
+    std::function&lt;void(int, int)&gt; DFS = [&amp;](int x, int fa) &#123;
+        h[x] = 1;
+        for (auto i : g1[x])
+            if (i != fa) &#123;
+                DFS(i, x);
+                h[x] = std::max(h[x], h[i] + 1);
+            &#125;
+        f[x].resize(h[x] + 1), g[x].resize(h[x] + 1);
+        f[x][0] = 1ll;
+        for (auto i : g1[x])
+            if (i != fa) &#123;
+                for (int j = 0; j &lt;= h[i]; ++j) &#123;
+                    if (j &gt;= 1)
+                        res += g[x][j] * f[i][j - 1];
+                    if (j &gt;= 1 &amp;&amp; j + 1 &lt;= h[i])
+                        res += f[x][j] * g[i][j + 1];
+                    if (j &gt;= 1) &#123;
+                        g[x][j] += f[x][j] * f[i][j - 1];
+                        f[x][j] += f[i][j - 1];
+                    &#125;
+                    if (j + 1 &lt;= h[i])
+                        g[x][j] += g[i][j + 1];
+                &#125;
+                std::vector&lt;long long&gt;().swap(f[i]);
+                std::vector&lt;long long&gt;().swap(g[i]);
+            &#125;
+        res += g[x][0];
+        return;
+    &#125;;
+    DFS(1, -1);
+    std::cout &lt;&lt; res &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+<p>然后对于每个 <span class="math inline">\(u\)</span>，类似 DSU on tree，继承其长儿子的数据（整体前移 / 后移一位，使用指针实现），再把短儿子暴力合并上来。</p>
+<p>每次合并短儿子，数组长为短儿子链长；<span class="math inline">\(u\)</span> 向上合并时，数组长为长儿子链长。故所有链被合并恰好一次，复杂度 <span class="math inline">\(O(n)\)</span>。</p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n;
+    std::cin &gt;&gt; n;
+    std::vector&lt;std::vector&lt;int&gt; &gt; g1(n + 1);
+    for (int i = 1, x, y; i &lt; n; ++i) &#123;
+        std::cin &gt;&gt; x &gt;&gt; y;
+        g1[x].push_back(y), g1[y].push_back(x);
+    &#125;
+    std::vector&lt;int&gt; h(n + 1), son(n + 1);
+    std::vector&lt;long long&gt; df(5 * n + 1), dg(5 * n + 1);
+    std::function&lt;void(int, int)&gt; DFS = [&amp;](int x, int fa) &#123;
+        h[x] = 1;
+        for (auto i : g1[x])
+            if (i != fa) &#123;
+                DFS(i, x);
+                h[x] = std::max(h[x], h[i] + 1);
+                if (h[i] &gt; h[son[x]])
+                    son[x] = i;
+            &#125;
+        return;
+    &#125;;
+    DFS(1, -1);
+    auto pos(dg.begin() + 3 * n);
+    std::vector&lt;decltype(df.begin())&gt; f(n + 1), g(n + 1);
+    auto res(0ll);
+    DFS = [&amp;](int x, int fa) &#123;
+        f[x][0] = 1ll;
+        if (son[x]) &#123;
+            f[son[x]] = std::next(f[x]), g[son[x]] = std::prev(g[x]);
+            DFS(son[x], x);
+        &#125;
+        for (auto i : g1[x])
+            if (i != fa &amp;&amp; i != son[x]) &#123;
+                f[i] = std::next(f[x], h[x] + 1);
+                std::fill(f[i], f[i] + h[i] + 2, 0ll);
+                g[i] = std::next(pos, h[i]), pos = std::next(g[i], h[i]);
+                std::fill(std::prev(g[i]), g[i] + h[i] + 2, 0ll);
+                DFS(i, x);
+                for (int j = 0; j &lt;= h[i]; ++j) &#123;
+                    if (j &gt;= 1)
+                        res += g[x][j] * f[i][j - 1];
+                    if (j &gt;= 1 &amp;&amp; j + 1 &lt;= h[i])
+                        res += f[x][j] * g[i][j + 1];
+                    if (j &gt;= 1) &#123;
+                        g[x][j] += f[x][j] * f[i][j - 1];
+                        f[x][j] += f[i][j - 1];
+                    &#125;
+                    if (j + 1 &lt;= h[i])
+                        g[x][j] += g[i][j + 1];
+                &#125;
+            &#125;
+        res += g[x][0];
+        return;
+    &#125;;
+    f[1] = df.begin(), g[1] = dg.begin() + 2 * n;
+    DFS(1, -1);
+    std::cout &lt;&lt; res &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h3 id="cf1585g-poachers">CF1585G Poachers</h3>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF1585G" class="uri">https://www.luogu.com.cn/problem/CF1585G</a></p>
+<p>公平博弈。我们现在要算每个根的 SG 值。设 <span class="math inline">\(f_{u,j}\)</span> 表示在点 <span class="math inline">\(u\)</span>，删了距离它为 <span class="math inline">\(j\)</span> 这一层的 SG 值，那么有：</p>
+<p><span class="math display">\[
+f_{u,j}=
+\begin{cases}
+\text{mex}\{f_{v,0}\}&amp;j=0\\
+\bigoplus f_{v,j-1}&amp;\text{otherwise}
+\end{cases}
+\]</span></p>
+<p>然后发现有深度维。大力长剖。</p>
+<hr />
 
 			</div>
 			<hr class="dotted">
@@ -411,13 +566,6 @@ auto ask = [&amp;](int x, int k) &#123;
 
 <script src="/js/search.js"></script>
 
-<script type="text/javascript">
-var search_path = "search.xml";
-if (search_path.length == 0) {
-    search_path = "search.xml";
-}
-var path = "/" + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
 </script>
 <!-- prism 相关配置 -->
 <script type="text/javascript" src="/js/prism.js" defer></script>

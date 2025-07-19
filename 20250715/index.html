@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 网站图标 -->
+<link rel="icon" type="image/png" sizes="32x32" href="/images/icon.svg">
+<!-- 其他图标支持 -->
+<link rel="stylesheet" href="/css/facss/fa-brands.min.css">
+<link rel="stylesheet" href="/css/facss/fa-regular.min.css">
+<link rel="stylesheet" href="/css/facss/fa-solid.min.css">
+<link rel="stylesheet" href="/css/facss/fontawesome.min.css">
+<link rel="stylesheet" href="/css/facss/fontawesome-all.css">
+<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+<!-- 网站标题 -->
+<title>
+	
+		练习 决策单调性 -
+	
+	XSC062 的博客
+</title>
+<!-- js 引入 -->
+
+<script src="/js/afterloaded.js"></script>
+
+
+<script src="/js/jQuery.js"></script>
+
+<!-- 载入 Valine -->
+
+<script src="/js/Valine.min.js"></script>
+
+<!-- css 引入 -->
+
+<link rel="stylesheet" href="/css/layout.css">
+
+
+<link rel="stylesheet" href="/css/prcss/prism.css">
+
+
+
+<meta charset="utf-8"> 
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body class="line-numbers match-braces no-brace-select rainbow-braces">
+	
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            processEscapes: true
+          }
+        });
+      </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+            tex2jax: {
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+          });
+      </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+              var all = MathJax.Hub.getAllJax(), i;
+              for(i=0; i < all.length; i += 1) {
+                  all[i].SourceElement().parentNode.className += ' has-jax';
+              }
+          });
+      </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+	<!-- 搜索 -->
+<div id="search-bg">
+	<div id="search-box">
+		<input type="text" id="search-input" placeholder="Type to search...">
+		<div id="search-results"></div>
+		<p>恭喜你触发了这个 box，由于我还没有写关闭键，你只能通过刷新页面来关闭它。非常抱歉 ;-)</p>
+		<p>为了证明我没有摆烂，在这里放一个进度：</p>
+		<p>- 250715：尝试实现搜索功能，初步成功，能够搜索到包含关键词的文章了（也能关掉了）。不知道为啥输入 123 可以匹配所有文章，但是输入 1234 就一篇都匹配不上。</p>
+		<p>- 250716：尝试加入关键词上下文来 de 上面的 bug，然后把 js 写成史了，现在这个框框并不具备搜索功能（也不具备关闭功能） :-(</p>
+	</div>
+</div>
+<!-- 顶栏整体导航菜单 -->
+<div class="ui top menu">
+	<!-- 左对齐 logo -->
+	<a class="logo" href="/">
+		<img src="/images/icon.png"></img>
+		<div id="bartitle">
+			XSC062 的博客
+		</div>
+	</a>
+	<!-- 右对齐部分导航 -->
+	<script>
+		function toSearch() {
+			// goto search.ejs
+			$("#search-bg, #search-bg *").css("z-index", "1002"); 
+			$("#search-bg, #search-bg *").css("opacity", "100%");
+		}
+	</script>
+	<div id="rightali">
+		<a class="item" id="Search" type="button" onclick="toSearch()">
+			<i class="btn text-muted fa fa-search" id="search-icon" disabled></i>
+		</a>
+		<a class="item" id="Home" href="/">
+			Home
+		</a>
+		<a class="item" id="Arch" href="/archives">
+			Archives
+		</a>
+		<!-- <a class="item" id="Cate" href="/categories">
+			Categories
+		</a> -->
+		<a class="item" id="Tags" href="/tags">
+			Tags
+		</a>
+		<a class="item" id="Frie" href="/friends">
+			Friends
+		</a>
+		<a class="item" id="Abou" href="/about">
+			About
+		</a>
+	</div>
+</div>
+    
+<link rel="stylesheet" href="/css/post.css">
+
+
+<script src="/js/post.js"></script>
+
+
+<div class="main">
+	<div id="sidebar">
+		<aside id="toc">
+			<span id="toctitle">
+				<i class="fas fa-list"></i>
+				目录
+			</span>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#a---%E5%BE%81%E9%80%94"><span class="toc-text">A - 征途</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b---%E5%88%B7%E9%87%8E-iii"><span class="toc-text">B - ⭐ 刷野 III</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c---traka"><span class="toc-text">C - ⭐ TRAKA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#d---%E6%9F%A0%E6%AA%AC"><span class="toc-text">D - ⭐ 柠檬</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#e---knapsack-with-diminishing-values"><span class="toc-text">E - Knapsack with Diminishing Values</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#f---managing-telephone-poles"><span class="toc-text">F - Managing Telephone Poles</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#g---partition-game"><span class="toc-text">G - Partition Game</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#h---battle-lemmings"><span class="toc-text">H - Battle Lemmings</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#a---yakiniku-restaurants"><span class="toc-text">A - ⭐ Yakiniku Restaurants</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b---jellyfish-and-miku"><span class="toc-text">B - Jellyfish and Miku</span></a></li></ol>
+		</aside>
+	</div>
+	<div class="ui post container">
+		<div class="ui text container yahei">
+			<span id="postcon">
+				<span id="postinfo">
+					<div class="ui post title">
+						<div id="fortitle" data-content="练习 决策单调性">
+							练习 决策单调性
+						</div>
+						<div class="ui title background">
+						</div>
+					</div>
+					<span id="date">
+						<i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
+						2025-07-15
+					</span>
+				</span>
+			</span>
+			<div id="posttags" class="dotted border">
+				
+					
+						<a href="/tags/斜率优化/" class="citem">斜率优化</a>
+					
+						<a href="/tags/DP/" class="citem">DP</a>
+					
+						<a href="/tags/四边形不等式/" class="citem">四边形不等式</a>
+					
+				
+			</div>
+			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
+			
+			<div id="content">
+				<p>『心静自然凉』大抵是因为情绪平和时副交感神经兴奋，体温略有降低导致的。吗？</p>
+<span id="more"></span>
+<p>其实是因为心脏停跳后血液循环终止、代谢中断，导致产热低于散热（？）</p>
+<hr />
+<h2 id="a---征途">A - 征途</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4072" class="uri">https://www.luogu.com.cn/problem/P4072</a></p>
+<p>用完全平方公式展开得到 <span class="math inline">\(m^2\sigma^2=m\left(\sum {x_i}^2\right)-S^2\)</span>，其中 <span class="math inline">\(S\)</span> 为求和。</p>
+<p>所以目标是最小化 <span class="math inline">\(\sum {x_i}^2\)</span> 这个东西。令 <span class="math inline">\(f_{i,j}\)</span> 表示第 <span class="math inline">\(i\)</span> 天走到 <span class="math inline">\(j\)</span>，得到：</p>
+<p><span class="math display">\[
+\begin{aligned}
+f_{i,j}&amp;=\min\{f_{i-1,k}+(s_j-s_k)^2\}\\
+&amp;=\min\{f_{i-1,k}-2\times s_j\times s_k+{s_k}^2\}+{s_j}^2
+\end{aligned}
+\]</span></p>
+<p>最后得到的斜率式子是 <span class="math inline">\(\dfrac {f_{i - 1, a}-f_{i - 1, b}+{s_a}^2-{s_b}^2}{2(s_a-s_b)}&lt;s_j\)</span>，由于 <span class="math inline">\(s_j\)</span> 单增，<del>单调队列维护递减斜率即可</del> <strong>更正：是递增斜率。原因是 <span class="math inline">\(&lt;\)</span> 是弹出条件，而非保留条件……</strong></p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const long long inf = 1e9;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n, m;
+    std::cin &gt;&gt; n &gt;&gt; m;
+    std::vector&lt;int&gt; a(n + 1);
+    std::vector&lt;long long&gt; s(n + 1);
+    auto sum(0ll);
+    for (int i = 1; i &lt;= n; ++i) &#123;
+        std::cin &gt;&gt; a[i];
+        s[i] = s[i - 1] + a[i];
+        sum += a[i];
+    &#125;
+    std::vector&lt;std::vector&lt;long long&gt; &gt; f(m + 1, std::vector&lt;long long&gt; (n + 1, inf));
+    f[0][0] = 0ll;
+    for (int i = 1; i &lt;= m; ++i) &#123;
+        auto f1 = [&amp;](int a, int b) &#123;
+            return f[i - 1][a] - f[i - 1][b] + s[a] * s[a] - s[b] * s[b];
+        &#125;;
+        auto f2 = [&amp;](int a, int b) &#123;
+            return 2 * (s[a] - s[b]);
+        &#125;;
+        std::vector&lt;int&gt; q(n + 1);
+        int h = 0, t = -1;
+        q[++t] = i - 1;
+        for (int j = i; j &lt;= n; ++j) &#123;
+            for (; h &lt; t &amp;&amp; f1(q[h + 1], q[h]) &lt; s[j] * f2(q[h + 1], q[h]); ++h);
+            f[i][j] = f[i - 1][q[h]] + (s[j] - s[q[h]]) * (s[j] - s[q[h]]);
+            for (; h &lt; t &amp;&amp; f1(j, q[t]) * f2(q[t], q[t - 1]) &lt; f1(q[t], q[t - 1]) * f2(j, q[t]); --t);
+            q[++t] = j;
+        &#125;
+    &#125;
+    std::cout &lt;&lt; m * f[m][n] - sum * sum &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="b---刷野-iii">B - ⭐ 刷野 III</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P10074" class="uri">https://www.luogu.com.cn/problem/P10074</a></p>
+<blockquote>
+<p>⭐ <strong>抽象问题的 DP 式</strong></p>
+<p>已知怪物的血量是一个长度为 <span class="math inline">\(n\)</span> 的序列的 random_shuffle；你的 ATK 为 <span class="math inline">\(1\)</span>，需要击杀 <span class="math inline">\(m\)</span> 只怪物，找到一种策略，最小化最劣情况下的攻击次数，求该次数。</p>
+<p>例：若血量序列为 <span class="math inline">\(\{10,15\}\)</span>，<span class="math inline">\(m=1\)</span>，答案为 <span class="math inline">\(15\)</span>；若序列为 <span class="math inline">\(\{10,30\}\)</span>，<span class="math inline">\(m=1\)</span>，答案为 <span class="math inline">\(20\)</span>。</p>
+<p><span class="math inline">\(n\le 2000\)</span>。</p>
+</blockquote>
+<p>发现最坏情况就是每次『试探』都不中的情况，再试探中最坏的那一个。为啥呢，相当于我们每次攻击的一定是未知元素中血最多的一个。既然已经试探出了比阈值大的所有元素，那么下一个攻击的就一定是阈值本身，如果这次跳过它，它就会成为下一次试探失败的元素。这显然不如一开始就直接用新阈值试探。</p>
+<p>从大到小排序。令 <span class="math inline">\(f_{j, i}\)</span> 表示只确定了前 <span class="math inline">\(i\)</span> 大的数，已经杀了 <span class="math inline">\(j\)</span> 个人的最坏情况最小代价。那么显然这一次的阈值是 <span class="math inline">\(a_i\)</span>。随便选出上一次的阈值 <span class="math inline">\(a_k\)</span>，那么中间这一段待确定的元素数量为 <span class="math inline">\(i-k\)</span>。那么有：</p>
+<p><span class="math display">\[
+\begin{aligned}
+f_{j, i}&amp;=\min\limits_{k&lt;i}\{f_{j-1,k}+(i-k)\times a_i\}\\
+&amp;=\min\limits_{k&lt;i}\{f_{j-1,k}-k\times a_i\}+i\times a_i
+\end{aligned}
+\]</span></p>
+<p>经过验证，虽然这个式子和题解长得不一样，但是是对的 <del>因为我 n^3 暴力 A 了</del></p>
+<p>推出斜优形式 <span class="math inline">\(\dfrac {f_{j-1,A}-f_{j-1,B}}{A-B}&lt;a_i\)</span>，但我的朋友，<span class="math inline">\(a_i\)</span> 是递减的。所以用单调栈维护递增斜率即可。<del>或者你也可以学习 grisses 打一个单调队列上二分</del></p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const long long inf = 1e12;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;P10074_4.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n, m;
+    std::cin &gt;&gt; n &gt;&gt; m;
+    std::vector&lt;long long&gt; a(n + 1);
+    for (int i = 1; i &lt;= n; ++i)
+        std::cin &gt;&gt; a[i];
+    std::sort(a.begin() + 1, a.end(), std::greater&lt;long long&gt; ());
+    std::vector&lt;std::vector&lt;long long&gt; &gt; f(m + 1, std::vector&lt;long long&gt; (n + 1, inf));
+    f[0][0] = 0ll;
+    for (int j = 1; j &lt;= m; ++j) &#123;
+        std::vector&lt;int&gt; q(n + 1);
+        int t = -1;
+        q[++t] = j - 1;
+        auto f1 = [&amp;](int A, int B) &#123;
+            return f[j - 1][A] - f[j - 1][B];
+        &#125;;
+        auto f2 =[&amp;](int A, int B) &#123;
+            return A - B;
+        &#125;;
+        for (int i = j; i &lt;= n; ++i) &#123;
+            for (; t &gt;= 1 &amp;&amp; f1(q[t], q[t - 1]) &gt; a[i] * f2(q[t], q[t - 1]); --t);
+            f[j][i] = f[j - 1][q[t]] + (i - q[t]) * a[i];
+            for (; t &gt;= 1 &amp;&amp; f1(i, q[t]) * f2(q[t], q[t - 1]) &lt; f1(q[t], q[t - 1]) * f2(i, q[t]); --t);
+            q[++t] = i;
+        &#125;
+    &#125;
+    auto res(inf);
+    for (int i = m; i &lt;= n; ++i)
+        res = std::min(res, f[m][i]);
+    std::cout &lt;&lt; res &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="c---traka">C - ⭐ TRAKA</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P7747" class="uri">https://www.luogu.com.cn/problem/P7747</a></p>
+<blockquote>
+<p>⭐ <strong>不等式到 DP 的转化</strong></p>
+<p>现在有 <span class="math inline">\(m\)</span> 辆车需要被<strong>依次</strong>安装，每辆车都需要<strong>无间隔时间地、依次</strong>经过工人 <span class="math inline">\(1\sim n\)</span>。每辆车有一个系数 <span class="math inline">\(f_j\)</span>，每个人有一个系数 <span class="math inline">\(t_i\)</span>，则人 <span class="math inline">\(i\)</span> 操作车 <span class="math inline">\(j\)</span> 的时间为 <span class="math inline">\(t_i\times f_j\)</span>。</p>
+<p>最小化第 <span class="math inline">\(m\)</span> 辆车被装完的时间。</p>
+<p><span class="math inline">\(n,m\le 10^5\)</span>。</p>
+</blockquote>
+<p>稍微手玩一下就可以发现，假如第 <span class="math inline">\(j\)</span> 个人在第 <span class="math inline">\(i\)</span> 次的工作时间为 <span class="math inline">\([L_{j,i},R_{j,i}]\)</span>，第 <span class="math inline">\(i-1\)</span> 次为 <span class="math inline">\([L_{j,i-1},R_{j,i-1}]\)</span>，那么要求 <span class="math inline">\(L_{j,i}\ge R_{j,i-1}\)</span>。</p>
+<p>令 <span class="math inline">\(s_j\)</span> 为 <span class="math inline">\(t\)</span> 的前缀和。假设第 <span class="math inline">\(i-1\)</span> 次加工于 <span class="math inline">\(x_{i-1}\)</span> 开始，那么我们可以把上式转写为 <span class="math inline">\(x_{i}+s_{j-1}\times f_{i}\ge x_{i-1}+s_j\times f_{i-1}\)</span>。也即 <span class="math inline">\(x_i-x_{i-1}\ge s_j\times f_{i-1}-s_{j-1}\times f_i\)</span>。</p>
+<p>显然需要找到一个 <span class="math inline">\(j\)</span> 使得 RSH 取得最大值；现在就可以考虑斜率优化了。由于所有项都和 <span class="math inline">\(i\)</span> 有关，想到两边同除 <span class="math inline">\(f_{i}\)</span> 消掉一个 <span class="math inline">\(i\)</span> 有关的系数，最后化出来的斜优形式是 <span class="math inline">\(\dfrac {s_A-s_B}{s_{A-1}-s_{B-1}}&gt;\dfrac {f_{i-1}}{f_i}\)</span>。由于 RSH 不单调，把所有 <span class="math inline">\(j\)</span> 塞到队列里维护递减斜率，打二分即可。</p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n, m;
+    std::cin &gt;&gt; n &gt;&gt; m;
+    std::vector&lt;long long&gt; a(n + 1), w(m + 1), s(n + 1);
+    for (int i = 1; i &lt;= n; ++i)
+        std::cin &gt;&gt; a[i], s[i] = s[i - 1] + a[i];
+    for (int i = 1; i &lt;= m; ++i)
+        std::cin &gt;&gt; w[i];
+    std::vector&lt;long long&gt; f(m + 1);
+    std::vector&lt;int&gt; q(n + 1);
+    int h = 0, t = -1;
+    q[++t] = 1;
+    for (int i = 2; i &lt;= n; ++i) &#123;
+        for (; h &lt; t &amp;&amp; (s[i] - s[q[t]]) * (s[q[t] - 1] - s[q[t - 1] - 1]) &gt; (s[q[t]] - s[q[t - 1]]) * (s[i - 1] - s[q[t] - 1]); --t);
+        q[++t] = i;
+    &#125;
+    for (int i = 2; i &lt;= m; ++i) &#123;
+        int to = q[h];
+        for (int l = h + 1, r = t, mid; l &lt;= r; ) &#123;
+            mid = (l + r) &gt;&gt; 1;
+            if ((s[q[mid]] - s[q[mid - 1]]) * w[i - 1] &gt; w[i] * (s[q[mid] - 1] - s[q[mid - 1] - 1]))
+                to = q[mid], l = mid + 1;
+            else
+                r = mid - 1;
+        &#125;
+        f[i] = f[i - 1] + s[to] * w[i - 1] - s[to - 1] * w[i];
+    &#125;
+    std::cout &lt;&lt; f[m] + w[m] * s[n] &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="d---柠檬">D - ⭐ 柠檬</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5504" class="uri">https://www.luogu.com.cn/problem/P5504</a></p>
+<blockquote>
+<p>⭐ <strong>斜优式子中的代换</strong></p>
+<p>给定一个序列，每次可以从两端取走一段元素，你每次可以任选一个值 <span class="math inline">\(k\)</span>，若其在这一段中出现次数为 <span class="math inline">\(c_k\)</span>，则这次操作的收益为 <span class="math inline">\(k\times {c_k}^2\)</span>。求取空后的最大收益。</p>
+<p><span class="math inline">\(n\le 10^5\)</span>。</p>
+</blockquote>
+<ul>
+<li>观察零：原问题『从两端取』可以转化为分段问题，故从其中一端考虑即可。</li>
+<li>观察一：若有一段连续的 <span class="math inline">\(x\)</span>，完整的比拆开的更优。</li>
+<li>观察二：如果一段 <span class="math inline">\(x\)</span> 中夹杂了一些其他元素，那么在哪里分段是说不准的。</li>
+<li>观察三：如果选取的区间是 <span class="math inline">\([1,r]\)</span>，那么贪心地想，<span class="math inline">\(a_r\)</span> 一定是关键值，不然取 <span class="math inline">\(a_r\)</span> 就浪费了。</li>
+<li>观察四：如果选取的区间是 <span class="math inline">\([l,r]\)</span>，那么由观察四，<span class="math inline">\(a_l=a_r\)</span>，且该值为关键值。</li>
+</ul>
+<p>结合这几个观察，令 <span class="math inline">\(c_i\)</span> 表示 <span class="math inline">\(a_i\)</span> 在 <span class="math inline">\([1,i]\)</span> 中出现次数，<span class="math inline">\(f_i\)</span> 表示这一段以 <span class="math inline">\(i\)</span> 结尾的最大价值：</p>
+<p><span class="math display">\[
+\begin{aligned}
+f_i&amp;=\max\limits_{j&lt;i,a_{j+1}=a_i}\{f_j+a_i\times (c_i-c_{j + 1} + 1)^2\}\\
+&amp;=\max\limits_{j&lt;i,a_{j+1}=a_i}\{f_j+a_{j+1}\times {c_{j+1}}^2-2\times c_i\times a_{j+1}\times c_{j+1}-2\times c_{j+1}\times a_{j+1}\}+a_i\times(c_i-1)^2
+\end{aligned}
+\]</span></p>
+<p>（怎么这么大一堆。）最后可以化出 <span class="math inline">\(\dfrac {f_A-f_B+a_{A+1}\cdot c_{A+1}\cdot (c_{A+1}-2)-a_{B+1}\cdot c_{B+1}\cdot (c_{B+1}-2)}{2(c_{A+1} - c_{B+1})}&gt;c_i\times a_i\)</span>。发现对于每一种 <span class="math inline">\(a_i\)</span>，<span class="math inline">\(c_i\times a_i\)</span> 是单增的。单调栈维护即可。</p>
+<p><em>这其实提醒我们关于代换的问题——显然，当与 <span class="math inline">\(i\)</span> 的项、与 <span class="math inline">\(j\)</span> 有关的项之间存在代换关系时，应该尽量往 <span class="math inline">\(j\)</span> 的方向靠。</em></p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;7.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n;
+    std::cin &gt;&gt; n;
+    std::vector&lt;long long&gt; a(n + 1), c(n + 1), la(10001);
+    for (int i = 1; i &lt;= n; ++i) &#123;
+        std::cin &gt;&gt; a[i];
+        c[i] = c[la[a[i]]] + 1, la[a[i]] = i;
+    &#125;
+    std::vector&lt;long long&gt; f(n + 1);
+    std::vector&lt;int&gt; _t(10001, -1);
+    std::vector&lt;std::vector&lt;int&gt; &gt; _q(10001);
+    auto f1 = [&amp;](int A, int B) &#123;
+        return f[A] - f[B] + a[A + 1] * c[A + 1] * (c[A + 1] - 2) - a[B + 1] * c[B + 1] * (c[B + 1] - 2);
+    &#125;;
+    auto f2 = [&amp;](int A, int B) &#123;
+        return 2 * (c[A + 1] - c[B + 1]);
+    &#125;;
+    ++_t[a[1]], _q[a[1]].push_back(0);
+    for (int i = 1; i &lt;= n; ++i) &#123;
+        &#123;
+            auto &amp;t = _t[a[i]];
+            auto &amp;q = _q[a[i]];
+            for (; t &gt;= 1 &amp;&amp; f1(q[t], q[t - 1]) &lt; c[i] * a[i] * f2(q[t], q[t - 1]); --t);
+            f[i] = f[q[t]] + a[i] * (c[i] - c[q[t] + 1] + 1) * (c[i] - c[q[t] + 1] + 1);
+        &#125;
+        if (i &lt; n) &#123;
+            auto &amp;t = _t[a[i + 1]];
+            auto &amp;q = _q[a[i + 1]];
+            for (; t &gt;= 1 &amp;&amp; f1(i, q[t]) * f2(q[t], q[t - 1]) &gt; f1(q[t], q[t - 1]) * f2(i, q[t]); --t);
+            q.resize(++t + 1), q[t] = i;
+        &#125;
+    &#125;
+    std::cout &lt;&lt; f[n] &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="e---knapsack-with-diminishing-values">E - Knapsack with Diminishing Values</h2>
+<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc373/tasks/abc373_f" class="uri">https://atcoder.jp/contests/abc373/tasks/abc373_f</a></p>
+<p>发现和 <a href="/20250707-1/#例单调队列优化多重背包">单调队列优化多重背包</a> 有异曲同工之妙。</p>
+<p>不妨令 <span class="math inline">\(v_i\)</span> 表示体积，<span class="math inline">\(w_i\)</span> 表示价值。对于每一个 <span class="math inline">\(i\)</span>，把所有体积按模 <span class="math inline">\(v_i\)</span> 的余数分类，设为 <span class="math inline">\(j\cdot v_i+x\)</span>。对于 <span class="math inline">\(k\cdot v_i+x\)</span>，有：</p>
+<p><span class="math display">\[
+\begin{aligned}
+f_{i,j\cdot v_i+x}&amp;=\max\limits_{k&lt;j}\{f_{i-1,k\cdot v_i+x}+(j-k)\cdot w_i-(j-k)^2\}\\
+&amp;=\max\limits_{k&lt;j}\{f_{i-1,k\cdot v_i+x}-k\cdot w_i-k^2+2\times j\times k\}-j^2+j\cdot w_i
+\end{aligned}
+\]</span></p>
+<p>则得到 <span class="math inline">\(\dfrac {f_{i-1,A\cdot v_i+x}-f_{i-1,B\cdot v_i+x}+(B-A)\cdot w_i - A^2+B^2}{2(B-A)}&lt;j\)</span>。注意分母为负。总之单调队列维护递增斜率即可。</p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n, m;
+    std::cin &gt;&gt; n &gt;&gt; m;
+    std::vector&lt;long long&gt; v(n + 1), w(n + 1);
+    std::vector&lt;std::vector&lt;long long&gt; &gt; f(n + 1, std::vector&lt;long long&gt; (m + 1));
+    for (int i = 1; i &lt;= n; ++i) &#123;
+        std::cin &gt;&gt; v[i] &gt;&gt; w[i];
+        for (int x = 0; x &lt; v[i]; ++x) &#123;
+            int h = 0, t = -1;
+            std::vector&lt;int&gt; q;
+            auto f1 = [&amp;](int A, int B) &#123;
+                return f[i - 1][A * v[i] + x] - f[i - 1][B * v[i] + x] + (B - A) * w[i] - A * A + B * B;
+            &#125;;
+            auto f2 = [&amp;](int A, int B) &#123;
+                return 2 * (B - A);
+            &#125;;
+            for (int j = 0, J = x; J &lt;= m; ++j, J += v[i]) &#123;
+                for (; h &lt; t &amp;&amp; f1(q[h + 1], q[h]) &gt; j * f2(q[h + 1], q[h]); ++h);
+                f[i][J] = f[i - 1][J];
+                if (h &lt;= t)
+                    f[i][J] = std::max(f[i][J], f[i - 1][q[h] * v[i] + x] + (j - q[h]) * w[i] - (j - q[h]) * (j - q[h]));
+                for (; h &lt; t &amp;&amp; f1(j, q[t]) * f2(q[t], q[t - 1]) &lt; f1(q[t], q[t - 1]) * f2(j, q[t]); --t);
+                q.resize(++t + 1), q[t] = j;
+            &#125;
+        &#125;
+    &#125;
+    std::cout &lt;&lt; f[n][m] &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="f---managing-telephone-poles">F - Managing Telephone Poles</h2>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1575/M" class="uri">https://codeforces.com/problemset/problem/1575/M</a></p>
+<p>？观察到性质然后被自己忽略了。非常值得批评。</p>
+<p>不难写出类似斜率优化的式子 <span class="math inline">\(S(i,j)=\min\{ {x_k}^2-2\times i\times x_k+{y_k}^2-2\times j \times y_k\}+i^2+j^2\)</span>。</p>
+<p>会下意识尝试固定 <span class="math inline">\(i\)</span>，就可以 <span class="math inline">\(O(n^2m)\)</span> 完成任务，似乎不太行。顺着这个想法会观察到，固定 <span class="math inline">\(i\)</span> 之后，每一列的 poles 中只有和第 <span class="math inline">\(i\)</span> 行最近的才会有贡献。</p>
+<p>这个是好做的，且这样的相邻点数量是 <span class="math inline">\(O(m)\)</span> 的；于是将 <span class="math inline">\(i\)</span> 视为常数进行变形，若将所有 poles 按 <span class="math inline">\(y\)</span> 从小到大排序就能得到斜率形式 <span class="math inline">\(\dfrac { {x_A}^2-{x_B}^2+{y_A}^2-{y_B}^2-2\times i\times(x_A-x_B)}{2(y_A-y_B)}&lt;j\)</span>。维护递增斜率就能 <span class="math inline">\(O(n^2)\)</span> 完成问题。</p>
+<p>那么找相邻点这一步大可以摆烂写二分。所以总共是 <span class="math inline">\(O(nm\log m)\)</span> 的。</p>
+<p>不要像我一样把两边最近的都加进队列，不然你会有分母为 <span class="math inline">\(0\)</span> 的斜率 <img src="/em/hsh.gif" /></p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n, m;
+    std::cin &gt;&gt; n &gt;&gt; m, ++n, ++m;
+    std::vector&lt;std::vector&lt;int&gt; &gt; tag(n + 1, std::vector&lt;int&gt; (m + 1));
+    std::vector&lt;std::vector&lt;int&gt; &gt; g(m + 1);
+    for (int i = 1; i &lt;= n; ++i)
+        for (int j = 1; j &lt;= m; ++j) &#123;
+            char t;
+            std::cin &gt;&gt; t;
+            if (t == &#39;1&#39;)
+                g[j].push_back(i), tag[i][j] = 1;
+        &#125;
+    struct node &#123; long long x, y; &#125;;
+    auto res(0ll);
+    for (int i = 1; i &lt;= n; ++i) &#123;
+        std::vector&lt;node&gt; p;
+        for (int j = 1; j &lt;= m; ++j) &#123;
+            int to = std::lower_bound(g[j].begin(), g[j].end(), i) - g[j].begin();
+            if (to &lt; (int)g[j].size()) &#123;
+                p.push_back(&#123; g[j][to], j &#125;);
+                if (g[j][to] != i &amp;&amp; to != 0 &amp;&amp; g[j][to] - i &gt; i - g[j][to - 1])
+                    p.back() = &#123; g[j][to - 1], j &#125;;
+            &#125;
+            else if (to != 0)
+                p.push_back(&#123; g[j][to - 1], j &#125;);
+        &#125;
+        std::vector&lt;int&gt; q(m + 1);
+        int h = 0, t = -1;
+        auto f1 = [&amp;](node A, node B) &#123;
+            return A.x * A.x - B.x * B.x + A.y * A.y - B.y * B.y - 2 * i * (A.x - B.x);
+        &#125;;
+        auto f2 = [&amp;](node A, node B) &#123;
+            return 2 * (A.y - B.y);
+        &#125;;
+        for (int j = 0; j &lt; (int)p.size(); ++j) &#123;
+            for (; h &lt; t &amp;&amp; f1(p[j], p[q[t]]) * f2(p[q[t]], p[q[t - 1]]) &lt; f1(p[q[t]], p[q[t - 1]]) * f2(p[j], p[q[t]]); --t);
+            q[++t] = j;
+        &#125;
+        for (int j = 1; j &lt;= m; ++j) &#123;  
+            for (; h &lt; t &amp;&amp; f1(p[q[h + 1]], p[q[h]]) &lt; j * f2(p[q[h + 1]], p[q[h]]); ++h);
+            res += (p[q[h]].x - i) * (p[q[h]].x - i) + (p[q[h]].y - j) * (p[q[h]].y - j);
+        &#125;
+    &#125;
+    std::cout &lt;&lt; res &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="g---partition-game">G - Partition Game</h2>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1527/E" class="uri">https://codeforces.com/problemset/problem/1527/E</a></p>
+<p>发现不太斜优，终于给我浸泡了两天斜优内容的大脑加了勺新的底物。</p>
+<p>令 <span class="math inline">\(f_{i,j}\)</span> 表示第 <span class="math inline">\(i\)</span> 段以 <span class="math inline">\(j\)</span> 结尾的最小代价；对 <span class="math inline">\(w\)</span> 套用四边形不等式变式 <span class="math inline">\(w(l-1,r+1)+w(l,r)\ge w(l-1,r)+w(l,r+1)\)</span> 发现成立（其中大多数时候能取等；部分特殊情况取到大于号）。</p>
+<p>那么发现可以用分治优化。发现 <span class="math inline">\(w\)</span> 不那么能快速求；还是套用 <a href="/20250707-1/#例yet-another-minimization-problem">Yet Another Minimization Problem</a> 中的方法，用类似莫队的方式求解。</p>
+<p>发现这个莫队套路也很熟悉了，直接用双端队列维护即可。复杂度 <span class="math inline">\(O(nk\log n)\)</span>，看着不太安全。但注意到我们在 20 个月前的提交中使用了 <span class="math inline">\(O(nk\log n)\)</span> 的线段树，所以能过的兄弟。</p>
+<details>
+<p>鉴于 deque 的时空常数都大得吓人，所以我用静态 vector 模拟 deque 了。</p>
+<p>跑得比我之前线段树的一半还快，兄弟。</p>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int inf = 1e18;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n, m;
+    std::cin &gt;&gt; n &gt;&gt; m;
+    std::vector&lt;std::vector&lt;int&gt; &gt; pos(n + 1);
+    std::vector&lt;int&gt; a(n + 1), _h(n + 1), _t(n + 1, -1);
+    for (int i = 1; i &lt;= n; ++i)
+        std::cin &gt;&gt; a[i], pos[a[i]].push_back(i);
+    std::vector&lt;std::vector&lt;long long&gt; &gt; f(m + 1, std::vector&lt;long long&gt; (n + 1, inf));
+    f[0][0] = 0ll;
+    auto w = [&amp;](int ql, int qr) &#123;
+        static int l = 1, r = 0;
+        static auto res(0ll);
+        for (; l &gt; ql; ) &#123;
+            --l;
+            auto &amp;h = _h[a[l]], &amp;t = _t[a[l]];
+            auto &amp;q = pos[a[l]];
+            if (h &lt;= t)
+                res -= q[t] - q[h];
+            res += q[t] - q[--h];
+        &#125;
+        for (; r &gt; qr; ) &#123;
+            auto &amp;h = _h[a[r]], &amp;t = _t[a[r]];
+            auto &amp;q = pos[a[r]];
+            res -= q[t--] - q[h];
+            if (h &lt;= t)
+                res += q[t] - q[h];
+            --r;
+        &#125;
+        for (; r &lt; qr; ) &#123;
+            ++r;
+            auto &amp;h = _h[a[r]], &amp;t = _t[a[r]];
+            auto &amp;q = pos[a[r]];
+            if (h &lt;= t)
+                res -= q[t] - q[h];
+            res += q[++t] - q[h];
+        &#125;
+        for (; l &lt; ql; ) &#123;
+            auto &amp;h = _h[a[l]], &amp;t = _t[a[l]];
+            auto &amp;q = pos[a[l]];
+            res -= q[t] - q[h++];
+            if (h &lt;= t)
+                res += q[t] - q[h];
+            ++l;
+        &#125;
+        return res;
+    &#125;;
+    for (int t = 1; t &lt;= m; ++t) &#123;
+        std::function&lt;void(int, int, int, int)&gt; calc = [&amp;](int l, int r, int lp, int rp) &#123;
+            if (l &gt; r)
+                return;
+            if (l == r) &#123;
+                for (int i = lp; i &lt;= rp &amp;&amp; i &lt; l; ++i)
+                    f[t][l] = std::min(f[t][l], f[t - 1][i] + w(i + 1, l));
+                return;
+            &#125;
+            int mid = (l + r) &gt;&gt; 1, p = -1;
+            for (int i = lp; i &lt;= rp &amp;&amp; i &lt; mid; ++i)
+                if (f[t - 1][i] + w(i + 1, mid) &lt; f[t][mid])
+                    f[t][mid] = f[t - 1][i] + w(i + 1, mid), p = i;
+            calc(l, mid - 1, lp, p), calc(mid + 1, r, p, rp);
+            return;
+        &#125;;
+        calc(t, n, t - 1, n - 1);
+    &#125;
+    std::cout &lt;&lt; f[m][n] &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="h---battle-lemmings">H - Battle Lemmings</h2>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1420/E" class="uri">https://codeforces.com/problemset/problem/1420/E</a></p>
+<p>容易发现 <span class="math inline">\(0\)</span> 的数目不变，答案就是 <span class="math inline">\(0\)</span> 的对数 - 连续 <span class="math inline">\(0\)</span> 的对数。</p>
+<p>然后有一个我们很熟悉的 trick，随便找一个目标序列，那么花费的操作次数就是每个对应的 <span class="math inline">\(1\)</span> 的位置差。令 <span class="math inline">\(f_{i,j,k}\)</span> 表示用了 <span class="math inline">\(i\)</span> 次操作、<span class="math inline">\(j\)</span> 个 <span class="math inline">\(1\)</span>、最后一个 <span class="math inline">\(1\)</span> 在 <span class="math inline">\(k\)</span> 的最小连续 <span class="math inline">\(0\)</span> 对数。那么有：</p>
+<p><span class="math display">\[
+\begin{aligned}
+f_{i,j,k}&amp;=\min\limits_{p&lt;k}\left\{f_{i-|k-pos_j|,j-1,p}+\dfrac {(k-p-1)(k-p-2)}2\right\}\\
+&amp;=\min\left\{f_{i-|k-pos_j|,j-1,p}-k\cdot p+\dfrac {p(p + 2)}2\right\}+\dfrac {k^2-3k+2}2
+\end{aligned}
+\]</span></p>
+<p>发现这个式子是 <span class="math inline">\(O(n^5)\)</span> 的，而且看起来很斜优，化为斜率形式 <span class="math inline">\(\dfrac{2\times f_A-2\times f_B+A(A+2)-B(B+2)}{2(A-B)}&lt;k\)</span>。维护递增斜率就可以 <span class="math inline">\(O(n^4)\)</span> 做了。</p>
+<p>Tip：当时写着写着愣住了，比如这个 <span class="math inline">\(i-|k-pos_j|\)</span> 不是一直在动吗。解决方案？同时维护很多个队列即可。</p>
+<details>
+<p>注意还要把最后一个 <span class="math inline">\(1\)</span> 之后连续 <span class="math inline">\(0\)</span> 的代价算上。</p>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const long long inf = 1e9;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n;
+    std::cin &gt;&gt; n;
+    std::vector&lt;int&gt; a(n + 1);
+    std::vector&lt;long long&gt; pos(1);
+    for (int i = 1; i &lt;= n; ++i) &#123;
+        std::cin &gt;&gt; a[i];
+        if (a[i] == 1)
+            pos.push_back(i);
+    &#125;
+    int m = n * (n - 1) / 2;
+    std::vector&lt;std::vector&lt;std::vector&lt;long long&gt; &gt; &gt; f(pos.size(), std::vector&lt;std::vector&lt;long long&gt; &gt; (m + 1, std::vector&lt;long long&gt; (n + 1, inf)));
+    f[0][0][0] = 0ll;
+    for (int j = 1; j &lt; (int)pos.size(); ++j) &#123;
+        std::vector&lt;std::vector&lt;int&gt; &gt; _q(m + 1, std::vector&lt;int&gt; (n + 1));
+        std::vector&lt;int&gt; _h(m + 1), _t(m + 1, -1);
+        for (int k = 0; k &lt;= n; ++k)
+            for (int i = m; i &gt;= 0; --i) &#123;
+                if (i &gt;= std::abs(k - pos[j])) &#123;
+                    auto f1 = [&amp;](long long A, long long B) &#123;
+                        return 2 * f[j - 1][i - std::abs(k - pos[j])][A] - 2 * f[j - 1][i - std::abs(k - pos[j])][B] + A * (A + 2) - B * (B + 2);
+                    &#125;;
+                    auto f2 = [&amp;](long long A, long long B) &#123;
+                        return 2 * (A - B);
+                    &#125;;
+                    auto &amp;h = _h[i - std::abs(k - pos[j])], &amp;t = _t[i - std::abs(k - pos[j])];
+                    auto &amp;q = _q[i - std::abs(k - pos[j])];
+                    for (; h &lt; t &amp;&amp; f1(q[h + 1], q[h]) &lt; k * f2(q[h + 1], q[h]); ++h) &#123;&#125;
+                    if (h &lt;= t)
+                        f[j][i][k] = std::min(inf, f[j - 1][i - std::abs(k - pos[j])][q[h]] + (k - q[h] - 1) * (k - q[h] - 2) / 2);
+                &#125;
+                auto f1 = [&amp;](long long A, long long B) &#123;
+                    return 2 * f[j - 1][i][A] - 2 * f[j - 1][i][B] + A * (A + 2) - B * (B + 2);
+                &#125;;
+                auto f2 = [&amp;](long long A, long long B) &#123;
+                    return 2 * (A - B);
+                &#125;;
+                auto &amp;h = _h[i], &amp;t = _t[i];
+                auto &amp;q = _q[i];
+                for (; h &lt; t &amp;&amp; f1(k, q[t]) * f2(q[t], q[t - 1]) &lt; f1(q[t], q[t - 1]) * f2(k, q[t]); --t);
+                q[++t] = k;
+            &#125;
+    &#125;
+    auto res(-inf);
+    int cnt = n - (int)pos.size() + 1;
+    cnt = cnt * (cnt - 1) / 2;
+    for (int i = 0; i &lt;= m; ++i) &#123;
+        for (int k = 0; k &lt;= n; ++k)
+            res = std::max(res, cnt - f.back()[i][k] - (n - k) * (n - k - 1) / 2);
+        std::cout &lt;&lt; res &lt;&lt; &#39; &#39;;
+    &#125;
+    std::cout &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="a---yakiniku-restaurants">A - ⭐ Yakiniku Restaurants</h2>
+<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc067/tasks/arc067_d" class="uri">https://atcoder.jp/contests/arc067/tasks/arc067_d</a></p>
+<blockquote>
+<p>⭐ <strong>单调栈在决策单调性中的应用</strong></p>
+<p>给定 <span class="math inline">\(n\times m\)</span> 的矩阵 <span class="math inline">\(a\)</span>、长度为 <span class="math inline">\(n\)</span> 的数组 <span class="math inline">\(d\)</span>。选定一段区间 <span class="math inline">\([l,r]\)</span>，最大化 <span class="math inline">\(\left(\sum\limits_{j=1^m}\max\limits_{i\in[l,r]}\{a_{i,j}\}\right)-\sum\limits_{i=l}^r d_i\)</span>。</p>
+<p><span class="math inline">\(n\le 5\times 10^3,m\le 200\)</span>。</p>
+</blockquote>
+<p>发现固定左右端点后，收益是可以贪心算的；下意识想到只固定左端点，那么右端点应该就可以用单调队列之类的搞一搞。</p>
+<p>先提前把所有东西塞到队列里。左端点一开始在最右边；往左边动一下之后，就可以更新每种菜的队列；发现在所有元素中作决策点的不总是队头；这个地方用 <strong>单调递减的单调栈</strong> 是极好的。这里的单调栈其实就类似 <a href="/20250707-1/#优化-dp单调数据结构">四边形不等式中的单调数据结构</a> 了。</p>
+<p>维护单调栈中每个决策点的影响区间；显然每个右端点的答案变化量相同；用个类似于差分的东西记录一下就好了。</p>
+<p>复杂度 <span class="math inline">\(O(n^2)\)</span>。</p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const long long inf = 1e18;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n, m;
+    std::cin &gt;&gt; n &gt;&gt; m;
+    std::vector&lt;long long&gt; s(n + 1), f(n + 1);
+    for (int i = 2; i &lt;= n; ++i) &#123;
+        std::cin &gt;&gt; s[i], s[i] += s[i - 1];
+        f[i] = -s[i];
+    &#125;
+    std::vector&lt;std::vector&lt;int&gt; &gt; a(n + 1, std::vector&lt;int&gt; (m + 1));
+    for (int i = 1; i &lt;= n; ++i)
+        for (int j = 1; j &lt;= m; ++j)
+            std::cin &gt;&gt; a[i][j];
+    struct node &#123; int j, l, r; &#125;;
+    std::vector&lt;std::stack&lt;node&gt; &gt; _q(m + 1);
+    auto res(-inf);
+    for (int l = n; l; --l) &#123;
+        std::vector&lt;long long&gt; d(n + 1);
+        auto add = [&amp;](int l, int r, long long v) &#123;
+            d[l] += v;
+            if (r != n)
+                d[r + 1] -= v;
+            return;
+        &#125;;
+        for (int j = 1; j &lt;= m; ++j) &#123;
+            auto &amp;q = _q[j];
+            node now = &#123; j, l, l &#125;;
+            add(l, l, a[l][j]);
+            for (; !q.empty() &amp;&amp; a[l][j] &gt;= a[q.top().l][q.top().j]; q.pop()) &#123;
+                now.r = q.top().r;
+                add(q.top().l, q.top().r, a[l][j] - a[q.top().l][q.top().j]);
+            &#125;
+            q.push(now);
+        &#125;
+        std::partial_sum(d.begin() + 1, d.end(), d.begin() + 1);
+        for (int r = l; r &lt;= n; ++r) &#123;
+            f[r] += d[r];
+            res = std::max(res, f[r] + s[l]);
+        &#125;
+    &#125;
+    std::cout &lt;&lt; res &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="b---jellyfish-and-miku">B - Jellyfish and Miku</h2>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1874/D" class="uri">https://codeforces.com/problemset/problem/1874/D</a></p>
+<p>唉数列。唉概统。在数学讲义上折磨了我一遍之后还要到这儿来折磨我。</p>
+<p>假设已经知道了 <span class="math inline">\(a\)</span>，考虑求期望步数。设 <span class="math inline">\(E_i\)</span> 为从 <span class="math inline">\(i\)</span> 出发走到 <span class="math inline">\(n\)</span> 的期望步数。那么有：</p>
+<p><span class="math display">\[
+E_i=\begin{cases}
+E_1+1&amp;i=0\\
+0&amp;i=n\\
+E_i=(E_{i-1}+1)\cdot \dfrac {a_i}{a_{i+1}+a_i}+(E_{i+1}+1)\cdot \dfrac {a_{i+1}}{a_{i+1}+a_{i}}&amp;\text{otherwise}
+\end{cases}
+\]</span></p>
+<p>（提示：从『<span class="math inline">\(i\)</span> 下一步会走哪个方向』考虑。）</p>
+<p>接下来就可以利用你的高中数学知识进行一个 <span class="math inline">\(f_0\)</span> 的求，（一堆过程），得到 <span class="math inline">\(E_0=n+2\times \sum\limits_{i=1}^n\dfrac {\sum_{j\le i}a_j}{a_i}\)</span>，然后想要最小化这个东西。</p>
+<p>不妨令 <span class="math inline">\(f_{i,j}\)</span> 表示到 <span class="math inline">\(i\)</span> 时已经分配走了 <span class="math inline">\(j\)</span> 体积，<span class="math inline">\(\sum_{k=1}^i \dfrac {\sum_{l\le k}a_l}{a_k}\)</span> 的最小值，有 <span class="math inline">\(f_{i,j}=\min\limits_{k&lt;j}\left\{f_{i-1,k}+\dfrac {k}{j - k}\right\}\)</span>。发现它大抵是满足四边形不等式的，按照 <a href="/20250707-1/#d1d-dp-优化">2D/1D DP 优化的结论</a>，代入 <span class="math inline">\(p_{i,j-1}&lt;p_{i,j}&lt;p_{i+1,j}\)</span> 可以 <span class="math inline">\(O(nm)\)</span> 解决问题。</p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n, m;
+    std::cin &gt;&gt; n &gt;&gt; m;
+    std::vector&lt;std::vector&lt;int&gt; &gt; p(n + 1, std::vector&lt;int&gt; (m + 1));
+    std::vector&lt;std::vector&lt;long double&gt; &gt; f(n + 1, std::vector&lt;long double&gt; (m + 1, 1e18));
+    f[0][0] = 0ll;
+    for (int j = 1; j &lt;= m; ++j)
+        for (int i = std::min(j, n); i; --i) &#123;
+            int to = ((i == std::min(j, n)) ? j : std::min(p[i + 1][j], j));
+            for (int k = p[i][j - 1]; k &lt;= to; ++k)
+                if (f[i - 1][k] + k * 1. / (j - k) &lt; f[i][j])
+                    f[i][j] = f[i - 1][k] + k * 1. / (j - k), p[i][j] = k;
+            // printf(&quot;f[%d][%d] = %Lf, p = %d\n&quot;, i, j, f[i][j], p[i][j]);
+        &#125;
+    std::cout &lt;&lt; std::fixed &lt;&lt; std::setprecision(10) &lt;&lt; n + 2 * f[n][m] &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+
+			</div>
+			<hr class="dotted">
+			<div class="post footer">
+				<div id="hitokoto">
+					<h3 id="hitokoto-title">
+						言论
+					</h3>
+					<div id="hitokoto-content">
+					</div>
+					<div id="hitokoto-from">
+					</div>
+				</div>
+				<div class="button flex">
+					<div id="prev">
+						
+							<!-- 吐槽，为啥还需要加 / -->
+							<a href="/20250716/">
+								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
+								练习 树的各种性质 I
+							</a>
+						
+					</div>
+					<div id="next">
+						
+							<a href="/20250712/">
+								杂题
+								<i class="fas fa-angle-double-right" style="margin-left: 10px;"></i>
+							</a>
+						
+					</div>
+				</div>
+				<div id="vcomments" class="yahei"></div>
+<script>
+	new Valine({
+		el: '#vcomments',
+		appId: 'OlmvQ0a2Zw7xo3no2bwabOzx-gzGzoHsz',
+		appKey: 'TW6t8mFeGLmhPjWisvmllvvo',
+		recordIP: true,
+		enableQQ: true, 
+		// 目前 Valine 的 QQ 自动获取昵称似乎不可用 故不建议开启
+		pageSize: 10,
+		requiredFields:
+			
+				['nick']
+			,
+		placeholder: "The world is but a little place after all...\n能够根据邮箱获取你的 Gravatar 头像。昵称是必填项，长度需不低于 3。",
+		avatar: 'mp',
+		avatar_cdn: 'https://cravatar.cn/avatar/',
+		emojiCDN: 'https://xsc062.netlify.app/em/', 
+		emojiMaps: {
+			
+				"微笑": "wx.gif",
+			
+				"龇牙": "cy.gif",
+			
+				"流泪": "ll.gif",
+			
+				"笑哭": "xk.gif",
+			
+				"流汗": "lh.gif",
+			
+				"擦汗": "ch.gif",
+			
+				"亲亲": "qq.gif",
+			
+				"色": "se.gif",
+			
+				"疑问": "yiw.gif",
+			
+				"发呆": "fd.gif",
+			
+				"晕": "yun.gif",
+			
+				"鼓掌": "gz.gif",
+			
+				"憨笑": "hanx.gif",
+			
+				"快哭了": "kk.gif",
+			
+				"得意": "dy.gif",
+			
+				"狂笑": "kx.gif",
+			
+				"害羞": "hx.gif",
+			
+				"妈妈生的": "dz.gif",
+			
+				"糗大了": "qd.gif",
+			
+				"吃瓜": "cg.gif",
+			
+				"睁眼": "zy.webp",
+			
+				"辣眼睛": "lyj.gif",
+			
+				"酸了": "nm.gif",
+			
+				"滚": "gun.webp",
+			
+				"惊恐": "jk.gif",
+			
+				"幽灵": "youl.gif",
+			
+				"无聊": "wul.gif",
+			
+				"吃": "eat.gif",
+			
+				"你很棒棒": "bb.gif",
+			
+				"赞": "qiang.gif",
+			
+				"踩": "ruo.gif",
+			
+				"握手": "wsh.gif",
+			
+				"发抖": "fad.gif",
+			
+				"挥手": "hsh.gif",
+			
+				"磕头": "kt.gif",
+			
+				"怄火": "oh.gif",
+			
+		},
+	})
+</script>
+			</div>
+			<script>setHitokoto();</script>
+		</div> 
+	</div>
+</div>
+    <!-- 页脚开始 -->
+<div id="footer" class="yahei">
+    Powered by
+    <a target="_blank" rel="noopener" href="https://hexo.io">
+        Hexo
+    </a>
+    &
+    <a href="/about-this-theme">
+        iwll
+    </a>
+    <p style="margin-top: 5px;">
+        2021 - 2025
+    </p>
+</div>
+<!-- Valine 相关配置 -->
+<script>
+    const getValineDomTimer = setInterval(() => {
+        // 不知道为什么 我从原博客 js 文件粘过来的参数是
+        // "#valine .vcards .vcard"
+        // DEBUG 了半天才定位到这个问题。。。
+        const vcards =
+            document.querySelectorAll('#valine, .vcards, .vcard');
+        if (vcards.length > 0) {
+            let author = 'XSC062';
+            for (let vcard of vcards) {
+                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                if (vnick_dom != null) {
+                    const vnick = vnick_dom.innerHTML;
+                    if (vnick === author) {
+                        vnick_dom.innerHTML =
+                        `${vnick} <span id="rootitem" class="fira">root</span>`
+                    }
+                }
+            }
+        }
+        else {
+            clearInterval(getValineDomTimer);
+        }
+    }, 2000);
+    SetActiveItem();
+    setDetailsSummary();
+    setTitleAnchor();
+    setEmptyToc();
+    setCodeClassName();
+</script>
+
+
+<!-- js -->
+<!-- 搜索功能相关配置 -->
+
+<script src="/js/search.js"></script>
+
+</script>
+<!-- prism 相关配置 -->
+<script type="text/javascript" src="/js/prism.js" defer></script>
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/clipboard-use.js"></script>
+<!-- 页脚结束 -->
+</body>
+</html>

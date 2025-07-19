@@ -68,11 +68,14 @@
 
 	<!-- 搜索 -->
 <div id="search-bg">
-	<div id="search-box"></div>
-	<!-- <div class="form-group">
-		<input type="text" id="local-search-input" name="q" results="0" placeholder="search" class="st-search-input st-default-search-input form-control"/>
-	</div>  
-	<div id="local-search-result"></div> -->
+	<div id="search-box">
+		<input type="text" id="search-input" placeholder="Type to search...">
+		<div id="search-results"></div>
+		<p>恭喜你触发了这个 box，由于我还没有写关闭键，你只能通过刷新页面来关闭它。非常抱歉 ;-)</p>
+		<p>为了证明我没有摆烂，在这里放一个进度：</p>
+		<p>- 250715：尝试实现搜索功能，初步成功，能够搜索到包含关键词的文章了（也能关掉了）。不知道为啥输入 123 可以匹配所有文章，但是输入 1234 就一篇都匹配不上。</p>
+		<p>- 250716：尝试加入关键词上下文来 de 上面的 bug，然后把 js 写成史了，现在这个框框并不具备搜索功能（也不具备关闭功能） :-(</p>
+	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
@@ -86,7 +89,8 @@
 	<!-- 右对齐部分导航 -->
 	<script>
 		function toSearch() {
-			$("#search-bg, #search-bg *").css("z-index", "1002");
+			// goto search.ejs
+			$("#search-bg, #search-bg *").css("z-index", "1002"); 
 			$("#search-bg, #search-bg *").css("opacity", "100%");
 		}
 	</script>
@@ -128,7 +132,7 @@
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%9C%E7%8E%87%E4%BC%98%E5%8C%96-dp"><span class="toc-text">斜率优化 DP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%8D%B0%E6%96%87%E7%AB%A0"><span class="toc-text">打印文章</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#solution"><span class="toc-text">Solution</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%B4%E6%8A%A4%E9%98%9F%E5%A4%B4"><span class="toc-text">维护队头</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0-dp-%E5%80%BC"><span class="toc-text">更新 DP 值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%B4%E6%8A%A4%E9%98%9F%E5%B0%BE"><span class="toc-text">维护队尾</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#code"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%A9%E5%85%B7%E8%A3%85%E7%AE%B1"><span class="toc-text">玩具装箱</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#solution-1"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#code-1"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E5%AE%89%E6%8E%92-1"><span class="toc-text">任务安排 1</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#solution-2"><span class="toc-text">Solution</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95%E4%B8%80"><span class="toc-text">解法一</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-text">代码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95%E4%BA%8C"><span class="toc-text">解法二</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="toc-text">代码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E5%AE%89%E6%8E%92-2"><span class="toc-text">任务安排 2</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#solution-3"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#code-2"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E5%AE%89%E6%8E%92-3"><span class="toc-text">任务安排 3</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#solution-4"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#code-3"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%9F%E5%9C%B0%E8%B4%AD%E4%B9%B0"><span class="toc-text">土地购买</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#solution-5"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#code-4"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%93%E5%BA%93%E5%BB%BA%E8%AE%BE"><span class="toc-text">仓库建设</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#solution-6"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#code-5"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%AF%E6%9C%A8%E5%8E%82%E9%80%89%E5%9D%80"><span class="toc-text">锯木厂选址</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#solution-7"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#code-6"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cats-transport"><span class="toc-text">Cats Transport</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#solution-8"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#code-7"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E5%88%AB%E8%A1%8C%E5%8A%A8%E9%98%9F"><span class="toc-text">特别行动队</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#solution-9"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#code-8"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%81%E9%80%94"><span class="toc-text">征途</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#solution-10"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#code-9"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A0%E6%AA%AC"><span class="toc-text">柠檬</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#solution-11"><span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#code-10"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%9C%E7%8E%87%E4%BC%98%E5%8C%96-dp"><span class="toc-text">斜率优化 DP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%93%E5%8D%B0%E6%96%87%E7%AB%A0"><span class="toc-text">打印文章</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#solution"><span class="toc-text">Solution</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%B4%E6%8A%A4%E9%98%9F%E5%A4%B4"><span class="toc-text">维护队头</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0-dp-%E5%80%BC"><span class="toc-text">更新 DP 值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%B4%E6%8A%A4%E9%98%9F%E5%B0%BE"><span class="toc-text">维护队尾</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#code"><span class="toc-text">Code</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%A9%E5%85%B7%E8%A3%85%E7%AE%B1"><span class="toc-text">玩具装箱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E5%AE%89%E6%8E%92-1"><span class="toc-text">任务安排 1</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95%E4%B8%80"><span class="toc-text">解法一</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95%E4%BA%8C"><span class="toc-text">解法二</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E5%AE%89%E6%8E%92-2"><span class="toc-text">任务安排 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E5%AE%89%E6%8E%92-3"><span class="toc-text">任务安排 3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%9F%E5%9C%B0%E8%B4%AD%E4%B9%B0"><span class="toc-text">土地购买</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%93%E5%BA%93%E5%BB%BA%E8%AE%BE"><span class="toc-text">仓库建设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%AF%E6%9C%A8%E5%8E%82%E9%80%89%E5%9D%80"><span class="toc-text">锯木厂选址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cats-transport"><span class="toc-text">Cats Transport</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E5%88%AB%E8%A1%8C%E5%8A%A8%E9%98%9F"><span class="toc-text">特别行动队</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%81%E9%80%94"><span class="toc-text">征途</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A0%E6%AA%AC"><span class="toc-text">柠檬</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -244,12 +248,12 @@ f_j-f_k+{s_j}^2-{s_k}^2&lt;2\times s_i\times(s_j-s_k)
 <p>发现了吗？<span class="math inline">\(B\)</span> 永远都不可能是最优解。</p>
 <p>所以如果我们要维护一个最优解的序列，就可以不要 <span class="math inline">\(B\)</span> 了。</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20210210230815253.png" alt="上凸" /><figcaption>上凸</figcaption>
+<img src="0.png" alt="上凸" /><figcaption>上凸</figcaption>
 </figure>
 <p>那么，因为我们已经删掉了所有「上凸」的突起部分，所以这个最优解序列里肯定不会再存在「上凸」了。</p>
 <p>如果是这样的「下凸」呢？</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/20210211104654433.png" alt="下凸" /><figcaption>下凸</figcaption>
+<img src="1.png" alt="下凸" /><figcaption>下凸</figcaption>
 </figure>
 <p><span class="math inline">\(k_1\)</span> 为 <span class="math inline">\(l_{AB}\)</span> 的斜率，<span class="math inline">\(k_2\)</span> 为 <span class="math inline">\(l_{BC}\)</span> 的斜率。</p>
 <p>将 <span class="math inline">\(A,B\)</span> 代入，我们得知：</p>
@@ -268,7 +272,7 @@ f_j-f_k+{s_j}^2-{s_k}^2&lt;2\times s_i\times(s_j-s_k)
 <p>所以，在下凸的情况中，三个点都有可能是最优解，都需要保留。</p>
 <p>现在呢，所有上凸都被去掉了，只剩下凸，所以大概最后的最优解序列就长这个样子：</p>
 <figure>
-<img src="https://img-blog.csdnimg.cn/2021021111003214.png" alt="下凸包" /><figcaption>下凸包</figcaption>
+<img src="2.png" alt="下凸包" /><figcaption>下凸包</figcaption>
 </figure>
 <p><del>下 秃 包</del></p>
 <p><del>反过来看就是 lifan 的脑袋了</del></p>
@@ -328,7 +332,6 @@ int main()&#123;
 <hr />
 <h3 id="玩具装箱"><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3195">玩具装箱</a></h3>
 <p><a target="_blank" rel="noopener" href="https://loj.ac/p/10188">双倍经验</a> | <a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/1094/">三倍经验</a></p>
-<h4 id="solution-1">Solution</h4>
 <p>从今往后我们就只讲怎么推式子，不再证明下凸等性质了。</p>
 <p>设 <span class="math inline">\(f_i\)</span> 表示第 <span class="math inline">\(i\)</span> 个玩具放完后的最小费用。 <span class="math display">\[
 f_i=\min\{f_j+(i-j-1+\sum\limits_{k=i}^jC_k-L)^2\}
@@ -369,7 +372,6 @@ f_j-f_k+{C_j}^2-{C_k}^2+2\times C_j\times L-2\times C_k\times L&lt;2\times(C_j-C
 \\
 \dfrac{(f_j+{C_j}^2)-(f_k+{C_k}^2)}{(2\times C_j)-(2\times C_k)}&lt;C_i
 \]</span></p>
-<h4 id="code-1">Code</h4>
 <pre class="cpp"><code>#include &lt;cstdio&gt;
 #define int long long
 const int maxn = 5e5 + 5;
@@ -421,9 +423,8 @@ signed main() &#123;
 <hr />
 <h3 id="任务安排-1"><a target="_blank" rel="noopener" href="https://loj.ac/p/10184">任务安排 1</a></h3>
 <p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/302/">双倍经验</a> | <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2365">三倍经验</a></p>
-<h4 id="solution-2">Solution</h4>
 <p>感谢蓝书。这里按着蓝书上的思维走。</p>
-<h5 id="解法一">解法一</h5>
+<h4 id="解法一">解法一</h4>
 <p>暴力。</p>
 <p>此处的 <span class="math inline">\(t,c\)</span> 为输入的 <span class="math inline">\(t,c\)</span> 的前缀和数组。</p>
 <p>设 <span class="math inline">\(f_{i,j}\)</span> 为前 <span class="math inline">\(i\)</span> 个任务分成 <span class="math inline">\(j\)</span> 批的最小费用。</p>
@@ -431,7 +432,6 @@ signed main() &#123;
 <p>得出状态转移方程（<span class="math inline">\(k\)</span> 枚举上一批任务结束位置）： <span class="math display">\[
 f_{i,j}=\min\limits_{0\leqslant k&lt;i}\{f_{k,j-1}+(S\times j+t_i)\times(c_i-c_k)\}
 \]</span> 时间复杂度 <span class="math inline">\(\mathcal O(n^3)\)</span>。</p>
-<h5 id="代码">代码</h5>
 <pre class="cpp"><code>#include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 #define int long long
@@ -490,7 +490,7 @@ signed main() &#123;
     return 0;
 &#125;</code></pre>
 <p><del>亲测 TLE 70</del></p>
-<h5 id="解法二">解法二</h5>
+<h4 id="解法二">解法二</h4>
 <p>脑子炸了，想了好久才想明白这个优化的正确性。</p>
 <p>思考，以上代码需要 <span class="math inline">\(j\)</span> 这一维的根本原因是什么？</p>
 <p>因为我们无法确定之前已经划分了多少批，也就是无法确定 <span class="math inline">\(S\)</span> 的个数。</p>
@@ -507,7 +507,6 @@ signed main() &#123;
 <p>状态转移方程： <span class="math display">\[
 f_i=\min\limits_{0\leqslant j&lt;i}\{f_j+(c_i-c_j)\times t_i+s\times(c_n-c_j)\}
 \]</span> 此处，<span class="math inline">\(f_i\)</span> 没有具体含义。</p>
-<h5 id="代码-1">代码</h5>
 <pre class="cpp"><code>#include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 #define int long long
@@ -563,7 +562,6 @@ signed main() &#123;
 <h3 id="任务安排-2"><a target="_blank" rel="noopener" href="https://loj.ac/p/10185">任务安排 2</a></h3>
 <p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/303/">双倍经验</a></p>
 <p><span class="math inline">\(n\)</span> 的范围变大了，<span class="math inline">\(n^2\)</span> 过不了。</p>
-<h4 id="solution-3">Solution</h4>
 <p>这不随手加个斜率优化的事儿吗。</p>
 <p>我们继续瞎搞这个式子。 <span class="math display">\[
 \begin{aligned}
@@ -584,7 +582,6 @@ f_j-f_k-s\times c_j+s\times c_k&lt;t_i\times(c_j-c_k)
 \dfrac{(f_j-s\times c_j)-(f_k-s\times c_k)}{(c_j)-(c_k)}&lt;t_i
 \]</span> 然后就是老套路。</p>
 <p>时间复杂度 <span class="math inline">\(\mathcal O(n)\)</span>。</p>
-<h4 id="code-2">Code</h4>
 <pre class="cpp"><code>#include &lt;cstdio&gt;
 #define int long long
 const int maxn = 5e5 + 5;
@@ -632,7 +629,6 @@ signed main() &#123;
 <h3 id="任务安排-3"><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5785">任务安排 3</a></h3>
 <p><a target="_blank" rel="noopener" href="https://loj.ac/p/10186">双倍经验</a> | <a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/304/">三倍经验</a></p>
 <p>注意 <span class="math inline">\(t\)</span> 有可能是负数。</p>
-<h4 id="solution-4">Solution</h4>
 <p><span class="math inline">\(t\)</span> （输入）有可能为负，代表着 <span class="math inline">\(t\)</span>（前缀和）不再单调递增，用不单调的对象作为单调队列的条件一看就十分不讲武德，这样维护出来的队头显然不是正确答案。</p>
 <p>后面的 <span class="math inline">\(t,c\)</span> 默认为前缀和。</p>
 <p>我们感性证明一下。</p>
@@ -643,7 +639,6 @@ signed main() &#123;
 <p>然后把 <span class="math inline">\(pos\)</span> 当成 <span class="math inline">\(q_l\)</span> 来处理就好了。</p>
 <p>队尾还是维护一个下凸。</p>
 <p>时间复杂度 <span class="math inline">\(\mathcal O(n\log_2n)\)</span>。</p>
-<h4 id="code-3">Code</h4>
 <p><em>强烈建议不要去动 AcWing 版本的那道。</em></p>
 <p><em>最后两组数据堪称毒瘤。</em></p>
 <p><em>卡 <code>long long</code> 乘法，卡 <code>__int128</code> 时限，卡 <code>double</code>精度，非 T 即 WA。</em></p>
@@ -703,7 +698,6 @@ signed main() &#123;
 &#125;</code></pre>
 <hr />
 <h3 id="土地购买"><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2900">土地购买</a></h3>
-<h4 id="solution-5">Solution</h4>
 <p>首先我们想明白一件事情：如果一块土地，有另一块土地的长和宽都比它大，那就不用再理它了，直接从总序列里剔除。</p>
 <pre class="cpp"><code>struct _ &#123;
     int w, l;
@@ -732,7 +726,6 @@ f_j-f_k&lt;(-w_{j+1}+w_{k+1})\times l_i
 \\
 \dfrac{(f_j)-(f_k)}{(-w_{j+1})+(w_{k+1})}&lt;l_i
 \]</span></p>
-<h4 id="code-4">Code</h4>
 <pre class="cpp"><code>#include &lt;cstdio&gt;
 #include &lt;algorithm&gt;
 #define int long long
@@ -773,7 +766,6 @@ signed main() &#123;
 <hr />
 <h3 id="仓库建设"><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2120">仓库建设</a></h3>
 <p><a target="_blank" rel="noopener" href="https://loj.ac/p/10189">双倍经验</a> | <a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/description/1095/">三倍经验</a></p>
-<h4 id="solution-6">Solution</h4>
 <p>设 <span class="math inline">\(f_i\)</span> 表示在 <span class="math inline">\(i\)</span> 工厂建立仓库的最小花费。</p>
 <p>则有： <span class="math display">\[
 \begin{aligned}
@@ -800,7 +792,6 @@ f_j-f_k+b_j-b_k&lt;x_i\times a_j-x_i\times a_k
 \\
 \dfrac{(f_j+b_j)-(f_k+b_k)}{a_j-a_k}&lt;x_i
 \]</span></p>
-<h4 id="code-5">Code</h4>
 <p><em>想感受人生的同学们可以尝试做一下 AcWing 那个版本，非 MLE 即 WA，爽到炸。</em></p>
 <pre class="cpp"><code>#include &lt;cstdio&gt;
 #define int long long
@@ -860,7 +851,6 @@ signed main() &#123;
 <hr />
 <h3 id="锯木厂选址"><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4360">锯木厂选址</a></h3>
 <p><a target="_blank" rel="noopener" href="https://loj.ac/p/10192">双倍经验</a> | <a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/1097/">三倍经验</a></p>
-<h4 id="solution-7">Solution</h4>
 <p>和仓库建设很像。</p>
 <p>设 <span class="math inline">\(A_i=\sum\limits_{j=i}^nd_j\)</span>，表示第 <span class="math inline">\(i\)</span> 棵树与山脚的距离；<span class="math inline">\(B_i=\sum\limits_{j=1}^iw_j\)</span>，表示 <span class="math inline">\(w\)</span> 的前缀和；<span class="math inline">\(S=\sum\limits_{i=1}^nA_i\times w_i\)</span>，表示将所有树全部运到山脚的花费总和。</p>
 <p>假设在 <span class="math inline">\(j\)</span> 处建立第 <span class="math inline">\(1\)</span> 座锯木厂，在 <span class="math inline">\(i\)</span> 处建立第 <span class="math inline">\(2\)</span> 座锯木厂，此时：</p>
@@ -881,7 +871,6 @@ A_i\times B_j-A_j\times B_j&amp;&lt;A_i\times B_k-A_k\times B_k\\
 \dfrac{A_j\times B_j-A_k\times B_k}{B_j-B_k}&amp;&lt;A_i\\
 \end{aligned}
 \]</span> 其中，<span class="math inline">\(A_i\)</span> 具有单调性，可以直接套板子。</p>
-<h4 id="code-6">Code</h4>
 <pre class="cpp"><code>#include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 #include &lt;algorithm&gt;
@@ -955,7 +944,6 @@ signed main() &#123;
 <h3 id="cats-transport"><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF311B">Cats Transport</a></h3>
 <p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/305/">双倍经验</a> | <a target="_blank" rel="noopener" href="http://codeforces.com/problemset/problem/311/B">三倍经验</a></p>
 <p>经验：洛谷的题面比蓝书和 AcWing 上的标准多了，蓝书的题意不清。</p>
-<h4 id="solution-8">Solution</h4>
 <p>研究表明，边猛灌养乐多边看蓝书有助于理解。</p>
 <p>这道题难在推式子。<del>不然还能难在哪里</del></p>
 <p>设 <span class="math inline">\(A_i\)</span> 表示要接到第 <span class="math inline">\(i\)</span> 只猫的最早出发时间，也就是说，在此时出发，猫 <span class="math inline">\(i\)</span> 的等待时间为 <span class="math inline">\(0\)</span>。</p>
@@ -991,7 +979,6 @@ f_{i-1,x}-A_j\times x+S_x&lt;f_{i-1,y}-A_j\times y+S_y
 \dfrac{(f_{i-1,x}+S_x)-(f_{i-1,y+S_y})}{x-y}&lt;A_j
 \]</span> <strong>注意事项</strong></p>
 <p><span class="math inline">\(f\)</span> 初始化为极大值。</p>
-<h4 id="code-7">Code</h4>
 <pre class="cpp"><code>#include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 #include &lt;algorithm&gt;
@@ -1068,7 +1055,6 @@ signed main() &#123;
 <hr />
 <h3 id="特别行动队"><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3628">特别行动队</a></h3>
 <p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/337/">双倍经验</a> | <a target="_blank" rel="noopener" href="https://loj.ac/p/10190">三倍经验</a></p>
-<h4 id="solution-9">Solution</h4>
 <p>直接推式子。 <span class="math display">\[
 \begin{aligned}
 f_i&amp;=\max\{f_j+a\times(s_i-s_j)^2+b\times(s_i-s_j)+c\ \}\\
@@ -1084,7 +1070,6 @@ f_j-2\times a\times s_i\times s_j+a\times{s_j}^2-b\times s_j&amp;&gt;f_k-2\times
 \end{aligned}
 \]</span> 我们发现中间的符号是 <span class="math inline">\(&gt;\)</span>。</p>
 <p>所以我们在弹队头的时候，要把判断条件中的符号反过来。</p>
-<h4 id="code-8">Code</h4>
 <pre class="cpp"><code>#include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 #include &lt;algorithm&gt;
@@ -1147,7 +1132,6 @@ signed main() &#123;
 <hr />
 <h3 id="征途"><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4072">征途</a></h3>
 <p><a target="_blank" rel="noopener" href="https://loj.ac/p/2035">双倍经验</a> | <a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/2575/">三倍经验</a></p>
-<h4 id="solution-10">Solution</h4>
 <p>明显，不化掉 <span class="math inline">\(v\times m^2\)</span> 就无法进行优化。</p>
 <p>设 <span class="math inline">\(x\)</span> 为当前休息站点与上一休息站点的距离， <span class="math inline">\(x_0\)</span> 为 <span class="math inline">\(x_1\sim x_n\)</span> 的平均数，<span class="math inline">\(S\)</span> 为 <span class="math inline">\(x\)</span> 的前缀和。 <span class="math display">\[
 \begin{aligned}
@@ -1174,10 +1158,9 @@ f_{i-1,j}-2\times a_i\times a_j+{a_j}^2&lt;f_{i-1,k}-2\times a_i\times a_k+{a_k}
 f_{i-1,j}-f_{i-1,k}+{a_j}^2-{a_k}^2&lt;2\times a_i\times(a_j-a_k)
 \\
 \dfrac{f_{i-1,j}-f_{i-1,k}+{a_j}^2-{a_k}^2}{2\times(a_j-a_k)}&lt;a_i
-\]</span> ##### 注意事项</p>
+\]</span></p>
 <p>初始化。</p>
 <p>将 <span class="math inline">\(f\)</span> 初始化为极大值。</p>
-<h4 id="code-9">Code</h4>
 <p>在 AcWing 上将 <code>memset</code> 改为初始化 <code>f[0][i] = a[i] * a[i]</code> 就可以过了，不然会 MLE，也许是因为没开滚动。（本来也用不着滚</p>
 <pre class="cpp"><code>#include &lt;cstdio&gt;
 #define int long long
@@ -1248,7 +1231,6 @@ signed main()&#123;
 <hr />
 <h3 id="柠檬"><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5504">柠檬</a></h3>
 <p><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/2396/">双倍经验</a></p>
-<h4 id="solution-11">Solution</h4>
 <p>是边写这篇题解边做的（</p>
 <p>题意：</p>
 <p>有一个含有 <span class="math inline">\(n\)</span> 个元素的序列 <span class="math inline">\(s\)</span>。将这个序列分成连续的若干段，定义每一段的价值为「在这一段当中任选某个元素的个数的平方再乘上这个元素」的最大值。求将 <span class="math inline">\(s\)</span> 划分后的最大价值。</p>
@@ -1285,7 +1267,6 @@ f_{j-1}-f_{k-1}+s_j\times {cnt_j}^2-s_k\times {cnt_k}^2-2\times s_j\times cnt_j+
 <p>因为 <span class="math inline">\(s_i\)</span> 必须与 <span class="math inline">\(s_j,s_k\)</span> 相同，明显要针对每个 <span class="math inline">\(s_i\)</span> 维护不同的最优解序列，在每次对应的序列中计算。</p>
 <p>维护的斜率单调递减，而对于每一个相等的 <span class="math inline">\(s_i\)</span>， <span class="math inline">\(2\times s_i\times cnt_i\)</span> 一定是单调递增的，导致了这个序列大概长这个样子：斜率单调递减，但末尾的最小的斜率仍大于 <span class="math inline">\(2\times s_i\times cnt_i\)</span>。</p>
 <p>单调栈可以自行研究，因为作者瞄了一眼时间发现已经是明天了。（什</p>
-<h4 id="code-10">Code</h4>
 <pre class="cpp"><code>#include&lt;cstdio&gt;
 #include&lt;vector&gt;
 using namespace std;
@@ -1512,13 +1493,6 @@ signed main()&#123;
 
 <script src="/js/search.js"></script>
 
-<script type="text/javascript">
-var search_path = "search.xml";
-if (search_path.length == 0) {
-    search_path = "search.xml";
-}
-var path = "/" + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
 </script>
 <!-- prism 相关配置 -->
 <script type="text/javascript" src="/js/prism.js" defer></script>

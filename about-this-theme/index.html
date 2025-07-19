@@ -68,11 +68,14 @@
 
 	<!-- 搜索 -->
 <div id="search-bg">
-	<div id="search-box"></div>
-	<!-- <div class="form-group">
-		<input type="text" id="local-search-input" name="q" results="0" placeholder="search" class="st-search-input st-default-search-input form-control"/>
-	</div>  
-	<div id="local-search-result"></div> -->
+	<div id="search-box">
+		<input type="text" id="search-input" placeholder="Type to search...">
+		<div id="search-results"></div>
+		<p>恭喜你触发了这个 box，由于我还没有写关闭键，你只能通过刷新页面来关闭它。非常抱歉 ;-)</p>
+		<p>为了证明我没有摆烂，在这里放一个进度：</p>
+		<p>- 250715：尝试实现搜索功能，初步成功，能够搜索到包含关键词的文章了（也能关掉了）。不知道为啥输入 123 可以匹配所有文章，但是输入 1234 就一篇都匹配不上。</p>
+		<p>- 250716：尝试加入关键词上下文来 de 上面的 bug，然后把 js 写成史了，现在这个框框并不具备搜索功能（也不具备关闭功能） :-(</p>
+	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
@@ -86,7 +89,8 @@
 	<!-- 右对齐部分导航 -->
 	<script>
 		function toSearch() {
-			$("#search-bg, #search-bg *").css("z-index", "1002");
+			// goto search.ejs
+			$("#search-bg, #search-bg *").css("z-index", "1002"); 
 			$("#search-bg, #search-bg *").css("opacity", "100%");
 		}
 	</script>
@@ -121,8 +125,8 @@
 <div class="ui content container">
 	<h1 id="title">更新日志 / 关于 iwll</h1>
     <div class="ui text container yahei">
-		<p>是的 iwll 是这个 theme 的名字，就是 will 的乱序，不排除是想名字的时候英语水平比较低想不出来什么高级词汇。</p>
-<p>2022 年 10 月晚自习，面对一笔未动的数学作业，在草稿本上画下了本主题的大致精神面貌。在一双只实现过简单 Stylus 的手下，到 2022 年 12 月，iwll 竟已初具雏形（虽然和草稿本上那个不说相去甚远，也是毫不沾边）。</p>
+		<p>iwll 是这个 theme 的名字，就是 will 的乱序，不排除是想名字的时候英语水平比较低想不出来什么高级词汇 <del>其实现在也很低</del>。</p>
+<p>2022 年 10 月，晚自习，面对一笔未动的数学作业，我在草稿本上画下了本主题的大致面貌。2022 年 12 月，iwll 在一双只实现过简单 Stylus 的手下初具雏形（虽然和草稿本上那个不说相去甚远，也是毫不沾边）。</p>
 <p>一路上修修补补，直到今天——</p>
 <p>To-do list 只完成了 20% <img src="/em/kx.gif" alt="狂笑" /></p>
 <p>当然也加了很多当时没有想到的功能。<em><del>真的吗？</del></em></p>
@@ -130,6 +134,10 @@
 <p>以下从观感上似乎更像是 Site change log 而非 Theme’s，不管怎么样看看就好。</p>
 <h2 id="change-log">Change Log</h2>
 <ul>
+<li>250518：
+<ul>
+<li>修了 excerpt 在无 <code>more</code> 标签时未转义的问题。发现过程比较曲折 <img src="/em/ll.gif" /></li>
+</ul></li>
 <li>250219：
 <ul>
 <li>修好了 prismjs 插件 Line Highlight 和 Line Number 调用顺序颠倒的问题，但这是 prismjs 自己的锅。</li>
@@ -138,7 +146,7 @@
 </ul></li>
 <li>250204：
 <ul>
-<li>花费了两天时间，把 prismjs 从内置渲染放到了浏览器端以支持我瞎搞。感谢 DeepSeek 为我提供大部分（善解人意的）支持。于是把代码高亮想办法整得和本地 VSCode Solarized Light 一模一样了。</li>
+<li>花费了两天时间，把 prismjs 从内置渲染放到了浏览器端以支持我瞎搞。感谢 DeepSeek 为我提供大部分（善解人意的）支持。于是把代码高亮想办法整得和本地 VSCode Solarized Light 一模一样了。<del>还加了一些小插件</del></li>
 <li>为 <code>&lt;h3&gt;</code> 也添加了锚。</li>
 </ul></li>
 <li>250121：
@@ -155,7 +163,7 @@
 </ul></li>
 <li>241114：
 <ul>
-<li>更新了一下归档页，使其看起来没那么傻。</li>
+<li>更新了一下归档页，使其看起来没那么傻。<del>20250601 更新：我干了啥来着？</del></li>
 <li>发现老文章提醒写假了（被减数和减数写反了，建议回一年级学习四则运算），它之前到底是怎么生效的？</li>
 <li><p>历史性地发现了代码首行 <code>padding</code> 莫名其妙错位的问题、行号和代码错位的问题！我之前到底是怎么解决的？？？我动啥不该动的屎山了？</p>
 哦哦我之前给 <code>&lt;code&gt;</code> 加上了一个 <code>padding</code>，结果把 <code>pre&gt;code</code> 影响到了 <img src="/em/yun.gif" alt="晕" /></li>
@@ -166,13 +174,13 @@
 <li><p>241023：</p>
 <ul>
 <li>写了目录的 CSS，虽然被 rybp 吐槽很丑但至少现在我们有目录了 <img src="/em/dy.gif" alt="得意" /></li>
-<li>加了更新日志页，顺便更新了一下页脚：增加通往本页面的超链接，把当前年份换成了动态获取。</li>
+<li>加了更新日志页，顺便更新了一下页脚：增加通往本页面的超链接，把当前年份换成了动态获取 <del>这对吗？</del></li>
 </ul></li>
 <li>241005：修复了 <code>friends.css</code> 中弃用属性的使用；为首页布局加上了 Firefox 支持。</li>
 <li><p>240820：</p>
 <ol type="1">
 <li><p>因为难看所以给 <code>&lt;del&gt;</code> 换了个颜色。</p>
-以及发现了自己这个东西如果不穿插一点主题亮色就会很素的问题，所以选了个贴近主题色的暗色。</li>
+以及发现了自己这个东西如果不穿插一点主题亮色就会很素的问题，所以选了个贴近主题色的暗色 <del>朋友你在说什么</del></li>
 <li><p>修复了 index 页的 <code>-webkit-fill-available</code> 在 Firefox 下不可用的问题 <del>废话</del></p>
 以及 Firefox 下与之对应的属性居然叫 <code>--mozlia-available</code> 而不是 <code>--mozlia-fill-available</code>（）</li>
 </ol></li>
@@ -387,13 +395,6 @@
 
 <script src="/js/search.js"></script>
 
-<script type="text/javascript">
-var search_path = "search.xml";
-if (search_path.length == 0) {
-    search_path = "search.xml";
-}
-var path = "/" + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
 </script>
 <!-- prism 相关配置 -->
 <script type="text/javascript" src="/js/prism.js" defer></script>

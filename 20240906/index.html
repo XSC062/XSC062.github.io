@@ -13,7 +13,7 @@
 <!-- 网站标题 -->
 <title>
 	
-		动！态！规！划！10！题！ -
+		动态规划 10 题 - I -
 	
 	XSC062 的博客
 </title>
@@ -68,11 +68,14 @@
 
 	<!-- 搜索 -->
 <div id="search-bg">
-	<div id="search-box"></div>
-	<!-- <div class="form-group">
-		<input type="text" id="local-search-input" name="q" results="0" placeholder="search" class="st-search-input st-default-search-input form-control"/>
-	</div>  
-	<div id="local-search-result"></div> -->
+	<div id="search-box">
+		<input type="text" id="search-input" placeholder="Type to search...">
+		<div id="search-results"></div>
+		<p>恭喜你触发了这个 box，由于我还没有写关闭键，你只能通过刷新页面来关闭它。非常抱歉 ;-)</p>
+		<p>为了证明我没有摆烂，在这里放一个进度：</p>
+		<p>- 250715：尝试实现搜索功能，初步成功，能够搜索到包含关键词的文章了（也能关掉了）。不知道为啥输入 123 可以匹配所有文章，但是输入 1234 就一篇都匹配不上。</p>
+		<p>- 250716：尝试加入关键词上下文来 de 上面的 bug，然后把 js 写成史了，现在这个框框并不具备搜索功能（也不具备关闭功能） :-(</p>
+	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
@@ -86,7 +89,8 @@
 	<!-- 右对齐部分导航 -->
 	<script>
 		function toSearch() {
-			$("#search-bg, #search-bg *").css("z-index", "1002");
+			// goto search.ejs
+			$("#search-bg, #search-bg *").css("z-index", "1002"); 
 			$("#search-bg, #search-bg *").css("opacity", "100%");
 		}
 	</script>
@@ -128,7 +132,7 @@
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E5%90%88%E5%B9%B6"><span class="toc-text">1. 字符合并</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mod-mod-mod"><span class="toc-text">2. Mod Mod Mod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stalinsort-algorithm"><span class="toc-text">3. StalinSort Algorithm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#merge-triplets"><span class="toc-text">4. Merge Triplets</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#runaway-quail"><span class="toc-text">5. Runaway Quail</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E5%90%88%E5%B9%B6"><span class="toc-text">1. 字符合并</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mod-mod-mod"><span class="toc-text">2. Mod Mod Mod</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stalinsort-algorithm"><span class="toc-text">3. StalinSort Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#merge-triplets"><span class="toc-text">4. Merge Triplets</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#runaway-quail"><span class="toc-text">5. Runaway Quail</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#the-great-marathon"><span class="toc-text">6. The Great Marathon</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sorting-pancakes"><span class="toc-text">7. Sorting Pancakes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#complexity"><span class="toc-text">8. Complexity</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#boxes-and-balls"><span class="toc-text">9. Boxes and Balls</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#legondary-grandmaster"><span class="toc-text">10. LEGOndary Grandmaster</span></a></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -136,8 +140,8 @@
 			<span id="postcon">
 				<span id="postinfo">
 					<div class="ui post title">
-						<div id="fortitle" data-content="动！态！规！划！10！题！">
-							动！态！规！划！10！题！
+						<div id="fortitle" data-content="动态规划 10 题 - I">
+							动态规划 10 题 - I
 						</div>
 						<div class="ui title background">
 						</div>
@@ -162,17 +166,24 @@
 <p>自用向，不写太详细，把破题点写出来就差不多了。哦哦这里的破题是动词不是名词。</p>
 <span id="more"></span>
 <hr />
-<h3 id="字符合并">1. 字符合并</h3>
+<h2 id="字符合并">1. 字符合并</h2>
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3736" class="uri">https://www.luogu.com.cn/problem/P3736</a></p>
+<blockquote>
+<p>给定长度为 <span class="math inline">\(n\)</span> 的 <span class="math inline">\(01\)</span> 串和 <span class="math inline">\(2^k\)</span> 条规则，第 <span class="math inline">\(i\)</span> 条规则形如：</p>
+<ul>
+<li>对于序列中的 <span class="math inline">\(k\)</span> 位二进制数 <span class="math inline">\(i\)</span>，可以将它合并为 <span class="math inline">\(c(c\in\{0,1\})\)</span>，并产生 <span class="math inline">\(v\)</span> 的价值。</li>
+</ul>
+<p>进行任意次合并，求出能取得的最大总价值。<span class="math inline">\(n\le 300,k\le 8\)</span>。</p>
+</blockquote>
 <p><strong>状压</strong>，<strong>区间 DP</strong>。</p>
 <p>注意到 <span class="math inline">\(k\)</span> 只有 <span class="math inline">\(8\)</span>，独特的输入方式也引导我们注意到状态数为 <span class="math inline">\(10^2\)</span> 级别。合并的背景又让我们本能想到区间 DP，所以刚好盲猜这题是个 <span class="math inline">\(O(2^k\times n^2)\)</span> 的区间状压 DP。</p>
 <ul>
-<li><p>然后我觉得最神的一个地方是什么呢？最后的答案一定是一个长度小于 <span class="math inline">\(k\)</span> 的串，<mark>每位展开还原，可以知道，每个合并操作选取的区间互不相交。</mark></p>
+<li><p>然后我觉得最神的一个地方是什么呢？最后的答案一定是一个长度小于 <span class="math inline">\(k\)</span> 的串，<mark>每位展开还原，可以知道，每个合并操作选取的区间可能包含但不相交。</mark></p>
 <p>看起来很蠢很显然，但这是我们 <span class="math inline">\(n^2\)</span> 区间 DP 的基础啊（（（</p></li>
 </ul>
 <p>然后我们区间 DP 套路，枚举对于 <span class="math inline">\([l,r]\)</span> 最左边一位，然后就可以开始大力转移了。</p>
-<p>但是这里我们会发现，这一位原本的样子有点多，可以任何一个 <span class="math inline">\(1 + d\times (k-1)\)</span>，所以只能再来一层 <span class="math inline">\(\dfrac nk\)</span> 地枚举，极限情况是个有点难绷的 3e9，作为正解只能说这个数据范围的提示性有点令人难评了。</p>
-<p>本来我实现着实现着把自己整懵了：<code>00000</code> 和 <code>0</code> 压出来都是 <code>0</code>，但二者代表的含义显然不同，又无法简单区别。但其实<mark>长度为 <span class="math inline">\(1+d\times (k-1)\)</span> 的区间和长度为 <span class="math inline">\(d\)</span> 的最终结果是一一对应的，所以在我们设计的包含了区间作右端点的状态中，压出来的就是我们想要的那个。</mark></p>
+<p>但是这里我们会发现，这一位原本的样子有点多，可以是任何一个长度为 <span class="math inline">\(1 + d\times (k-1)\)</span> 的数，所以只能再来一层 <span class="math inline">\(\dfrac nk\)</span> 的枚举，极限情况是个有点难绷的 3e9，作为正解只能说这个数据范围的提示性有点令人难评了。</p>
+<p>实现着实现着把自己整懵了：<code>00000</code> 和 <code>0</code> 压出来都是 <code>0</code>，但二者代表的含义显然不同，又无法简单区别。但其实<mark>长度为 <span class="math inline">\(1+d\times (k-1)\)</span> 的区间和长度为 <span class="math inline">\(d\)</span> 的最终结果是一一对应的，所以在我们设计的包含了区间作右端点的状态中，压出来的就是我们想要的那个。</mark></p>
 <details>
 <p>这里的实现比<strong>所有</strong>我找到的题解都更像人打出来的。导致我想对比疗法都找不到合适的代码 <img src="/em/lh.gif" /></p>
 <p>换言之，这最像是一份通常的区间 DP 代码，不存在其他题解中乱七八糟的填表啊相互影响啊之类的恶心 feature。</p>
@@ -231,17 +242,21 @@ int main() &#123;
 </details>
 <hr />
 <p>其实一开始挺担心会不会因为写博客影响做题时间之类的。</p>
-<p>后来发现我可以看知乎看一个上午然后代码动都不动一下，反正不想做题的时候也不能强制让自己做题，那不如写写博客算了 <img src="/em/lh.gif" /></p>
+<p>直到发现我可以看知乎看一个上午然后代码动都不动一下 <img src="/em/lh.gif" /></p>
 <hr />
-<h3 id="mod-mod-mod">2. Mod Mod Mod</h3>
+<h2 id="mod-mod-mod">2. Mod Mod Mod</h2>
 <p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/889/problem/E" class="uri">https://codeforces.com/contest/889/problem/E</a></p>
+<blockquote>
+<p>给定 <span class="math inline">\(a_{1\sim n}\)</span>，对于所有非负整数 <span class="math inline">\(x\)</span> 定义 <span class="math inline">\(f(x,n)=x\bmod a_n\)</span>，<span class="math inline">\(f(x,i)=x\bmod a_i+f(x\bmod a_i,i+1)\)</span>。</p>
+<p>求 <span class="math inline">\(f(x,1)\)</span> 最大值。<span class="math inline">\(n\le 2\times 10^5\)</span>。</p>
+</blockquote>
 <p><strong>技巧 / 特殊性质类 DP</strong>。</p>
 <p>小神题。注意到题意可以转化为，找到一个 <span class="math inline">\(x\)</span>，最大化：</p>
 <p><span class="math display">\[
 x\bmod a_1 + x\bmod a_1\bmod a_2 + \cdots + x\bmod a_1\bmod a_2\bmod\cdots\bmod a_n.
 \]</span></p>
 <p>简称 <span class="math inline">\(x\bmod a_1\bmod a_2\bmod \cdots\bmod a_i\)</span> 的值为 <span class="math inline">\(f_i\)</span>。</p>
-<p>这个时候我们不难注意到，<span class="math inline">\(f_i\)</span> 肯定是单调不升的。形象化地，整个 <span class="math inline">\(f\)</span> 序列肯定是由若干个单调下降的段组成的。并且，必定存在至少一个 <span class="math inline">\(i\)</span>，使得 <span class="math inline">\(f_i = a_i-1\)</span>，否则可以将所有 <span class="math inline">\(f_i\gets f_i+1\)</span>，同时 <span class="math inline">\(\sum f\gets (\sum f) + n\)</span>。</p>
+<p>这个时候我们不难注意到，<span class="math inline">\(f_i\)</span> 肯定是<mark>单调不升</mark>的。形象化地，整个 <span class="math inline">\(f\)</span> 序列肯定是由若干个单调下降的段组成的。并且，<mark>必定存在至少一个 <span class="math inline">\(i\)</span>，使得 <span class="math inline">\(f_i = a_i-1\)</span>，否则可以将所有 <span class="math inline">\(f_i\gets f_i+1\)</span>，同时 <span class="math inline">\(\sum f\gets (\sum f) + n\)</span></mark>。</p>
 <p>这启示我们关注 <span class="math inline">\(f_i\)</span> 的值域。假设已经确定了 <span class="math inline">\(f\)</span> 序列的一个前缀 <span class="math inline">\(f_1\sim i\)</span>，对于任意 <span class="math inline">\(0\le k\le f_{\min}\)</span>（注意由于单调不降，<span class="math inline">\(f_{\min} = f_i\)</span>），我们可以将所有 <span class="math inline">\(f_j\gets f_j-k\)</span>，得到一个新的合法的 <span class="math inline">\(f&#39;_{1\sim i}\)</span>。</p>
 <p>形象化地，将 <span class="math inline">\(f_{1\sim i}\)</span> 想象为一个逐渐降低的柱状图，任意切去了一个高度的底部，并且这个高度不高于最矮的元素（即第 <span class="math inline">\(i\)</span> 个元素）。</p>
 <p>这时候有一个很美妙的性质，就是我们<mark>对于切之前和切之后的柱状图，其 <strong>最矮元素以上的部分</strong> 长得完全相同</mark>。然后就是神中神之 DP 状态设计。很难想象是在什么样的精神状态下凑出来这种神奇状态的，可能是某种我不了解的 trick？</p>
@@ -300,8 +315,16 @@ int main() &#123;
 &#125;</code></pre>
 </details>
 <hr />
-<h3 id="stalinsort-algorithm">3. StalinSort Algorithm</h3>
+<h2 id="stalinsort-algorithm">3. StalinSort Algorithm</h2>
 <p><a target="_blank" rel="noopener" href="https://qoj.ac/problem/1456" class="uri">https://qoj.ac/problem/1456</a></p>
+<blockquote>
+<p>给定排列 <span class="math inline">\(A_{1\sim n}\)</span>。从 <span class="math inline">\(i=2\)</span> 开始往右扫，每一步执行以下操作：</p>
+<ul>
+<li>若 <span class="math inline">\(A_i&gt; A_{i-1}\)</span>，什么也不做。</li>
+<li>否则，你可以删除 <span class="math inline">\(A_{i-1}\)</span> 或 <span class="math inline">\(A_i\)</span>，但要求删除后，该前缀必须单调递增。</li>
+</ul>
+<p>问最少可以删除多少个数。<span class="math inline">\(n\le 10^5\)</span>。</p>
+</blockquote>
 <p>你会发现<mark>删最少 = 留最多</mark>。</p>
 <p>考虑 <span class="math inline">\(i\)</span> 能够转移到的 <span class="math inline">\(j(j&gt;i)\)</span> 需满足的条件。若令 <span class="math inline">\(nex_p\)</span> 表示 <span class="math inline">\(p\)</span> 之后第一个值比 <span class="math inline">\(a_p\)</span> 大的元素，则 <span class="math inline">\(j\in [nex_i, nex_{nex_i})\)</span> 且 <span class="math inline">\(a_j&gt;a_i\)</span>。</p>
 <p><mark>赛时误认为右端点为 <span class="math inline">\(i\)</span> 之后第二个值比 <span class="math inline">\(a_i\)</span> 大的元素，导致完全寄掉。</mark></p>
@@ -406,8 +429,15 @@ int main() &#123;
 &#125;</code></pre>
 </details>
 <hr />
-<h3 id="merge-triplets">4. Merge Triplets</h3>
+<h2 id="merge-triplets">4. Merge Triplets</h2>
 <p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/agc043/tasks/agc043_d" class="uri">https://atcoder.jp/contests/agc043/tasks/agc043_d</a></p>
+<blockquote>
+<p>给定 <span class="math inline">\(A_{1\sim 3N}=\{1, 2, \dots, 3N\}\)</span>，从 <span class="math inline">\(1\)</span> 开始每 <span class="math inline">\(3\)</span> 个数分为一组，每一组初始有一个指针指向第一个元素。执行若干次以下操作：</p>
+<ul>
+<li>在所有指针指向的数中选择一个最小的，把它放到序列末（不会加入末端的组）；将原本指向它的指针后移一位，如果移出原本的组就删除这个指针。</li>
+</ul>
+<p>问任意次操作后，可能得到多少种序列。<span class="math inline">\(n\le 2\times 10^3\)</span>。</p>
+</blockquote>
 <p>由于要对合法的最终序列进行计数，考虑最终序列的性质。</p>
 <p>若序列中 <span class="math inline">\(a_{i+1}&lt;a_i\)</span>，则说明在某一组中，值为 <span class="math inline">\(a_i\)</span> 的元素下一个就是 <span class="math inline">\(a_{i+1}\)</span>。否则，因 <span class="math inline">\(a_{i+1}\)</span> 可选且比 <span class="math inline">\(a_i\)</span> 小，<span class="math inline">\(a_{i+1}\)</span> 应排在 <span class="math inline">\(a_i\)</span> 前面。</p>
 <p>否则，<span class="math inline">\(a_{i+1}\)</span> 既可以与 <span class="math inline">\(a_i\)</span> 不在同一组，也可以是 <span class="math inline">\(a_i\)</span> 的下一个元素。</p>
@@ -460,8 +490,13 @@ int main() &#123;
 &#125;</code></pre>
 </details>
 <hr />
-<h3 id="runaway-quail">5. Runaway Quail</h3>
+<h2 id="runaway-quail">5. Runaway Quail</h2>
 <p><a target="_blank" rel="noopener" href="https://qoj.ac/problem/5978" class="uri">https://qoj.ac/problem/5978</a></p>
+<blockquote>
+<p>数轴上有 <span class="math inline">\(n\)</span> 只鸡，初始位置为非 <span class="math inline">\(0\)</span> 整数 <span class="math inline">\(p_i\)</span>，奔跑速度为 <span class="math inline">\(s_i\)</span>。你初始在 <span class="math inline">\(0\)</span> 位置，奔跑速度为 <span class="math inline">\(Y(Y&gt;s_i)\)</span>。你要抓到所有鸡。</p>
+<p>你可以在任意时刻调转方向；鸡总会朝着远离你的方向奔跑；当你的坐标和鸡重合时，你抓到鸡。</p>
+<p>问抓到所有鸡的最短时间（显然是个实数）。<span class="math inline">\(n\le 500\)</span>。</p>
+</blockquote>
 <p>容易发现鸡的奔跑方向从始至终不会变，如果我们要从往左追变成往右追，显而易见地我们会<mark>在追上右边第一只鸡前经过原点</mark>，反之同理。</p>
 <p>那么有一个很神奇的状态设计，设 <span class="math inline">\(f_{i,j}\)</span> 为追上了左边速度第 <span class="math inline">\(1\sim i - 1\)</span> 大的所有鸡和右边速度第 <span class="math inline">\(1\sim j - 1\)</span> 大的所有鸡，然后跑回原点的最小时间，这样我们就不用记录这个非常难记录的当前位置信息，对于速度排名 <span class="math inline">\(\ge i,j\)</span> 的所有鸡，当前是否追上我们并不关心——<mark>如果其位置比较远，那么我们会在后续转移中再考虑；如果其位置比较近，在解决速度排名 <span class="math inline">\(&lt;i,j\)</span> 的鸡时就已经抓住</mark>。</p>
 <p><mark>我们 <span class="math inline">\(\mathcal O(n)\)</span> 枚举上一次反向是在抓住哪一只鸡时，然后让中间全部同向跑即可</mark>。</p>
@@ -526,6 +561,373 @@ int main() &#123;
             std::cout &lt;&lt; &quot;Case #&quot; &lt;&lt; ++casetot &lt;&lt; &quot;: &quot;;
         &#125;
         std::cout &lt;&lt; std::fixed &lt;&lt; std::setprecision(9) &lt;&lt; f[p][p] &lt;&lt; &#39;\n&#39;;
+    &#125;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="the-great-marathon">6. The Great Marathon</h2>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/38/H" class="uri">https://codeforces.com/problemset/problem/38/H</a></p>
+<blockquote>
+<p>给定一个 <span class="math inline">\(n\)</span> 个点 <span class="math inline">\(m\)</span> 条边的无向连通图，点 <span class="math inline">\(i\)</span> 上初始有选手 <span class="math inline">\(i\)</span>。为每个选手任意指定终点（可重复），那么最后的排名按照最短路为第一关键字、编号为第二关键字排序。</p>
+<p>现按照排名序列分成前中后三段，记为金银铜牌；满足金牌数在 <span class="math inline">\([g_1,g_2]\)</span> 之间，银牌数在 <span class="math inline">\([s_1,s_2]\)</span> 之间。任意指定发牌数量和每个人的终点，问最后有多少种方案数；两个方案不同当且仅当有至少一个人拿的牌不一样。</p>
+<p><span class="math inline">\(n\le 50,m\le 1000\)</span>。</p>
+</blockquote>
+<p><mark><span class="math inline">\(n=50\)</span>：可能需要考虑 <span class="math inline">\(n^5\)</span> 做法。</mark></p>
+<p>发现是 <mark>需要确定顺序的 DP</mark>。关键位置自然在于『金银、银铜界处』。考虑钦定金牌最后一名、铜牌第一名的人选（不考虑中间的银牌是因为会出现这样那样的问题），还需要枚举他们的路程吗？并不。甚而至于，这样做会算重。</p>
+<p>考虑<mark>『最小化』左右两侧的金牌、铜牌可选集合</mark>。强行让金牌最后一名 <span class="math inline">\(u\)</span> 的路程为 <span class="math inline">\(\min\{dis_{u,i}\}\)</span>，最小路程小于这个值的所有元素都可以成为金牌；同时让铜牌第一名 <span class="math inline">\(v\)</span> 的路程为 <span class="math inline">\(\max\{dis_{v,i}\}\)</span>，最大路程大于这个值的所有数都可以成为铜牌。</p>
+<p>Q1: 如果存在一个 <span class="math inline">\(i\)</span>，它最小的距离也比 <span class="math inline">\(u\)</span> 的最小距离大，但实际上当 <span class="math inline">\(u\)</span> 更大一点儿的时候，<span class="math inline">\(i\)</span> 可以成为金牌呢？</p>
+<p>A1：这种情况在钦定 <span class="math inline">\(i\)</span> 为最后一名的时候讨论过了。</p>
+<p>Q2：是否会算重？</p>
+<p>A2：如上所述，假如在钦定 <span class="math inline">\(i\)</span> 的时候统计了 <span class="math inline">\(u\)</span>，那么在钦定 <span class="math inline">\(u\)</span> 的时候就不会统计 <span class="math inline">\(i\)</span>。</p>
+<p>考虑转移。令 <span class="math inline">\(f_{i,u,v,j,k}\)</span> 为考虑到 <span class="math inline">\(i\)</span>，金牌倒一为 <span class="math inline">\(u\)</span>，铜牌第一为 <span class="math inline">\(v\)</span>，选了 <span class="math inline">\(j\)</span> 个金、<span class="math inline">\(k\)</span> 个铜的方案数。转移是 <span class="math inline">\(O(1)\)</span> 的。</p>
+<details>
+<p>注意 <code>vector</code> 要开在循环外面，不然申请空间很耗时间 /ll</p>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int inf = 0x3f3f3f3f;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n, m;
+    std::cin &gt;&gt; n &gt;&gt; m;
+    std::vector&lt;std::vector&lt;int&gt; &gt; g(n + 1, std::vector&lt;int&gt; (n + 1, inf));
+    for (int x, y; m--; ) &#123;
+        std::cin &gt;&gt; x &gt;&gt; y;
+        std::cin &gt;&gt; g[x][y], g[y][x] = g[x][y];
+    &#125;
+    for (int i = 1; i &lt;= n; ++i)
+        g[i][i] = 0;
+    for (int k = 1; k &lt;= n; ++k)
+        for (int i = 1; i &lt;= n; ++i)
+            if (k != i)
+                for (int j = 1; j &lt;= n; ++j)
+                    if (i != k &amp;&amp; j != k)
+                        g[i][j] = std::min(g[i][j], g[i][k] + g[k][j]);
+    int g1, g2, s1, s2;
+    std::cin &gt;&gt; g1 &gt;&gt; g2 &gt;&gt; s1 &gt;&gt; s2;
+    for (int i = 1; i &lt;= n; ++i)
+        for (int j = 1; j &lt;= n; ++j)
+            if (g[i][j] != inf)
+                g[i][j] = g[i][j] * n + i;
+    std::vector&lt;int&gt; mx(n + 1), mn(n + 1, inf);
+    for (int i = 1; i &lt;= n; ++i) &#123;
+        for (int j = 1; j &lt;= n; ++j)
+            if (j != i)
+                mn[i] = std::min(mn[i], g[i][j]);
+        mx[i] = *std::max_element(g[i].begin() + 1, g[i].end());
+    &#125;
+    auto res(0ll);
+    std::vector&lt;std::vector&lt;std::vector&lt;long long&gt; &gt; &gt; f(n + 1, std::vector&lt;std::vector&lt;long long&gt; &gt; (n + 1, std::vector&lt;long long&gt; (n + 1)));
+    for (int u = 1; u &lt;= n; ++u)
+        for (int v = 1; v &lt;= n; ++v)
+            if (v != u) &#123;
+                f[0][1][1] = 1ll;
+                for (int i = 1; i &lt;= n; ++i)
+                    if (i == u || i == v)
+                        f[i] = f[i - 1];
+                    else &#123;
+                        bool flag = 0;
+                        for (int j = 1; j &lt;= n; ++j)
+                            if (mn[u] &lt; g[i][j] &amp;&amp; g[i][j] &lt; mx[v]) &#123;
+                                flag = 1;
+                                break;
+                            &#125;
+                        for (int j = 1; j &lt;= g2; ++j)
+                            for (int k = 1; k &lt;= n - g1 - s1; ++k) &#123;
+                                f[i][j][k] = 0ll;
+                                if (mx[i] &lt; mn[u])
+                                    f[i][j][k] = f[i - 1][j - 1][k];
+                                else if (mn[i] &gt; mx[v])
+                                    f[i][j][k] = f[i - 1][j][k - 1];
+                                else &#123;
+                                    if (flag)
+                                        f[i][j][k] = f[i - 1][j][k];
+                                    if (mn[i] &lt; mn[u])
+                                        f[i][j][k] += f[i - 1][j - 1][k];
+                                    if (mx[i] &gt; mx[v])
+                                        f[i][j][k] += f[i - 1][j][k - 1];
+                                &#125;
+                            &#125;
+                    &#125;
+                for (int g = g1; g &lt;= g2; ++g)
+                    for (int s = s1; s &lt;= s2; ++s)
+                        res += f[n][g][n - g - s];
+            &#125;
+    std::cout &lt;&lt; res &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="sorting-pancakes">7. Sorting Pancakes</h2>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1675/problem/G" class="uri">https://codeforces.com/contest/1675/problem/G</a></p>
+<blockquote>
+<p>给定盒子 <span class="math inline">\(1\sim n\)</span> 和每个盒子 <span class="math inline">\(i\)</span> 里的初始球数 <span class="math inline">\(a_i\)</span>，每次可以选择一个球移动到相邻盒子，最后欲使盒子内球数单调不升,求最小移球次数。</p>
+<p><span class="math inline">\(n,\sum a_i\le 250\)</span>。</p>
+</blockquote>
+<p>简单题！这种『移动元素的题』，会考虑<mark>钦定每个元素最终的值，把前面的元素富余的 / 欠下来的存储起来</mark>。<em>当然也有例外，比如添加了『时间』这一维的限制，goto <a target="_blank" rel="noopener" href="http://localhost:4000/20250510/#a---pass-to-next">solu to Pass to Next</a></em></p>
+<p>在如果在 <span class="math inline">\(i\)</span> 处富余了 <span class="math inline">\(x\)</span>，那么在移动到 <span class="math inline">\(i+1\)</span> 的过程中就会产生 <span class="math inline">\(|x|\)</span> 的代价。</p>
+<p>令 <span class="math inline">\(f_{i,k,j}\)</span> 表示第 <span class="math inline">\(i\)</span> 个元素处，钦定它最终为 <span class="math inline">\(j\)</span>，富余 <span class="math inline">\(k\)</span>，则 <span class="math inline">\(f_{i,k,j}\gets \min\limits_{j&#39;\ge j}\{f_{i-1, k-(j-a_i),j&#39;}\}\)</span>。显而易见后缀 min 优化就能 <span class="math inline">\(O(n\cdot m^2)\)</span> 地做了。</p>
+<details>
+<p>DP 数组和后缀 min 数组要合起来，不然会 MLE /ll</p>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int inf = 0x3f3f3f3f;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n, m;
+    std::cin &gt;&gt; n &gt;&gt; m;
+    std::vector&lt;int&gt; a(n + 1);
+    for (int i = 1; i &lt;= n; ++i)
+        std::cin &gt;&gt; a[i];
+    using arr = std::vector&lt;int&gt;;
+    using brr = std::vector&lt;arr&gt;;
+    using crr = std::vector&lt;brr&gt;;
+    crr f(n + 1, brr(2 * m + 1, arr(m + 1, inf)));
+    std::fill(f[0][m].begin(), f[0][m].begin() + m + 1, 0);
+    for (int i = 1; i &lt;= n; ++i)
+        for (int k = 0; k &lt;= 2 * m; ++k)
+            for (int j = std::min(m, k + a[i]); j &gt;= std::max(0, k + a[i] - 2 * m); --j) &#123;
+                f[i][k][j] = f[i - 1][k - (j - a[i])][j] + std::abs(k - m);
+                if (j != m)
+                    f[i][k][j] = std::min(f[i][k][j], f[i][k][j + 1]);
+            &#125;
+    std::cout &lt;&lt; f[n][m][0] &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="complexity">8. Complexity</h2>
+<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/agc033/tasks/agc033_d" class="uri">https://atcoder.jp/contests/agc033/tasks/agc033_d</a></p>
+<blockquote>
+<p>给定 <span class="math inline">\(n\times m\)</span> 的 <span class="math inline">\(01\)</span> 矩阵。定义其子矩阵的凌乱度：</p>
+<ul>
+<li>若该矩阵中只有一种值，凌乱度为 <span class="math inline">\(0\)</span>。</li>
+<li>否则，任意竖直 / 水平切一刀，得到两个小矩阵；若它们的凌乱度分别为 <span class="math inline">\(a,b\)</span>，则大矩阵的凌乱度为 <span class="math inline">\(\max(a,b)+1\)</span> 的最小值。</li>
+</ul>
+<p>求给定矩阵的凌乱度。<span class="math inline">\(n,m\le 185\)</span>。</p>
+</blockquote>
+<p>如果暴力枚举 DP，很不幸是 <span class="math inline">\(n^5\)</span> 的。考虑优化。发现矩阵的凌乱度大致在 <span class="math inline">\(O(\log n)\)</span> 级别，考虑用<mark>状态交换答案</mark>减小复杂度。具体地，设 <span class="math inline">\(f_{k,u,d,l}\)</span> 表示凌乱度 <span class="math inline">\(\le k\)</span> 时，<span class="math inline">\(r\)</span> 可取到的最大值，那么有转移：</p>
+<ul>
+<li>竖着切一刀，枚举切点 <span class="math inline">\(i\le f_{k-1,u,d,l}\)</span>，有 <span class="math inline">\(f_{k,u,d,l}\gets f_{k-1,u,d,i+1}\)</span>。发现显然 <span class="math inline">\(i\)</span> 取 <span class="math inline">\(f_{k-1,u,d,l}\)</span> 的时候最优，这个是 <span class="math inline">\(O(1)\)</span> 的。</li>
+<li>横着切一刀，枚举切点 <span class="math inline">\(i\in[u,d)\)</span>，有 <span class="math inline">\(f_{k,u,d,l}\gets \min(f_{k-1,u,i,l},f_{k-1,i+1,d,l})\)</span>。发现随 <span class="math inline">\(i\)</span> 增大左边单调不增，右边单调不降。随着 <span class="math inline">\(d\)</span> 的增大，左边不变，右边下移，交出来的交点一直右移。然后就可以优化到均摊 <span class="math inline">\(O(1)\)</span>。</li>
+</ul>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int inf = 0x3f3f3f3f;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n, m;
+    std::cin &gt;&gt; n &gt;&gt; m;
+    std::vector&lt;std::vector&lt;char&gt; &gt; a(n + 1, std::vector&lt;char&gt; (m + 1));
+    for (int i = 1; i &lt;= n; ++i)
+        for (int j = 1; j &lt;= m; ++j)
+            std::cin &gt;&gt; a[i][j];
+    using arr = std::vector&lt;int&gt;;
+    using brr = std::vector&lt;arr&gt;;
+    using crr = std::vector&lt;brr&gt;;
+    std::vector&lt;std::string&gt; res;
+    std::vector&lt;crr&gt; _f(2, crr(n + 1, brr(m + 1, arr(n + 1))));
+    for (int k = 0; ; ++k) &#123;
+        auto &amp;f = _f[k &amp; 1], &amp;f1 = _f[(k &amp; 1) ^ 1];
+        if (k == 0) &#123;
+            crr tag(m + 1, brr(n + 1, arr(n + 1, -1)));
+            for (int l = 1; l &lt;= m; ++l)
+                for (int u = 1; u &lt;= n; ++u)
+                    for (int d = u; d &lt;= n &amp;&amp; a[d][l] == a[u][l]; ++d)
+                        tag[l][u][d] = a[u][l];
+            for (int u = 1; u &lt;= n; ++u)
+                for (int d = u; d &lt;= n; ++d)
+                    for (int l = m; l; --l) &#123;
+                        f[u][l][d] = l - 1;
+                        if (~tag[l][u][d]) &#123;
+                            if (l != m &amp;&amp; tag[l][u][d] == tag[l + 1][u][d])
+                                f[u][l][d] = f[u][l + 1][d];
+                            else
+                                f[u][l][d] = l;
+                        &#125;
+                    &#125;
+        &#125;
+        else
+            for (int u = 1; u &lt;= n; ++u)
+                for (int l = 1; l &lt;= m; ++l)
+                    for (int d = u, pos = 1; d &lt;= n; ++d) &#123;
+                        f[u][l][d] = f1[u][l][d];
+                        if (f[u][l][d] != m) &#123;
+                            f[u][l][d] = std::max(f[u][l][d], f1[u][f1[u][l][d] + 1][d]);
+                            int mx = 0;
+                            for (int i = pos; i &lt; d; ++i) &#123;
+                                if (std::min(f1[u][l][i], f1[i + 1][l][d]) &gt;= mx)
+                                    mx = std::min(f1[u][l][i], f1[i + 1][l][d]), pos = i;
+                                else
+                                    break;
+                            &#125;
+                            f[u][l][d] = std::max(f[u][l][d], mx);
+                        &#125;
+                    &#125;
+        if (f[1][1][n] == m) &#123;
+            std::cout &lt;&lt; k &lt;&lt; &#39;\n&#39;;
+            return 0;
+        &#125;
+    &#125;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="boxes-and-balls">9. Boxes and Balls</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF1845E" class="uri">https://www.luogu.com.cn/problem/CF1845E</a></p>
+<blockquote>
+<p>给定一个长度为 <span class="math inline">\(n\)</span> 的 <span class="math inline">\(01\)</span> 序列 <span class="math inline">\(a_{1\sim n}\)</span>。你可以进行恰好 <span class="math inline">\(k\)</span> 次如下操作：</p>
+<ul>
+<li>选择序列中一对相邻且值不同的元素，将它们交换。</li>
+</ul>
+<p>问有多少种最终序列。<span class="math inline">\(n,k\le 1500\)</span>。</p>
+</blockquote>
+<p>沿用 <a href="#sorting-pancakes">7. Sorting Pancakes</a> 的思路，考虑令 <span class="math inline">\(f_{i,j,l}\)</span> 表示最终序列的前 <span class="math inline">\(i\)</span> 个里有 <span class="math inline">\(j\)</span> 个 <span class="math inline">\(1\)</span>，代价已经有 <span class="math inline">\(l\)</span> 的方案数；那么令 <span class="math inline">\(s_i\)</span> 为 <span class="math inline">\(a\)</span> 的前缀和，显然有：</p>
+<p><span class="math display">\[
+f_{i+1,j+1,k+|j-s_i|}\gets f_{i,j,k}\\
+f_{i+1,j,k+|j-s_i|}\gets f_{i,j,k}
+\]</span></p>
+<p>最后在比 <span class="math inline">\(k\)</span> 小且奇偶性和 <span class="math inline">\(k\)</span> 相同的 <span class="math inline">\(l\)</span> 里找答案。然后想怎么优化。</p>
+<p>答案是不用优化。考虑<mark>有效状态数</mark>，<del>打个表发现每个 <span class="math inline">\(i\)</span> 在 <span class="math inline">\(O(n\sqrt n)\)</span> 左右</del>，但有另一种方法是发现有效的 <span class="math inline">\(|j-s_i|\)</span> 不会超过 <span class="math inline">\(O(\sqrt n)\)</span>（原因：为了消除 <span class="math inline">\(|j-s_i|\)</span> 的欠账，需要 <span class="math inline">\(|j-s_i|\)</span> 个位置；每个位置都会有差不多 <span class="math inline">\(|j-s_i|\)</span> 的代价），所以枚举时只用枚举 <span class="math inline">\(O(\sqrt n)\)</span> 个 <span class="math inline">\(j\)</span>。</p>
+<p>总之只用存有效状态会发现跑不满 <img src="/em/bb.gif" /></p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int mod = 1e9 + 7;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n, k;
+    std::cin &gt;&gt; n &gt;&gt; k;
+    std::vector&lt;int&gt; a(n + 1), s(n + 1);
+    for (int i = 1; i &lt;= n; ++i)
+        std::cin &gt;&gt; a[i];
+    std::partial_sum(a.begin() + 1, a.end(), s.begin() + 1);
+    using arr = std::vector&lt;long long&gt;;
+    using brr = std::vector&lt;arr&gt;;
+    using crr = std::vector&lt;brr&gt;;
+    brr tag(n + 1, arr(n + 1));
+    std::vector&lt;std::vector&lt;std::pair&lt;int, int&gt; &gt; &gt; stt(2);
+    stt[0].emplace_back(0, 0);
+    crr _f(2, brr(n + 1, arr(k + 1)));
+    _f[0][0][0] = 1;
+    for (int i = 0; i &lt; n; ++i) &#123;
+        auto &amp;f = _f[i &amp; 1], &amp;f1 = _f[(i &amp; 1) ^ 1];
+        std::vector&lt;std::pair&lt;int, int&gt; &gt;().swap(stt[(i &amp; 1) ^ 1]);
+        for (auto [j, l] : stt[i &amp; 1]) &#123;
+                if (j + 1 &lt;= s[n] &amp;&amp; l + std::abs(j - s[i]) &lt;= k) &#123;
+                    if (tag[j + 1][l + std::abs(j - s[i])] != i + 1)
+                        tag[j + 1][l + std::abs(j - s[i])] = i + 1, stt[(i &amp; 1) ^ 1].emplace_back(j + 1, l + std::abs(j - s[i])), f1[j + 1][l + std::abs(j - s[i])] = 0ll;
+                    (f1[j + 1][l + std::abs(j - s[i])] += f[j][l]) %= mod;
+                &#125;
+                if (l + std::abs(j - s[i]) &lt;= k) &#123;
+                    if (tag[j][l + std::abs(j - s[i])] != i + 1)
+                        tag[j][l + std::abs(j - s[i])] = i + 1, stt[(i &amp; 1) ^ 1].emplace_back(j, l + std::abs(j - s[i])), f1[j][l + std::abs(j - s[i])] = 0ll;
+                    (f1[j][l + std::abs(j - s[i])] += f[j][l]) %= mod;
+                &#125;
+            &#125;
+        std::cout &lt;&lt; (int)stt[i &amp; 1].size() &lt;&lt; &#39;\n&#39;;
+    &#125;
+    auto res(0ll);
+    for (int i = k &amp; 1; i &lt;= k; i += 2)
+        if (tag[s[n]][i] == n)
+            (res += _f[n &amp; 1][s[n]][i]) %= mod;
+    std::cout &lt;&lt; res &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="legondary-grandmaster">10. LEGOndary Grandmaster</h2>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1615/F" class="uri">https://codeforces.com/problemset/problem/1615/F</a></p>
+<blockquote>
+<p>给定两个长度为 <span class="math inline">\(n\)</span> 的 <span class="math inline">\(0/1/?\)</span> 串 <span class="math inline">\(s,t\)</span>，你可以对 <span class="math inline">\(s\)</span> 进行若干次如下操作：</p>
+<ul>
+<li>选择序列中一对相邻且值相同的元素，将它们取反。</li>
+</ul>
+<p>现任意将 <span class="math inline">\(s\)</span> 和 <span class="math inline">\(t\)</span> 中的 <code>?</code> 填为 <span class="math inline">\(0/1\)</span>，问所有情况中 <span class="math inline">\(s\)</span> 转化为 <span class="math inline">\(t\)</span> 所需最小操作次数和（规定无解的操作次数为 <span class="math inline">\(0\)</span>）。<span class="math inline">\(n\le 2000\)</span>。</p>
+</blockquote>
+<p>如果我们之前做过某些令人心（咬）旷（牙）神（切）怡（齿）的题目，会发现这个操作等价于交换任意两个相邻数，再让他们取反。</p>
+<p>进一步地，可以交换运算顺序，先取反某个位置，再交换，再取反这个位置——把这个操作平均分配到 <span class="math inline">\(s\)</span> 和 <span class="math inline">\(t\)</span> 上，<mark>结合『相邻两数位置必一奇一偶』这个美妙的性质，想到把 <span class="math inline">\(s\)</span> 和 <span class="math inline">\(t\)</span> 的奇数位都提前取反，这样就可以转化成直接交换了</mark>，</p>
+<p>接下来就和上一题有点不一样了。这里我们直接算一个位置的贡献——这意味着不需要统计一个序列的代价（此时失去了 <span class="math inline">\(k\)</span> 的限制，代价来到 <span class="math inline">\(n^2\)</span> 级别）。令 <span class="math inline">\(f_{i,j}\)</span> 表示从前往后到了第 <span class="math inline">\(i\)</span> 个位置，欠债为 <span class="math inline">\(j\)</span> 的方案数；同样地，令 <span class="math inline">\(g_{i,j}\)</span> 表示从后到前到了第 <span class="math inline">\(i\)</span> 个位置，欠债为 <span class="math inline">\(j\)</span> 的方案数。则贡献为 <span class="math inline">\(\sum_i \sum_j f_{i, j}\times g_{i + 1, -j}\times j\)</span>。</p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int mod = 1e9 + 7;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int T;
+    for (std::cin &gt;&gt; T; T--; ) &#123;
+        int n;
+        std::string s, t;
+        std::cin &gt;&gt; n &gt;&gt; s &gt;&gt; t, s = &#39;#&#39; + s, t = &#39;#&#39; + t;
+        for (int i = 1; i &lt;= n; ++i)
+            if (i &amp; 1) &#123;
+                if (s[i] != &#39;?&#39;)
+                    s[i] = &#39;0&#39; + &#39;1&#39; - s[i];
+                if (t[i] != &#39;?&#39;)
+                    t[i] = &#39;0&#39; + &#39;1&#39; - t[i];
+            &#125;
+        using arr = std::vector&lt;long long&gt;;
+        using brr = std::vector&lt;arr&gt;;
+        brr f(n + 1, arr(2 * n + 1)), g(n + 2, arr(2 * n + 1));
+        f[0][n] = 1ll;
+        for (int i = 1; i &lt;= n; ++i) &#123;
+            for (int S = 0; S &lt;= 1; ++S)
+                if ((S == 0 &amp;&amp; s[i] == &#39;1&#39;) || (S == 1 &amp;&amp; s[i] == &#39;0&#39;));
+                else
+                    for (int T = 0; T &lt;= 1; ++T) &#123;
+                        if ((T == 0 &amp;&amp; t[i] == &#39;1&#39;) || (T == 1 &amp;&amp; t[i] == &#39;0&#39;));
+                        else
+                            for (int j = 0; j &lt;= 2 * n; ++j)
+                                if (j - (T - S) &gt;= 0 &amp;&amp; j - (T - S) &lt;= 2 * n)
+                                    (f[i][j] += f[i - 1][j - (T - S)]) %= mod;
+                    &#125;
+        &#125;
+        g[n + 1][n] = 1ll;
+        for (int i = n; i; --i) &#123;
+            for (int S = 0; S &lt;= 1; ++S)
+                if ((S == 0 &amp;&amp; s[i] == &#39;1&#39;) || (S == 1 &amp;&amp; s[i] == &#39;0&#39;));
+                else
+                    for (int T = 0; T &lt;= 1; ++T) &#123;
+                        if ((T == 0 &amp;&amp; t[i] == &#39;1&#39;) || (T == 1 &amp;&amp; t[i] == &#39;0&#39;));
+                        else
+                            for (int j = 0; j &lt;= 2 * n; ++j)
+                                if (j - (T - S) &gt;= 0 &amp;&amp; j - (T - S) &lt;= 2 * n)
+                                    (g[i][j] += g[i + 1][j - (T - S)]) %= mod;
+                    &#125;
+        &#125;
+        auto res(0ll);
+        for (int i = 1; i &lt; n; ++i)
+            for (int j = 1; j &lt;= n; ++j) &#123;
+                (res += j * f[i][n + j] % mod * g[i + 1][n - j] % mod) %= mod;
+                (res += j * f[i][n - j] % mod * g[i + 1][n + j] % mod) %= mod;
+            &#125;
+        std::cout &lt;&lt; res &lt;&lt; &#39;\n&#39;;
     &#125;
     return 0;
 &#125;</code></pre>
@@ -714,13 +1116,6 @@ int main() &#123;
 
 <script src="/js/search.js"></script>
 
-<script type="text/javascript">
-var search_path = "search.xml";
-if (search_path.length == 0) {
-    search_path = "search.xml";
-}
-var path = "/" + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
 </script>
 <!-- prism 相关配置 -->
 <script type="text/javascript" src="/js/prism.js" defer></script>

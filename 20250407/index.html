@@ -68,11 +68,14 @@
 
 	<!-- 搜索 -->
 <div id="search-bg">
-	<div id="search-box"></div>
-	<!-- <div class="form-group">
-		<input type="text" id="local-search-input" name="q" results="0" placeholder="search" class="st-search-input st-default-search-input form-control"/>
-	</div>  
-	<div id="local-search-result"></div> -->
+	<div id="search-box">
+		<input type="text" id="search-input" placeholder="Type to search...">
+		<div id="search-results"></div>
+		<p>恭喜你触发了这个 box，由于我还没有写关闭键，你只能通过刷新页面来关闭它。非常抱歉 ;-)</p>
+		<p>为了证明我没有摆烂，在这里放一个进度：</p>
+		<p>- 250715：尝试实现搜索功能，初步成功，能够搜索到包含关键词的文章了（也能关掉了）。不知道为啥输入 123 可以匹配所有文章，但是输入 1234 就一篇都匹配不上。</p>
+		<p>- 250716：尝试加入关键词上下文来 de 上面的 bug，然后把 js 写成史了，现在这个框框并不具备搜索功能（也不具备关闭功能） :-(</p>
+	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
@@ -86,7 +89,8 @@
 	<!-- 右对齐部分导航 -->
 	<script>
 		function toSearch() {
-			$("#search-bg, #search-bg *").css("z-index", "1002");
+			// goto search.ejs
+			$("#search-bg, #search-bg *").css("z-index", "1002"); 
 			$("#search-bg, #search-bg *").css("opacity", "100%");
 		}
 	</script>
@@ -947,8 +951,8 @@ int main() &#123;
 <h2 id="e---kdoi-11彩灯晚会">E - 「KDOI-11」彩灯晚会</h2>
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P11292" class="uri">https://www.luogu.com.cn/problem/P11292</a></p>
 <p>考虑 <span class="math inline">\({cnt_i}^2\)</span> 的含义，即在所有颜色为 <span class="math inline">\(i\)</span>、长度为 <span class="math inline">\(l\)</span> 的链中有放回地选两次的方案数。</p>
-<p>显然复杂度里是不能包含 <span class="math inline">\(k\)</span> 的，所以放弃直接统计 <span class="math inline">\(cnt_i\)</span> 的想法。显然每种颜色是等价的，考虑计算选择两条链可以给答案带来的贡献。我们发现答案的形式是个和式，对于两条同色链 <span class="math inline">\(p,q\)</span>，假设颜色为 <span class="math inline">\(i\)</span>，那么会对 <span class="math inline">\({cnt_i}^2\)</span> 带来 <span class="math inline">\(k^{n-2l-|p\cap q|}\)</span> 的贡献，对总答案就会带来 <span class="math inline">\(k^{n-2l-|p\cap q| + 1}\)</span> 的贡献。</p>
-<p>然而如果要枚举计算 <span class="math inline">\(|p\cap q|\)</span> 就无法避免 <span class="math inline">\(O(n^5)\)</span>，考虑更有潜力的方法：将问题转化为对于每个 <span class="math inline">\(x\)</span>，求交集大小恰好为 <span class="math inline">\(x\)</span> 的链对个数。然而「恰好」是不方便计算的——假如当前两链在 <span class="math inline">\(u\)</span> 次重合，如果我假设下一次在 <span class="math inline">\(v\)</span> 次重合，就需要保证在 <span class="math inline">\(u,v\)</span> 之间不能重合——这并不好操作。二项式反演将恰好转化为至少，则限制减弱。</p>
+<p>显然复杂度里是不能包含 <span class="math inline">\(k\)</span> 的，所以放弃直接统计 <span class="math inline">\(cnt_i\)</span> 的想法。显然每种颜色是等价的，考虑计算选择两条链可以给答案带来的贡献：答案的形式是个和式；对于两条同色链 <span class="math inline">\(p,q\)</span>，假设颜色为 <span class="math inline">\(i\)</span>，那么会对 <span class="math inline">\({cnt_i}^2\)</span> 带来 <span class="math inline">\(k^{n-2l-|p\cap q|}\)</span> 的贡献，对总答案带来 <span class="math inline">\(k^{n-2l-|p\cap q| + 1}\)</span> 的贡献。</p>
+<p>然而如果要枚举计算 <span class="math inline">\(|p\cap q|\)</span> 就无法避免 <span class="math inline">\(O(n^5)\)</span>，考虑更有潜力的方法：将问题转化为对于每个 <span class="math inline">\(x\)</span>，求交集大小恰好为 <span class="math inline">\(x\)</span> 的链对个数。然而「恰好」是不方便计算的——假如当前两链在 <span class="math inline">\(u\)</span> 次重合，如果假设下一次在 <span class="math inline">\(v\)</span> 次重合，就需要保证在 <span class="math inline">\(u,v\)</span> 之间不能重合——这并不好操作。二项式反演将恰好转化为至少，则限制减弱。</p>
 <p>令 <span class="math inline">\(f_{u,c,l_1,l_2}\)</span> 表示 <span class="math inline">\(p,q\)</span> 当前在 <span class="math inline">\(u\)</span> 处重合，视野内的 <span class="math inline">\(p,q\)</span> 长度为 <span class="math inline">\(l_1,l_2\)</span>，至少已经重合了 <span class="math inline">\(c\)</span> 次的方案数。预处理出走到 <span class="math inline">\(u\)</span> 步数为 <span class="math inline">\(l_1,l_2\)</span> 的方案数为初始值。枚举可能的后续重合点 <span class="math inline">\(v\)</span>（满足 <span class="math inline">\(v\)</span> 的拓扑序 <span class="math inline">\(&gt;u\)</span>）有 <span class="math inline">\(f_{v,c+1,l_1&#39;,l_2&#39;}\gets f_{v,c+1,l_1&#39;,l_2&#39;} + f_{u,c,l_1,l_2}\)</span>。预处理出 <span class="math inline">\(u\to v\)</span> 长度为 <span class="math inline">\(\Delta\)</span> 的方案数（这是 <span class="math inline">\(O(n^3l)\)</span> 的）优化转移，在算出 <span class="math inline">\(nex_{u,l}\)</span> 表示从 <span class="math inline">\(u\)</span> 出发走 <span class="math inline">\(l\)</span> 步的方案数处理答案，则 <span class="math inline">\(F(i)=\sum_{u,l_1,l_2}f_{u,l_1,l_2}\cdot nex_{u,l-l_1}\cdot nex_{u,l-l_2}\)</span>，枚举 <span class="math inline">\(u,c,l_1,l_2,v,l_1&#39;,l_2&#39;\)</span>，就可以达到优秀的 <span class="math inline">\(O(n^2l^5+n^3l)\)</span>！简直是令人震撼 <img src="/em/kt.gif" /></p>
 <p>给出第一个优化：发现 <span class="math inline">\(l_1\)</span> 和 <span class="math inline">\(l_2\)</span> 的转移彼此不干扰，考虑建立一个临时数组 <span class="math inline">\(g\)</span>，先从 <span class="math inline">\(f_u,c\)</span> 转移 <span class="math inline">\(l_1\)</span> 到 <span class="math inline">\(g\)</span>，再从 <span class="math inline">\(g\)</span> 转移 <span class="math inline">\(l_2\)</span> 到 <span class="math inline">\(f_{v,c+1}\)</span>，则复杂度降为 <span class="math inline">\(O(n^2l^4+n^3l)\)</span>，仍不足以通过。</p>
 <p>DP 过程上的优化已经万策尽，考虑从式子本身消元减少 DP 维度入手。令 <span class="math inline">\(h(i)\)</span> 表示交集大小恰好恰好为 <span class="math inline">\(i\)</span> 的方案数，则此时答案式为 <span class="math inline">\(\sum\limits_{i=0}^l k^{n-2l+i+1}\times h(i)\)</span>。又 <span class="math inline">\(F(i)=\sum\limits_{j=i}^lC_j^i\cdot h(j)\)</span>，二项式反演得：</p>
@@ -1558,13 +1562,6 @@ int main() &#123;
 
 <script src="/js/search.js"></script>
 
-<script type="text/javascript">
-var search_path = "search.xml";
-if (search_path.length == 0) {
-    search_path = "search.xml";
-}
-var path = "/" + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
 </script>
 <!-- prism 相关配置 -->
 <script type="text/javascript" src="/js/prism.js" defer></script>

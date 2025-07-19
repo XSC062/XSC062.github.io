@@ -1,121 +1,107 @@
-// A local search script with the help of [hexo-generator-search](https://github.com/PaicHyperionDev/hexo-generator-search)
-// Copyright (C) 2015 
-// Joseph Pan <http://github.com/wzpan>
-// Shuhao Mao <http://github.com/maoshuhao>
-// This library is free software; you can redistribute it and/or modify
-// it under the terms of the GNU Lesser General Public License as
-// published by the Free Software Foundation; either version 2.1 of the
-// License, or (at your option) any later version.
-// 
-// This library is distributed in the hope that it will be useful, but
-// WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-// Lesser General Public License for more details.
-// 
-// You should have received a copy of the GNU Lesser General Public
-// License along with this library; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-// 02110-1301 USA
-// 
-
-var searchFunc = function(path, search_id, content_id) {
-    'use strict';
-    $.ajax({
-        url: path,
-        dataType: "xml",
-        success: function( xmlResponse ) {
-            // get the contents from search data
-            var datas = $( "entry", xmlResponse ).map(function() {
-                return {
-                    title: $( "title", this ).text(),
-                    content: $("content",this).text(),
-                    url: $( "url" , this).text()
-                };
-            }).get();
-
-            var $input = document.getElementById(search_id);
-			if (!$input) return;
-            var $resultContent = document.getElementById(content_id);
-            if ($("#local-search-input").length > 0) {
-                $input.addEventListener('input', function () {
-                    var str = '<ul class=\"search-result-list\">';
-                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-                    $resultContent.innerHTML = "";
-                    if (this.value.trim().length <= 0) {
-                        return;
-                    }
-                    // perform local searching
-                    datas.forEach(function (data) {
-                        var isMatch = true;
-                        var content_index = [];
-                        if (!data.title || data.title.trim() === '') {
-                            data.title = "Untitled";
-                        }
-                        var data_title = data.title.trim().toLowerCase();
-                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
-                        var data_url = data.url;
-                        var index_title = -1;
-                        var index_content = -1;
-                        var first_occur = -1;
-                        // only match artiles with not empty contents
-                        if (data_content !== '') {
-                            keywords.forEach(function (keyword, i) {
-                                index_title = data_title.indexOf(keyword);
-                                index_content = data_content.indexOf(keyword);
-
-                                if (index_title < 0 && index_content < 0) {
-                                    isMatch = false;
-                                } else {
-                                    if (index_content < 0) {
-                                        index_content = 0;
-                                    }
-                                    if (i == 0) {
-                                        first_occur = index_content;
-                                    }
-                                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
-                                }
-                            });
-                        } else {
-                            isMatch = false;
-                        }
-                        // show search results
-                        if (isMatch) {
-                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
-                            var content = data.content.trim().replace(/<[^>]+>/g, "");
-                            if (first_occur >= 0) {
-                                // cut out 100 characters
-                                var start = first_occur - 20;
-                                var end = first_occur + 80;
-
-                                if (start < 0) {
-                                    start = 0;
-                                }
-
-                                if (start == 0) {
-                                    end = 100;
-                                }
-
-                                if (end > content.length) {
-                                    end = content.length;
-                                }
-
-                                var match_content = content.substring(start, end);
-
-                                // highlight all keywords
-                                keywords.forEach(function (keyword) {
-                                    var regS = new RegExp(keyword, "gi");
-                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
-                                });
-
-                                str += "<p class=\"search-result\">" + match_content + "...</p>"
-                            }
-                            str += "</li>";
-                        }
-                    });
-                    str += "</ul>";
-                    $resultContent.innerHTML = str;
-                });
-            }
-        }
+document.addEventListener('DOMContentLoaded', () => {
+  const searchModal = document.getElementById('search-box');
+  const searchInput = document.getElementById('search-input');
+  const searchResults = document.getElementById('search-results');
+  
+  // 存储所有文章数据
+  let allPosts = [];
+  
+  // 预加载搜索数据
+  fetch('/search.xml')
+    .then(res => res.text())
+    .then(xml => {
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xml, 'text/xml');
+      const items = xmlDoc.querySelectorAll('entry');
+      
+      allPosts = Array.from(items).map(item => {
+        return {
+          title: item.querySelector('title').textContent,
+          link: item.querySelector('url').textContent,
+          content: item.querySelector('content').textContent,
+          context: JSON.parse(item.querySelector('search_context').textContent || '{}')
+        };
+      });
     });
-}
+  
+  // 打开搜索弹窗
+  document.querySelector('#search-icon').addEventListener('click', () => {
+    searchModal.style.display = 'block';
+    searchInput.focus();
+  });
+  
+  // 关闭弹窗
+  searchModal.addEventListener('click', (e) => {
+    if (e.target === searchModal) searchModal.style.display = 'none';
+  });
+  
+  // 搜索逻辑
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value.trim().toLowerCase();
+    if (!query) {
+      searchResults.innerHTML = '';
+      return;
+    }
+    
+    const results = allPosts.filter(post => {
+      return (
+        post.title.toLowerCase().includes(query) ||
+        post.content.toLowerCase().includes(query) ||
+        Object.keys(post.content).some(key => key.includes(query))
+      );
+    });
+    
+    displayResults(results, query);
+  });
+  
+  function displayResults(results, query) {
+    if (results.length === 0) {
+      searchResults.innerHTML = '<div class="no-results">没有找到相关结果……换个模糊点儿的关键词试试？</div>';
+      return;
+    }
+    
+    let html = '';
+    results.forEach(post => {
+      // 查找最佳匹配片段
+      const bestSnippet = findBestSnippet(post, query);
+      
+      html += `
+        <div class="search-result">
+          <a href="${post.link}" class="result-title">${highlightText(post.title, query)}</a>
+          <div class="result-snippet">${bestSnippet}</div>
+        </div>
+      `;
+    });
+    
+    searchResults.innerHTML = html;
+  }
+  
+  function findBestSnippet(post, query) {
+    // 查找包含完整查询词的片段
+    if (post.context[query]) {
+      return highlightText(post.context[query][0], query);
+    }
+    
+    // 查找包含部分查询词的片段
+    const queryWords = query.split(/\s+/);
+    for (const word of queryWords) {
+      if (post.context[word]) {
+        return highlightText(post.context[word][0], query);
+      }
+    }
+    
+    // 默认返回文章开头片段
+    return highlightText(post.content.substring(0, 150) + '...', query);
+  }
+  
+  function highlightText(text, query) {
+    if (!query) return text;
+    
+    const regex = new RegExp(`(${escapeRegExp(query)})`, 'gi');
+    return text.replace(regex, '<mark>$1</mark>');
+  }
+  
+  function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+});

@@ -68,11 +68,14 @@
 
 	<!-- 搜索 -->
 <div id="search-bg">
-	<div id="search-box"></div>
-	<!-- <div class="form-group">
-		<input type="text" id="local-search-input" name="q" results="0" placeholder="search" class="st-search-input st-default-search-input form-control"/>
-	</div>  
-	<div id="local-search-result"></div> -->
+	<div id="search-box">
+		<input type="text" id="search-input" placeholder="Type to search...">
+		<div id="search-results"></div>
+		<p>恭喜你触发了这个 box，由于我还没有写关闭键，你只能通过刷新页面来关闭它。非常抱歉 ;-)</p>
+		<p>为了证明我没有摆烂，在这里放一个进度：</p>
+		<p>- 250715：尝试实现搜索功能，初步成功，能够搜索到包含关键词的文章了（也能关掉了）。不知道为啥输入 123 可以匹配所有文章，但是输入 1234 就一篇都匹配不上。</p>
+		<p>- 250716：尝试加入关键词上下文来 de 上面的 bug，然后把 js 写成史了，现在这个框框并不具备搜索功能（也不具备关闭功能） :-(</p>
+	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
@@ -86,7 +89,8 @@
 	<!-- 右对齐部分导航 -->
 	<script>
 		function toSearch() {
-			$("#search-bg, #search-bg *").css("z-index", "1002");
+			// goto search.ejs
+			$("#search-bg, #search-bg *").css("z-index", "1002"); 
 			$("#search-bg, #search-bg *").css("opacity", "100%");
 		}
 	</script>
@@ -128,7 +132,7 @@
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ds"><span class="toc-text">DS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6"><span class="toc-text">数学</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E8%AE%BA"><span class="toc-text">图论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dp"><span class="toc-text">DP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%88%E5%B8%8C"><span class="toc-text">哈希</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E6%9C%80%E5%80%BC"><span class="toc-text">关于最值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F"><span class="toc-text">关于冒泡排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-lis"><span class="toc-text">关于 LIS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%82%E9%A1%B9"><span class="toc-text">杂项</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ds"><span class="toc-text">DS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6"><span class="toc-text">数学</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E8%AE%BA"><span class="toc-text">图论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dp"><span class="toc-text">DP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E8%83%8C%E5%8C%85"><span class="toc-text">关于背包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%88%E5%B8%8C"><span class="toc-text">哈希</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#xor-hash"><span class="toc-text">xor hash</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E6%9C%80%E5%80%BC"><span class="toc-text">关于最值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F"><span class="toc-text">关于冒泡排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-lis"><span class="toc-text">关于 LIS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%82%E9%A1%B9"><span class="toc-text">杂项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%82%AC%E7%BA%BF%E6%B3%95"><span class="toc-text">悬线法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E5%BA%8F%E5%88%97%E6%82%AC%E7%BA%BF%E7%BB%93%E5%90%88%E5%88%86%E5%9D%97"><span class="toc-text">随机序列悬线结合分块</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%92%A4%E9%94%80%E6%80%9D%E6%83%B3"><span class="toc-text">撤销思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E6%A0%88%E6%A8%A1%E6%8B%9F%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97"><span class="toc-text">双栈模拟双端队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%AC%E5%8F%B7%E5%BA%8F%E5%88%97"><span class="toc-text">括号序列</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%BB%B4%E6%8A%A4%E6%8B%AC%E5%8F%B7%E5%BA%8F%E5%88%97"><span class="toc-text">线段树维护括号序列</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B4%AA%E5%BF%83%E9%80%89%E5%8F%96%E6%8B%AC%E5%8F%B7%E5%BA%8F%E5%88%97"><span class="toc-text">贪心选取括号序列</span></a></li></ol></li></ol></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -165,12 +169,12 @@
 <hr />
 <h2 id="ds">DS</h2>
 <ul>
-<li><p>不强制在线复杂度不依赖均摊的可持久化数据结构 <span class="math inline">\(\to\)</span> DAG 上直接模拟。</p>
-<p>猜猜这里内涵的是哪个名字叫并查集的小朋友 <img src="/em/lh.gif" /></p>
-哦哦更新了，还有你，线段树合并 <img src="/em/lh.gif" /></li>
-<li>只要求在最新版本上修改和查询所有版本的可持久化数组可以在 <code>vector</code> 上二分，又唤部分可持久化。</li>
-<li><p>在同时可以使用线段树合并和主席树解决的问题中，选前者。</p>
-<p>问就是跑不满 <img src="/em/lh.gif" /></p></li>
+<li><p><strong>不强制在线</strong> <strong>复杂度不依赖均摊</strong> 的可持久化数据结构 <span class="math inline">\(\to\)</span> DAG 上直接模拟。</p>
+并查集，线段树合并 <img src="/em/lh.gif" /></li>
+<li>只要求『在最新版本上修改』和『查询所有版本』的可持久化数组可以在 <code>vector</code> 上二分，又唤部分可持久化。</li>
+<li>在可以使用『线段树合并』或『主席树』解决的问题中，选前者。原因：跑不满。</li>
+<li><p>插入删除区间，维护值域内未被覆盖的点的信息：线段树维护节点内被覆盖次数最小值和最小值信息；当最小值为 <span class="math inline">\(0\)</span> 时，将信息纳入统计。</p>
+<p>扩：插入删除区间，维护值域内恰好被区间覆盖 <span class="math inline">\(k\)</span> 次的点的信息：线段树维护节点内前 <span class="math inline">\(k+1\)</span> 小值的信息，则 <span class="math inline">\(k\)</span> 一定出现在前 <span class="math inline">\(k+1\)</span> 小值中。</p></li>
 </ul>
 <hr />
 <h2 id="数学">数学</h2>
@@ -192,8 +196,7 @@ for (int i = n; i; --i) &#123;
     inv[i] = inv[i] * t % mod;
 &#125;</code></pre></li>
 <li><p>求线段 <span class="math inline">\((x_1,y_1,x_2,y_2)\)</span> 穿过直线系 <span class="math inline">\(x+y=k\cdots m(k\in \mathbb{N}^*)\)</span> 的次数。</p>
-<p>算出线段中 <span class="math inline">\(x+y\)</span> 的取值范围也即 <span class="math inline">\([x_1+y_1,x_2+y_2]\)</span>（斜率为负就不同了，但可以证明都是单调的），求出 <span class="math inline">\(k\cdot m\)</span> 在里面的出现次数就可以了。</p>
-<p><del>有的人高中数学欠的债要到竞赛来还</del></p>
+<p>算出线段中 <span class="math inline">\(x+y\)</span> 的取值范围也即 <span class="math inline">\([x_1+y_1,x_2+y_2]\)</span>（斜率为负就不同了，但可以证明都是单调的），求出 <span class="math inline">\(k\cdot m\)</span> 在里面的出现次数就可以了。<del>有的人高中数学欠的债要到竞赛来还</del></p>
 <p>goto <a target="_blank" rel="noopener" href="https://codeforces.com/contest/2098/problem/E">CF2098E</a>。</p></li>
 </ul>
 <hr />
@@ -212,8 +215,10 @@ for (int i = n; i; --i) &#123;
 <li>否则枚举环上所有边是统一选顺 / 逆时针方向的端点，答案为 <span class="math inline">\(2\)</span>。</li>
 </ul></li>
 <li><p>若 <span class="math inline">\(n&lt;m\)</span>：</p>
-点不够用，答案为 <span class="math inline">\(0\)</span>。 最后把所有连通块的答案相乘就可以得到总答案。<em>参见 <a target="_blank" rel="noopener" href="https://vjudge.net/problem/OpenJ_POJ-C19A">Ball</a>, <a target="_blank" rel="noopener" href="https://codeforces.com/contest/2097/problem/B">Baggage Claim</a></em></li>
-</ul></li>
+<p>点不够用，答案为 <span class="math inline">\(0\)</span>。</p></li>
+</ul>
+<p>最后把所有连通块的答案相乘就可以得到总答案。</p>
+goto <a target="_blank" rel="noopener" href="https://vjudge.net/problem/OpenJ_POJ-C19A">Ball</a>, <a target="_blank" rel="noopener" href="https://codeforces.com/contest/2097/problem/B">Baggage Claim</a>, <a target="_blank" rel="noopener" href="https://atcoder.jp/contests/tkppc6-2/tasks/tkppc6_2_g">Must be Distinct!</a>。</li>
 <li><p>比如有对图中边权的更新。像是让你求某某的最小，然后更新操作是减小某个边权。</p>
 <p>这个时候我们就会发现改边不太现实，可以直接加边，因为保留原来那条更大的边不会影响答案。</p>
 题不知道。</li>
@@ -235,8 +240,8 @@ Goto <a href="/20231113/#b.-商人">solu to 商人</a>。</li>
 <hr />
 <h2 id="dp">DP</h2>
 <ul>
-<li>用计数 DP 代替你那又臭又长还调不出来的该死的大容斥。</li>
-<li><p>碰到了「起点状态到终点状态，中间不能经过一些非法状态的方案数」，可以用 <span class="math inline">\(f_i\)</span> 表示从起点，不经过 <span class="math inline">\(1\sim i-1\)</span> 的非法状态，到达非法状态 <span class="math inline">\(i\)</span> 的方案数，最后将终点状态也视为一个非法状态并 DP 即可。</p>
+<li>计数 DP 和容斥的选择。</li>
+<li><p>（容斥）碰到了「起点状态到终点状态，中间不能经过一些非法状态的方案数」，可以用 <span class="math inline">\(f_i\)</span> 表示从起点，不经过 <span class="math inline">\(1\sim i-1\)</span> 的非法状态，到达非法状态 <span class="math inline">\(i\)</span> 的方案数，最后将终点状态也视为一个非法状态并 DP 即可。</p>
 Goto <a href="/20231113/#a---gerald-and-giant-chess">solu to CF559C Gerald and Giant Chess</a>，<a target="_blank" rel="noopener" href="https://www.cnblogs.com/XSC062/p/17330225.html">solu to 两双手</a>。</li>
 <li><p>要求字典序大于 / 小于给定值的方案数，考虑使用 <span class="math inline">\(f_i\)</span> 表示 <span class="math inline">\(1\sim i\)</span> 全部和给定值相同，<span class="math inline">\(i+1\)</span> 大于 / 小于给定值，后面乱搞的情况总数。</p>
 Goto <a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5423/problem/2">冒泡排序</a>。</li>
@@ -274,12 +279,23 @@ Goto <a href="/20231003/#f.-单词">solu to 单词</a>。</li>
 <p>故胡乱拓展一下，在保证值域内分布均匀的整数域内背包，在 <code>random_shuffle</code> 后实际最大状态不太会超过 <span class="math inline">\(\sqrt V\)</span>。</p>
 <p>因为这个是由一个科什么什么定理推来的中间很松的结论，所以运气比较好的时候甚至不会超过 <span class="math inline">\(\log v\)</span>。</p></li>
 </ul>
+<h3 id="关于背包">关于背包</h3>
+<ul>
+<li><p>子序列问题（不仅是 + &amp; min，也可以是 xor、加 &amp; 模等）可以转化为背包问题；对一个区间做背包，可以把区间划分成若干段，每段做背包，再依次 <span class="math inline">\(O(v^2)\)</span> 地合并。</p>
+<p>『划分』的一个典型场景是找『分割线』，然后向左向右分别做背包——这么做的优点是，对于任意穿这条分割线的区间，你都能 <span class="math inline">\(O(v^2)\)</span> 得到所有的背包信息。甚至，如果你只需要求某个特定体积下的答案，只需要 <span class="math inline">\(O(v)\)</span> 枚举。</p>
+goto <a target="_blank" rel="noopener" href="https://loj.ac/p/6515">贪玩蓝月</a>。</li>
+<li><p>背包可以看作一种 +/min 卷积：在体积维上做加法、在代价维上做 min。当然其他操作如体积维上的 xor、加模；代价维上的方案数都差不多。</p>
+<p>因此，多次区间询问（离线）的背包可以结合分治——原因是从每个 <span class="math inline">\(l\)</span> 开始做一次背包是不现实的，而我们发现分割线是可以共用的——分割线代表的背包信息也是可以共用的。</p>
+<p>所以需要找到一种『找分割线』和『一条分割线求解的范围』的方法，使得规定复杂度内能够最大化利用『公共信息』。分治的（类线段树的）结构就是一种极好的方式，在一层分治内解决所有在 <span class="math inline">\([l,r]\)</span> 范围内，且跨越 <span class="math inline">\(mid\)</span> 的询问，这样就能从 <span class="math inline">\(mid\)</span> 出发，向左到 <span class="math inline">\(l\)</span>，向右到 <span class="math inline">\(r\)</span> 求解背包。</p>
+<p>goto <a href="/20250520/#cf2043f-nim">solu to CF2043F</a>。</p></li>
+</ul>
 <hr />
 <h2 id="哈希">哈希</h2>
 <ul>
 <li><p>用哈希解决，呃，怎么概括呢，比如区间计数，其中合法区间的左右端点对应着一种转化后的「全等」关系……？</p>
-Goto <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/article/5reynyzi">Three Occurrence</a>。</li>
-<li><p>xor hash</p>
+<p>Goto <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/article/5reynyzi">Three Occurrence</a>。</p></li>
+</ul>
+<h3 id="xor-hash">xor hash</h3>
 <p>使用于异或判断次数奇偶性 / 元素存在性的哈希。</p>
 <p>我们知道，区间里每个值出现次数都是偶数的必要不充分条件是区间异或起来为 <span class="math inline">\(0\)</span>。之所以不充分是因为存在类似 <span class="math inline">\(1\oplus 2\oplus 3=0\)</span> 的情况。</p>
 <p>然后怎么让他变成充要的呢，哎，我们把每个数都给他哈希成一个随机大数（比如 ull），这样冲突的概率就会变成 <span class="math inline">\(2^{-64}\)</span>。</p>
@@ -287,24 +303,16 @@ Goto <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/article/5r
 <details>
 <p><summary>goto <em>solu to 牛客题</em>…</summary></p>
 <blockquote>
-<p>给定一棵带权树，把 <span class="math inline">\((u,v)\)</span> 间简单路径上的边权全部拉出来生成数组，两个人在数组中轮流选数，每次选走的数必须小于等于上一个人选走的数，不能选的人输，问有多少个 <span class="math inline">\((u,v)\)</span> 满足先手必胜。</p>
+<p>给定一棵带权树，将 <span class="math inline">\((u,v)\)</span> 间简单路径上的边权生成数组，两个人在数组中轮流选数，每次选走的数必须 <span class="math inline">\(\le\)</span> 上一个人选走的数，不能选的人输，问有多少个 <span class="math inline">\((u,v)\)</span> 满足先手必胜。</p>
 </blockquote>
-<p>首先给一个结论，如果在 <span class="math inline">\((x, y)\)</span> 的路径上有任何一种边权的数量是奇数，那么就要统计 <span class="math inline">\((x,y)\)</span>。</p>
-<p>首先，假设 <span class="math inline">\(x\)</span> 是一个边权。如果从最小边权一直到 <span class="math inline">\(x\)</span>，每个边权的出现次数之和为奇数，先手必胜。</p>
-<p>因为这个时候先手选 <span class="math inline">\(x\)</span>，后手选任意一个小于等于 <span class="math inline">\(x\)</span> 的边权，原来总共有奇数个可选项，选走两个，剩下的可选项的个数还是奇数个。</p>
-<p>如此递归下去，最后一定会出现：可选最小边权剩下奇数个，那么两个轮流选，明显先手胜。</p>
-<p>然后，如果任意一种边权出现的次数是奇数，那么先手胜。</p>
-<p>为什么呢？因为如果它是最小的出现次数为奇数的边权，那么它和比它小的所有边权的数量之和为奇数，因为前面的出现次数都是偶数。如果它不是最小的，那么明显就是因为存在比它更小的。根据我们刚刚得到的结论，此时先手胜。</p>
-<p>所以，问题就转化为了：统计点对 <span class="math inline">\((x, y)\)</span> 的数量，满足 <span class="math inline">\(x\)</span> 到 <span class="math inline">\(y\)</span> 的简单路径中存在出现次数为奇数的边权。</p>
-<p>另一种可行的转化是，用 <span class="math inline">\(C_n^2\)</span> 减去路径上不存在出现次数为边权的点对数。</p>
-<p>接下来讲讲统计。这个要用到一个 xor-hashing，字面意思，给异或用的哈希，专门应对这种情况。</p>
+<p>如果在 <span class="math inline">\((u, v)\)</span> 的路径上有任何一种边权的数量是奇数，那么就要统计 <span class="math inline">\((u,v)\)</span>。</p>
+<p>对于最小的、出现次数为奇数的边权 <span class="math inline">\(w\)</span>，先手选择 <span class="math inline">\(w\)</span>，此时剩下偶数个可选项。后手选择 <span class="math inline">\(w&#39;\)</span>，这会删除 <span class="math inline">\(&gt;w&#39;\)</span> 且 <span class="math inline">\(\le w\)</span> 的所有可选项。发现被删掉偶数个选项；剩下奇数个选项。易知先手必胜。</p>
+<p>若不存在出现次数为奇数的边权，从刚刚后手的处境可以看出先手必败。所以，问题就转化为了：统计点对 <span class="math inline">\((u, v)\)</span> 的数量，满足 <span class="math inline">\(u\)</span> 到 <span class="math inline">\(v\)</span> 的简单路径中存在出现次数为奇数的边权。</p>
 <p>给每个边权映射一个值，为 <code>base</code> 的 <code>rand()</code> 次方，自然溢出即可。然后直接按照之前的操作处理就好了。</p>
 <p>如果一个你想找到类似于 <code>1 ^ 2 ^ 3 = 0</code> 的情况，其出现概率与数字的二进制位数有关。因为 <code>xor</code> 只针对于同一位，结果不会被上一位或下一位干扰，所以每一位出现异或起来为 <span class="math inline">\(0\)</span> 的概率是 <span class="math inline">\(\dfrac 12\)</span>。只要我们整点比较强力的 <span class="math inline">\(k\)</span> 位二进制数，那么出现以上情况的概率就是 <span class="math inline">\(2^{-k}\)</span>。</p>
-<p>那么这个比较强力的 <span class="math inline">\(k\)</span> 位二进制数，用比较强力的类字符串哈希生成方式，再使用一个很大很大的随机数替代字符串哈希中表示下标的 <span class="math inline">\(i\)</span>，用自然溢出让它显得更加稳妥就好。</p>
-<p>所以现在我们程序寄掉的概率就是 <span class="math inline">\(\dfrac 1{2^{64}}\)</span>，好事情啊好事情。</p>
-<p>最后时间复杂度 <span class="math inline">\(\mathcal O(n\log n)\)</span>，<span class="math inline">\(\log n\)</span> 来源于映射。</p>
-</details></li>
-</ul>
+<p>那么这个比较强力的 <span class="math inline">\(k\)</span> 位二进制数，用比较强力的类字符串哈希生成方式，再使用一个很大很大的随机数替代字符串哈希中表示下标的 <span class="math inline">\(i\)</span>，用自然溢出让它显得更加稳妥就好。所以现在我们程序寄掉的概率就是 <span class="math inline">\(\dfrac 1{2^{64}}\)</span>，好事情啊好事情。</p>
+<p>时间复杂度 <span class="math inline">\(\mathcal O(n\log n)\)</span>，<span class="math inline">\(\log n\)</span> 来源于映射。</p>
+</details>
 <hr />
 <h2 id="关于最值">关于最值</h2>
 <h3 id="关于冒泡排序">关于冒泡排序</h3>
@@ -322,13 +330,67 @@ goto <a href="/20250510/#c---1-loop-bubble-sort">1 Loop Bubble Sort</a>。</li>
 </ul>
 <h2 id="杂项">杂项</h2>
 <ul>
-<li><p>对于悬线法：可以顺带维护一些东西。</p>
-<p>具体可维护的东西和倍增差不多吧，还是比单调栈泛用性大很多的。是单调栈 / 单调栈上二分的 <span class="math inline">\(O(n)\)</span> 平替。</p>
-<p>但事实上可以用笛卡尔树完美替代 <img src="/em/lh.gif" /></p>
-<p>不过肯定悬线是好写很多的。一行代码还不用在意任何特殊情况的单调栈谁不爱呢。</p>
-Goto <a target="_blank" rel="noopener" href="https://www.cnblogs.com/XSC062/p/17833822.html">solu to 情景剧</a>。</li>
-<li><p><span class="math inline">\(k\)</span> 个「二者至少选其一」形式的限制，要求选的尽可能少，使用 <span class="math inline">\(2^k\)</span> 枚举后取并集代替你那脑子被电灯泡撞了才能想出来的 <span class="math inline">\(3^k\)</span> 枚举。</p></li>
+<li><span class="math inline">\(k\)</span> 个「二者至少选其一」形式的限制，要求选的尽可能少，使用 <span class="math inline">\(2^k\)</span> 枚举后取并集代替你那脑子被电灯泡撞了才能想出来的 <span class="math inline">\(3^k\)</span> 枚举。</li>
 </ul>
+<h3 id="悬线法">悬线法</h3>
+<p>具体可维护的东西和倍增差不多吧，还是比单调栈泛用性大很多的。是单调栈 / 单调栈上二分的 <span class="math inline">\(O(n)\)</span> 平替。可以用笛卡尔树完美替代 <img src="/em/lh.gif" /></p>
+<p>不过肯定悬线是好写很多的。一行代码还不用在意任何特殊情况的单调栈谁不爱呢。</p>
+<p>Goto <a target="_blank" rel="noopener" href="https://www.cnblogs.com/XSC062/p/17833822.html">solu to 情景剧</a>。</p>
+<h4 id="随机序列悬线结合分块">随机序列悬线结合分块</h4>
+<p>随机序列的笛卡尔树深度为 <span class="math inline">\(\log\)</span>；令块长为 <span class="math inline">\(B=\sqrt {\log n}\)</span>，维护每个点跳 <span class="math inline">\(B\)</span> 步的答案；那么就能 <span class="math inline">\(O(\sqrt {\log n})\)</span> 跳悬线。</p>
+<h3 id="撤销思想">撤销思想</h3>
+<p>当题目给出『按一定的操作序列，将整块逐步分解为小段，问至晚哪一步后满足条件（需要单调性）』，可以考虑从最后的局面开始考虑，逐步『合并』，并 check 最早合并到哪一步时满足条件。</p>
+<details>
+<p><summary>Goto <em>solu to CF567D</em></summary></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF567D" class="uri">https://www.luogu.com.cn/problem/CF567D</a></p>
+<p>因为「某一时刻是否一定被击中过」具有单调性，考虑先提前发射所有炮弹，倒序枚举炮弹，不断「撤销」当前最后一发炮弹的发射，如果在「撤销」这发炮弹后，存在任意一种放下 <span class="math inline">\(k\)</span> 艘完整的战舰的方案，说明在发射这一发炮弹之后绝对能够击中。</p>
+<p>如果发射所有炮弹后，依然存在一种放下 <span class="math inline">\(k\)</span> 艘完整的战舰的方案，则无解。</p>
+<p>具体实现可以使用并查集维护连通块大小，每「撤销」一发炮弹的发射相当于合并三个连通块：炮弹的落点、落点的前一个元素（若不存在或已被炮弹摧毁则忽略）、落点的后一个元素（若不存在或已被炮弹摧毁则忽略）。</p>
+<p>设某连通块大小为 <span class="math inline">\(x\)</span>，可容纳战舰数为 <span class="math inline">\(res\)</span>，显然有 <span class="math inline">\(res = \lfloor (x + 1) \div (p + 1) \rfloor\)</span>。</p>
+<p>记统计当前可容纳战舰的数量为 <span class="math inline">\(ans\)</span>，在并查集合并时，<span class="math inline">\(ans\)</span> 分别减去两个待合并连通块的可容纳战舰的数量，再加上新连通块可容纳战舰的数量。最靠后的 <span class="math inline">\(ans\ge k\)</span> 的时刻即为所求。</p>
+<p>同时使用路径压缩和按秩合并，时空复杂度均为 <span class="math inline">\(\mathcal O(n)\)</span>。优于 multiset 解法。</p>
+</details>
+<h3 id="双栈模拟双端队列">双栈模拟双端队列</h3>
+<blockquote>
+<p>用两个栈模拟队列或双端队列。支持两头删除、插入。</p>
+</blockquote>
+<p>一个维护前面的插入、删除；一个维护后面的插入、删除。插入是简单的；删除在大部分情况下是简单的；如果某个栈删空了，将另一个栈的一半挪过来暴力重构即可。均摊复杂度线性。</p>
+<details>
+<p><summary>复杂度证明</summary></p>
+<p>设两栈长度分别为 <span class="math inline">\(L_1,L_2\)</span>，定义势能 <span class="math inline">\(E=|L_1-L_2|\)</span>。每次插入 / 简单删除带来 <span class="math inline">\(\pm 1\)</span> 的势能变化；</p>
+<p>一次重构消耗 <span class="math inline">\(E\)</span> 的势能，将势能重置为 <span class="math inline">\(E\le 1\)</span>。显然就有均摊线性复杂度了。</p>
+</details>
+<p>适用场景：类队列 / 双端队列场景，但若固定一个端点就可以向左向右分别简单维护的；如背包等。</p>
+<p>goto <a target="_blank" rel="noopener" href="https://ac.nowcoder.com/acm/contest/39759/F">黑鸟</a>，<a href="/20250520/#贪玩蓝月">solu to 贪玩蓝月</a>，<a href="/20250520/#贪玩蓝月">solu to Peru</a>。</p>
+<h3 id="括号序列">括号序列</h3>
+<h4 id="线段树维护括号序列">线段树维护括号序列</h4>
+<p>每个节点维护左边</p>
+<h4 id="贪心选取括号序列">贪心选取括号序列</h4>
+<blockquote>
+<p>给定 <span class="math inline">\(a_1\sim a_{2N}\)</span>，选取一个合法的长度为 <span class="math inline">\(2N\)</span> 的括号序列，记权值为所有 <span class="math inline">\((\)</span> 所在位置的 <span class="math inline">\(a\)</span> 值之和，最大化权值。</p>
+</blockquote>
+<p><span class="math inline">\(a_1\)</span> 显然为 <code>(</code>，<span class="math inline">\(a_{2N}\)</span> 显然为 <code>)</code>；</p>
+<p>对于 <span class="math inline">\(a_2\sim a_{2N-1}\)</span>，从前往后扫，每次把两个连续元素放在一起考虑，进行如下操作：</p>
+<ul>
+<li>把这两个连续元素放到『可用来作 <code>(</code>』的队列里。</li>
+<li>贪心地从队列里挑选 <span class="math inline">\(a\)</span> 最大的元素，令其为 <code>(</code>。</li>
+</ul>
+<details>
+<p><summary>正确性证明</summary></p>
+<p>即证：可构造出来的序列 <span class="math inline">\(\iff\)</span> 合法的序列；构造出来的序列最优。</p>
+<ul>
+<li><p>必要性：</p>
+<p>我们知道，括号序列合法 <span class="math inline">\(\iff\)</span> 对于任意 <span class="math inline">\(i\)</span>，<span class="math inline">\(1\sim i\)</span> 中的 <code>)</code> 的数量不超过 <code>(</code>。</p>
+对于任意 <span class="math inline">\(i=2k+1\)</span>，前 <span class="math inline">\(i\)</span> 个元素中存在至少 <span class="math inline">\(k+1\)</span> 个 <code>(</code>。<strong>且如果任意一步少选，序列不合法</strong>。</li>
+<li><p>充分性：</p>
+<p>也即在我们可以任意选择从队列中挑选哪个元素的情况下，证明任意目标序列都可以被这么构造。</p>
+每次选择目标序列最靠前的未被选的 <code>(</code> 并将其选中。如果有一步不存在这样的位置怎么办？由『必要性』中粗体字得不合法。</li>
+<li><p>最优性：</p>
+<p>首先需要知道每个元素是否被选择是相对独立的。如果两个数都可被选，那么它们的选中状态是互不影响的（除非这是最后一个位置了，但显然这不是我们关注的重点）。</p>
+<p>假设一个 <span class="math inline">\(a_i\)</span> 位于最优解序列，但我们没有选择它：说明选中了一个比 <span class="math inline">\(a_i\)</span> 更大的元素，可以构造出更优的序列。由此反证。</p></li>
+</ul>
+</details>
+<p>goto <a href="/20250520/#abc407e-most-valuable-parentheses">abc407E</a>。</p>
 
 			</div>
 			<hr class="dotted">
@@ -513,13 +575,6 @@ Goto <a target="_blank" rel="noopener" href="https://www.cnblogs.com/XSC062/p/17
 
 <script src="/js/search.js"></script>
 
-<script type="text/javascript">
-var search_path = "search.xml";
-if (search_path.length == 0) {
-    search_path = "search.xml";
-}
-var path = "/" + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
 </script>
 <!-- prism 相关配置 -->
 <script type="text/javascript" src="/js/prism.js" defer></script>

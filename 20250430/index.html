@@ -68,11 +68,14 @@
 
 	<!-- 搜索 -->
 <div id="search-bg">
-	<div id="search-box"></div>
-	<!-- <div class="form-group">
-		<input type="text" id="local-search-input" name="q" results="0" placeholder="search" class="st-search-input st-default-search-input form-control"/>
-	</div>  
-	<div id="local-search-result"></div> -->
+	<div id="search-box">
+		<input type="text" id="search-input" placeholder="Type to search...">
+		<div id="search-results"></div>
+		<p>恭喜你触发了这个 box，由于我还没有写关闭键，你只能通过刷新页面来关闭它。非常抱歉 ;-)</p>
+		<p>为了证明我没有摆烂，在这里放一个进度：</p>
+		<p>- 250715：尝试实现搜索功能，初步成功，能够搜索到包含关键词的文章了（也能关掉了）。不知道为啥输入 123 可以匹配所有文章，但是输入 1234 就一篇都匹配不上。</p>
+		<p>- 250716：尝试加入关键词上下文来 de 上面的 bug，然后把 js 写成史了，现在这个框框并不具备搜索功能（也不具备关闭功能） :-(</p>
+	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
@@ -86,7 +89,8 @@
 	<!-- 右对齐部分导航 -->
 	<script>
 		function toSearch() {
-			$("#search-bg, #search-bg *").css("z-index", "1002");
+			// goto search.ejs
+			$("#search-bg, #search-bg *").css("z-index", "1002"); 
 			$("#search-bg, #search-bg *").css("opacity", "100%");
 		}
 	</script>
@@ -345,6 +349,7 @@ int main() &#123;
     return 0;
 &#125;</code></pre>
 </details>
+<hr />
 <h2 id="有标号-dag-计数">有标号 DAG 计数</h2>
 <blockquote>
 <p>给定 <span class="math inline">\(N\)</span> 个点，你可以在它们间任意连边，要求最后图为 DAG，可能要求图弱连通。</p>
@@ -367,6 +372,7 @@ f(i)
 \end{aligned}
 \]</span></p>
 <p>即得递推式。如果要求连通仿照无向图连通的方法，用任意减去不连通即可。</p>
+<hr />
 <h3 id="c---amusement-park">C - Amusement Park</h3>
 <p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1193/A" class="uri">https://codeforces.com/problemset/problem/1193/A</a></p>
 <p>先考虑计算方案数。枚举 <span class="math inline">\(1\)</span> 所在子集，那么有 <span class="math inline">\(f(S)=\sum\limits_{T\in S} (-1)^{|T|+1}\cdot f(S - T)\)</span>。相较于一般的 DAG 计数，因为每条边取不取是固定的，所以没有了 <span class="math inline">\(2\)</span> 的次幂的系数；同时因为直接枚举子集，所以没有了组合系数。</p>
@@ -672,13 +678,6 @@ h(S, k) = \sum_{T\subset S} f(T) \cdot h(S - T, k-1)
 
 <script src="/js/search.js"></script>
 
-<script type="text/javascript">
-var search_path = "search.xml";
-if (search_path.length == 0) {
-    search_path = "search.xml";
-}
-var path = "/" + search_path;
-searchFunc(path, 'local-search-input', 'local-search-result');
 </script>
 <!-- prism 相关配置 -->
 <script type="text/javascript" src="/js/prism.js" defer></script>
