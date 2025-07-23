@@ -13,7 +13,7 @@
 <!-- 网站标题 -->
 <title>
 	
-		关于 -
+		vp 记录 edu 181 -
 	
 	XSC062 的博客
 </title>
@@ -119,23 +119,147 @@
 	</div>
 </div>
     
-<link rel="stylesheet" href="/css/about.css">
-	
-<div class="ui content container">
-	<div class="ui text container">
-		<img src="http://q1.qlogo.cn/g?b=qq&nk=942987023&s=5" id="photo">
-		<hr>
-		<h1 id="title">关于我
-		</h1>
-		<hr>
-        <span style="text-align:  center ; margin-top: auto;">
-            <p>XSC062（? - ）</p>
-<p>头像是家里猫。</p>
-<p>以上。</p>
+<link rel="stylesheet" href="/css/post.css">
 
-		</span>
-		<hr class="dotted">
-		<div id="vcomments" class="yahei"></div>
+
+<script src="/js/post.js"></script>
+
+
+<div class="main">
+	<div id="sidebar">
+		<aside id="toc">
+			<span id="toctitle">
+				<i class="fas fa-list"></i>
+				目录
+			</span>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#e.-sets-of-complementary-sums"><span class="toc-text">E. Sets of Complementary Sums</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vp-%E8%AE%B0%E5%BD%95"><span class="toc-text">vp 记录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#a"><span class="toc-text">A</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#b"><span class="toc-text">B</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#c"><span class="toc-text">C</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#d"><span class="toc-text">D</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#e.0"><span class="toc-text">E.0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#f"><span class="toc-text">F</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#e.1"><span class="toc-text">E.1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#b.1"><span class="toc-text">B.1</span></a></li></ol></li></ol>
+		</aside>
+	</div>
+	<div class="ui post container">
+		<div class="ui text container yahei">
+			<span id="postcon">
+				<span id="postinfo">
+					<div class="ui post title">
+						<div id="fortitle" data-content="vp 记录 edu 181">
+							vp 记录 edu 181
+						</div>
+						<div class="ui title background">
+						</div>
+					</div>
+					<span id="date">
+						<i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
+						2025-07-23
+					</span>
+				</span>
+			</span>
+			<div id="posttags" class="dotted border">
+				
+					
+						<a href="/tags/差分/" class="citem">差分</a>
+					
+						<a href="/tags/背包/" class="citem">背包</a>
+					
+				
+			</div>
+			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
+			
+			<div id="content">
+				<p>tzl 太强了！真挚的膜拜</p>
+<span id="more"></span>
+<p>lhy 太强了！真挚的膜拜</p>
+<hr />
+<h2 id="e.-sets-of-complementary-sums">E. Sets of Complementary Sums</h2>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/2125/problem/E" class="uri">https://codeforces.com/contest/2125/problem/E</a></p>
+<p>分拆数、其实是个不牛的东西，但是写假了 😅</p>
+<p>令集合元素升序排列为 <span class="math inline">\(b_{1\sim n}\)</span>。显然有结论 <span class="math inline">\(\sum b\geqslant (n-1)(b_n+1)\)</span>，化一下就有 <span class="math inline">\(b_n\geqslant \left(\sum\limits_{i=1}^{n-1} b_n-b_i\right)+(n-1)\)</span>。发现 RSH 取值对 LSH 无影响（从取等开始，RSH 不变，若 <span class="math inline">\(b_n\gets b_n+1\)</span>，只需将每个 <span class="math inline">\(b_i\gets b_i+1\)</span> 即可构造出一组解），故只用考虑 RSH 的每种取值下的方案。</p>
+<p>然后就可以做 <a href="/20231117/#dp">分拆数</a> 了。发现会 MLE，滚动即可。以及每次暴力 assign 会很慢，可以用一点小巧思来清空滚动数组。</p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int mod = 998244353;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int T;
+    for (std::cin &gt;&gt; T; T--; ) &#123;
+        long long n, m;
+        std::cin &gt;&gt; n &gt;&gt; m;
+        if (n * (n - 1) / 2 &gt; m) &#123;
+            std::cout &lt;&lt; 0 &lt;&lt; &#39;\n&#39;;
+            continue;
+        &#125;
+        if (n == 1) &#123;
+            std::cout &lt;&lt; m &lt;&lt; &#39;\n&#39;;
+            continue;
+        &#125;
+        --n;
+        std::vector&lt;std::vector&lt;long long&gt; &gt; f(2, std::vector &lt;long long&gt; (m + 1));
+        f[0][0] = 1ll;
+        for (int j = 1, at = 1; j &lt;= n; ++j, at ^= 1)
+            for (int i = 0; i &lt;= m; ++i) &#123;
+                if (i &lt; j)
+                    f[at][i] = 0;
+                else
+                    f[at][i] = (f[at ^ 1][i - j] + f[at][i - j]) % mod;
+            &#125;
+        auto res(0ll);
+        for (int i = 1; i &lt;= m - n; ++i)
+            (res += f[n &amp; 1][i] * (m - (i + n) + 1)) %= mod;
+        std::cout &lt;&lt; res &lt;&lt; &#39;\n&#39;;
+    &#125;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="vp-记录">vp 记录</h2>
+<h3 id="a">A</h3>
+<p>1:43 切。打 <code>std::</code> 还是太费时间了。</p>
+<h3 id="b">B</h3>
+<p>5:46 切，看完题没想到 gcd，输出的时候想到了。莼菜。</p>
+<h3 id="c">C</h3>
+<p>11:23 切，原因是容斥符号乱写。</p>
+<h3 id="d">D</h3>
+<p>24:21 切，中间重构了一次并且前缀和的部分考虑得有点问题。绅士（38:35）问我为啥做这么快。</p>
+<h3 id="e.0">E.0</h3>
+<p>看了一眼感觉不太可做。quack 说 F 板板，故跳。</p>
+<h3 id="f">F</h3>
+<p>01:13:41 草完。奇怪的 WQS 二分板板。吃了一发罚时，原因是没人合法的时候要输出 <span class="math inline">\(0\)</span>。但和 maimai 的 30 发比起来还是相形见绌。绅士考虑了这个，但是没判目标 <span class="math inline">\(&lt;\)</span> 当前的情况遗憾 4 题离场。</p>
+<p>场下看了 Diagnostics，发现其实第二发有个地方是 RE 了的（长度不足 <span class="math inline">\(6\)</span> 我的 <code>*std::max_element</code> 会飞起来），但是不知道为啥就是 A 了。</p>
+<h3 id="e.1">E.1</h3>
+<p>猜到结论之后止步于此。试着打了分拆数然后（实际上是）写挂了，怀疑自己结论出错直到 5 题招笑离场 😅</p>
+<h3 id="b.1">B.1</h3>
+<p>哈哈哈 B 的 gcd 没开 <code>long long</code> 被 hack 了，rk55 to 6000+</p>
+
+			</div>
+			<hr class="dotted">
+			<div class="post footer">
+				<div id="hitokoto">
+					<h3 id="hitokoto-title">
+						言论
+					</h3>
+					<div id="hitokoto-content">
+					</div>
+					<div id="hitokoto-from">
+					</div>
+				</div>
+				<div class="button flex">
+					<div id="prev">
+						
+					</div>
+					<div id="next">
+						
+							<a href="/20250722/">
+								无题
+								<i class="fas fa-angle-double-right" style="margin-left: 10px;"></i>
+							</a>
+						
+					</div>
+				</div>
+				<div id="vcomments" class="yahei"></div>
 <script>
 	new Valine({
 		el: '#vcomments',
@@ -230,8 +354,11 @@
 		},
 	})
 </script>
-    </div>
-</div> 
+			</div>
+			<script>setHitokoto();</script>
+		</div> 
+	</div>
+</div>
     <!-- 页脚开始 -->
 <div id="footer" class="yahei">
     Powered by

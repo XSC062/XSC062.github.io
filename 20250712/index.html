@@ -132,7 +132,7 @@
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#town"><span class="toc-text">town</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#perm"><span class="toc-text">perm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%A9%E6%8E%92"><span class="toc-text">彩排</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#town"><span class="toc-text">town</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#perm"><span class="toc-text">perm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cf2122d-traffic-lights"><span class="toc-text">CF2122D Traffic Lights</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#arc202a-merge-and-increment"><span class="toc-text">ARC202A Merge and Increment</span></a></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -319,15 +319,141 @@ int main() &#123;
 &#125;</code></pre>
 </details>
 <hr />
-<h2 id="彩排">彩排</h2>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/6439/problem/3" class="uri">http://222.180.160.110:61235/contest/6439/problem/3</a></p>
+<h2 id="cf2122d-traffic-lights">CF2122D Traffic Lights</h2>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/2122/problem/D" class="uri">https://codeforces.com/contest/2122/problem/D</a></p>
 <blockquote>
-<p>构造一个长度 <span class="math inline">\(\le 5.5\times 10^5\)</span>、只由 <span class="math inline">\(1\sim n\)</span> 组成的序列，使其由 <span class="math inline">\(1\sim n\)</span> 开头，<span class="math inline">\(a_i\sim a_n\)</span> 结尾，且任意相同元素距离不小于 <span class="math inline">\(n-1\)</span>。</p>
-<p><span class="math inline">\(n\le 1000\)</span>，保证 <span class="math inline">\(a\)</span> 随机生成。</p>
+<p>给你一个由 <span class="math inline">\(n\)</span> 个顶点和 <span class="math inline">\(m\)</span> 条边组成的简单无向连通图。在顶点 <span class="math inline">\(1\)</span> 有一个标记。认为初始时间为 <span class="math inline">\(t=0\)</span>，在 <span class="math inline">\(t\)</span> 秒后，如果标记位于点 <span class="math inline">\(u\)</span> ，则必须执行以下操作之一：</p>
+<ul>
+<li>等待一秒。</li>
+<li>将标记沿 <span class="math inline">\(u\)</span> 的第 <span class="math inline">\((t \bmod \mathrm{deg}(u) + 1)\)</span> 条边移动，花费一秒。</li>
+</ul>
+<p>计算将标记从顶点 <span class="math inline">\(1\)</span> 移到顶点 <span class="math inline">\(n\)</span> 所需的最短时间，以及在使总时间最小化的同时所能达到的最短等待时间。<span class="math inline">\(m\le 5\times 10^5\)</span>。</p>
 </blockquote>
-<p>发现可以花费 <span class="math inline">\(2n\)</span> 的代价交换任意两个元素。例，让 <code>a b X c d Y e f ...</code> 中 <code>X</code> 和 <code>Y</code> 交换，只需要：</p>
-<pre class="plain"><code>a b X c d Y e f ... a b X c d e f ... a b Y c d X e f ...</code></pre>
-<p>其实不是很牛，但是无效思考花费的时间太多了导致没愿意继续想。现在想要用尽量小的交换次数完成排序。把每个数朝它该在的位置连边，（出题人声称）因为目标序列是随机的导致不怎么会出现环。所以大部分情况可以直接交换；如果有环</p>
+<p>能够发现这是一个边权和 dis 有关的最短路，本着分层图一类的想法，考察答案的最值。发现一个很松的上界是 <span class="math inline">\(O(m)\)</span>；发现实际情况会比这个乐观得多，这个时候就会考虑用一些暴力做法草过去了。</p>
+<p>实际上有一个上界是 <span class="math inline">\(3n\)</span>：取一条最短路，则不存在路径外的点，与路径上至少四个点有连边，否则可以更新最短路。设最短路长 <span class="math inline">\(k\)</span>，让每次等待时间取满，考察答案发现为 <span class="math inline">\(2k\)</span>（路径上点之间）、<span class="math inline">\(3(n-k)\)</span>（路径上与路径外），共为 <span class="math inline">\(\le 3n\)</span>。还有一个上确界是 <span class="math inline">\(2n-3\)</span>，可以欣赏一下 <a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/144876?#comment-1295568" class="uri">https://codeforces.com/blog/entry/144876?#comment-1295568</a>，我没看懂 😰</p>
+<p>总之可以猜到暴力 dij 上 DP 得到…… 啊题解怎么说是 <span class="math inline">\(O(n^2+m)\)</span> 的。原因是求得答案上界之后就能暴力模拟这个过程了 😅</p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int inf = 0x3f3f3f3f;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int T;
+    for (std::cin &gt;&gt; T; T--; ) &#123;
+        int n, m;
+        std::cin &gt;&gt; n &gt;&gt; m;
+        std::vector&lt;std::vector&lt;int&gt; &gt; g(n + 1);
+        for (int x, y; m--; ) &#123;
+            std::cin &gt;&gt; x &gt;&gt; y;
+            g[x].push_back(y), g[y].push_back(x);
+        &#125;
+        std::vector&lt;std::vector&lt;int&gt; &gt; dis(2, std::vector&lt;int&gt; (n + 1, inf));
+        dis[1][1] = 0;
+        for (int t = 0; ; ++t) &#123;
+            auto &amp;d = dis[t &amp; 1], &amp;la = dis[(t &amp; 1) ^ 1];
+            std::vector&lt;int&gt; (n + 1, inf).swap(d);
+            for (int i = 1; i &lt;= n; ++i) &#123;
+                int to = t % ((int)g[i].size());
+                d[g[i][to]] = std::min(d[g[i][to]], la[i]);
+                d[i] = std::min(d[i], la[i] + 1);
+            &#125;
+            if (d[n] != inf) &#123;
+                std::cout &lt;&lt; t + 1 &lt;&lt; &#39; &#39; &lt;&lt; d[n] &lt;&lt; &#39;\n&#39;;
+                break;
+            &#125;
+        &#125;
+    &#125;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="arc202a-merge-and-increment">ARC202A Merge and Increment</h2>
+<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc202/tasks/arc202_a" class="uri">https://atcoder.jp/contests/arc202/tasks/arc202_a</a></p>
+<p>假设相邻元素全部不同，至少在当前这一步有一个很显然的策略（记为 <em>策略一</em>）是选全局最小值，把它和它左边、右边更小的一个 merge 起来。</p>
+<p>注意到如果当前全局最小值有相邻的偶数个，可以把相邻项合并一次，得到长度减半的区间，一定不劣（记为 <em>策略二</em>）；假如当前全局最小值存在相邻的奇数个，很容易注意到有两种处理方式：</p>
+<ol type="1">
+<li>选取偶数个应用策略二，剩余一个应用策略一。</li>
+<li>花一步，补一个全局最小值，转化为策略二。</li>
+</ol>
+<p>很容易发现第二种方式一定不劣 😅。模拟即可。</p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int T;
+    for (std::cin &gt;&gt; T; T--; ) &#123;
+        int n;
+        std::cin &gt;&gt; n;
+        std::vector&lt;std::pair&lt;int, int&gt; &gt; a(1);
+        &#123;
+            for (int i = 1, x; i &lt;= n; ++i) &#123;
+                std::cin &gt;&gt; x;
+                if (x != a.back().first)
+                    a.emplace_back(x, 1);
+                else
+                    ++a.back().second;
+            &#125;
+            n = (int)a.size() - 1;
+        &#125;
+        std::vector&lt;int&gt; pre(n + 2), nex(n + 1), tag(n + 1);
+        std::priority_queue&lt;std::pair&lt;int, int&gt;, std::vector&lt;std::pair&lt;int, int&gt; &gt;, std::greater&lt;std::pair&lt;int, int&gt; &gt; &gt; q;
+        for (int i = 1; i &lt;= n; ++i) &#123;
+            q.emplace(a[i].first, i);
+            pre[i] = i - 1, nex[i] = i + 1;
+        &#125;
+        nex[0] = 1, pre[n + 1] = n;
+        auto del = [&amp;](int i) &#123;
+            tag[i] = 1;
+            pre[nex[i]] = pre[i], nex[pre[i]] = nex[i];
+            return;
+        &#125;;
+        auto res(0ll);
+        for (; (int)q.size() &gt; 1;) &#123;
+            auto [x, id] = q.top();
+            q.pop();
+            if (tag[id] || a[id].first != x)
+                continue;
+            if (a[id].second == 1) &#123;
+                if (!pre[id] || (nex[id] != n + 1 &amp;&amp; a[nex[id]].first &lt;= a[pre[id]].first))
+                    res += a[nex[id]].first - x, a[id].first = a[nex[id]].first;
+                else
+                    res += a[pre[id]].first - x, a[id].first = a[pre[id]].first;
+            &#125;
+            else &#123;
+                if (a[id].second &amp; 1)
+                    ++res, ++a[id].second;
+                ++a[id].first, a[id].second /= 2;
+            &#125;
+            if (pre[id] &amp;&amp; a[id].first == a[pre[id]].first)
+                a[id].second += a[pre[id]].second, del(pre[id]);
+            if (nex[id] != n + 1 &amp;&amp; a[id].first == a[nex[id]].first)
+                a[id].second += a[nex[id]].second, del(nex[id]);
+            q.emplace(a[id].first, id);
+        &#125;
+        &#123;
+            auto [x, id] = q.top();
+            for ( ; a[id].second != 1; ) &#123;
+                if (a[id].second &amp; 1)
+                    ++res, ++a[id].second;
+                ++a[id].first, a[id].second /= 2;
+            &#125;
+        &#125;
+        std::cout &lt;&lt; res &lt;&lt; &#39;\n&#39;;
+    &#125;
+    return 0;
+&#125;</code></pre>
+</details>
 
 			</div>
 			<hr class="dotted">

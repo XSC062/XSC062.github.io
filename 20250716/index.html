@@ -132,7 +132,7 @@
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#a---tree"><span class="toc-text">A - Tr&#x2F;ee</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b---keep-perfectly-matched"><span class="toc-text">B - ⭐ Keep Perfectly Matched</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c---fiolki"><span class="toc-text">C - Fiolki</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#d---permutation-tree"><span class="toc-text">D - Permutation Tree</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#e---isomorphism-freak"><span class="toc-text">E - Isomorphism Freak</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#a---tree"><span class="toc-text">A - Tr&#x2F;ee</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b---keep-perfectly-matched"><span class="toc-text">B - Keep Perfectly Matched</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c---fiolki"><span class="toc-text">C - Fiolki</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#d---permutation-tree"><span class="toc-text">D - Permutation Tree</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#e---isomorphism-freak"><span class="toc-text">E - Isomorphism Freak</span></a></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -215,14 +215,8 @@ int main() &#123;
 &#125;</code></pre>
 </details>
 <hr />
-<h2 id="b---keep-perfectly-matched">B - ⭐ Keep Perfectly Matched</h2>
+<h2 id="b---keep-perfectly-matched">B - Keep Perfectly Matched</h2>
 <p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc183/tasks/arc183_d" class="uri">https://atcoder.jp/contests/arc183/tasks/arc183_d</a></p>
-<blockquote>
-<p>⭐ <strong>奇偶性、重心的分析</strong></p>
-<p>给定大小为 <span class="math inline">\(2n\)</span> 的树，定义完美匹配为，在树上选 <span class="math inline">\(n\)</span> 条边，满足每个点被覆盖恰好一次。</p>
-<p>保证初始存在完美匹配，接下来你需要进行 <span class="math inline">\(n\)</span> 次操作，每次删掉两个叶子，保证删完之后仍存在完美匹配，最大化每次删掉的两个点的距离之和。输出每次删除的点。</p>
-<p><span class="math inline">\(2n\le 2.5\times 10^5\)</span>。</p>
-</blockquote>
 <p>发现这个『完美匹配』就是在树上给每个点找相邻点配对，看看能不能配上；继而发现由于点的总数为偶，一个点有且仅能有一个 siz 为奇的子树（不然非法），再发现对于任意一个点，删掉的点对要么来自其同一个子树；要么一个来自其奇子树，另一个来自其偶子树。</p>
 <p>发现要求最大化距离，又只能删叶子，所以需要最小化 LCA 深度；有没有办法让每次的 LCA 都是根呢？让重心成为根，并保证每次操作的两个点都不来自同一个儿子即可（显然这样是完全可能的）。</p>
 <p>接着写了一发发现过不了样例，原因是发现在偶子树中会出现『一个中途的节点本来有一个奇儿子，删去偶子树中的一个叶子后非法』的情况。显然这样的节点是一个偶儿子。确保每个偶儿子的奇儿子先被删掉就可以解决问题。</p>
