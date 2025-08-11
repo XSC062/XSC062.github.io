@@ -13,7 +13,7 @@
 <!-- 网站标题 -->
 <title>
 	
-		无题 -
+		学习笔记：分拆数与 Ferrers 图 -
 	
 	XSC062 的博客
 </title>
@@ -132,47 +132,67 @@
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%8B%86%E6%95%B0%E4%B8%8E%E4%BA%92%E5%BC%82%E5%88%86%E6%8B%86%E6%95%B0"><span class="toc-text">分拆数与互异分拆数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8Bsets-of-complementary-sums"><span class="toc-text">例：Sets of Complementary Sums</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ferrers-%E5%9B%BE"><span class="toc-text">Ferrers 图</span></a></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
-		<div class="ui text container yahei">
+		<div class="ui text container">
 			<span id="postcon">
 				<span id="postinfo">
 					<div class="ui post title">
-						<div id="fortitle" data-content="无题">
-							无题
+						<div id="fortitle" data-content="学习笔记：分拆数与 Ferrers 图">
+							学习笔记：分拆数与 Ferrers 图
 						</div>
 						<div class="ui title background">
 						</div>
 					</div>
 					<span id="date">
 						<i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
-						2025-07-22
+						2025-08-07
 					</span>
 				</span>
 			</span>
 			<div id="posttags" class="dotted border">
 				
 					
-						<a href="/tags/闲话/" class="citem">闲话</a>
+						<a href="/tags/DP/" class="citem">DP</a>
 					
 				
 			</div>
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
-				<p>bro 也是开始写闲话了。疑似形散神散了说是。</p>
+				<p>怎么不下雨了？</p>
 <span id="more"></span>
 <hr />
-<p>胃疼，不想做题，故摆之。</p>
-<p>翻友链，一边担心 yippie 视监，随机打开几个我比较认识的学长，发现博客加密率高达 80%（以及 ■■ 大抵确实是把博客删完了）。怎么连静态博客都能加密的，想了一下没想出来原理，不敢问大 D 老师，害怕被视监。</p>
-<p>人是要有精神支柱的，这是我过去 5min 来所贯彻的人生箴言。想起我一开始就是奔着 ■■ 的博客去的（很幸运，他的博客组成了那 20%），点开几个比赛记录，享受了一下『高深的知识平滑地掠过光滑的大脑皮层』的爽感。点开几个游记，比较平淡地看完。</p>
-<p>我不知道该说什么，但我想说我不能理解很多人。就像我想不出他们设置密码的理由（可能是随手为之、可能有意、也有可能只是教练要求），我也永远不能接受 ■■■■■ 那种，可以这么说吗，近乎磕药的精神状态。我大抵是所谓那种『有的人一看就成不了器』。</p>
-<p>想起整个高一自己的精神状态都不知道该怎么形容，是经常性习惯性的痛苦，是看到某个场景，甚至只是想到某个回忆、臆想某种可能性，就会物理意义上的停止呼吸——然后等到被呛醒之后，用机械性的悲伤来回避现实中不可测的痛苦（至少应对前者我更有经验）——常常忘记自己什么时候回过神来、继续上了发条做事的。一整年身体其实都不很好的，看上去没什么问题，其实生物节律已经乱麻了。期间因为肠胃实在难受去过一次急诊，但上上下下查了一通没啥问题。ly（数学老师）有言，肠胃问题会反应精神状态，现在看来大有道理。</p>
-<p>我说我直到快 18 了才长出大脑学会思考。但我已经没办法乐观地看什么东西了。</p>
-<p>想到化学，会想到 yyb，马；想到生物，会想到 yyh，赵王；想到物理，会想到 M。想到 g2026 的信息，会想到 xzj；想到 g2025 的信息，会想到 ly。想到我们的数学会想到谁呢？想到我们的信息又会想到谁呢？</p>
-<p>我觉得『给别人带来正能量』是个很高的评价，并且我觉得我能做到。如果没有这样的人，就让我来当吧。</p>
+<h2 id="分拆数与互异分拆数">分拆数与互异分拆数</h2>
+<p>要求：给定一个正整数 <span class="math inline">\(n\)</span>，要求将其划分为 <span class="math inline">\(m\)</span> 个可重 / 不可重的正整数，问本质不同的方案数。（显然 <span class="math inline">\(m\)</span> 与 <span class="math inline">\(\sqrt n\)</span> 同阶。）</p>
+<p>不妨令划分结果单调不降，则有两种 DP 路径：</p>
+<ul>
+<li><p>法一：令 <span class="math inline">\(f_{i,j}\)</span> 表示把 <span class="math inline">\(i\)</span> 分成 <span class="math inline">\(j\)</span> 个正整数的方案数。</p>
+<ul>
+<li>不可重：考虑将这 <span class="math inline">\(j\)</span> 个数减去 <span class="math inline">\(1\)</span>。最多一个元素由 <span class="math inline">\(1\)</span> 变为 <span class="math inline">\(0\)</span>，组数减少 <span class="math inline">\(1\)</span>；其他时候还是 <span class="math inline">\(j\)</span> 组。故云 <span class="math inline">\(f_{i,j}=f_{i-j,j-1}+f_{i-j,j}\)</span>。</li>
+<li>可重：如果存在 <span class="math inline">\(1\)</span>，可以删除之然后转移；否则仍整体减 <span class="math inline">\(1\)</span> 转移。故曰 <span class="math inline">\(f_{i,j}=f_{i-1,j-1}+f_{i-j,j}\)</span>。</li>
+</ul>
+该转移方法唯一性很显然。<strong>注意到第二维只和 <span class="math inline">\(j,j-1\)</span> 有关；可以交换前后两维顺序然后滚动。</strong></li>
+<li><p>法二：令 <span class="math inline">\(n=\sum a_i\)</span>，建立 <span class="math inline">\(a\)</span> 的差分数组 <span class="math inline">\(d\)</span>，则有 <span class="math inline">\(n=\sum\limits_{i=1}^m \sum\limits_{j=1}^i c_j=\sum\limits_{i=1}^m (n-i+1)\times a_i\)</span>。发现 <span class="math inline">\(a_i\)</span> 每增大 <span class="math inline">\(1\)</span>，答案会增大 <span class="math inline">\(n-i+1\)</span>。故转化为『第 <span class="math inline">\(i\)</span> 个物品重量为 <span class="math inline">\(n-i+1\)</span>』的完全背包。</p>
+<ul>
+<li>不可重：要求每个物品至少选一次。</li>
+<li>可重：无限制。</li>
+</ul>
+<p>该方法唯一性更显然。</p></li>
+</ul>
+<p>复杂度均为 <span class="math inline">\(O(nm)\)</span>，即 <span class="math inline">\(O(V\sqrt V)\)</span>。</p>
+<h3 id="例sets-of-complementary-sums">例：Sets of Complementary Sums</h3>
+<p><a href="/20250723/#e.-sets-of-complementary-sums">link</a></p>
+<h2 id="ferrers-图">Ferrers 图</h2>
+<p>将 <span class="math inline">\(k\)</span> 个分拆出来的数用横向柱状图表示并单调不增排列，得到 Ferrers 图。</p>
+<figure>
+<img src="image-1.png" alt="例：12=5+4+2+1 的 Ferrers 图（图源 OI Wiki）" /><figcaption>例：<span class="math inline">\(12=5+4+2+1\)</span> 的 Ferrers 图（图源 OI Wiki）</figcaption>
+</figure>
+<p>将图像斜向翻折得到一组共轭解，原图中的 <span class="math inline">\(k\)</span> 即为共轭解中的元素最值。故亦可限定分拆结果的最值为 <span class="math inline">\(k\)</span>，则结果仍为 <span class="math inline">\(f_{n,k}\)</span>。同时适用于分拆数与互异分拆数。</p>
+<p>顺带提一嘴杨表：把点替换成 <span class="math inline">\(1\sim n\)</span>，并使得一个点同时大于左侧和上方的值。</p>
+<p>似乎就不是很有用了。计数题可能会考。</p>
 
 			</div>
 			<hr class="dotted">
@@ -190,16 +210,16 @@
 					<div id="prev">
 						
 							<!-- 吐槽，为啥还需要加 / -->
-							<a href="/20250723/">
+							<a href="/20250809/">
 								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
-								vp 记录 edu 181
+								近期杂题
 							</a>
 						
 					</div>
 					<div id="next">
 						
-							<a href="/20250721/">
-								解题报告 CF1804F Approximate Diameter
+							<a href="/20250805/">
+								状压 DP
 								<i class="fas fa-angle-double-right" style="margin-left: 10px;"></i>
 							</a>
 						

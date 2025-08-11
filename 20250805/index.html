@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 网站图标 -->
+<link rel="icon" type="image/png" sizes="32x32" href="/images/icon.svg">
+<!-- 其他图标支持 -->
+<link rel="stylesheet" href="/css/facss/fa-brands.min.css">
+<link rel="stylesheet" href="/css/facss/fa-regular.min.css">
+<link rel="stylesheet" href="/css/facss/fa-solid.min.css">
+<link rel="stylesheet" href="/css/facss/fontawesome.min.css">
+<link rel="stylesheet" href="/css/facss/fontawesome-all.css">
+<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+<!-- 网站标题 -->
+<title>
+	
+		状压 DP -
+	
+	XSC062 的博客
+</title>
+<!-- js 引入 -->
+
+<script src="/js/afterloaded.js"></script>
+
+
+<script src="/js/jQuery.js"></script>
+
+<!-- 载入 Valine -->
+
+<script src="/js/Valine.min.js"></script>
+
+<!-- css 引入 -->
+
+<link rel="stylesheet" href="/css/layout.css">
+
+
+<link rel="stylesheet" href="/css/prcss/prism.css">
+
+
+
+<meta charset="utf-8"> 
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body class="line-numbers match-braces no-brace-select rainbow-braces">
+	
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            processEscapes: true
+          }
+        });
+      </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+            tex2jax: {
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+          });
+      </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+              var all = MathJax.Hub.getAllJax(), i;
+              for(i=0; i < all.length; i += 1) {
+                  all[i].SourceElement().parentNode.className += ' has-jax';
+              }
+          });
+      </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+	<!-- 搜索 -->
+<div id="search-bg">
+	<div id="search-box">
+		<input type="text" id="search-input" placeholder="Type to search...">
+		<div id="search-results"></div>
+		<p>恭喜你触发了这个 box，由于我还没有写关闭键，你只能通过刷新页面来关闭它。非常抱歉 ;-)</p>
+		<p>为了证明我没有摆烂，在这里放一个进度：</p>
+		<p>- 250715：尝试实现搜索功能，初步成功，能够搜索到包含关键词的文章了（也能关掉了）。不知道为啥输入 123 可以匹配所有文章，但是输入 1234 就一篇都匹配不上。</p>
+		<p>- 250716：尝试加入关键词上下文来 de 上面的 bug，然后把 js 写成史了，现在这个框框并不具备搜索功能（也不具备关闭功能） :-(</p>
+	</div>
+</div>
+<!-- 顶栏整体导航菜单 -->
+<div class="ui top menu">
+	<!-- 左对齐 logo -->
+	<a class="logo" href="/">
+		<img src="/images/icon.png"></img>
+		<div id="bartitle">
+			XSC062 的博客
+		</div>
+	</a>
+	<!-- 右对齐部分导航 -->
+	<script>
+		function toSearch() {
+			// goto search.ejs
+			$("#search-bg, #search-bg *").css("z-index", "1002"); 
+			$("#search-bg, #search-bg *").css("opacity", "100%");
+		}
+	</script>
+	<div id="rightali">
+		<a class="item" id="Search" type="button" onclick="toSearch()">
+			<i class="btn text-muted fa fa-search" id="search-icon" disabled></i>
+		</a>
+		<a class="item" id="Home" href="/">
+			Home
+		</a>
+		<a class="item" id="Arch" href="/archives">
+			Archives
+		</a>
+		<!-- <a class="item" id="Cate" href="/categories">
+			Categories
+		</a> -->
+		<a class="item" id="Tags" href="/tags">
+			Tags
+		</a>
+		<a class="item" id="Frie" href="/friends">
+			Friends
+		</a>
+		<a class="item" id="Abou" href="/about">
+			About
+		</a>
+	</div>
+</div>
+    
+<link rel="stylesheet" href="/css/post.css">
+
+
+<script src="/js/post.js"></script>
+
+
+<div class="main">
+	<div id="sidebar">
+		<aside id="toc">
+			<span id="toctitle">
+				<i class="fas fa-list"></i>
+				目录
+			</span>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#a---%E5%8F%AA%E4%B8%8D%E8%BF%87%E6%98%AF%E9%95%BF%E7%9A%84%E9%A2%86%E5%B8%A6-2-just-long-neckties-2"><span class="toc-text">A - 只不过是长的领带 2 &#x2F; Just Long Neckties 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b---cut-and-reorder"><span class="toc-text">B - Cut and Reorder</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c---electric-circuit"><span class="toc-text">C - Electric Circuit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#d---count-grid-3-coloring"><span class="toc-text">D - Count Grid 3-coloring</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#e---pure-straight"><span class="toc-text">E - Pure Straight</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#f---123-set"><span class="toc-text">F - 123 Set</span></a></li></ol>
+		</aside>
+	</div>
+	<div class="ui post container">
+		<div class="ui text container">
+			<span id="postcon">
+				<span id="postinfo">
+					<div class="ui post title">
+						<div id="fortitle" data-content="状压 DP">
+							状压 DP
+						</div>
+						<div class="ui title background">
+						</div>
+					</div>
+					<span id="date">
+						<i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
+						2025-08-05
+					</span>
+				</span>
+			</span>
+			<div id="posttags" class="dotted border">
+				
+					
+						<a href="/tags/DP/" class="citem">DP</a>
+					
+						<a href="/tags/状压-DP/" class="citem">状压 DP</a>
+					
+				
+			</div>
+			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
+			
+			<div id="content">
+				<p>发现如果 <code>&lt;!-- more --&gt;</code> 前面是空白字符会被认为 excerpt 不存在，早该想到这个的</p>
+<span id="more"></span>
+<hr />
+<h2 id="a---只不过是长的领带-2-just-long-neckties-2">A - 只不过是长的领带 2 / Just Long Neckties 2</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P11665" class="uri">https://www.luogu.com.cn/problem/P11665</a></p>
+<p>需要观察到，任意时刻 <span class="math inline">\(B\)</span> 中不存在重复元素。把 <span class="math inline">\(B\)</span> 压出来，令 <span class="math inline">\(f_{i,S}\)</span> 表示选了 <span class="math inline">\(i\)</span>，当前 <span class="math inline">\(B\)</span> 为 <span class="math inline">\(S\)</span> 是否可行，能够 <span class="math inline">\(O(n\cdot 2^V)\)</span>。对于某个 <span class="math inline">\(S\)</span>，只关心它最远能到达哪个 <span class="math inline">\(i\)</span>，故令 <span class="math inline">\(f_S\)</span> 记录之。对于每一个 <span class="math inline">\(S\)</span>，都可以找到 <span class="math inline">\(f_S\)</span> 后第一对 <span class="math inline">\(a_i,a_{i+1}\notin S\)</span>，用其刷表。</p>
+<p>发现『找 <span class="math inline">\(f_S\)</span> 后第一对非法元素』是很慢的，考虑优化；对于每个 <span class="math inline">\(i\)</span> 维护 <span class="math inline">\(p\)</span> 在其后第一次出现的位置 <span class="math inline">\(x\)</span>，对于每个 <span class="math inline">\(a_x=p\)</span> 维护 <span class="math inline">\(x\)</span> 后方 <span class="math inline">\(a_y=p,a_{y+1}=q\)</span> 第一次出现的位置，相当于<strong>先找 <span class="math inline">\(p\)</span> 再找 <span class="math inline">\((p,q)\)</span></strong>，就可以做到 <span class="math inline">\(O(V^2\cdot 2^V+n\cdot V)\)</span>。</p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n;
+    std::cin &gt;&gt; n;
+    std::vector&lt;int&gt; a(n + 1);
+    int V = 0;
+    for (int i = 1; i &lt;= n; ++i) &#123;
+        std::cin &gt;&gt; a[i];
+        V = std::max(V, a[i]--);
+    &#125;
+    std::vector&lt;std::vector&lt;int&gt; &gt; tx(n + 1, std::vector&lt;int&gt; (V)), ty(n + 1, std::vector&lt;int&gt; (V));
+    std::vector&lt;int&gt; lp(V);
+    std::vector&lt;std::vector&lt;int&gt; &gt; lpq(V, std::vector&lt;int&gt; (V));
+    for (int i = n; ~i; --i) &#123;
+        if (i &amp;&amp; i != n)
+            lpq[a[i]][a[i + 1]] = i;
+        for (int j = 0; j &lt; V; ++j) &#123;
+            tx[i][j] = lp[j];
+            if (i != n)
+                ty[i][j] = lpq[a[i]][j];
+        &#125;
+        if (i != 0)
+            lp[a[i]] = i;
+    &#125;
+    int siz = 1 &lt;&lt; V, res = 21;
+    std::vector&lt;int&gt; f(siz);
+    for (int i = 0; i &lt; siz; ++i) &#123;
+        std::vector&lt;int&gt; p0, p1;
+        for (int j = 0; j &lt; V; ++j)
+            if ((i &gt;&gt; j) &amp; 1)
+                p1.push_back(j);
+            else
+                p0.push_back(j);
+        int j = n;
+        for (auto p : p0)
+            if (tx[f[i]][p])
+                for (auto q : p0)
+                    if (ty[tx[f[i]][p]][q])
+                        j = std::min(j, ty[tx[f[i]][p]][q]);
+        if (j != n) &#123;
+            f[i ^ (1 &lt;&lt; a[j])] = std::max(f[i ^ (1 &lt;&lt; a[j])], j);
+            f[i ^ (1 &lt;&lt; a[j + 1])] = std::max(f[i ^ (1 &lt;&lt; a[j + 1])], j + 1);
+            for (auto k : p1) &#123;
+                f[i ^ (1 &lt;&lt; k) ^ (1 &lt;&lt; a[j])] = std::max(f[i ^ (1 &lt;&lt; k) ^ (1 &lt;&lt; a[j])], j);
+                f[i ^ (1 &lt;&lt; k) ^ (1 &lt;&lt; a[j + 1])] = std::max(f[i ^ (1 &lt;&lt; k) ^ (1 &lt;&lt; a[j + 1])], j + 1);
+            &#125;
+        &#125;
+        else
+            res = std::min(res, __builtin_popcount(i));
+    &#125;
+    std::cout &lt;&lt; res &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="b---cut-and-reorder">B - Cut and Reorder</h2>
+<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc328/tasks/abc328_g" class="uri">https://atcoder.jp/contests/abc328/tasks/abc328_g</a></p>
+<p>不妨先重排再修改，令 <span class="math inline">\(f_{i,S}\)</span> 表示已经重排好新序列的前 <span class="math inline">\(i\)</span> 个元素，对应原序列状态 <span class="math inline">\(S\)</span> 的最小代价。枚举新区间容易转移。可以发现枚举 <span class="math inline">\(i,S\)</span> 的实际复杂度为 <span class="math inline">\(O(2^n)\)</span>（空间也可以这么优化），预处理之后总时间复杂度 <span class="math inline">\(O(n^2\cdot 2^n)\)</span>，跑不满，可以通过。</p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const long long inf = 1e18;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n;
+    long long c;
+    std::cin &gt;&gt; n &gt;&gt; c;
+    std::vector&lt;long long&gt; a(n), b(n);
+    for (int i = 0; i &lt; n; ++i)
+        std::cin &gt;&gt; a[i];
+    for (int i = 0; i &lt; n; ++i)
+        std::cin &gt;&gt; b[i];
+    using arr = std::vector&lt;long long&gt;;
+    using brr = std::vector&lt;arr&gt;;
+    using crr = std::vector&lt;brr&gt;;
+    brr p(n, arr(n));
+    crr g(n, brr(n, arr(n)));
+    for (int l = 0; l &lt; n; ++l)
+        for (int r = l; r &lt; n; ++r) &#123;
+            for (int k = l; k &lt;= r; ++k)
+                p[l][r] ^= (1 &lt;&lt; k);
+            for (int R = r - l; R &lt; n; ++R)
+                for (int L = R, j = r; j &gt;= l; --L, --j)
+                    g[l][r][R] += std::abs(b[L] - a[j]);
+        &#125;
+    int siz = 1 &lt;&lt; n;
+    std::vector&lt;long long&gt; f(siz, inf);
+    f[0] = 0ll;
+    for (int j = 1; j &lt; siz; ++j) &#123;
+        int i = __builtin_popcount(j) - 1;
+        for (int r = 0; r &lt; n; ++r)
+            for (int l = r; ~l &amp;&amp; ((j &gt;&gt; l) &amp; 1); --l)
+                f[j] = std::min(f[j], f[j ^ p[l][r]] + g[l][r][i] + c);
+    &#125;
+    std::cout &lt;&lt; f[siz - 1] - c &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="c---electric-circuit">C - Electric Circuit</h2>
+<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc321/tasks/abc321_g" class="uri">https://atcoder.jp/contests/abc321/tasks/abc321_g</a></p>
+<p>很像<a href="/20250430/#有标号无向图计数">无向图容斥</a>？令 <span class="math inline">\(f_S\)</span> 表示让 <span class="math inline">\(S\)</span> 内部完成配对，可以不连通的方案数，那么当且仅当 <span class="math inline">\(S\)</span> 内部点出、入度之和相等（记为 <span class="math inline">\(cnt\)</span>）时，<span class="math inline">\(f_S\)</span> 有值 <span class="math inline">\(cnt!\)</span>。相似地，设 <span class="math inline">\(g_S\)</span> 表示让 <span class="math inline">\(S\)</span> 完成配对，成为一个连通块的方案数，得到 <span class="math inline">\(g_S=f_S-\sum\limits_{v\in S} f_{S\oplus v}\cdot g_v\)</span>。让 <span class="math inline">\(v\)</span> 必须包含 <span class="math inline">\(S\)</span> 中编号最小的点就可以去重。</p>
+<p>从贡献的角度出发，<span class="math inline">\(S\)</span> 带来的贡献就是 <span class="math inline">\(g_S\cdot f_{U\oplus S}\)</span>，其中 <span class="math inline">\(U\)</span> 是全集。最后除以 <span class="math inline">\(M!\)</span> 求出期望。</p>
+<p>复杂度 <span class="math inline">\(O(3^n)\)</span>。</p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int mod = 998244353;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n, m;
+    std::cin &gt;&gt; n &gt;&gt; m;
+    std::vector&lt;int&gt; ci(n), co(n);
+    for (int i = 1, x; i &lt;= m; ++i)
+        std::cin &gt;&gt; x, ++ci[x - 1];
+    for (int i = 1, x; i &lt;= m; ++i)
+        std::cin &gt;&gt; x, ++co[x - 1];
+    std::vector&lt;long long&gt; fac(m + 1);
+    fac[0] = 1ll;
+    for (int i = 1; i &lt;= m; ++i)
+        fac[i] = fac[i - 1] * i % mod;
+    auto qkp = [&amp;](long long x, int y) &#123;
+        auto res(1ll);
+        for (; y; (x *= x) %= mod, y &gt;&gt;= 1)
+            if (y &amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &#125;;
+    int siz = 1 &lt;&lt; n;
+    std::vector&lt;long long&gt; f(siz), g(siz);
+    for (int i = 1; i &lt; siz; ++i) &#123;
+        int si = 0, so = 0;
+        for (int j = 0; j &lt; n; ++j)
+            if ((i &gt;&gt; j) &amp; 1)
+                si += ci[j], so += co[j];
+        if (si == so)
+            f[i] = fac[si];
+    &#125;
+    auto res(0ll);
+    for (int i = 1; i &lt; siz; ++i) &#123;
+        g[i] = f[i];
+        int mn = 0;
+        for (int j = 0; j &lt; n; ++j)
+            if ((i &gt;&gt; j) &amp; 1) &#123;
+                mn = j;
+                break;
+            &#125;
+        int s = i ^ (1 &lt;&lt; mn);
+        (g[i] += mod - g[1 &lt;&lt; mn] * f[s] % mod) %= mod;
+        for (int j = (s - 1) &amp; s; j; j = (j - 1) &amp; s)
+            (g[i] += mod - g[j ^ (1 &lt;&lt; mn)] * f[s ^ j] % mod) %= mod;
+        if (i != siz - 1)
+            (res += g[i] * f[(siz - 1) ^ i]) %= mod;
+        else
+            (res += g[i]) %= mod;
+    &#125;
+    std::cout &lt;&lt; res * qkp(fac[m], mod - 2) % mod &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="d---count-grid-3-coloring">D - Count Grid 3-coloring</h2>
+<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/abc379/tasks/abc379_g" class="uri">https://atcoder.jp/contests/abc379/tasks/abc379_g</a></p>
+<p>轮廓线 DP。把每一列已经确定的最靠下的元素压起来，每行逐个确定即可。</p>
+<p>发现有效状态中只能容许最多一对相邻相同元素，这样复杂度就能降下来了。注意特判 <span class="math inline">\(1\times 1\)</span> 的情况。</p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int mod = 998244353;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n, m;
+    std::cin &gt;&gt; n &gt;&gt; m;
+    std::array&lt;int, 15&gt; p;
+    p[0] = 1;
+    for (int i = 1; i &lt; 15; ++i)
+        p[i] = p[i - 1] * 3;
+    std::vector&lt;std::vector&lt;int&gt; &gt; a;
+    if (n &gt;= m) &#123;
+        a.assign(n + 1, std::vector&lt;int&gt; (m + 1));
+        for (int i = 1; i &lt;= n; ++i) 
+            for (int j = 1; j &lt;= m; ++j) &#123;
+                char t;
+                std::cin &gt;&gt; t, a[i][j] = (t == &#39;?&#39; ? -1 : t - &#39;1&#39;);
+            &#125;
+    &#125;
+    else &#123;
+        std::swap(n, m);
+        a.assign(n + 1, std::vector&lt;int&gt; (m + 1));
+        for (int i = 1; i &lt;= m; ++i)
+            for (int j = 1; j &lt;= n; ++j) &#123;
+                char t;
+                std::cin &gt;&gt; t, a[j][i] = (t == &#39;?&#39; ? -1 : t - &#39;1&#39;);
+            &#125;
+    &#125;
+    int siz = p[m];
+    using arr = std::vector&lt;long long&gt;;
+    using brr = std::vector&lt;arr&gt;;
+    using crr = std::vector&lt;brr&gt;;
+    std::vector&lt;int&gt; s, tab(siz, -1);
+    auto getv_1 = [&amp;](int j, int i) &#123;
+        return (j / p[i - 1]) % 3;
+    &#125;;
+    auto getv = [&amp;](int j, int i) &#123;
+        return (s[j] / p[i - 1]) % 3;
+    &#125;;
+    auto chg = [&amp;](int j, int i, int v) &#123;
+        return tab[s[j] - p[i - 1] * getv(j, i) + p[i - 1] * v];
+    &#125;;
+    auto out = [&amp;](int i) &#123;
+        std::string s;
+        for (int j = 1; j &lt;= m; ++j)
+            s += &#39;1&#39; + getv_1(i, j);
+        return s.c_str();
+    &#125;;
+    for (int i = 0; i &lt; siz; ++i) &#123;
+        s.push_back(i);
+        int cnt = 0;
+        for (int j = 2; j &lt;= m; ++j)
+            if (getv_1(i, j - 1) == getv_1(i, j) &amp;&amp; ++cnt &gt;= 2) &#123;
+                s.pop_back();
+                break;
+            &#125;
+    &#125;
+    for (int i = 0; i &lt; (int)s.size(); ++i)
+        tab[s[i]] = i;
+    siz = (int)s.size();
+    if (n == 1) &#123;
+        std::cout &lt;&lt; (a[1][1] == -1 ? 3 : 1) &lt;&lt; &#39;\n&#39;;
+        return 0;
+    &#125;
+    crr f(n + 1, brr(m + 1, arr(siz)));
+    for (int i = 0; i &lt; siz; ++i)
+        if ([&amp;](int i, int s) &#123;
+            for (int j = 1; j &lt;= m; ++j) &#123;
+                if (a[i][j] != -1 &amp;&amp; a[i][j] != getv(s, j))
+                    return false;
+                if (j != 1 &amp;&amp; getv(s, j) == getv(s, j - 1))
+                    return false;
+            &#125;
+            return true;
+        &#125; (1, i)) &#123;
+            for (int p = 0; p &lt; 3; ++p)
+                if ((a[2][1] == -1 || a[2][1] == p) &amp;&amp; getv(i, 1) != p &amp;&amp; ~chg(i, 1, p))
+                    (++f[2][1][chg(i, 1, p)]) %= mod;
+        &#125;
+    for (int i = 2; i &lt;= n; ++i) &#123;
+        for (int k = 1; k &lt; m; ++k)
+            for (int j = 0; j &lt; siz; ++j)
+                if (f[i][k][j]) &#123;
+                    // printf(&quot;f[%d][%d][%s] = %lld\n&quot;, i, k, out(s[j]), f[i][k][j]);
+                    for (int p = 0; p &lt; 3; ++p)
+                        if ((a[i][k + 1] == -1 || a[i][k + 1] == p) &amp;&amp; getv(j, k) != p &amp;&amp; getv(j, k + 1) != p &amp;&amp; ~chg(j, k + 1, p))
+                            (f[i][k + 1][chg(j, k + 1, p)] += f[i][k][j]) %= mod;
+                &#125;
+        for (int j = 0; j &lt; siz; ++j)
+            if (i != n &amp;&amp; f[i][m][j])
+                for (int p = 0; p &lt; 3; ++p)
+                    if ((a[i + 1][1] == -1 || a[i + 1][1] == p) &amp;&amp; getv(j, 1) != p &amp;&amp; ~chg(j, 1, p))
+                        (f[i + 1][1][chg(j, 1, p)] += f[i][m][j]) %= mod;
+    &#125;
+    auto res = 0ll;
+    for (int i = 0; i &lt; siz; ++i)
+        (res += f[n][m][i]) %= mod;
+    std::cout &lt;&lt; res &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="e---pure-straight">E - Pure Straight</h2>
+<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc126/tasks/arc126_d" class="uri">https://atcoder.jp/contests/arc126/tasks/arc126_d</a></p>
+<p>手玩发现只要最终序列确定，那么移动的顺序不影响答案。故考虑确定目标位置和移动序列。考虑绝对值的几何意义，不妨令目标子序列中元素集中到被选中位置的中间元素，此时的代价可以计算。用点二进制技巧和库函数可以 <span class="math inline">\(O(1)\)</span> 算代价。</p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n, k;
+    std::cin &gt;&gt; n &gt;&gt; k;
+    int siz = 1 &lt;&lt; k;
+    std::vector&lt;int&gt; a(n + 1), f(siz, 0x3f3f3f3f);
+    auto out = [&amp;](int j) &#123;
+        std::string s;
+        for (int i = 0; i &lt; k; ++i)
+            s += (&#39;0&#39; + ((j &gt;&gt; i) &amp; 1));
+        return s.c_str();
+    &#125;;
+    f[0] = 0;
+    for (int i = 1; i &lt;= n; ++i) &#123;
+        std::cin &gt;&gt; a[i], --a[i];
+        for (int j = siz - 1; j &gt;= 0; --j) &#123;
+            if (!((j &gt;&gt; a[i]) &amp; 1))
+                f[j | (1 &lt;&lt; a[i])] = std::min(f[j | (1 &lt;&lt; a[i])], f[j] + __builtin_popcount(j &amp; (~((1 &lt;&lt; a[i]) - 1))));
+            f[j] += std::min(__builtin_popcount(j), k - __builtin_popcount(j));
+        &#125;
+    &#125;
+    std::cout &lt;&lt; f[siz - 1] &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="f---123-set">F - 123 Set</h2>
+<p><a target="_blank" rel="noopener" href="https://atcoder.jp/contests/arc184/tasks/arc184_b" class="uri">https://atcoder.jp/contests/arc184/tasks/arc184_b</a></p>
+<p>做过 <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3226">集合选数</a>（这个 trick 见过很多次了，应该不只这一道，但我想不起来了）很容易想到画一个表格或者 DAG 出来，其实都能做</p>
+<p>对于表格左上角和 DAG 的源点，肯定是一个 <span class="math inline">\(x\)</span>，其不是 <span class="math inline">\(2\)</span> 或 <span class="math inline">\(3\)</span> 的倍数。如果画表，横乘 3 竖乘 2，观察一下是包含了 <span class="math inline">\(1\sim n\)</span> 恰好一次的很多个杨表（没什么用，提一嘴而已），考虑转化目标，发现是用一个不可旋转的倒 L 形骨牌可叠放地铺满异形表格，可以考虑轮廓线 DP</p>
+<p>具体地，用 1 来表示拐角处，0 表示其他，叠放的时候 1 的优先级比 0 高，然后就可以做了。以 3 为行，悲观估计单个表格大概有 <span class="math inline">\(31\times 2^{19}\)</span> 个状态，运算次数差不多 <span class="math inline">\(31\times 19\times 2^{19}\)</span>；再发现长得一模一样的表格肯定方案数是一样的，如果把任意一个表格全部除以 <span class="math inline">\(x\)</span>，就会得到 <span class="math inline">\(n=10^9\div x\)</span> 时 <span class="math inline">\(1\)</span> 为左上角的杨表，就是说长相只和 <span class="math inline">\(10^9\div x\)</span> 的值有关，可以整除分块 😱 可预计的跑得非常不满，实践下来是可以过的（但是很慢）</p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n;
+    std::cin &gt;&gt; n;
+    auto calc = [&amp;](int r) &#123;
+        return r - r / 2 - r / 3 + r / 6;
+    &#125;;
+    auto dp = [&amp;](int lim) &#123;
+        if (lim == 1) &#123;
+            // printf(&quot;lim = 1, ret 1&quot;);
+            return 1;
+        &#125;
+        int n = 1, m = 1;
+        for (int k = 1; k * 2 &lt;= lim; ++n, k *= 2);
+        for (int k = 1; k * 3 &lt;= lim; ++m, k *= 3);
+        int siz = 1 &lt;&lt; m;
+        std::vector&lt;std::vector&lt;std::vector&lt;int&gt; &gt; &gt; f(2, std::vector&lt;std::vector&lt;int&gt; &gt; (2, std::vector&lt;int&gt; (siz))), p(n + 1, std::vector&lt;std::vector&lt;int&gt; &gt; (m));
+        std::vector&lt;std::vector&lt;std::vector&lt;std::pair&lt;int, int&gt; &gt; &gt; &gt; t(2, std::vector&lt;std::vector&lt;std::pair&lt;int, int&gt; &gt; &gt; (2, std::vector&lt;std::pair&lt;int, int&gt; &gt; (siz))); // sb
+        auto upd = [&amp;](int i, int k, int j, int v) &#123;
+            if (t[i &amp; 1][k &amp; 1][j] != std::make_pair(i, k)) &#123;
+                p[i][k].push_back(j);
+                t[i &amp; 1][k &amp; 1][j] = &#123; i, k &#125;, f[i &amp; 1][k &amp; 1][j] = v;
+            &#125;
+            else
+                f[i &amp; 1][k &amp; 1][j] = std::min(f[i &amp; 1][k &amp; 1][j], v);
+            return;
+        &#125;;
+        auto chg = [&amp;](int i, int j, int v) &#123;
+            return i ^ (((i &gt;&gt; j) &amp; 1) &lt;&lt; j) ^ (v &lt;&lt; j);
+        &#125;;
+        for (int i = 0; i &lt; siz; ++i) &#123;
+            bool flag = 0;
+            for (int j = 0; j &lt; m; ++j)
+                if (((i &gt;&gt; j) &amp; 1) || (j &amp;&amp; ((i &gt;&gt; (j - 1)) &amp; 1)));
+                else &#123;
+                    flag = 1;
+                    break;
+                &#125;
+            if (!flag)
+                upd(1, m - 1, i, __builtin_popcount(i));
+        &#125;
+        for (int i = 2; i &lt;= n; i++) &#123;
+            int m1 = 1;
+            for (int x = (1 &lt;&lt; (i - 1)); x * 3ll &lt;= lim; ++m1, x *= 3);
+            int siz1 = 1 &lt;&lt; m1;
+            for (auto j : p[i - 1][m - 1]) &#123;
+                if (j &amp; 1)
+                    upd(i, 0, chg(j &amp; (siz1 - 1), 0, 0), f[(i - 1) &amp; 1][(m - 1) &amp; 1][j]);
+                upd(i, 0, chg(j &amp; (siz1 - 1), 0, 1), f[(i - 1) &amp; 1][(m - 1) &amp; 1][j] + 1);
+            &#125;
+            m = m1, siz = siz1;
+            for (int k = 0; k &lt; m - 1; ++k)
+                for (auto j : p[i][k]) &#123;
+                    if (((j &gt;&gt; k) &amp; 1) || ((j &gt;&gt; (k + 1)) &amp; 1))
+                        upd(i, k + 1, chg(j, k + 1, 0), f[i &amp; 1][k &amp; 1][j]);
+                    upd(i, k + 1, chg(j, k + 1, 1), f[i &amp; 1][k &amp; 1][j] + 1);
+                &#125;
+        &#125;
+        int res = 0x3f3f3f3f;
+        for (auto i : p[n][m - 1])
+            res = std::min(res, f[n &amp; 1][(m - 1) &amp; 1][i]);
+        return res;
+    &#125;;
+    int res = 0;
+    for (int l = 1, r; l &lt;= n; l = r + 1) &#123;
+        r = n / (n / l);
+        if (calc(r) - calc(l - 1))
+            res += (calc(r) - calc(l - 1)) * dp(n / l);
+    &#125;
+    std::cout &lt;&lt; res &lt;&lt; &#39;\n&#39;;
+    return 0;
+&#125;</code></pre>
+</details>
+
+			</div>
+			<hr class="dotted">
+			<div class="post footer">
+				<div id="hitokoto">
+					<h3 id="hitokoto-title">
+						言论
+					</h3>
+					<div id="hitokoto-content">
+					</div>
+					<div id="hitokoto-from">
+					</div>
+				</div>
+				<div class="button flex">
+					<div id="prev">
+						
+							<!-- 吐槽，为啥还需要加 / -->
+							<a href="/20250807/">
+								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
+								学习笔记：分拆数与 Ferrers 图
+							</a>
+						
+					</div>
+					<div id="next">
+						
+							<a href="/20250803/">
+								树 DP
+								<i class="fas fa-angle-double-right" style="margin-left: 10px;"></i>
+							</a>
+						
+					</div>
+				</div>
+				<div id="vcomments" class="yahei"></div>
+<script>
+	new Valine({
+		el: '#vcomments',
+		appId: 'OlmvQ0a2Zw7xo3no2bwabOzx-gzGzoHsz',
+		appKey: 'TW6t8mFeGLmhPjWisvmllvvo',
+		recordIP: true,
+		enableQQ: true, 
+		// 目前 Valine 的 QQ 自动获取昵称似乎不可用 故不建议开启
+		pageSize: 10,
+		requiredFields:
+			
+				['nick']
+			,
+		placeholder: "The world is but a little place after all...\n能够根据邮箱获取你的 Gravatar 头像。昵称是必填项，长度需不低于 3。",
+		avatar: 'mp',
+		avatar_cdn: 'https://cravatar.cn/avatar/',
+		emojiCDN: 'https://xsc062.netlify.app/em/', 
+		emojiMaps: {
+			
+				"微笑": "wx.gif",
+			
+				"龇牙": "cy.gif",
+			
+				"流泪": "ll.gif",
+			
+				"笑哭": "xk.gif",
+			
+				"流汗": "lh.gif",
+			
+				"擦汗": "ch.gif",
+			
+				"亲亲": "qq.gif",
+			
+				"色": "se.gif",
+			
+				"疑问": "yiw.gif",
+			
+				"发呆": "fd.gif",
+			
+				"晕": "yun.gif",
+			
+				"鼓掌": "gz.gif",
+			
+				"憨笑": "hanx.gif",
+			
+				"快哭了": "kk.gif",
+			
+				"得意": "dy.gif",
+			
+				"狂笑": "kx.gif",
+			
+				"害羞": "hx.gif",
+			
+				"妈妈生的": "dz.gif",
+			
+				"糗大了": "qd.gif",
+			
+				"吃瓜": "cg.gif",
+			
+				"睁眼": "zy.webp",
+			
+				"辣眼睛": "lyj.gif",
+			
+				"酸了": "nm.gif",
+			
+				"滚": "gun.webp",
+			
+				"惊恐": "jk.gif",
+			
+				"幽灵": "youl.gif",
+			
+				"无聊": "wul.gif",
+			
+				"吃": "eat.gif",
+			
+				"你很棒棒": "bb.gif",
+			
+				"赞": "qiang.gif",
+			
+				"踩": "ruo.gif",
+			
+				"握手": "wsh.gif",
+			
+				"发抖": "fad.gif",
+			
+				"挥手": "hsh.gif",
+			
+				"磕头": "kt.gif",
+			
+				"怄火": "oh.gif",
+			
+		},
+	})
+</script>
+			</div>
+			<script>setHitokoto();</script>
+		</div> 
+	</div>
+</div>
+    <!-- 页脚开始 -->
+<div id="footer" class="yahei">
+    Powered by
+    <a target="_blank" rel="noopener" href="https://hexo.io">
+        Hexo
+    </a>
+    &
+    <a href="/about-this-theme">
+        iwll
+    </a>
+    <p style="margin-top: 5px;">
+        2021 - 2025
+    </p>
+</div>
+<!-- Valine 相关配置 -->
+<script>
+    const getValineDomTimer = setInterval(() => {
+        // 不知道为什么 我从原博客 js 文件粘过来的参数是
+        // "#valine .vcards .vcard"
+        // DEBUG 了半天才定位到这个问题。。。
+        const vcards =
+            document.querySelectorAll('#valine, .vcards, .vcard');
+        if (vcards.length > 0) {
+            let author = 'XSC062';
+            for (let vcard of vcards) {
+                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                if (vnick_dom != null) {
+                    const vnick = vnick_dom.innerHTML;
+                    if (vnick === author) {
+                        vnick_dom.innerHTML =
+                        `${vnick} <span id="rootitem" class="fira">root</span>`
+                    }
+                }
+            }
+        }
+        else {
+            clearInterval(getValineDomTimer);
+        }
+    }, 2000);
+    SetActiveItem();
+    setDetailsSummary();
+    setTitleAnchor();
+    setEmptyToc();
+    setCodeClassName();
+</script>
+
+
+<!-- js -->
+<!-- 搜索功能相关配置 -->
+
+<script src="/js/search.js"></script>
+
+</script>
+<!-- prism 相关配置 -->
+<script type="text/javascript" src="/js/prism.js" defer></script>
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/clipboard-use.js"></script>
+<!-- 页脚结束 -->
+</body>
+</html>

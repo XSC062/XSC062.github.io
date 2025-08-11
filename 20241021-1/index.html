@@ -136,7 +136,7 @@
 		</aside>
 	</div>
 	<div class="ui post container">
-		<div class="ui text container yahei">
+		<div class="ui text container">
 			<span id="postcon">
 				<span id="postinfo">
 					<div class="ui post title">
@@ -238,11 +238,13 @@ auto ask = [&amp;](int x, int k) &#123;
 <blockquote>
 <p>yly：管它这那的，只要是有关深度直接上长剖就是了。</p>
 </blockquote>
-<p>我还想上呢，怎么上啊？？？</p>
+<p>和 DSU on tree 类似，主要利用每条链只会被算一次实现 <span class="math inline">\(O(n)\)</span> DP。具体地，尽可能地『继承』长链的信息，『短链』则暴力合并。</p>
+<p>值得注意的是，一般『深度』这一维信息会以『与 <span class="math inline">\(u\)</span> 的距离』的形式，结合指针来维护（因为直接记录深度会更史）。</p>
+<p>具体地，用一个全局大数组容纳所有信息，为每个点分配相应的数组头指针。正常情况下需要用到的元素最多为 <span class="math inline">\(2n\)</span>，但如果存在一些诡异的前移后移操作就另当别论了。</p>
 <hr />
 <h3 id="p5904-poi-2014-hot-hotels-加强版">P5904 [POI 2014] HOT-Hotels 加强版</h3>
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5904" class="uri">https://www.luogu.com.cn/problem/P5904</a></p>
-<p>首先 <del>不难</del> 得到 <span class="math inline">\(O(n^2)\)</span> 做法：显然存在一个点到三个点距离相等。这个点既可能是它们的 LCA，也可能是其中一个点的子孙，另外两个点的 LCA。总之在 LCA 处统计答案是可行的。</p>
+<p>首先 <del>不难</del> 得到 <span class="math inline">\(O(n^2)\)</span> 做法：显然存在一个点到三个点距离相等。这个点既可能是它们的 LCA，也可能是其中一个点的子孙，另外两个点的 LCA。综上，<strong>在 LCA 处统计答案是可行的</strong>。</p>
 <p>令 <span class="math inline">\(f_{i,j}\)</span> 表示 <span class="math inline">\(i\)</span> 子树中距离 <span class="math inline">\(i\)</span> 为 <span class="math inline">\(j\)</span> 的点数；<span class="math inline">\(g_{i,j}\)</span> 表示 <span class="math inline">\(i\)</span> 子树中距离 <span class="math inline">\(i\)</span> 为 <span class="math inline">\(j\)</span>、或者距 LCA 为 <span class="math inline">\(d\)</span> 且 LCA 距离 <span class="math inline">\(i\)</span> 为 <span class="math inline">\(d-j\)</span> 的点对数；随便做就可以了。</p>
 <details>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
@@ -371,7 +373,7 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="cf1585g-poachers">CF1585G Poachers</h3>
-<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF1585G" class="uri">https://www.luogu.com.cn/problem/CF1585G</a></p>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1585/G" class="uri">https://codeforces.com/problemset/problem/1585/G</a></p>
 <p>公平博弈。我们现在要算每个根的 SG 值。设 <span class="math inline">\(f_{u,j}\)</span> 表示在点 <span class="math inline">\(u\)</span>，删了距离它为 <span class="math inline">\(j\)</span> 这一层的 SG 值，那么有：</p>
 <p><span class="math display">\[
 f_{u,j}=
@@ -381,6 +383,90 @@ f_{u,j}=
 \end{cases}
 \]</span></p>
 <p>然后发现有深度维。大力长剖。</p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int inf = 0x3f3f3f3f;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int T;
+    for (std::cin &gt;&gt; T; T--; ) &#123;
+        int n;
+        std::cin &gt;&gt; n;
+        std::vector&lt;int&gt; rt;
+        std::vector&lt;std::vector&lt;int&gt; &gt; g(n + 1);
+        for (int i = 1, x; i &lt;= n; ++i) &#123;
+            std::cin &gt;&gt; x;
+            if (x)
+                g[x].push_back(i);
+            else
+                rt.push_back(i);
+        &#125;
+        std::vector&lt;int&gt; h(n + 1), son(n + 1), to(n + 1, inf);
+        std::function&lt;void(int)&gt; DFS = [&amp;](int x) &#123;
+            h[x] = 1;
+            for (auto i : g[x]) &#123;
+                DFS(i);
+                h[x] = std::max(h[x], h[i] + 1);
+                to[x] = std::min(to[x], to[i] + 1);
+                if (h[i] &gt; h[son[x]])
+                    son[x] = i;
+            &#125;
+            to[x] = std::min(to[x], h[x]);
+            return;
+        &#125;;
+        for (auto i : rt)
+            DFS(i);
+        std::vector&lt;int&gt; _f(5 * n + 1), top(n + 1);
+        std::vector&lt;decltype(_f.begin())&gt; f(n + 1);
+        std::vector&lt;std::unordered_set&lt;int&gt; &gt; s(n + 1);
+        auto p(_f.begin());
+        DFS = [&amp;](int x) &#123;
+            if (son[x]) &#123;
+                f[son[x]] = std::next(f[x]);
+                top[son[x]] = top[x], DFS(son[x]);
+            &#125;
+            if ((int)g[x].size() == 1) &#123;
+                s[top[x]].insert(f[son[x]][0]);
+                for (int now = f[son[x]][0] + 1; ; ++now)
+                    if (!s[top[x]].count(now)) &#123;
+                        f[x][0] = now;
+                        break;
+                    &#125;
+                return;
+            &#125;
+            for (auto i : g[x])
+                if (i != son[x]) &#123;
+                    f[i] = p, p = std::next(p, h[i] + 1);
+                    top[i] = i, DFS(i);
+                    for (int j = 1; j &lt;= to[i] + 1; ++j)
+                        f[x][j] ^= f[i][j - 1];
+                &#125;
+            std::unordered_set&lt;int&gt;().swap(s[top[x]]);
+            for (int j = 1; j &lt;= to[x]; ++j)
+                s[top[x]].insert(f[x][j]);
+            for (int now = 0; ; ++now)
+                if (!s[top[x]].count(now)) &#123;
+                    f[x][0] = now;
+                    break;
+                &#125;
+            return;
+        &#125;;
+        int res = 0;
+        for (auto i : rt) &#123;
+            f[i] = p, p = std::next(p, h[i] + 1);
+            DFS(i), res ^= f[i][0];
+        &#125;
+        std::cout &lt;&lt; (res ? &quot;YES&quot; : &quot;NO&quot;) &lt;&lt; &#39;\n&#39;;
+    &#125;
+    return 0;
+&#125;</code></pre>
+</details>
 <hr />
 
 			</div>
