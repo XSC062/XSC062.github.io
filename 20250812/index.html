@@ -18,6 +18,9 @@
 	XSC062 的博客
 </title>
 <!-- js 引入 -->
+<script>
+const searchPath = "/search.xml"
+</script>
 
 <script src="/js/afterloaded.js"></script>
 
@@ -73,8 +76,11 @@
 		<div id="search-results"></div>
 		<p>恭喜你触发了这个 box，由于我还没有写关闭键，你只能通过刷新页面来关闭它。非常抱歉 ;-)</p>
 		<p>为了证明我没有摆烂，在这里放一个进度：</p>
-		<p>- 250715：尝试实现搜索功能，初步成功，能够搜索到包含关键词的文章了（也能关掉了）。不知道为啥输入 123 可以匹配所有文章，但是输入 1234 就一篇都匹配不上。</p>
+		<p>- 250715：尝试实现搜索功能，初步成功，能够搜索到包含关键词的文章了（<strong>也能关掉了</strong>）。不知道为啥输入 123 可以匹配所有文章，但是输入 1234 就一篇都匹配不上。（250814 upd：搜索的是 html 源码，<code>{</code> 的 ASCII 码为 123 / <code>&</code><code>#123;</code>）</p>
 		<p>- 250716：尝试加入关键词上下文来 de 上面的 bug，然后把 js 写成史了，现在这个框框并不具备搜索功能（也不具备关闭功能） :-(</p>
+		<p>- 250814：<strong>能关了</strong>，我很勤勉</p>
+		<p>什么？居然还能搜索！还能高亮关键词？谢谢你，hexo-generator-searchdb！但是你为什么没有注释，让我阅读理解了半天 :-(</p>
+		<p>css 等有空了再写吧，能用就行</p>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
@@ -87,15 +93,8 @@
 		</div>
 	</a>
 	<!-- 右对齐部分导航 -->
-	<script>
-		function toSearch() {
-			// goto search.ejs
-			$("#search-bg, #search-bg *").css("z-index", "1002"); 
-			$("#search-bg, #search-bg *").css("opacity", "100%");
-		}
-	</script>
 	<div id="rightali">
-		<a class="item" id="Search" type="button" onclick="toSearch()">
+		<a class="item" id="Search" type="button">
 			<i class="btn text-muted fa fa-search" id="search-icon" disabled></i>
 		</a>
 		<a class="item" id="Home" href="/">
@@ -132,7 +131,7 @@
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81-dp"><span class="toc-text">动态 DP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E6%B5%B7%E6%8A%A5"><span class="toc-text">例：海报</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E9%A2%98gss3"><span class="toc-text">经典题：GSS3</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%A0%91-dp"><span class="toc-text">动态树 DP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E5%8A%A8%E6%80%81-dp"><span class="toc-text">【模板】动态 DP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-text">全局平衡二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%B4%E6%8A%A4-ddp%E6%A8%A1%E6%9D%BF%E5%8A%A8%E6%80%81-dp%E5%8A%A0%E5%BC%BA%E7%89%88"><span class="toc-text">维护 DDP：【模板】动态 DP（加强版）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%91%E4%B8%8A%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98%E6%9F%93%E8%89%B2"><span class="toc-text">树上路径问题：染色</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%A0%E9%A2%98"><span class="toc-text">习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#e---%E7%8C%AB%E6%88%96%E7%8B%97-cats-or-dogs"><span class="toc-text">E - 猫或狗 &#x2F; Cats or Dogs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#g---hash-on-tree"><span class="toc-text">G - Hash on Tree</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81-dp"><span class="toc-text">动态 DP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E6%B5%B7%E6%8A%A5"><span class="toc-text">例：海报</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E9%A2%98gss3"><span class="toc-text">经典题：GSS3</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%A0%91-dp"><span class="toc-text">动态树 DP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E5%8A%A8%E6%80%81-dp"><span class="toc-text">【模板】动态 DP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="toc-text">全局平衡二叉树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%B4%E6%8A%A4-ddp%E6%A8%A1%E6%9D%BF%E5%8A%A8%E6%80%81-dp%E5%8A%A0%E5%BC%BA%E7%89%88"><span class="toc-text">维护 DDP：【模板】动态 DP（加强版）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%91%E4%B8%8A%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98%E6%9F%93%E8%89%B2"><span class="toc-text">树上路径问题：染色</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%A0%E9%A2%98"><span class="toc-text">习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#e---%E7%8C%AB%E6%88%96%E7%8B%97-cats-or-dogs"><span class="toc-text">E - 猫或狗 &#x2F; Cats or Dogs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#f---hash-on-tree"><span class="toc-text">F - Hash on Tree</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#g---%E8%80%83%E8%AF%95-2"><span class="toc-text">G - 考试 2</span></a></li></ol></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -154,6 +153,8 @@
 			</span>
 			<div id="posttags" class="dotted border">
 				
+					
+						<a href="/tags/线段树/" class="citem">线段树</a>
 					
 						<a href="/tags/DDP/" class="citem">DDP</a>
 					
@@ -1487,9 +1488,529 @@ int main() &#123;
 #endif</code></pre>
 </details>
 <hr />
-<h3 id="g---hash-on-tree">G - Hash on Tree</h3>
+<h3 id="f---hash-on-tree">F - Hash on Tree</h3>
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_abc351_g" class="uri">https://www.luogu.com.cn/problem/AT_abc351_g</a></p>
 <p>记 <span class="math inline">\(g_x\)</span> 为轻儿子的哈希值之积，则 <span class="math inline">\(f_u=A_u+f_{son}\cdot g_u\)</span>。</p>
+<p>然后开一个常数维即可。快速幂的 log 省不掉，所以是双 log 的。</p>
+<p>初值和修改都有可能为 <span class="math inline">\(0\)</span>，需要维护实际哈希值和去掉 <span class="math inline">\(0\)</span> 的哈希值。</p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int maxn = 1e6 + 5;
+const int LEN = (1 &lt;&lt; 20);
+const int mod = 998244353;
+int nec(void) &#123;
+    static char buf[LEN], *p = buf, *e = buf;
+    if (p == e) &#123;
+        e = buf + fread(buf, 1, LEN, stdin);
+        if (e == buf) return EOF;
+        p = buf;
+    &#125;
+    return *p++;
+&#125;
+bool read(int &amp;x) &#123;
+    x = 0;
+    bool f = 0;
+    char ch = nec();
+    while (ch &lt; &#39;0&#39; || ch &gt; &#39;9&#39;) &#123;
+        if (ch == EOF) return 0;
+        if (ch == &#39;-&#39;) f = 1;
+        ch = nec();
+    &#125;
+    while (ch &gt;= &#39;0&#39; &amp;&amp; ch &lt;= &#39;9&#39;) &#123;
+        x = x * 10 + ch - &#39;0&#39;;
+        ch = nec();
+    &#125;
+    if (f) x = -x;
+    return 1;
+&#125;
+void print(int x) &#123;
+    if (x &lt; 0)
+        putchar(&#39;-&#39;), x = -x;
+    if (x &gt;= 10) print(x / 10);
+    putchar(x % 10 + &#39;0&#39;);
+    return;
+&#125;
+void print(int x, char ch) &#123;
+    print(x), putchar(ch);
+    return;
+&#125;
+struct mat &#123;
+    int n, m;
+    long long a[2][2];
+    long long* operator[] (const int q) &#123;
+        return a[q];
+    &#125;
+    mat operator* (mat &amp;q) const &#123;
+        mat res;
+        res.n = n, res.m = q.m;
+        res[0][0] = res[0][1] = res[1][0] = res[1][1] = 0ll;
+        for (int i = 0; i &lt; n; ++i)
+            for (int k = 0; k &lt; q.m; ++k) &#123;
+                for (int j = 0; j &lt; m; ++j)
+                    res[i][k] += a[i][j] * q[j][k];
+                res[i][k] %= mod;
+            &#125;
+        return res;
+    &#125;
+    mat&amp; operator*= (mat &amp;q) &#123;
+        return *this = *this * q;
+    &#125;
+&#125;;
+struct &#123; int lc, rc, l, r, mid; mat u; &#125; t[maxn &lt;&lt; 2]; 
+long long g[maxn];
+int tab[maxn], ls[maxn], a[maxn];
+#define lt t[p].lc
+#define rt t[p].rc
+void bld(int &amp;p, int l, int r) &#123;
+    static int tot = 0;
+    p = ++tot, t[p].l = l, t[p].r = r;
+    if (l == r) &#123;
+        int u = tab[l];
+        t[p].u.n = t[p].u.m = 2;
+        t[p].u[0][0] = g[u];
+        t[p].u[0][1] = 0ll;
+        t[p].u[1][0] = a[u];
+        t[p].u[1][1] = 1ll;
+        return;
+    &#125;
+    int s = 0, u = ls[tab[l]];
+    for (int i = l; i &lt;= r; ++i)
+        s += ls[tab[i]];
+    s &gt;&gt;= 1;
+    t[p].mid = r - 1;
+    for (int i = l + 1; i &lt; r; ++i) &#123;
+        u += ls[tab[i]];
+        if (u + ls[tab[i + 1]] &gt; s) &#123;
+            t[p].mid = i;
+            break;
+        &#125;
+    &#125;
+    bld(lt, l, t[p].mid), bld(rt, t[p].mid + 1, r);
+    t[p].u = t[rt].u * t[lt].u;
+    return;
+&#125;
+void add(int p, int x) &#123;
+    if (t[p].l == t[p].r) &#123;
+        int u = tab[x];
+        t[p].u[0][0] = g[u];
+        t[p].u[1][0] = a[u];
+        return;
+    &#125;
+    if (x &lt;= t[p].mid)
+        add(lt, x);
+    else
+        add(rt, x);
+    t[p].u = t[rt].u * t[lt].u;
+    return;
+&#125;
+#undef lt
+#undef rt
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n, q;
+    read(n), read(q);
+    std::vector&lt;int&gt; rt(n + 1);
+    std::vector&lt;std::vector&lt;int&gt; &gt; g1(n + 1);
+    for (int i = 2, x; i &lt;= n; ++i) &#123;
+        read(x);
+        g1[i].push_back(x), g1[x].push_back(i);
+    &#125;
+    for (int i = 1; i &lt;= n; ++i)
+        read(a[i]);
+    std::vector&lt;int&gt; siz(n + 1), son(n + 1), fa(n + 1);
+    std::function&lt;void(int)&gt; DFS = [&amp;](int x) &#123;
+        siz[x] = 1;
+        for (auto i : g1[x])
+            if (i != fa[x]) &#123;
+                fa[i] = x, DFS(i);
+                siz[x] += siz[i];
+                if (siz[i] &gt; siz[son[x]])
+                    son[x] = i;
+            &#125;
+        return;
+    &#125;;
+    DFS(1);
+    std::vector&lt;long long&gt; f(n + 1);
+    std::vector&lt;int&gt; top(n + 1), bot(n + 1), dfn(n + 1), la(n + 1), cnt(n + 1);
+    DFS = [&amp;](int x) &#123;
+        static int now = 0;
+        dfn[x] = ++now, tab[now] = x, ls[x] = 1;
+        if (son[x]) &#123;
+            top[son[x]] = top[x], DFS(son[x]);
+            bot[x] = bot[son[x]];
+            g[x] = 1ll;
+            for (auto i : g1[x])
+                if (i != son[x] &amp;&amp; i != fa[x]) &#123;
+                    top[i] = i, DFS(i);
+                    ls[x] += siz[i];
+                    if (f[i] == 0ll)
+                        ++cnt[x];
+                    else
+                        (la[x] *= f[i]) %= mod;
+                    (g[x] *= f[i]) %= mod;
+                &#125;
+            f[x] = (a[x] + g[x] * f[son[x]]) % mod;
+        &#125;
+        else
+            f[x] = a[x], bot[x] = x;
+        // printf(&quot;f[%d] = %lld\n&quot;, x, f[x]);
+        if (x == top[x])
+            bld(rt[x], dfn[x], dfn[bot[x]]);
+        return;
+    &#125;;
+    top[1] = 1, DFS(1);
+    mat init;
+    init.n = 1, init.m = 2;
+    init[0][0] = 0ll, init[0][1] = 1ll;
+    auto qkp = [&amp;](long long x, int y) &#123;
+        auto res(1ll);
+        for (; y; (x *= x) %= mod, y &gt;&gt;= 1)
+            if (y &amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &#125;;
+    auto inv = [&amp;](int x) &#123;
+        return qkp(x, mod - 2);
+    &#125;;
+    for (int x, v; q--; ) &#123;
+        read(x), read(v);
+        a[x] = v;
+        for (; top[x] != 1; ) &#123;
+            int faa = fa[top[x]];
+            auto &amp;id = t[rt[top[x]]].u;
+            int f = (init * id)[0][0];
+            if (f == 0) &#123;
+                if (--cnt[faa] == 0)
+                    g[faa] = la[faa];
+            &#125;
+            else &#123;
+                f = inv(f);
+                (g[faa] *= f) %= mod;
+                (la[faa] *= f) %= mod;
+            &#125;
+            add(rt[top[x]], dfn[x]);
+            f = (init * id)[0][0];
+            if (f == 0) &#123;
+                if (cnt[faa]++ == 0)
+                    la[faa] = g[faa];
+                g[faa] = 0ll;
+            &#125;
+            else &#123;
+                (g[faa] *= f) %= mod;
+                (la[faa] *= f) %= mod;
+            &#125;
+            x = faa;
+        &#125;
+        add(rt[1], dfn[x]);
+        auto &amp;id = t[rt[1]].u;
+        int f = (init * id)[0][0];
+        std::cout &lt;&lt; f &lt;&lt; &#39;\n&#39;;
+    &#125;
+#ifndef ONLINE_JUDGE
+    std::cerr &lt;&lt; std::fixed &lt;&lt; std::setprecision(6) &lt;&lt; std::chrono::duration&lt;double&gt; (std::chrono::steady_clock::now() - stime).count() &lt;&lt; &quot;s\n&quot;;
+#endif
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h3 id="g---考试-2">G - 考试 2</h3>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P10626" class="uri">https://www.luogu.com.cn/problem/P10626</a></p>
+<p>运算均是线性的，容易想到『按位』维护，即只维护某个特定点值。如果将询问离线下来排序，每个函数的点值只会变化 <span class="math inline">\(O(1)\)</span> 次。</p>
+<p>建出符号二叉树，进行 DDP 即可。具体地，令 <span class="math inline">\(f_u\)</span> 表示在运算 <span class="math inline">\(u\)</span> 处的答案，计算 <span class="math inline">\(g_u\)</span> 为轻儿子的答案，按照 <span class="math inline">\(u\)</span> 处的符号写矩阵即可。注意叶子不是一次运算，应该直接填入点值（注意线段树上的叶子不一定是原树上的叶子）。</p>
+<p>建树和矩阵更新有点史，适当封装一下感觉会好一点</p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int maxn = 1e6 + 5;
+const char mp[] = &quot;x!&amp;|^&quot;;
+const int LEN = (1 &lt;&lt; 20);
+#define nec getchar
+inline bool read(int &amp;x) &#123;
+    x = 0;
+    bool f = 0;
+    char ch = nec();
+    while (ch &lt; &#39;0&#39; || ch &gt; &#39;9&#39;) &#123;
+        if (ch == EOF) return 0;
+        if (ch == &#39;-&#39;) f = 1;
+        ch = nec();
+    &#125;
+    while (ch &gt;= &#39;0&#39; &amp;&amp; ch &lt;= &#39;9&#39;) &#123;
+        x = x * 10 + ch - &#39;0&#39;;
+        ch = nec();
+    &#125;
+    if (f) x = -x;
+    return 1;
+&#125;
+void print(int x) &#123;
+    if (x &lt; 0)
+        putchar(&#39;-&#39;), x = -x;
+    if (x &gt;= 10) print(x / 10);
+    putchar(x % 10 + &#39;0&#39;);
+    return;
+&#125;
+void print(int x, char ch) &#123;
+    print(x), putchar(ch);
+    return;
+&#125;
+struct mat &#123;
+    int n, m;
+    int a[2][2];
+    int* operator[] (const int q) &#123;
+        return a[q];
+    &#125;
+    inline mat operator* (mat &amp;q) const &#123;
+        mat res;
+        res.n = n, res.m = q.m;
+        res[0][0] = res[0][1] = res[1][0] = res[1][1] = 0ll;
+        for (int i = 0; i &lt; n; ++i)
+            for (int k = 0; k &lt; q.m; ++k)
+                for (int j = 0; j &lt; m; ++j)
+                    res[i][k] += a[i][j] * q[j][k];
+        return res;
+    &#125;
+    mat&amp; operator*= (mat &amp;q) &#123;
+        return *this = *this * q;
+    &#125;
+&#125;;
+struct &#123; int lc, rc, l, r, mid; mat u; &#125; t[maxn &lt;&lt; 2]; 
+int g1[maxn][2];
+int g[maxn], ty[maxn];
+int tab[maxn], ls[maxn], lim[maxn];
+#define lt t[p].lc
+#define rt t[p].rc
+void fillmat(mat &amp;a, int op, int g) &#123;
+    if (op == 0) &#123;
+        a.n = 1, a.m = 2;
+        a[0][!g] = 0, a[0][g] = 1;
+        return;
+    &#125;
+    a.n = 2, a.m = 2;
+    switch (op) &#123;
+    case 1: // !
+        a[0][0] = 0, a[0][1] = 1;
+        a[1][0] = 1, a[1][1] = 0;
+        break;
+    case 2: // &amp;
+        a[0][0] = 1, a[0][1] = 0;
+        a[1][0] = !g, a[1][1] = g;
+        break;
+    case 3: // |
+        a[0][0] = !g, a[0][1] = g;
+        a[1][0] = 0, a[1][1] = 1;
+        break;
+    case 4: // ^
+        a[0][0] = !g, a[0][1] = g;
+        a[1][0] = g, a[1][1] = !g;
+        break;
+    default:
+        assert(0);
+    &#125;
+    return;
+&#125;
+void bld(int &amp;p, int l, int r) &#123;
+    static int tot = 0;
+    p = ++tot, t[p].l = l, t[p].r = r;
+    if (l == r) &#123;
+        fillmat(t[p].u, ty[tab[l]], g[tab[l]]);
+        return;
+    &#125;
+    int s = 0, u = ls[tab[l]];
+    for (int i = l; i &lt;= r; ++i)
+        s += ls[tab[i]];
+    s &gt;&gt;= 1;
+    t[p].mid = r - 1;
+    for (int i = l + 1; i &lt; r; ++i) &#123;
+        u += ls[tab[i]];
+        if (u + ls[tab[i + 1]] &gt; s) &#123;
+            t[p].mid = i;
+            break;
+        &#125;
+    &#125;
+    bld(lt, l, t[p].mid), bld(rt, t[p].mid + 1, r);
+    t[p].u = t[rt].u * t[lt].u;
+    return;
+&#125;
+void add(int p, int x) &#123;
+    if (t[p].l == t[p].r) &#123;
+        fillmat(t[p].u, ty[tab[t[p].l]], g[tab[t[p].l]]);
+        return;
+    &#125;
+    if (x &lt;= t[p].mid)
+        add(lt, x);
+    else
+        add(rt, x);
+    t[p].u = t[rt].u * t[lt].u;
+    return;
+&#125;
+#undef lt
+#undef rt
+int main() &#123;
+#ifndef ONLINE_JUDGE
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n = 0, q, p;
+    read(q), read(q);
+    &#123;
+        std::string s;
+        std::cin &gt;&gt; s;
+        std::stringstream in(s);
+        std::stack&lt;char&gt; op;
+        std::stack&lt;int&gt; id;
+        auto trans = [&amp;](char t) &#123;
+            switch (t) &#123;
+            case &#39;!&#39;:
+                return 1;
+            case &#39;&amp;&#39;:
+                return 2;
+            case &#39;|&#39;:
+                return 3;
+            case &#39;^&#39;:
+                return 4;
+            &#125;
+            assert(0);
+            return -1;
+        &#125;;
+        auto calcNot = [&amp;](void) &#123;
+            for (; !op.empty() &amp;&amp; op.top() == &#39;!&#39;; ) &#123;
+                ty[++n] = trans(op.top());
+                g1[n][0] = id.top(), id.pop(), id.push(n);
+                op.pop();
+            &#125;
+            return;
+        &#125;;
+        auto opt = [&amp;](void) &#123;
+            ty[++n] = trans(op.top());
+            g1[n][0] = id.top(), id.pop();
+            g1[n][1] = id.top(), id.pop();
+            id.push(n), op.pop();
+            return;
+        &#125;;
+        for (char t; in &gt;&gt; t; )
+            if (t == &#39;[&#39;) &#123;
+                int x;
+                in &gt;&gt; x, in &gt;&gt; t;
+                lim[++n] = x - 1;
+                id.push(n), calcNot();
+            &#125;
+            else if (t == &#39;(&#39;)
+                op.push(t);
+            else if (t == &#39;)&#39;) &#123;
+                for (; op.top() != &#39;(&#39;; opt());
+                op.pop(), calcNot();
+            &#125;
+            else if (t == &#39;&amp;&#39;)
+                op.push(t);
+            else if (t == &#39;^&#39;) &#123;
+                for (; !op.empty() &amp;&amp; op.top() == &#39;&amp;&#39;; opt());
+                op.push(t);
+            &#125;
+            else if (t == &#39;|&#39;) &#123;
+                for (; !op.empty() &amp;&amp; (op.top() == &#39;&amp;&#39; || op.top() == &#39;^&#39;); opt());
+                op.push(t);
+            &#125;
+            else &#123;
+                assert(t == &#39;!&#39;);
+                op.push(t);
+            &#125;
+        for (; !op.empty(); opt());
+        p = id.top();
+    &#125;
+    std::vector&lt;int&gt; rt(n + 1);
+    std::vector&lt;int&gt; siz(n + 1), son(n + 1), fa(n + 1);
+    std::function&lt;void(int)&gt; DFS = [&amp;](int x) &#123;
+        siz[x] = 1;
+        for (auto i : g1[x])
+            if (i != 0) &#123;
+                fa[i] = x, DFS(i);
+                siz[x] += siz[i];
+                if (siz[i] &gt; siz[son[x]])
+                    son[x] = i;
+            &#125;
+        return;
+    &#125;;
+    DFS(p);
+    std::vector&lt;long long&gt; f(n + 1);
+    std::vector&lt;int&gt; top(n + 1), bot(n + 1), dfn(n + 1);
+    DFS = [&amp;](int x) &#123;
+        static int now = 0;
+        dfn[x] = ++now, tab[now] = x, ls[x] = 1;
+        if (son[x]) &#123;
+            top[son[x]] = top[x], DFS(son[x]);
+            bot[x] = bot[son[x]];
+            for (auto i : g1[x])
+                if (i != son[x] &amp;&amp; i != 0) &#123;
+                    top[i] = i, DFS(i);
+                    ls[x] += siz[i], g[x] = f[i];
+                &#125;
+            switch (ty[x]) &#123;
+            case 1:
+                f[x] = !f[son[x]];
+                break;
+            case 2:
+                f[x] = g[x] &amp; f[son[x]];
+                break;
+            case 3:
+                f[x] = g[x] | f[son[x]];
+                break;
+            case 4:
+                f[x] = g[x] ^ f[son[x]];
+                break;
+            default:
+                assert(0);
+                break;
+            &#125;
+        &#125;
+        else
+            assert(!ty[x]), f[x] = g[x] = 0, bot[x] = x;
+        if (x == top[x])
+            bld(rt[x], dfn[x], dfn[bot[x]]);
+        return;
+    &#125;;
+    top[p] = p, DFS(p);
+    std::vector&lt;int&gt; a(q + 1), res(q + 1);
+    for (int i = 1; i &lt;= q; ++i)
+        read(a[i]);
+    std::vector&lt;int&gt; qid(q), nid;
+    for (int i = 1; i &lt;= n; ++i)
+        if (ty[i] == 0)
+            nid.push_back(i);
+    std::iota(qid.begin(), qid.end(), 1);
+    std::sort(qid.begin(), qid.end(), [&amp;](int x, int y) &#123; return a[x] &lt; a[y]; &#125;);
+    std::sort(nid.begin(), nid.end(), [&amp;](int x, int y) &#123; return lim[x] &gt; lim[y]; &#125;);
+    for (auto i : qid) &#123;
+        for (; !nid.empty() &amp;&amp; lim[nid.back()] &lt; a[i]; ) &#123;
+            int x = nid.back();
+            nid.pop_back();
+            g[x] = 1;
+            for (; top[x] != p; ) &#123;
+                add(rt[top[x]], dfn[x]);
+                g[fa[top[x]]] = t[rt[top[x]]].u[0][1];
+                x = fa[top[x]];
+            &#125;
+            add(rt[p], dfn[x]);
+        &#125;
+        res[i] = t[rt[p]].u[0][1];
+    &#125;
+    for (int i = 1; i &lt;= q; ++i)
+        if (res[i])
+            std::cout &lt;&lt; &quot;True\n&quot;;
+        else
+            std::cout &lt;&lt; &quot;False\n&quot;;
+#ifndef ONLINE_JUDGE
+    std::cerr &lt;&lt; std::fixed &lt;&lt; std::setprecision(6) &lt;&lt; std::chrono::duration&lt;double&gt; (std::chrono::steady_clock::now() - stime).count() &lt;&lt; &quot;s\n&quot;;
+#endif
+    return 0;
+&#125;</code></pre>
+</details>
+<p>还口胡了另一个做法：最后的数组由若干连续段组成；段数不超过操作次数。故离散化后线段树维护分段函数即可。</p>
 
 			</div>
 			<hr class="dotted">
@@ -1667,6 +2188,9 @@ int main() &#123;
 <!-- 搜索功能相关配置 -->
 
 <script src="/js/search.js"></script>
+
+
+<script src="/js/local-search.js"></script>
 
 </script>
 <!-- prism 相关配置 -->
