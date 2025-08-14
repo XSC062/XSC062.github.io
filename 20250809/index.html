@@ -859,7 +859,7 @@ int main() &#123;
 <hr />
 <h2 id="f---对数据结构的爱">F - 对数据结构的爱</h2>
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5609" class="uri">https://www.luogu.com.cn/problem/P5609</a></p>
-<p><strong>线段树做法</strong>：猜测对于一个固定的询问区间，当 <span class="math inline">\(x\)</span> 小于一个特定的上界时答案为某个值 <span class="math inline">\(v\)</span>，否则为 <span class="math inline">\(v+1\)</span>。故考虑线段树维护函数。定义 <span class="math inline">\(f(x)\)</span> 表示区间上想要减去 <span class="math inline">\(x\)</span> 次 <span class="math inline">\(p\)</span> 需要的最小初始值（这样才能让定义域和区间长有关），查询时直接二分即可；考虑初始化时如何合并。</p>
+<p><strong>线段树做法</strong>：考虑线段树维护函数。定义 <span class="math inline">\(f(x)\)</span> 表示区间上想要减去 <span class="math inline">\(x\)</span> 次 <span class="math inline">\(p\)</span> 需要的最小初始值（这样才能让定义域和区间长有关），查询时直接二分即可；考虑初始化时如何合并。</p>
 <p>首先思考较为暴力的做法，对于左侧点 <span class="math inline">\(a\)</span> 和右侧点 <span class="math inline">\(b\)</span>，若 <span class="math inline">\(f(a+1)-1+s_l-a\cdot p\ge f(b)\)</span>，也即可以减去 <span class="math inline">\(a+b\)</span> 次，就可以用 <span class="math inline">\(\max(f(a),f(b)-s_l+a\cdot p)\)</span> 来更新 <span class="math inline">\(f(a+b)\)</span>。</p>
 <p>发现 <span class="math inline">\((a,b)\)</span> 的贡献一定小于 <span class="math inline">\((a+1,b-1)\)</span> 的贡献；具体地，发现 <span class="math inline">\(f(x+1)-f(x)\ge p\)</span> 后就很显然了。采用双指针，优先移动 <span class="math inline">\(b\)</span>，就能把最短区间扫一遍。</p>
 <p><strong>分治做法</strong>：Ast 自己还没切，蹲一个 sol。</p>
@@ -886,6 +886,12 @@ int main() &#123;
 				</div>
 				<div class="button flex">
 					<div id="prev">
+						
+							<!-- 吐槽，为啥还需要加 / -->
+							<a href="/20250812/">
+								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
+								DDP 与全局平衡二叉树
+							</a>
 						
 					</div>
 					<div id="next">
