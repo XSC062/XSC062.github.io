@@ -287,6 +287,7 @@ class LocalSearch {
           return data;
         });
         // Remove loading animation
+        console.log(this.datas);
         window.dispatchEvent(new Event('search:loaded'));
       });
   }

@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
     input.addEventListener('input', () => {
         const query = input.value.split(" ");
         const res = localSearch.getResultItems(query);
-        console.log(res);
         results.innerHTML = '';
         res.forEach(item => {
             results.innerHTML += item.item;
