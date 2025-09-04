@@ -1,0 +1,298 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title> • Posts by &#34;最小生成树&#34; tag</title>
+        <link>https://xsc062.netlify.app</link>
+        <description></description>
+        <language>zh-CN</language>
+        <pubDate>Tue, 06 Feb 2024 09:57:49 +0800</pubDate>
+        <lastBuildDate>Tue, 06 Feb 2024 09:57:49 +0800</lastBuildDate>
+        <category>并查集</category>
+        <category>斜率优化</category>
+        <category>悬线法</category>
+        <category>哈希</category>
+        <category>字典树</category>
+        <category>DP</category>
+        <category>单调队列</category>
+        <category>分治</category>
+        <category>二分图</category>
+        <category>CRT / exCRT</category>
+        <category>排列组合</category>
+        <category>网络流</category>
+        <category>费用流</category>
+        <category>二分</category>
+        <category>上下界网络流</category>
+        <category>容斥原理</category>
+        <category>线段树</category>
+        <category>树状数组</category>
+        <category>区间 DP</category>
+        <category>构造</category>
+        <category>Tarjan</category>
+        <category>数据结构</category>
+        <category>下饭</category>
+        <category>LCA</category>
+        <category>倍增</category>
+        <category>鸽巢原理</category>
+        <category>概率期望</category>
+        <category>调和级数</category>
+        <category>差分</category>
+        <category>思维</category>
+        <category>树形 DP</category>
+        <category>最小生成树</category>
+        <category>SAM</category>
+        <category>状压</category>
+        <category>分块</category>
+        <category>可持久化</category>
+        <category>笛卡尔树</category>
+        <category>高维前缀和</category>
+        <category>闲话</category>
+        <category>欧拉回路</category>
+        <category>树链剖分</category>
+        <category>长链剖分</category>
+        <category>KMP</category>
+        <category>border</category>
+        <category>字符串</category>
+        <category>AC 自动机</category>
+        <category>SA</category>
+        <category>数学</category>
+        <category>树上差分</category>
+        <category>FWT</category>
+        <category>堆</category>
+        <category>树的重心</category>
+        <category>二项式定理</category>
+        <category>二项式反演</category>
+        <category>贪心</category>
+        <category>均摊</category>
+        <category>计数</category>
+        <category>优化建图</category>
+        <category>反悔贪心</category>
+        <category>调整法</category>
+        <category>背包</category>
+        <category>博弈论</category>
+        <category>DP 优化</category>
+        <category>虚树</category>
+        <category>点分治</category>
+        <category>WQS 二分</category>
+        <category>闵可夫斯基和</category>
+        <category>slope trick</category>
+        <category>四边形不等式</category>
+        <category>暴力</category>
+        <category>状压 DP</category>
+        <category>组合数学</category>
+        <category>支配对</category>
+        <category>DDP</category>
+        <category>平衡树</category>
+        <category>容斥</category>
+        <category>猫树</category>
+        <category>Kruskal 重构树</category>
+        <category>李超线段树</category>
+        <item>
+            <guid isPermalink="true">https://xsc062.netlify.app/20240206/</guid>
+            <title>曼哈顿最小距离生成树</title>
+            <link>https://xsc062.netlify.app/20240206/</link>
+            <category>最小生成树</category>
+            <pubDate>Tue, 06 Feb 2024 09:57:49 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;如题。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;e.-another-minimum-spanning-tree&#34;&gt;E. Another Minimum Spanning Tree&lt;/h3&gt;
+&lt;p&gt;http://222.180.160.110:61235/contest/4940/problem/5&lt;/p&gt;
+&lt;p&gt;曼哈顿最小距离生成树。给定 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 个已知坐标的点，两两之间可连权值为曼哈顿距离的边，需求最小生成树。&lt;/p&gt;
+&lt;p&gt;有一引理：以任意一点为顶点的大小为 &lt;span class=&#34;math inline&#34;&gt;\(\dfrac \pi8\)&lt;/span&gt; 、且一条边与坐标轴重合的角覆盖的范围中，与该点曼哈顿距离最小的点才有可能与此点连边。&lt;/p&gt;
+&lt;p&gt;概括说来便是以该点为原点建系，沿坐标轴米字划分。&lt;/p&gt;
+&lt;details&gt;
+&lt;p&gt;&lt;summary&gt;浅证&lt;/summary&gt;&lt;/p&gt;
+&lt;p&gt;首先需认识到，若 &lt;span class=&#34;math inline&#34;&gt;\(w(x,y)&amp;lt;w(x,z)\)&lt;/span&gt; 且 &lt;span class=&#34;math inline&#34;&gt;\(w(y,z)&amp;lt;w(x,z)\)&lt;/span&gt;，则边 &lt;span class=&#34;math inline&#34;&gt;\(E(x,z)\)&lt;/span&gt; 不在最小生成树中。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;1.png&#34; alt=&#34;示意图&#34; /&gt;&lt;figcaption&gt;示意图&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;考虑有如上 &lt;span class=&#34;math inline&#34;&gt;\(A,B,C\)&lt;/span&gt; 三点。不妨设 &lt;span class=&#34;math inline&#34;&gt;\(d(A,B)\le d(A,C)\)&lt;/span&gt;。其中 &lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt; 为曼哈顿距离。&lt;/p&gt;
+&lt;p&gt;由图易知 &lt;span class=&#34;math inline&#34;&gt;\(x_B,y_B,x_C,y_C&amp;gt;0\)&lt;/span&gt; 且 &lt;span class=&#34;math inline&#34;&gt;\(y_B-x_B,y_C-x_C&amp;gt;0\)&lt;/span&gt;。讨论 &lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt; 与 &lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt; 位置关系。下文的 &lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt; 均相对 &lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt; 而言。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(x_B&amp;gt;x_C\)&lt;/span&gt; 且 &lt;span class=&#34;math inline&#34;&gt;\(y_B&amp;gt;y_c\)&lt;/span&gt;：&lt;/p&gt;
+此时 &lt;span class=&#34;math inline&#34;&gt;\(d(A,B)&amp;gt;d(B,C)\)&lt;/span&gt;，与题设不符，舍去。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(x_B&amp;gt;x_C\)&lt;/span&gt; 且 &lt;span class=&#34;math inline&#34;&gt;\(y_B&amp;lt;y_C\)&lt;/span&gt;：&lt;/p&gt;
+&lt;p&gt;此时 &lt;span class=&#34;math inline&#34;&gt;\(d(A,B)=x_B+y_B,d(B,C)=x_B-x_C+y_C-y_B,d(A,C)=x_C+y_C\)&lt;/span&gt;。由作差法得 &lt;span class=&#34;math inline&#34;&gt;\(d(B,C)-d(A,C)=x_B-y_B-2\times x_C\)&lt;/span&gt;，由 &lt;span class=&#34;math inline&#34;&gt;\(x_B-y_B&amp;lt;0,x_C&amp;gt;0\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(d(B,C)&amp;lt;d(A,C)\)&lt;/span&gt;。&lt;/p&gt;
+由于 &lt;span class=&#34;math inline&#34;&gt;\(d(A,B),d(B,C)&amp;lt;d(A,C)\)&lt;/span&gt;，故 &lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt; 一定不与 &lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt; 连边。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(x_B&amp;lt;x_C\)&lt;/span&gt; 且 &lt;span class=&#34;math inline&#34;&gt;\(y_B&amp;gt;y_C\)&lt;/span&gt;：&lt;/p&gt;
+与上一种情况同理。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(x_B&amp;lt;x_C\)&lt;/span&gt; 且 &lt;span class=&#34;math inline&#34;&gt;\(y_B&amp;lt;y_C\)&lt;/span&gt;：&lt;/p&gt;
+此时有 &lt;span class=&#34;math inline&#34;&gt;\(d(A,C)=d(A,B)+d(B,C)\)&lt;/span&gt;，则 &lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt; 一定不与 &lt;span class=&#34;math inline&#34;&gt;\(C\)&lt;/span&gt; 连边。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/details&gt;
+&lt;p&gt;如此一来，边数便降低到了 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt; 水平。&lt;/p&gt;
+&lt;p&gt;此外，如何识别每个点周围每 &lt;span class=&#34;math inline&#34;&gt;\(\dfrac \pi8\)&lt;/span&gt; 的最近点便是问题所在。&lt;/p&gt;
+&lt;p&gt;由于坐标可以变换，此处仅考虑顶点为 &lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt;，始边沿 &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; 轴正方向，终边沿 &lt;span class=&#34;math inline&#34;&gt;\(k=1\)&lt;/span&gt; 的区域。则对于区域内的点 &lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt;，易知 &lt;span class=&#34;math inline&#34;&gt;\(x_B\geqslant x_A,y_B-y_A\geqslant x_B-x_A\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;后一条规则分离变量则有 &lt;span class=&#34;math inline&#34;&gt;\(y_B-x_B\geqslant y_A-x_A\)&lt;/span&gt;，那么问题转化为二维偏序，其中待求为最小 &lt;span class=&#34;math inline&#34;&gt;\(x_B+y_B\)&lt;/span&gt;，可以用树状数组离散解决。&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;由于边是双向的，将问题在平面任意连续 &lt;span class=&#34;math inline&#34;&gt;\(\dfrac \pi 2\)&lt;/span&gt; 范围内进行四次坐标转化即可。&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;其实并不一定要连续，只要该区域与其旋转一百八十度后的图形的并可以覆盖整个平面即可。这么看来是不是只能连续。&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;我们会发现旋转 &lt;span class=&#34;math inline&#34;&gt;\(\dfrac \pi 8\)&lt;/span&gt; 这个我们在整数域上做不到啊。所以我们考虑旋转 + 翻折，最后整出来差不多这个图形：&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;2.png&#34; alt=&#34;示意图&#34; /&gt;&lt;figcaption&gt;示意图&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;然后由于我们发现这些点关于 &lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt; 的关系（是通过 &lt;span class=&#34;math inline&#34;&gt;\(A\)&lt;/span&gt; 翻折还是旋转得来的）并不中心对称啊，所以呢就要委屈一下写满八个方向了。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 1e5 + 5;
+struct _ &amp;#123;
+    int x, y, id;
+    bool operator&amp;lt; (const _ &amp;amp;q) const &amp;#123;
+        return y - x &amp;gt; q.y - q.x;
+    &amp;#125;
+&amp;#125;;
+struct __ &amp;#123;
+    int x, y, w;
+    __() &amp;#123;&amp;#125;
+    __(int x1, int y1, int w1) &amp;#123;
+        if (y1 &amp;lt; x1) x1 ^= y1 ^= x1 ^= y1;
+        x = x1, y = y1, w = w1;
+    &amp;#125;
+    bool operator&amp;lt; (const __ &amp;amp;q) const &amp;#123;
+        return w == q.w ? x &amp;lt; q.x : w &amp;lt; q.w;
+    &amp;#125;
+&amp;#125;;
+int n;
+int Bit[maxn]; 
+std::vector&amp;lt;__&amp;gt; e;
+_ a[maxn], b[maxn];
+int ls[maxn], f[maxn];
+int lowbit(int x) &amp;#123; return x &amp;amp; -x; &amp;#125;
+void upd(int &amp;amp;i, int j) &amp;#123;
+    if (!i || (j &amp;amp;&amp;amp; b[j].x + b[j].y &amp;lt;= b[i].x + b[i].y)) i = j;
+    return;
+&amp;#125;
+void add(int x, int i) &amp;#123;
+    for (; x &amp;lt;= n; x += lowbit(x)) upd(Bit[x], i);
+    return;
+&amp;#125;
+int ask(int x) &amp;#123;
+    int res = 0;
+    for (; x; x -= lowbit(x)) upd(res, Bit[x]);
+    return res;
+&amp;#125; 
+int find(int x) &amp;#123; return x == f[x] ? x : f[x] = find(f[x]); &amp;#125;
+void merge(int x, int y) &amp;#123; f[find(x)] = find(y); return; &amp;#125;
+int abs(int x) &amp;#123; return x &amp;gt;= 0 ? x : -x; &amp;#125;
+void adde(int x, int y) &amp;#123;
+    if (!x || !y) return;
+    e.emplace_back(x, y, abs(a[x].x - a[y].x) + abs(a[x].y - a[y].y));
+    return;
+&amp;#125;
+int main() &amp;#123;
+    read(n);
+    while (n) &amp;#123;
+        e.clear();
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            read(a[i].x), read(a[i].y), a[i].id = i;
+            ls[i] = a[i].x, b[i] = a[i], f[i] = i;
+        &amp;#125;
+        memset(Bit, 0, sizeof (Bit));
+        std::sort(b + 1, b + n + 1);
+        std::sort(ls + 1, ls + n + 1);
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            int x = std::lower_bound(ls + 1, ls + n + 1, b[i].x) - ls;
+            x = n + 1 - x, adde(b[i].id, b[ask(x)].id), add(x, i);
+        &amp;#125;
+        memset(Bit, 0, sizeof (Bit));
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            b[i].x = a[i].y, b[i].y = a[i].x;
+            ls[i] = b[i].x, b[i].id = i;
+        &amp;#125;
+        std::sort(b + 1, b + n + 1);
+        std::sort(ls + 1, ls + n + 1);
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            int x = std::lower_bound(ls + 1, ls + n + 1, b[i].x) - ls;
+            assert(x &amp;gt;= 1 &amp;amp;&amp;amp; x &amp;lt;= n);
+            x = n + 1 - x, adde(b[i].id, b[ask(x)].id), add(x, i);
+        &amp;#125;
+        memset(Bit, 0, sizeof (Bit));
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            b[i].x = -a[i].x, b[i].y = a[i].y;
+            ls[i] = b[i].x, b[i].id = i;
+        &amp;#125;
+        std::sort(b + 1, b + n + 1);
+        std::sort(ls + 1, ls + n + 1);
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            int x = std::lower_bound(ls + 1, ls + n + 1, b[i].x) - ls;
+            assert(x &amp;gt;= 1 &amp;amp;&amp;amp; x &amp;lt;= n);
+            x = n + 1 - x, adde(b[i].id, b[ask(x)].id), add(x, i);
+        &amp;#125;
+        memset(Bit, 0, sizeof (Bit));
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            b[i].x = -a[i].y, b[i].y = a[i].x;
+            ls[i] = b[i].x, b[i].id = i;
+        &amp;#125;
+        std::sort(b + 1, b + n + 1);
+        std::sort(ls + 1, ls + n + 1);
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            int x = std::lower_bound(ls + 1, ls + n + 1, b[i].x) - ls;
+            assert(x &amp;gt;= 1 &amp;amp;&amp;amp; x &amp;lt;= n);
+            x = n + 1 - x, adde(b[i].id, b[ask(x)].id), add(x, i);
+        &amp;#125;
+        memset(Bit, 0, sizeof (Bit));
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            b[i].x = -a[i].y, b[i].y = -a[i].x;
+            ls[i] = b[i].x, b[i].id = i;
+        &amp;#125;
+        std::sort(b + 1, b + n + 1);
+        std::sort(ls + 1, ls + n + 1);
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            int x = std::lower_bound(ls + 1, ls + n + 1, b[i].x) - ls;
+            assert(x &amp;gt;= 1 &amp;amp;&amp;amp; x &amp;lt;= n);
+            x = n + 1 - x, adde(b[i].id, b[ask(x)].id), add(x, i);
+        &amp;#125;
+        memset(Bit, 0, sizeof (Bit));
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            b[i].x = -a[i].x, b[i].y = -a[i].y;
+            ls[i] = b[i].x, b[i].id = i;
+        &amp;#125;
+        std::sort(b + 1, b + n + 1);
+        std::sort(ls + 1, ls + n + 1);
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            int x = std::lower_bound(ls + 1, ls + n + 1, b[i].x) - ls;
+            assert(x &amp;gt;= 1 &amp;amp;&amp;amp; x &amp;lt;= n);
+            x = n + 1 - x, adde(b[i].id, b[ask(x)].id), add(x, i);
+        &amp;#125;
+        memset(Bit, 0, sizeof (Bit));
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            b[i].x = a[i].x, b[i].y = -a[i].y;
+            ls[i] = b[i].x, b[i].id = i;
+        &amp;#125;
+        std::sort(b + 1, b + n + 1);
+        std::sort(ls + 1, ls + n + 1);
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            int x = std::lower_bound(ls + 1, ls + n + 1, b[i].x) - ls;
+            assert(x &amp;gt;= 1 &amp;amp;&amp;amp; x &amp;lt;= n);
+            x = n + 1 - x, adde(b[i].id, b[ask(x)].id), add(x, i);
+        &amp;#125;
+        memset(Bit, 0, sizeof (Bit));
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            b[i].x = a[i].y, b[i].y = -a[i].x;
+            ls[i] = b[i].x, b[i].id = i;
+        &amp;#125;
+        std::sort(b + 1, b + n + 1);
+        std::sort(ls + 1, ls + n + 1);
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            int x = std::lower_bound(ls + 1, ls + n + 1, b[i].x) - ls;
+            assert(x &amp;gt;= 1 &amp;amp;&amp;amp; x &amp;lt;= n);
+            x = n + 1 - x, adde(b[i].id, b[ask(x)].id), add(x, i);
+        &amp;#125;
+        std::sort(e.begin(), e.end());
+        int res = 0;
+        for (auto i : e) &amp;#123;
+            if (find(i.x) != find(i.y))
+                res += i.w, merge(i.x, i.y);
+        &amp;#125;
+        static int TimeKeeper = 0;
+        printf(&amp;quot;Case %d: Total Weight = %d\n&amp;quot;, ++TimeKeeper, res);
+        read(n);
+    &amp;#125;
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

@@ -1,0 +1,517 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://xsc062.netlify.app</id>
+    <title> • Posts by &#34;状压 dp&#34; tag</title>
+    <link href="https://xsc062.netlify.app" />
+    <updated>2025-08-05T06:33:55.000Z</updated>
+    <category term="并查集" />
+    <category term="斜率优化" />
+    <category term="悬线法" />
+    <category term="哈希" />
+    <category term="字典树" />
+    <category term="DP" />
+    <category term="单调队列" />
+    <category term="分治" />
+    <category term="二分图" />
+    <category term="CRT / exCRT" />
+    <category term="排列组合" />
+    <category term="网络流" />
+    <category term="费用流" />
+    <category term="二分" />
+    <category term="上下界网络流" />
+    <category term="容斥原理" />
+    <category term="线段树" />
+    <category term="树状数组" />
+    <category term="区间 DP" />
+    <category term="构造" />
+    <category term="Tarjan" />
+    <category term="数据结构" />
+    <category term="下饭" />
+    <category term="LCA" />
+    <category term="倍增" />
+    <category term="鸽巢原理" />
+    <category term="概率期望" />
+    <category term="调和级数" />
+    <category term="差分" />
+    <category term="思维" />
+    <category term="树形 DP" />
+    <category term="最小生成树" />
+    <category term="SAM" />
+    <category term="状压" />
+    <category term="分块" />
+    <category term="可持久化" />
+    <category term="笛卡尔树" />
+    <category term="高维前缀和" />
+    <category term="闲话" />
+    <category term="欧拉回路" />
+    <category term="树链剖分" />
+    <category term="长链剖分" />
+    <category term="KMP" />
+    <category term="border" />
+    <category term="字符串" />
+    <category term="AC 自动机" />
+    <category term="SA" />
+    <category term="数学" />
+    <category term="树上差分" />
+    <category term="FWT" />
+    <category term="堆" />
+    <category term="树的重心" />
+    <category term="二项式定理" />
+    <category term="二项式反演" />
+    <category term="贪心" />
+    <category term="均摊" />
+    <category term="计数" />
+    <category term="优化建图" />
+    <category term="反悔贪心" />
+    <category term="调整法" />
+    <category term="背包" />
+    <category term="博弈论" />
+    <category term="DP 优化" />
+    <category term="虚树" />
+    <category term="点分治" />
+    <category term="WQS 二分" />
+    <category term="闵可夫斯基和" />
+    <category term="slope trick" />
+    <category term="四边形不等式" />
+    <category term="暴力" />
+    <category term="状压 DP" />
+    <category term="组合数学" />
+    <category term="支配对" />
+    <category term="DDP" />
+    <category term="平衡树" />
+    <category term="容斥" />
+    <category term="猫树" />
+    <category term="Kruskal 重构树" />
+    <category term="李超线段树" />
+    <entry>
+        <id>https://xsc062.netlify.app/20250805/</id>
+        <title>状压 DP</title>
+        <link rel="alternate" href="https://xsc062.netlify.app/20250805/"/>
+        <content type="html">&lt;p&gt;没补完（1/3），动作还是太慢了&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;a---只不过是长的领带-2-just-long-neckties-2&#34;&gt;A - 只不过是长的领带 2 / Just Long Neckties 2&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P11665&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P11665&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;需要观察到，任意时刻 &lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt; 中不存在重复元素。把 &lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt; 压出来，令 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,S}\)&lt;/span&gt; 表示选了 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;，当前 &lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt; 为 &lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt; 是否可行，能够 &lt;span class=&#34;math inline&#34;&gt;\(O(n\cdot 2^V)\)&lt;/span&gt;。对于某个 &lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;，只关心它最远能到达哪个 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;，故令 &lt;span class=&#34;math inline&#34;&gt;\(f_S\)&lt;/span&gt; 记录之。对于每一个 &lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;，都可以找到 &lt;span class=&#34;math inline&#34;&gt;\(f_S\)&lt;/span&gt; 后第一对 &lt;span class=&#34;math inline&#34;&gt;\(a_i,a_{i+1}\notin S\)&lt;/span&gt;，用其刷表。&lt;/p&gt;
+&lt;p&gt;发现『找 &lt;span class=&#34;math inline&#34;&gt;\(f_S\)&lt;/span&gt; 后第一对非法元素』是很慢的，考虑优化；对于每个 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 维护 &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt; 在其后第一次出现的位置 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，对于每个 &lt;span class=&#34;math inline&#34;&gt;\(a_x=p\)&lt;/span&gt; 维护 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 后方 &lt;span class=&#34;math inline&#34;&gt;\(a_y=p,a_{y+1}=q\)&lt;/span&gt; 第一次出现的位置，相当于&lt;strong&gt;先找 &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt; 再找 &lt;span class=&#34;math inline&#34;&gt;\((p,q)\)&lt;/span&gt;&lt;/strong&gt;，就可以做到 &lt;span class=&#34;math inline&#34;&gt;\(O(V^2\cdot 2^V+n\cdot V)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    std::vector&amp;lt;int&amp;gt; a(n + 1);
+    int V = 0;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; a[i];
+        V = std::max(V, a[i]--);
+    &amp;#125;
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; tx(n + 1, std::vector&amp;lt;int&amp;gt; (V)), ty(n + 1, std::vector&amp;lt;int&amp;gt; (V));
+    std::vector&amp;lt;int&amp;gt; lp(V);
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; lpq(V, std::vector&amp;lt;int&amp;gt; (V));
+    for (int i = n; ~i; --i) &amp;#123;
+        if (i &amp;amp;&amp;amp; i != n)
+            lpq[a[i]][a[i + 1]] = i;
+        for (int j = 0; j &amp;lt; V; ++j) &amp;#123;
+            tx[i][j] = lp[j];
+            if (i != n)
+                ty[i][j] = lpq[a[i]][j];
+        &amp;#125;
+        if (i != 0)
+            lp[a[i]] = i;
+    &amp;#125;
+    int siz = 1 &amp;lt;&amp;lt; V, res = 21;
+    std::vector&amp;lt;int&amp;gt; f(siz);
+    for (int i = 0; i &amp;lt; siz; ++i) &amp;#123;
+        std::vector&amp;lt;int&amp;gt; p0, p1;
+        for (int j = 0; j &amp;lt; V; ++j)
+            if ((i &amp;gt;&amp;gt; j) &amp;amp; 1)
+                p1.push_back(j);
+            else
+                p0.push_back(j);
+        int j = n;
+        for (auto p : p0)
+            if (tx[f[i]][p])
+                for (auto q : p0)
+                    if (ty[tx[f[i]][p]][q])
+                        j = std::min(j, ty[tx[f[i]][p]][q]);
+        if (j != n) &amp;#123;
+            f[i ^ (1 &amp;lt;&amp;lt; a[j])] = std::max(f[i ^ (1 &amp;lt;&amp;lt; a[j])], j);
+            f[i ^ (1 &amp;lt;&amp;lt; a[j + 1])] = std::max(f[i ^ (1 &amp;lt;&amp;lt; a[j + 1])], j + 1);
+            for (auto k : p1) &amp;#123;
+                f[i ^ (1 &amp;lt;&amp;lt; k) ^ (1 &amp;lt;&amp;lt; a[j])] = std::max(f[i ^ (1 &amp;lt;&amp;lt; k) ^ (1 &amp;lt;&amp;lt; a[j])], j);
+                f[i ^ (1 &amp;lt;&amp;lt; k) ^ (1 &amp;lt;&amp;lt; a[j + 1])] = std::max(f[i ^ (1 &amp;lt;&amp;lt; k) ^ (1 &amp;lt;&amp;lt; a[j + 1])], j + 1);
+            &amp;#125;
+        &amp;#125;
+        else
+            res = std::min(res, __builtin_popcount(i));
+    &amp;#125;
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;b---cut-and-reorder&#34;&gt;B - Cut and Reorder&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/abc328/tasks/abc328_g&#34; class=&#34;uri&#34;&gt;https://atcoder.jp/contests/abc328/tasks/abc328_g&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;不妨先重排再修改，令 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,S}\)&lt;/span&gt; 表示已经重排好新序列的前 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 个元素，对应原序列状态 &lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt; 的最小代价。枚举新区间容易转移。可以发现枚举 &lt;span class=&#34;math inline&#34;&gt;\(i,S\)&lt;/span&gt; 的实际复杂度为 &lt;span class=&#34;math inline&#34;&gt;\(O(2^n)\)&lt;/span&gt;（空间也可以这么优化），预处理之后总时间复杂度 &lt;span class=&#34;math inline&#34;&gt;\(O(n^2\cdot 2^n)\)&lt;/span&gt;，跑不满，可以通过。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const long long inf = 1e18;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n;
+    long long c;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; c;
+    std::vector&amp;lt;long long&amp;gt; a(n), b(n);
+    for (int i = 0; i &amp;lt; n; ++i)
+        std::cin &amp;gt;&amp;gt; a[i];
+    for (int i = 0; i &amp;lt; n; ++i)
+        std::cin &amp;gt;&amp;gt; b[i];
+    using arr = std::vector&amp;lt;long long&amp;gt;;
+    using brr = std::vector&amp;lt;arr&amp;gt;;
+    using crr = std::vector&amp;lt;brr&amp;gt;;
+    brr p(n, arr(n));
+    crr g(n, brr(n, arr(n)));
+    for (int l = 0; l &amp;lt; n; ++l)
+        for (int r = l; r &amp;lt; n; ++r) &amp;#123;
+            for (int k = l; k &amp;lt;= r; ++k)
+                p[l][r] ^= (1 &amp;lt;&amp;lt; k);
+            for (int R = r - l; R &amp;lt; n; ++R)
+                for (int L = R, j = r; j &amp;gt;= l; --L, --j)
+                    g[l][r][R] += std::abs(b[L] - a[j]);
+        &amp;#125;
+    int siz = 1 &amp;lt;&amp;lt; n;
+    std::vector&amp;lt;long long&amp;gt; f(siz, inf);
+    f[0] = 0ll;
+    for (int j = 1; j &amp;lt; siz; ++j) &amp;#123;
+        int i = __builtin_popcount(j) - 1;
+        for (int r = 0; r &amp;lt; n; ++r)
+            for (int l = r; ~l &amp;amp;&amp;amp; ((j &amp;gt;&amp;gt; l) &amp;amp; 1); --l)
+                f[j] = std::min(f[j], f[j ^ p[l][r]] + g[l][r][i] + c);
+    &amp;#125;
+    std::cout &amp;lt;&amp;lt; f[siz - 1] - c &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;c---electric-circuit&#34;&gt;C - Electric Circuit&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/abc321/tasks/abc321_g&#34; class=&#34;uri&#34;&gt;https://atcoder.jp/contests/abc321/tasks/abc321_g&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;很像&lt;a href=&#34;/20250430/#有标号无向图计数&#34;&gt;无向图容斥&lt;/a&gt;？令 &lt;span class=&#34;math inline&#34;&gt;\(f_S\)&lt;/span&gt; 表示让 &lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt; 内部完成配对，可以不连通的方案数，那么当且仅当 &lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt; 内部点出、入度之和相等（记为 &lt;span class=&#34;math inline&#34;&gt;\(cnt\)&lt;/span&gt;）时，&lt;span class=&#34;math inline&#34;&gt;\(f_S\)&lt;/span&gt; 有值 &lt;span class=&#34;math inline&#34;&gt;\(cnt!\)&lt;/span&gt;。相似地，设 &lt;span class=&#34;math inline&#34;&gt;\(g_S\)&lt;/span&gt; 表示让 &lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt; 完成配对，成为一个连通块的方案数，得到 &lt;span class=&#34;math inline&#34;&gt;\(g_S=f_S-\sum\limits_{v\in S} f_{S\oplus v}\cdot g_v\)&lt;/span&gt;。让 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 必须包含 &lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt; 中编号最小的点就可以去重。&lt;/p&gt;
+&lt;p&gt;从贡献的角度出发，&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt; 带来的贡献就是 &lt;span class=&#34;math inline&#34;&gt;\(g_S\cdot f_{U\oplus S}\)&lt;/span&gt;，其中 &lt;span class=&#34;math inline&#34;&gt;\(U\)&lt;/span&gt; 是全集。最后除以 &lt;span class=&#34;math inline&#34;&gt;\(M!\)&lt;/span&gt; 求出期望。&lt;/p&gt;
+&lt;p&gt;复杂度 &lt;span class=&#34;math inline&#34;&gt;\(O(3^n)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 998244353;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, m;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; m;
+    std::vector&amp;lt;int&amp;gt; ci(n), co(n);
+    for (int i = 1, x; i &amp;lt;= m; ++i)
+        std::cin &amp;gt;&amp;gt; x, ++ci[x - 1];
+    for (int i = 1, x; i &amp;lt;= m; ++i)
+        std::cin &amp;gt;&amp;gt; x, ++co[x - 1];
+    std::vector&amp;lt;long long&amp;gt; fac(m + 1);
+    fac[0] = 1ll;
+    for (int i = 1; i &amp;lt;= m; ++i)
+        fac[i] = fac[i - 1] * i % mod;
+    auto qkp = [&amp;amp;](long long x, int y) &amp;#123;
+        auto res(1ll);
+        for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    int siz = 1 &amp;lt;&amp;lt; n;
+    std::vector&amp;lt;long long&amp;gt; f(siz), g(siz);
+    for (int i = 1; i &amp;lt; siz; ++i) &amp;#123;
+        int si = 0, so = 0;
+        for (int j = 0; j &amp;lt; n; ++j)
+            if ((i &amp;gt;&amp;gt; j) &amp;amp; 1)
+                si += ci[j], so += co[j];
+        if (si == so)
+            f[i] = fac[si];
+    &amp;#125;
+    auto res(0ll);
+    for (int i = 1; i &amp;lt; siz; ++i) &amp;#123;
+        g[i] = f[i];
+        int mn = 0;
+        for (int j = 0; j &amp;lt; n; ++j)
+            if ((i &amp;gt;&amp;gt; j) &amp;amp; 1) &amp;#123;
+                mn = j;
+                break;
+            &amp;#125;
+        int s = i ^ (1 &amp;lt;&amp;lt; mn);
+        (g[i] += mod - g[1 &amp;lt;&amp;lt; mn] * f[s] % mod) %= mod;
+        for (int j = (s - 1) &amp;amp; s; j; j = (j - 1) &amp;amp; s)
+            (g[i] += mod - g[j ^ (1 &amp;lt;&amp;lt; mn)] * f[s ^ j] % mod) %= mod;
+        if (i != siz - 1)
+            (res += g[i] * f[(siz - 1) ^ i]) %= mod;
+        else
+            (res += g[i]) %= mod;
+    &amp;#125;
+    std::cout &amp;lt;&amp;lt; res * qkp(fac[m], mod - 2) % mod &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;d---count-grid-3-coloring&#34;&gt;D - Count Grid 3-coloring&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/abc379/tasks/abc379_g&#34; class=&#34;uri&#34;&gt;https://atcoder.jp/contests/abc379/tasks/abc379_g&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;轮廓线 DP。把每一列已经确定的最靠下的元素压起来，每行逐个确定即可。&lt;/p&gt;
+&lt;p&gt;发现有效状态中只能容许最多一对相邻相同元素，这样复杂度就能降下来了。注意特判 &lt;span class=&#34;math inline&#34;&gt;\(1\times 1\)&lt;/span&gt; 的情况。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 998244353;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, m;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; m;
+    std::array&amp;lt;int, 15&amp;gt; p;
+    p[0] = 1;
+    for (int i = 1; i &amp;lt; 15; ++i)
+        p[i] = p[i - 1] * 3;
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; a;
+    if (n &amp;gt;= m) &amp;#123;
+        a.assign(n + 1, std::vector&amp;lt;int&amp;gt; (m + 1));
+        for (int i = 1; i &amp;lt;= n; ++i) 
+            for (int j = 1; j &amp;lt;= m; ++j) &amp;#123;
+                char t;
+                std::cin &amp;gt;&amp;gt; t, a[i][j] = (t == &amp;#39;?&amp;#39; ? -1 : t - &amp;#39;1&amp;#39;);
+            &amp;#125;
+    &amp;#125;
+    else &amp;#123;
+        std::swap(n, m);
+        a.assign(n + 1, std::vector&amp;lt;int&amp;gt; (m + 1));
+        for (int i = 1; i &amp;lt;= m; ++i)
+            for (int j = 1; j &amp;lt;= n; ++j) &amp;#123;
+                char t;
+                std::cin &amp;gt;&amp;gt; t, a[j][i] = (t == &amp;#39;?&amp;#39; ? -1 : t - &amp;#39;1&amp;#39;);
+            &amp;#125;
+    &amp;#125;
+    int siz = p[m];
+    using arr = std::vector&amp;lt;long long&amp;gt;;
+    using brr = std::vector&amp;lt;arr&amp;gt;;
+    using crr = std::vector&amp;lt;brr&amp;gt;;
+    std::vector&amp;lt;int&amp;gt; s, tab(siz, -1);
+    auto getv_1 = [&amp;amp;](int j, int i) &amp;#123;
+        return (j / p[i - 1]) % 3;
+    &amp;#125;;
+    auto getv = [&amp;amp;](int j, int i) &amp;#123;
+        return (s[j] / p[i - 1]) % 3;
+    &amp;#125;;
+    auto chg = [&amp;amp;](int j, int i, int v) &amp;#123;
+        return tab[s[j] - p[i - 1] * getv(j, i) + p[i - 1] * v];
+    &amp;#125;;
+    auto out = [&amp;amp;](int i) &amp;#123;
+        std::string s;
+        for (int j = 1; j &amp;lt;= m; ++j)
+            s += &amp;#39;1&amp;#39; + getv_1(i, j);
+        return s.c_str();
+    &amp;#125;;
+    for (int i = 0; i &amp;lt; siz; ++i) &amp;#123;
+        s.push_back(i);
+        int cnt = 0;
+        for (int j = 2; j &amp;lt;= m; ++j)
+            if (getv_1(i, j - 1) == getv_1(i, j) &amp;amp;&amp;amp; ++cnt &amp;gt;= 2) &amp;#123;
+                s.pop_back();
+                break;
+            &amp;#125;
+    &amp;#125;
+    for (int i = 0; i &amp;lt; (int)s.size(); ++i)
+        tab[s[i]] = i;
+    siz = (int)s.size();
+    if (n == 1) &amp;#123;
+        std::cout &amp;lt;&amp;lt; (a[1][1] == -1 ? 3 : 1) &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+        return 0;
+    &amp;#125;
+    crr f(n + 1, brr(m + 1, arr(siz)));
+    for (int i = 0; i &amp;lt; siz; ++i)
+        if ([&amp;amp;](int i, int s) &amp;#123;
+            for (int j = 1; j &amp;lt;= m; ++j) &amp;#123;
+                if (a[i][j] != -1 &amp;amp;&amp;amp; a[i][j] != getv(s, j))
+                    return false;
+                if (j != 1 &amp;amp;&amp;amp; getv(s, j) == getv(s, j - 1))
+                    return false;
+            &amp;#125;
+            return true;
+        &amp;#125; (1, i)) &amp;#123;
+            for (int p = 0; p &amp;lt; 3; ++p)
+                if ((a[2][1] == -1 || a[2][1] == p) &amp;amp;&amp;amp; getv(i, 1) != p &amp;amp;&amp;amp; ~chg(i, 1, p))
+                    (++f[2][1][chg(i, 1, p)]) %= mod;
+        &amp;#125;
+    for (int i = 2; i &amp;lt;= n; ++i) &amp;#123;
+        for (int k = 1; k &amp;lt; m; ++k)
+            for (int j = 0; j &amp;lt; siz; ++j)
+                if (f[i][k][j]) &amp;#123;
+                    // printf(&amp;quot;f[%d][%d][%s] = %lld\n&amp;quot;, i, k, out(s[j]), f[i][k][j]);
+                    for (int p = 0; p &amp;lt; 3; ++p)
+                        if ((a[i][k + 1] == -1 || a[i][k + 1] == p) &amp;amp;&amp;amp; getv(j, k) != p &amp;amp;&amp;amp; getv(j, k + 1) != p &amp;amp;&amp;amp; ~chg(j, k + 1, p))
+                            (f[i][k + 1][chg(j, k + 1, p)] += f[i][k][j]) %= mod;
+                &amp;#125;
+        for (int j = 0; j &amp;lt; siz; ++j)
+            if (i != n &amp;amp;&amp;amp; f[i][m][j])
+                for (int p = 0; p &amp;lt; 3; ++p)
+                    if ((a[i + 1][1] == -1 || a[i + 1][1] == p) &amp;amp;&amp;amp; getv(j, 1) != p &amp;amp;&amp;amp; ~chg(j, 1, p))
+                        (f[i + 1][1][chg(j, 1, p)] += f[i][m][j]) %= mod;
+    &amp;#125;
+    auto res = 0ll;
+    for (int i = 0; i &amp;lt; siz; ++i)
+        (res += f[n][m][i]) %= mod;
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;e---pure-straight&#34;&gt;E - Pure Straight&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/arc126/tasks/arc126_d&#34; class=&#34;uri&#34;&gt;https://atcoder.jp/contests/arc126/tasks/arc126_d&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;手玩发现只要最终序列确定，那么移动的顺序不影响答案。故考虑确定目标位置和移动序列。考虑绝对值的几何意义，不妨令目标子序列中元素集中到被选中位置的中间元素，此时的代价可以计算。用点二进制技巧和库函数可以 &lt;span class=&#34;math inline&#34;&gt;\(O(1)\)&lt;/span&gt; 算代价。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, k;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; k;
+    int siz = 1 &amp;lt;&amp;lt; k;
+    std::vector&amp;lt;int&amp;gt; a(n + 1), f(siz, 0x3f3f3f3f);
+    auto out = [&amp;amp;](int j) &amp;#123;
+        std::string s;
+        for (int i = 0; i &amp;lt; k; ++i)
+            s += (&amp;#39;0&amp;#39; + ((j &amp;gt;&amp;gt; i) &amp;amp; 1));
+        return s.c_str();
+    &amp;#125;;
+    f[0] = 0;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; a[i], --a[i];
+        for (int j = siz - 1; j &amp;gt;= 0; --j) &amp;#123;
+            if (!((j &amp;gt;&amp;gt; a[i]) &amp;amp; 1))
+                f[j | (1 &amp;lt;&amp;lt; a[i])] = std::min(f[j | (1 &amp;lt;&amp;lt; a[i])], f[j] + __builtin_popcount(j &amp;amp; (~((1 &amp;lt;&amp;lt; a[i]) - 1))));
+            f[j] += std::min(__builtin_popcount(j), k - __builtin_popcount(j));
+        &amp;#125;
+    &amp;#125;
+    std::cout &amp;lt;&amp;lt; f[siz - 1] &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;f---123-set&#34;&gt;F - 123 Set&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/arc184/tasks/arc184_b&#34; class=&#34;uri&#34;&gt;https://atcoder.jp/contests/arc184/tasks/arc184_b&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;做过 &lt;a href=&#34;https://www.luogu.com.cn/problem/P3226&#34;&gt;集合选数&lt;/a&gt;（这个 trick 见过很多次了，应该不只这一道，但我想不起来了）很容易想到画一个表格或者 DAG 出来，其实都能做&lt;/p&gt;
+&lt;p&gt;对于表格左上角和 DAG 的源点，肯定是一个 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，其不是 &lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt; 或 &lt;span class=&#34;math inline&#34;&gt;\(3\)&lt;/span&gt; 的倍数。如果画表，横乘 3 竖乘 2，观察一下是包含了 &lt;span class=&#34;math inline&#34;&gt;\(1\sim n\)&lt;/span&gt; 恰好一次的很多个杨表（没什么用，提一嘴而已），考虑转化目标，发现是用一个不可旋转的倒 L 形骨牌可叠放地铺满异形表格，可以考虑轮廓线 DP&lt;/p&gt;
+&lt;p&gt;具体地，用 1 来表示拐角处，0 表示其他，叠放的时候 1 的优先级比 0 高，然后就可以做了。以 3 为行，悲观估计单个表格大概有 &lt;span class=&#34;math inline&#34;&gt;\(31\times 2^{19}\)&lt;/span&gt; 个状态，运算次数差不多 &lt;span class=&#34;math inline&#34;&gt;\(31\times 19\times 2^{19}\)&lt;/span&gt;；再发现长得一模一样的表格肯定方案数是一样的，如果把任意一个表格全部除以 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，就会得到 &lt;span class=&#34;math inline&#34;&gt;\(n=10^9\div x\)&lt;/span&gt; 时 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 为左上角的杨表，就是说长相只和 &lt;span class=&#34;math inline&#34;&gt;\(10^9\div x\)&lt;/span&gt; 的值有关，可以整除分块 😱 可预计的跑得非常不满，实践下来是可以过的（但是很慢）&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    auto calc = [&amp;amp;](int r) &amp;#123;
+        return r - r / 2 - r / 3 + r / 6;
+    &amp;#125;;
+    auto dp = [&amp;amp;](int lim) &amp;#123;
+        if (lim == 1) &amp;#123;
+            // printf(&amp;quot;lim = 1, ret 1&amp;quot;);
+            return 1;
+        &amp;#125;
+        int n = 1, m = 1;
+        for (int k = 1; k * 2 &amp;lt;= lim; ++n, k *= 2);
+        for (int k = 1; k * 3 &amp;lt;= lim; ++m, k *= 3);
+        int siz = 1 &amp;lt;&amp;lt; m;
+        std::vector&amp;lt;std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; &amp;gt; f(2, std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; (2, std::vector&amp;lt;int&amp;gt; (siz))), p(n + 1, std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; (m));
+        std::vector&amp;lt;std::vector&amp;lt;std::vector&amp;lt;std::pair&amp;lt;int, int&amp;gt; &amp;gt; &amp;gt; &amp;gt; t(2, std::vector&amp;lt;std::vector&amp;lt;std::pair&amp;lt;int, int&amp;gt; &amp;gt; &amp;gt; (2, std::vector&amp;lt;std::pair&amp;lt;int, int&amp;gt; &amp;gt; (siz))); // sb
+        auto upd = [&amp;amp;](int i, int k, int j, int v) &amp;#123;
+            if (t[i &amp;amp; 1][k &amp;amp; 1][j] != std::make_pair(i, k)) &amp;#123;
+                p[i][k].push_back(j);
+                t[i &amp;amp; 1][k &amp;amp; 1][j] = &amp;#123; i, k &amp;#125;, f[i &amp;amp; 1][k &amp;amp; 1][j] = v;
+            &amp;#125;
+            else
+                f[i &amp;amp; 1][k &amp;amp; 1][j] = std::min(f[i &amp;amp; 1][k &amp;amp; 1][j], v);
+            return;
+        &amp;#125;;
+        auto chg = [&amp;amp;](int i, int j, int v) &amp;#123;
+            return i ^ (((i &amp;gt;&amp;gt; j) &amp;amp; 1) &amp;lt;&amp;lt; j) ^ (v &amp;lt;&amp;lt; j);
+        &amp;#125;;
+        for (int i = 0; i &amp;lt; siz; ++i) &amp;#123;
+            bool flag = 0;
+            for (int j = 0; j &amp;lt; m; ++j)
+                if (((i &amp;gt;&amp;gt; j) &amp;amp; 1) || (j &amp;amp;&amp;amp; ((i &amp;gt;&amp;gt; (j - 1)) &amp;amp; 1)));
+                else &amp;#123;
+                    flag = 1;
+                    break;
+                &amp;#125;
+            if (!flag)
+                upd(1, m - 1, i, __builtin_popcount(i));
+        &amp;#125;
+        for (int i = 2; i &amp;lt;= n; i++) &amp;#123;
+            int m1 = 1;
+            for (int x = (1 &amp;lt;&amp;lt; (i - 1)); x * 3ll &amp;lt;= lim; ++m1, x *= 3);
+            int siz1 = 1 &amp;lt;&amp;lt; m1;
+            for (auto j : p[i - 1][m - 1]) &amp;#123;
+                if (j &amp;amp; 1)
+                    upd(i, 0, chg(j &amp;amp; (siz1 - 1), 0, 0), f[(i - 1) &amp;amp; 1][(m - 1) &amp;amp; 1][j]);
+                upd(i, 0, chg(j &amp;amp; (siz1 - 1), 0, 1), f[(i - 1) &amp;amp; 1][(m - 1) &amp;amp; 1][j] + 1);
+            &amp;#125;
+            m = m1, siz = siz1;
+            for (int k = 0; k &amp;lt; m - 1; ++k)
+                for (auto j : p[i][k]) &amp;#123;
+                    if (((j &amp;gt;&amp;gt; k) &amp;amp; 1) || ((j &amp;gt;&amp;gt; (k + 1)) &amp;amp; 1))
+                        upd(i, k + 1, chg(j, k + 1, 0), f[i &amp;amp; 1][k &amp;amp; 1][j]);
+                    upd(i, k + 1, chg(j, k + 1, 1), f[i &amp;amp; 1][k &amp;amp; 1][j] + 1);
+                &amp;#125;
+        &amp;#125;
+        int res = 0x3f3f3f3f;
+        for (auto i : p[n][m - 1])
+            res = std::min(res, f[n &amp;amp; 1][(m - 1) &amp;amp; 1][i]);
+        return res;
+    &amp;#125;;
+    int res = 0;
+    for (int l = 1, r; l &amp;lt;= n; l = r + 1) &amp;#123;
+        r = n / (n / l);
+        if (calc(r) - calc(l - 1))
+            res += (calc(r) - calc(l - 1)) * dp(n / l);
+    &amp;#125;
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+</content>
+        <category term="DP" />
+        <category term="状压 DP" />
+        <updated>2025-08-05T06:33:55.000Z</updated>
+    </entry>
+</feed>

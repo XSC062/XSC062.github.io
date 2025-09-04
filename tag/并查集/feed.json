@@ -1,0 +1,18 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "null • All posts by \"并查集\" tag",
+    "description": "",
+    "home_page_url": "https://xsc062.netlify.app",
+    "items": [
+        {
+            "id": "https://xsc062.netlify.app/20220808/",
+            "url": "https://xsc062.netlify.app/20220808/",
+            "title": "解题报告 One-Dimensional Battle Ships",
+            "date_published": "2022-08-07T23:56:40.000Z",
+            "content_html": "<p>老题解批量补档。</p>\n<span id=\"more\"></span>\n<hr />\n<p><a href=\"https://www.luogu.com.cn/problem/CF567D\" class=\"uri\">https://www.luogu.com.cn/problem/CF567D</a></p>\n<p>因为「某一时刻是否一定被击中过」具有单调性，考虑先提前发射所有炮弹，倒序枚举炮弹，不断「撤销」当前最后一发炮弹的发射，如果在「撤销」这发炮弹后，存在任意一种放下 <span class=\"math inline\">\\(k\\)</span> 艘完整的战舰的方案，说明在发射这一发炮弹之后绝对能够击中。</p>\n<p>如果发射所有炮弹后，依然存在一种放下 <span class=\"math inline\">\\(k\\)</span> 艘完整的战舰的方案，则无解。</p>\n<p>具体实现可以使用并查集维护连通块大小，每「撤销」一发炮弹的发射相当于合并三个连通块：炮弹的落点、落点的前一个元素（若不存在或已被炮弹摧毁则忽略）、落点的后一个元素（若不存在或已被炮弹摧毁则忽略）。</p>\n<p>设某连通块大小为 <span class=\"math inline\">\\(x\\)</span>，可容纳战舰数为 <span class=\"math inline\">\\(res\\)</span>，显然有 <span class=\"math inline\">\\(res = \\lfloor (x + 1) \\div (p + 1) \\rfloor\\)</span>。</p>\n<p>记统计当前可容纳战舰的数量为 <span class=\"math inline\">\\(ans\\)</span>，在并查集合并时，<span class=\"math inline\">\\(ans\\)</span> 分别减去两个待合并连通块的可容纳战舰的数量，再加上新连通块可容纳战舰的数量。最靠后的 <span class=\"math inline\">\\(ans\\ge k\\)</span> 的时刻即为所求。</p>\n<p>同时使用路径压缩和按秩合并，时空复杂度均为 <span class=\"math inline\">\\(\\mathcal O(n)\\)</span>。优于 multiset 解法。</p>\n<details>\n<pre class=\"cpp\"><code>namespace XSC062 &#123;\nusing namespace fastIO;\nconst int maxn = 2e5 + 15;\nbool vis[maxn];\nint n, k, p, m, x, ans;\nint a[maxn], f[maxn], siz[maxn];\ninline void swap(int &amp;x, int &amp;y)&#123;\n    x ^= y ^= x ^= y;\n    return 0;\n&#125;\ninline int calc(int x) &#123;\n    return (x + 1) / (p + 1);\n&#125;\ninline void Init(int n) &#123;\n    for (int i = 1; i &lt;= n; ++i) &#123;\n        f[i] = i;\n        siz[i] = 1;\n    &#125;\n    return;\n&#125;\nint find(int x) &#123;\n    return x == f[x] ? x : f[x] = find(f[x]);\n&#125;\ninline void merge(int x, int y) &#123;\n    int fx = find(x);\n    int fy = find(y);\n    if (fx == fy)\n        return;\n    ans -= calc(siz[fx]);\n    ans -= calc(siz[fy]);\n    if (siz[fy] &gt; siz[fx])\n        swap(fx, fy);\n    ans += calc(siz[fy]);\n    f[fx] = fy;\n    return;\n&#125;\nint main() &#123;\n    read(n);\n    read(k);\n    read(p);\n    read(m);\n    Init(n + 5);\n    ans = (n - m) * (2 / (p + 1));\n    for (int i = 1; i &lt;= m; ++i) &#123;\n        read(a[i]);\n        vis[a[i]] = 1;\n    &#125;\n    for (int i = 1; i &lt;= n; ++i) &#123;\n        if (vis[i] || vis[i - 1])\n            continue;\n        merge(i, i - 1);\n    &#125; \n    if (ans &gt;= k) &#123;\n        puts(&quot;-1&quot;);\n        return 0;\n    &#125;\n    for (int i = m; i; --i) &#123;\n        vis[a[i]] = 0;\n        ans += 2 / (p + 1);\n        if (a[i] - 1 &amp;&amp; !vis[a[i] - 1])\n            merge(a[i], a[i] - 1);\n        if (a[i] + 1 &lt;= n &amp;&amp; !vis[a[i] + 1])\n            merge(a[i], a[i] + 1);\n        if (ans &gt;= k) &#123;\n            printf(&quot;%d&quot;, i);\n            return 0;\n        &#125;\n    &#125;\n    puts(&quot;-1&quot;);\n    return 0;\n&#125;\n&#125; // namespace XSC062\nint main() &#123;\n    XSC062::main();\n    return 0;\n&#125;</code></pre>\n</details>\n",
+            "tags": [
+                "并查集"
+            ]
+        }
+    ]
+}

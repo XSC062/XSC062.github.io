@@ -1,0 +1,359 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://xsc062.netlify.app</id>
+    <title> • Posts by &#34;李超线段树&#34; tag</title>
+    <link href="https://xsc062.netlify.app" />
+    <updated>2023-12-30T04:12:30.000Z</updated>
+    <category term="并查集" />
+    <category term="斜率优化" />
+    <category term="悬线法" />
+    <category term="哈希" />
+    <category term="字典树" />
+    <category term="DP" />
+    <category term="单调队列" />
+    <category term="分治" />
+    <category term="二分图" />
+    <category term="CRT / exCRT" />
+    <category term="排列组合" />
+    <category term="网络流" />
+    <category term="费用流" />
+    <category term="二分" />
+    <category term="上下界网络流" />
+    <category term="容斥原理" />
+    <category term="线段树" />
+    <category term="树状数组" />
+    <category term="区间 DP" />
+    <category term="构造" />
+    <category term="Tarjan" />
+    <category term="数据结构" />
+    <category term="下饭" />
+    <category term="LCA" />
+    <category term="倍增" />
+    <category term="鸽巢原理" />
+    <category term="概率期望" />
+    <category term="调和级数" />
+    <category term="差分" />
+    <category term="思维" />
+    <category term="树形 DP" />
+    <category term="最小生成树" />
+    <category term="SAM" />
+    <category term="状压" />
+    <category term="分块" />
+    <category term="可持久化" />
+    <category term="笛卡尔树" />
+    <category term="高维前缀和" />
+    <category term="闲话" />
+    <category term="欧拉回路" />
+    <category term="树链剖分" />
+    <category term="长链剖分" />
+    <category term="KMP" />
+    <category term="border" />
+    <category term="字符串" />
+    <category term="AC 自动机" />
+    <category term="SA" />
+    <category term="数学" />
+    <category term="树上差分" />
+    <category term="FWT" />
+    <category term="堆" />
+    <category term="树的重心" />
+    <category term="二项式定理" />
+    <category term="二项式反演" />
+    <category term="贪心" />
+    <category term="均摊" />
+    <category term="计数" />
+    <category term="优化建图" />
+    <category term="反悔贪心" />
+    <category term="调整法" />
+    <category term="背包" />
+    <category term="博弈论" />
+    <category term="DP 优化" />
+    <category term="虚树" />
+    <category term="点分治" />
+    <category term="WQS 二分" />
+    <category term="闵可夫斯基和" />
+    <category term="slope trick" />
+    <category term="四边形不等式" />
+    <category term="暴力" />
+    <category term="状压 DP" />
+    <category term="组合数学" />
+    <category term="支配对" />
+    <category term="DDP" />
+    <category term="平衡树" />
+    <category term="容斥" />
+    <category term="猫树" />
+    <category term="Kruskal 重构树" />
+    <category term="李超线段树" />
+    <entry>
+        <id>https://xsc062.netlify.app/231230/</id>
+        <title>解题报告 [SDOI2016] 游戏</title>
+        <link rel="alternate" href="https://xsc062.netlify.app/231230/"/>
+        <content type="html">&lt;p&gt;可以看出来出题人很想出一道把李超和别的什么东西凑起来的题目，于是给了这么一个缝合怪。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P4069&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P4069&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;符号有点混乱。比如箭头又可以表示路径又可以表示赋值，代入语境应该还是好理解的。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;看到 &lt;span class=&#34;math inline&#34;&gt;\(a\times dis + b\)&lt;/span&gt; 就应激反应出来是李超了，看到 &lt;span class=&#34;math inline&#34;&gt;\(s\to t\)&lt;/span&gt; 又瞬间反应过来是树剖，但是树剖的 DFN 和 &lt;span class=&#34;math inline&#34;&gt;\(dis\)&lt;/span&gt; 没有直接关联，赛时想不到怎么做就跑路了。&lt;/p&gt;
+&lt;p&gt;实际上这个转化很板。因为这是条路径，我们还在树链上跳，每次跳过的一个链上的 DFN 是连续的，对应的 &lt;span class=&#34;math inline&#34;&gt;\(dis\)&lt;/span&gt; 也是连续的。&lt;/p&gt;
+&lt;p&gt;估计是打 T4 的子树问题打傻了，没想到这个。&lt;/p&gt;
+&lt;p&gt;所以我们就相当于是给一条重链上的某个连续区间加了一个斜率为 &lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;，截距为 &lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt; 加上 &lt;em&gt;一坨东西&lt;/em&gt; 的线段。用李超维护即可。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;感觉讲的不清不楚的，那就再讲讲。&lt;/p&gt;
+&lt;p&gt;我们要让李超上任意一个点 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 代表的 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 是个定值。&lt;em&gt;一坨东西&lt;/em&gt; 维护了这条线段相对于 &lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt; 的偏移量。令 &lt;span class=&#34;math inline&#34;&gt;\(r\gets \text{LCA of } s \text { and } t\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(R\)&lt;/span&gt; 表示整棵树的根，&lt;span class=&#34;math inline&#34;&gt;\(d(u,v)\gets \text {distance between } u \text { and } v\)&lt;/span&gt;。&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;p&gt;对于 &lt;span class=&#34;math inline&#34;&gt;\(s\to r\)&lt;/span&gt; 上的每个点 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\begin{aligned}
+val_u&amp;amp;=a\times d(s, u)+b\\
+&amp;amp;=a\times[d(s,R)-d(u,R)]+b\\
+&amp;amp;=-a\times d(u,R)+[a\times d(s,R)+b]
+\end{aligned}
+\]&lt;/span&gt; &lt;span class=&#34;math inline&#34;&gt;\(a\times d(s,R)+b\)&lt;/span&gt; 是和 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 无关的定值（这意味着可以在同一个询问的树剖时直接线段树），&lt;span class=&#34;math inline&#34;&gt;\(d(u,R)\)&lt;/span&gt; 是只和 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 相关的值（这意味着对于任意询问都成立）。令斜率为 &lt;span class=&#34;math inline&#34;&gt;\(-a\)&lt;/span&gt;，截距为 &lt;span class=&#34;math inline&#34;&gt;\(a\times d(s,R)+b\)&lt;/span&gt;，李超上任意点 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 代表 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 为 &lt;span class=&#34;math inline&#34;&gt;\(d(x,R)\)&lt;/span&gt;，维护如此一条线段即可。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;对于 &lt;span class=&#34;math inline&#34;&gt;\(r\to t\)&lt;/span&gt; 上的每个点 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt;： &lt;span class=&#34;math display&#34;&gt;\[
+\begin{aligned}
+val_v&amp;amp;=a\times d(s,v)+b\\
+&amp;amp;= a\times [d(r,v)+d(s,r)]+b\\
+&amp;amp;=a\times [d(v,R)-d(r,R)+d(s,r)]+b\\
+&amp;amp;=a\times d(v,R)+[-a\times d(r,R)+a\times d(s,r)+b]
+\end{aligned}
+\]&lt;/span&gt; &lt;span class=&#34;math inline&#34;&gt;\(-a\times d(r,R)+a\times d(s,r)+b\)&lt;/span&gt; 是和 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 无关，只和询问中固定的 &lt;span class=&#34;math inline&#34;&gt;\(s,r,a,b\)&lt;/span&gt; 有关的定值；&lt;span class=&#34;math inline&#34;&gt;\(d(v,R)\)&lt;/span&gt; 是只和 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 相关的值且和上一个 case 里的 &lt;span class=&#34;math inline&#34;&gt;\(d(u,R)\)&lt;/span&gt; 同构，也用李超这么维护即可。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;用李超维护把原问题转化为每次向若干重链上连续区间插入线段，求最低交点的问题。&lt;/p&gt;
+&lt;p&gt;注意到区间查询，李超需要加一个 pushup。具体怎么去操作呢？在加线段的时候除编号外新增一个变量维护当前区间内最低交点；我们就 pushup 这个东西。然后查询的时候就是在散区间的时候和原来一样查，整区间就在散区间答案的基础上再和当前区间的整体最低交点比一个 min。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#define int long long
+namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxk = 25;
+const int maxn = 1e6 + 5;
+const int maxm = 1e6 + 5;
+const int inf = 123456789123456789;
+//#define DEBUG
+
+#ifdef DEBUG
+#define Z(x) x
+#else
+#define Z(x)
+#endif
+#define lt (p &amp;lt;&amp;lt; 1)
+#define rt (lt | 1)
+struct __ &amp;#123; int k, b; &amp;#125;;
+struct _ &amp;#123; int l, r, u, d; &amp;#125;;
+struct ____ &amp;#123;
+    int v, w;
+    ____() &amp;#123;&amp;#125;
+    ____(int v1, int w1) &amp;#123;
+        v = v1, w = w1; 
+    &amp;#125;
+&amp;#125;;
+__ a[maxm];
+_ t[maxn &amp;lt;&amp;lt; 2];
+int tot, si, now;
+int f[maxn][maxk];
+int dis[maxn], dep[maxn];
+int dfn[maxn], tab[maxn];
+std::vector&amp;lt;____&amp;gt; g[maxn];
+int n, m, ty, x, y, w, k, b;
+int siz[maxn], top[maxn], son[maxn];
+int max(int x, int y) &amp;#123;
+    return x &amp;gt; y ? x : y;
+&amp;#125;
+int min(int x, int y) &amp;#123;
+    return x &amp;lt; y ? x : y;
+&amp;#125;
+void swap(int &amp;amp;x, int &amp;amp;y) &amp;#123;
+    x ^= y ^= x ^= y;
+    return;
+&amp;#125;
+void DFS1(int x) &amp;#123;
+    siz[x] = 1;
+    for (auto i : g[x]) &amp;#123;
+        if (i.v == f[x][0]) continue;
+        f[i.v][0] = x;
+        for (int j = 1; j &amp;lt;= si; ++j)
+            f[i.v][j] = f[f[i.v][j - 1]][j - 1];
+        dep[i.v] = dep[x] + 1;
+        dis[i.v] = dis[x] + i.w;
+        DFS1(i.v);
+        if (siz[i.v] &amp;gt; siz[son[x]])
+            son[x] = i.v;
+        siz[x] += siz[i.v];
+    &amp;#125;
+    return;
+&amp;#125;
+void DFS2(int x, int t) &amp;#123;
+    top[x] = t;
+    dfn[x] = ++now, tab[now] = x;
+    if (son[x]) DFS2(son[x], t);
+    for (auto i : g[x]) &amp;#123;
+        if (i.v == f[x][0] || i.v == son[x])
+            continue;
+        DFS2(i.v, i.v);
+    &amp;#125;
+    return;
+&amp;#125;
+void bld(int p, int l, int r) &amp;#123;
+    t[p].l = l, t[p].r = r, t[p].d = inf;
+    if (l == r) return;
+    int mid = (l + r) &amp;gt;&amp;gt; 1;
+    bld(lt, l, mid), bld(rt, mid + 1, r);
+    return;
+&amp;#125;
+int getv(int id, int x) &amp;#123;
+    if (!id) return inf;
+    Z(printf(&amp;quot;get (%lld, %lld) = %lld\n&amp;quot;,
+        id, x, dis[tab[x]] * a[id].k + a[id].b));
+    return dis[tab[x]] * a[id].k + a[id].b;
+&amp;#125;
+void pushup(int p) &amp;#123;
+    if (t[p].l == t[p].r) return;
+    t[p].d = min(t[p].d, min(t[lt].d, t[rt].d));
+    Z(printf(&amp;quot;[%lld, %lld]: pushup to %lld\n&amp;quot;,
+        t[p].l, t[p].r, t[p].d));
+    return;
+&amp;#125;
+void chg(int p, int id) &amp;#123;
+    t[p].u = id;
+    Z(int tmp = t[p].d);
+    t[p].d = min(getv(id, t[p].l),
+                 getv(id, t[p].r));
+    Z(printf(&amp;quot;[%lld, %lld]: %lld -&amp;gt; %lld\n&amp;quot;,
+                t[p].l, t[p].r, tmp, t[p].d)); 
+    return;
+&amp;#125;
+void upd(int p, int id) &amp;#123;
+    if (!t[p].u) &amp;#123;
+        chg(p, id), pushup(p);
+        return;
+    &amp;#125;
+    int mid = (t[p].l + t[p].r) &amp;gt;&amp;gt; 1;
+    int v1 = getv(t[p].u, mid),
+        v2 = getv(id, mid);
+    if (v2 &amp;lt; v1) swap(t[p].u, id);
+    v1 = getv(t[p].u, t[p].l);
+    v2 = getv(id, t[p].l);
+    if (v2 &amp;lt; v1) upd(lt, id);
+    v1 = getv(t[p].u, t[p].r);
+    v2 = getv(id, t[p].r);
+    if (v2 &amp;lt; v1) upd(rt, id);
+    chg(p, t[p].u);
+    pushup(p);
+    return;
+&amp;#125;
+void add(int p, int l, int r, int id) &amp;#123;
+    if (l &amp;lt;= t[p].l &amp;amp;&amp;amp; t[p].r &amp;lt;= r) &amp;#123;
+        upd(p, id);
+        return;
+    &amp;#125;
+    int mid = (t[p].l + t[p].r) &amp;gt;&amp;gt; 1;
+    if (l &amp;lt;= mid) add(lt, l, r, id);
+    if (r &amp;gt; mid) add(rt, l, r, id);
+    pushup(p);
+    return;
+&amp;#125;
+int ask(int p, int l, int r) &amp;#123;
+    l = max(l, t[p].l);
+    r = min(r, t[p].r);
+    int res = min(getv(t[p].u, l),
+                  getv(t[p].u, r));
+    Z(printf(&amp;quot;[%lld, %lld]: res = %lld\n&amp;quot;,
+        t[p].l, t[p].r, res));
+    if (l &amp;lt;= t[p].l &amp;amp;&amp;amp; t[p].r &amp;lt;= r)
+        return min(res, t[p].d);
+    int mid = (t[p].l + t[p].r) &amp;gt;&amp;gt; 1;
+    if (l &amp;lt;= mid) res = min(res, ask(lt, l, r));
+    if (r &amp;gt; mid) res = min(res, ask(rt, l, r));
+    Z(printf(&amp;quot;[%lld, %lld]: res = %lld\n&amp;quot;,
+        t[p].l, t[p].r, res));
+    return res;
+&amp;#125;
+void add(int x, int y, int w) &amp;#123;
+    g[x].push_back(____(y, w));
+    return;
+&amp;#125;
+void ins(int l, int r, int k, int b) &amp;#123;
+    a[++tot].k = k, a[tot].b = b;
+    add(1, l, r, tot);
+    return;
+&amp;#125;
+int getLCA(int x, int y) &amp;#123;
+    if (dep[x] &amp;lt; dep[y]) swap(x, y);
+    for (int i = si; ~i; --i) &amp;#123;
+        if (dep[f[x][i]] &amp;gt;= dep[y])
+            x = f[x][i];
+    &amp;#125;
+    if (x == y) return x;
+    for (int i = si; ~i; --i) &amp;#123;
+        if (f[x][i] != f[y][i])
+            x = f[x][i], y = f[y][i];
+    &amp;#125;
+    return f[x][0];
+&amp;#125;
+void inst(int s, int t, int k, int b) &amp;#123;
+    int r = getLCA(s, t), u = s;
+    while (top[u] != top[r]) &amp;#123;
+        ins(dfn[top[u]], dfn[u],
+                    -k, k * dis[s] + b);
+        u = f[top[u]][0];
+    &amp;#125;
+    ins(dfn[r], dfn[u], -k, k * dis[s] + b);
+    u = t;
+    int d = dis[s] - dis[r];
+    while (top[u] != top[r]) &amp;#123;
+        ins(dfn[top[u]], dfn[u],
+                k, -k * dis[r] + k * d + b);
+        u = f[top[u]][0];
+    &amp;#125;
+    ins(dfn[r], dfn[u],
+            k, -k * dis[r] + k * d + b);
+    return;
+&amp;#125;
+int qry(int x, int y) &amp;#123;
+    int res = inf;
+    while (top[x] != top[y]) &amp;#123;
+        if (dep[top[x]] &amp;lt; dep[top[y]])
+            swap(x, y);
+        Z(printf(&amp;quot;ask %lld -&amp;gt; %lld: %lld\n&amp;quot;,
+            x, top[x],
+            ask(1, dfn[top[x]], dfn[x])));
+        res = min(res,
+            ask(1, dfn[top[x]], dfn[x]));
+        x = f[top[x]][0];
+    &amp;#125;
+    if (dep[x] &amp;lt; dep[y]) swap(x, y);
+    Z(printf(&amp;quot;ask %lld -&amp;gt; %lld: %lld\n&amp;quot;,
+        x, y, ask(1, dfn[y], dfn[x])));
+    res = min(res, ask(1, dfn[y], dfn[x]));
+    return res;
+&amp;#125;
+int main() &amp;#123;
+//  freopen(&amp;quot;game1.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    read(n), read(m);
+    si = log(n) / log(2.0);
+    for (int i = 1; i &amp;lt; n; ++i) &amp;#123;
+        read(x), read(y), read(w);
+        add(x, y, w), add(y, x, w);
+    &amp;#125;
+    bld(1, 1, n);
+    dep[1] = 1, DFS1(1), DFS2(1, -1);
+    Z(for (int i = 1; i &amp;lt;= n; ++i)
+        printf(&amp;quot;dfn[%lld] = %lld\n&amp;quot;, i, dfn[i]));
+    while (m--) &amp;#123;
+        read(ty), read(x), read(y);
+        if (ty == 1) &amp;#123;
+            read(k), read(b);
+            inst(x, y, k, b);
+        &amp;#125;
+        else print(qry(x, y), &amp;#39;\n&amp;#39;);
+    &amp;#125;
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062
+#undef int&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+</content>
+        <category term="树链剖分" />
+        <category term="李超线段树" />
+        <updated>2023-12-30T04:12:30.000Z</updated>
+    </entry>
+</feed>

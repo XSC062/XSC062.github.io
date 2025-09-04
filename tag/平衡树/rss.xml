@@ -1,0 +1,439 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title> • Posts by &#34;平衡树&#34; tag</title>
+        <link>https://xsc062.netlify.app</link>
+        <description></description>
+        <language>zh-CN</language>
+        <pubDate>Mon, 18 Aug 2025 08:18:48 +0800</pubDate>
+        <lastBuildDate>Mon, 18 Aug 2025 08:18:48 +0800</lastBuildDate>
+        <category>并查集</category>
+        <category>斜率优化</category>
+        <category>悬线法</category>
+        <category>哈希</category>
+        <category>字典树</category>
+        <category>DP</category>
+        <category>单调队列</category>
+        <category>分治</category>
+        <category>二分图</category>
+        <category>CRT / exCRT</category>
+        <category>排列组合</category>
+        <category>网络流</category>
+        <category>费用流</category>
+        <category>二分</category>
+        <category>上下界网络流</category>
+        <category>容斥原理</category>
+        <category>线段树</category>
+        <category>树状数组</category>
+        <category>区间 DP</category>
+        <category>构造</category>
+        <category>Tarjan</category>
+        <category>数据结构</category>
+        <category>下饭</category>
+        <category>LCA</category>
+        <category>倍增</category>
+        <category>鸽巢原理</category>
+        <category>概率期望</category>
+        <category>调和级数</category>
+        <category>差分</category>
+        <category>思维</category>
+        <category>树形 DP</category>
+        <category>最小生成树</category>
+        <category>SAM</category>
+        <category>状压</category>
+        <category>分块</category>
+        <category>可持久化</category>
+        <category>笛卡尔树</category>
+        <category>高维前缀和</category>
+        <category>闲话</category>
+        <category>欧拉回路</category>
+        <category>树链剖分</category>
+        <category>长链剖分</category>
+        <category>KMP</category>
+        <category>border</category>
+        <category>字符串</category>
+        <category>AC 自动机</category>
+        <category>SA</category>
+        <category>数学</category>
+        <category>树上差分</category>
+        <category>FWT</category>
+        <category>堆</category>
+        <category>树的重心</category>
+        <category>二项式定理</category>
+        <category>二项式反演</category>
+        <category>贪心</category>
+        <category>均摊</category>
+        <category>计数</category>
+        <category>优化建图</category>
+        <category>反悔贪心</category>
+        <category>调整法</category>
+        <category>背包</category>
+        <category>博弈论</category>
+        <category>DP 优化</category>
+        <category>虚树</category>
+        <category>点分治</category>
+        <category>WQS 二分</category>
+        <category>闵可夫斯基和</category>
+        <category>slope trick</category>
+        <category>四边形不等式</category>
+        <category>暴力</category>
+        <category>状压 DP</category>
+        <category>组合数学</category>
+        <category>支配对</category>
+        <category>DDP</category>
+        <category>平衡树</category>
+        <category>容斥</category>
+        <category>猫树</category>
+        <category>Kruskal 重构树</category>
+        <category>李超线段树</category>
+        <item>
+            <guid isPermalink="true">https://xsc062.netlify.app/20250818/</guid>
+            <title>学习笔记 平衡树</title>
+            <link>https://xsc062.netlify.app/20250818/</link>
+            <category>平衡树</category>
+            <pubDate>Mon, 18 Aug 2025 08:18:48 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;线段树 plus&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;概览&#34;&gt;概览&lt;/h2&gt;
+&lt;p&gt;定义：BST，且对于任意点，其左右子树树高差不超过 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，这样所有 &lt;span class=&#34;math inline&#34;&gt;\(O(h)\)&lt;/span&gt; 复杂度的 BST 操作都能在 &lt;span class=&#34;math inline&#34;&gt;\(O(\log n)\)&lt;/span&gt; 内解决。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;维护值：&lt;code&gt;__gnu_pbds::tree&amp;lt;&amp;gt;&lt;/code&gt; / 权值线段树&lt;/p&gt;
+&lt;p&gt;需要意识到线段树就是 leafy 的平衡树，且是静态的，不支持对树结构的操作；&lt;/p&gt;
+这也是为什么树上的 GBT 总是可以用线段树代替 BST 做 DDP，因为树是静态的，重链也是静态的，不可能有结构变化的需求。但序列上的 DDP 不一定是静态的，比如 &lt;a href=&#34;&#34;&gt;密码箱&lt;/a&gt; 就只能用平衡树做。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;维护序列：fhq treap&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;例普通平衡树&#34;&gt;例：普通平衡树&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P3369&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P3369&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;pbds / 权值线段树。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;fhq-treap&#34;&gt;FHQ Treap&lt;/h2&gt;
+&lt;p&gt;把 Treap 的旋转操作改成了好想好写的 split 和 merge，其余不变；额外带来了维护序列结构的功能。&lt;/p&gt;
+&lt;p&gt;这里就只探讨维护序列了，维护的是对于序列结构上的操作（也可以维护值的操作，方式和线段树类似），这里的点值就和线段树维护的值一样，对于操作是没有影响的；点的 id 和对应的下标并没有关系；点的 rank（可以 &lt;span class=&#34;math inline&#34;&gt;\(O(1)\)&lt;/span&gt; 维护）才对应下标。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;split&lt;/code&gt;：把树在某个值下标处分为两个 Treap。考虑怎么解决这种情况：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;image.png&#34; /&gt;&lt;/p&gt;
+自底向上递归处理，考虑到处理 &lt;span class=&#34;math inline&#34;&gt;\(4\)&lt;/span&gt; 的时候 &lt;span class=&#34;math inline&#34;&gt;\(4\)&lt;/span&gt; 接了完整的一个 BST，直接把 &lt;span class=&#34;math inline&#34;&gt;\(4\)&lt;/span&gt; 接到 &lt;span class=&#34;math inline&#34;&gt;\(3\)&lt;/span&gt; 的右儿子即可。显然是不会影响 priority 的。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;merge&lt;/code&gt;：是为了配合 split 而产生的操作，将树 split 出去并操作后需要 merge 回来。难点在于需要考虑 priority。相似地，考虑这种情况：&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;image-2.png&#34; alt=&#34;蓝色数字是 priority&#34; /&gt;&lt;figcaption&gt;蓝色数字是 priority&lt;/figcaption&gt;
+&lt;/figure&gt;
+从最右边一条链向下走到可以插入的位置（显然是唯一的），将点插入，该处原本的子树和新点的左子树递归合并。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;结构操作（以区间 reverse 为例）：两次 split 得到操作区间的 Treap，打一个懒标记，再合并回去。&lt;/p&gt;
+类似线段树，递归经过一个点时，如果存在 lazy，就可以交换左右儿子然后下传标记。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt; 建树：Treap 是笛卡尔树，然后就可以用悬线或者单调栈建树了。&lt;/p&gt;
+&lt;p&gt;反过来可以得到在随机数据下笛卡尔树是平衡的，参考 &lt;a href=&#34;https://www.luogu.com.cn/problem/P2611&#34;&gt;ZJOI2011 小蓝的好友&lt;/a&gt;，利用了这个性质。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;例文艺平衡树&#34;&gt;例：文艺平衡树&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P3391&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P3391&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;区间 reverse 乍看会带来可以用线段树做的错觉&lt;/p&gt;
+&lt;p&gt;实际上考虑一下 reverse 区间有交的情况，就会发现线段树确实做不了，只能真正地去实现 reverse 这个过程，就只有平衡树了能做了。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre data-line=&#34;37&#34; class=&#34;cpp language-cpp&#34;&gt;&lt;code data-line=&#34;37&#34; class=&#34;cpp language-cpp&#34;&gt;#include &amp;lt;bits/stdc++.h&gt;
+const int maxn = 1e5 + 5;
+unsigned pr[maxn];
+int lc[maxn], rc[maxn], d[maxn], siz[maxn];
+void pushup(int p) &amp;#123;
+    if (p)
+        siz[p] = siz[lc[p]] + 1 + siz[rc[p]];
+    return;
+&amp;#125;
+void pushdown(int p) &amp;#123;
+    if (p &amp;&amp; d[p]) &amp;#123;
+        std::swap(lc[p], rc[p]);
+        d[lc[p]] ^= 1, d[rc[p]] ^= 1;
+        d[p] = 0;
+    &amp;#125;
+    return;
+&amp;#125;
+void init(int p) &amp;#123;
+    if (lc[p])
+        init(lc[p]);
+    if (rc[p])
+        init(rc[p]);
+    pushup(p);
+    return;
+&amp;#125;
+int split(int &amp;p, int rk) &amp;#123;
+    if (!p)
+        return 0;
+    pushdown(p);
+    int q = 0;
+    if (siz[lc[p]] + 1 == rk)
+        q = rc[p], rc[p] = 0;
+    else if (rk &lt;= siz[lc[p]])
+        q = p, p = lc[p], lc[q] = split(p, rk);
+    else
+        q = split(rc[p], rk - siz[lc[p]] - 1);
+    pushdown(q);  // 易错：这里要 pushdown
+    pushup(p), pushup(q);
+    return q;
+&amp;#125;
+void merge(int &amp;p, int q) &amp;#123;
+    pushdown(p), pushdown(q);
+    if (!p || !q) &amp;#123;
+        p += q;
+        return;
+    &amp;#125;
+    if (pr[p] &gt; pr[q])
+        merge(p, lc[q]), lc[q] = p, p = q;
+    else
+        merge(rc[p], q);
+    pushup(p);
+    return;
+&amp;#125;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&#34;.in&#34;, &#34;r&#34;, stdin);
+    std::freopen(&#34;.out&#34;, &#34;w&#34;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n, m;
+    std::cin &gt;&gt; n &gt;&gt; m;
+    std::vector&amp;lt;int&gt; l(n + 1), r(n + 1);
+    std::mt19937 rand(time(nullptr));
+    for (int i = 1; i &lt;= n; ++i) &amp;#123;
+        pr[i] = rand();
+        for (l[i] = i; l[i] != 1 &amp;&amp; pr[l[i] - 1] &gt; pr[i]; l[i] = l[l[i] - 1]);
+        if (l[i] != 1)
+            rc[l[i] - 1] = i;
+    &amp;#125;
+    for (int i = n; i; --i) &amp;#123;
+        for (r[i] = i; r[i] != n &amp;&amp; pr[r[i] + 1] &gt; pr[i]; r[i] = r[r[i] + 1]);
+        if (r[i] != n)
+            lc[r[i] + 1] = i;
+    &amp;#125;
+    std::function&amp;lt;void(int)&gt; print = [&amp;](int p) &amp;#123;
+        pushdown(p);
+        if (lc[p])
+            print(lc[p]);
+        std::cout &lt;&lt; p &lt;&lt; &#39; &#39;;
+        if (rc[p])
+            print(rc[p]);
+        return;
+    &amp;#125;;
+    int rt = std::min_element(pr + 1, pr + n + 1) - pr;
+    init(rt);
+    for (int l, r, i = 1; i &lt;= m; ++i) &amp;#123;
+        std::cin &gt;&gt; l &gt;&gt; r;
+        int rt1 = split(rt, l - 1), rt2 = split(rt1, r - l + 1);
+        d[rt1] ^= 1;
+        merge(rt1, rt2), merge(rt, rt1);
+    &amp;#125;
+    print(rt), std::cout &lt;&lt; &#39;\n&#39;;
+#ifndef ONLINE_JUDGE
+    std::cerr &lt;&lt; std::fixed &lt;&lt; std::setprecision(6) &lt;&lt; std::chrono::duration&amp;lt;double&gt; (std::chrono::steady_clock::now() - stime).count() &lt;&lt; &#34;s\n&#34;;
+#endif
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;习题&#34;&gt;习题&lt;/h2&gt;
+&lt;p&gt;有点难，难点不在平衡树&lt;/p&gt;
+&lt;p&gt;平衡树反而是简单的，只需要发现序列和序列操作就可以了。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;c---密码箱&#34;&gt;C - 密码箱&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P7739&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P7739&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;经过思考后，发现比较合理的转化方式是&lt;strong&gt;跳过具体数值，直接用对应操作表示函数值&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;将数列转化为最终函数值，用矩阵很好操作（右乘）；考虑将操作转化为数值，利用结合律，容易发现只需要把操作对应的矩阵加在末端（前端）即可，这样就可以只用操作来表示函数值。&lt;/p&gt;
+&lt;p&gt;要做的话最好只让矩阵维护最后一项，&lt;code&gt;W&lt;/code&gt; 显然，&lt;code&gt;E&lt;/code&gt; 的第二种亦显然（加两个矩阵），考虑乘起来方便维护，乘起来之后发现和 &lt;code&gt;E&lt;/code&gt; 的第一种是等价的，平衡树维护四个矩阵即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int maxn = 2e5 + 5;
+const int mod = 998244353;
+using ll = long long;
+struct mat &amp;#123;
+    ll a[2][2];
+    ll* operator[] (const int q) &amp;#123;
+        return a[q];
+    &amp;#125;
+    bool operator== (mat &amp;amp;q) const &amp;#123;
+        return a[0][0] == q[0][0] &amp;amp;&amp;amp; a[0][1] == q[0][1] &amp;amp;&amp;amp; a[1][0] == q[1][0] &amp;amp;&amp;amp; a[1][1] == q[1][1];
+    &amp;#125;
+    mat operator* (mat &amp;amp;q) const &amp;#123;
+        mat res;
+        res[0][0] = (a[0][0] * q[0][0] + a[0][1] * q[1][0]) % mod;
+        res[0][1] = (a[0][0] * q[0][1] + a[0][1] * q[1][1]) % mod;
+        res[1][0] = (a[1][0] * q[0][0] + a[1][1] * q[1][0]) % mod;
+        res[1][1] = (a[1][0] * q[0][1] + a[1][1] * q[1][1]) % mod;
+        return res;
+    &amp;#125;
+&amp;#125; u[maxn][2], s[maxn][4], W, E, A, B, C;
+unsigned pr[maxn];
+int siz[maxn], d1[maxn], d2[maxn], lc[maxn], rc[maxn];
+#define lt lc[p]
+#define rt rc[p]
+void pushup(int p) &amp;#123;
+    if (p) &amp;#123;
+        siz[p] = siz[lc[p]] + 1 + siz[rc[p]];
+        s[p][0b00] = s[lc[p]][0b00] * u[p][0] * s[rc[p]][0b00];
+        s[p][0b01] = s[lc[p]][0b01] * u[p][1] * s[rc[p]][0b01];
+        s[p][0b10] = s[rc[p]][0b10] * u[p][0] * s[lc[p]][0b10];
+        s[p][0b11] = s[rc[p]][0b11] * u[p][1] * s[lc[p]][0b11];
+    &amp;#125;
+    return;
+&amp;#125;
+void pushdown(int p) &amp;#123;
+    if (p &amp;amp;&amp;amp; d1[p]) &amp;#123;
+        d1[lt] ^= 1, d1[rt] ^= 1;
+        std::swap(u[lt][0], u[lt][1]);
+        std::swap(s[lt][0b00], s[lt][0b01]);
+        std::swap(s[lt][0b10], s[lt][0b11]);
+        std::swap(u[rt][0], u[rt][1]);
+        std::swap(s[rt][0b00], s[rt][0b01]);
+        std::swap(s[rt][0b10], s[rt][0b11]);
+        d1[p] = 0;
+    &amp;#125;
+    if (p &amp;amp;&amp;amp; d2[p]) &amp;#123;
+        d2[lt] ^= 1, d2[rt] ^= 1;
+        std::swap(lc[lt], rc[lt]);
+        std::swap(s[lt][0b00], s[lt][0b10]);
+        std::swap(s[lt][0b01], s[lt][0b11]);
+        std::swap(lc[rt], rc[rt]);
+        std::swap(s[rt][0b00], s[rt][0b10]);
+        std::swap(s[rt][0b01], s[rt][0b11]);
+        d2[p] = 0;
+    &amp;#125;
+    return;
+&amp;#125;
+int split(int &amp;amp;p, int rk) &amp;#123;
+    if (!p)
+        return 0;
+    pushdown(p);
+    int q = 0;
+    if (siz[lc[p]] + 1 == rk)
+        q = rc[p], rc[p] = 0;
+    else if (rk &amp;lt;= siz[lc[p]])
+        q = p, p = lc[p], lc[q] = split(p, rk);
+    else
+        q = split(rc[p], rk - siz[lc[p]] - 1);
+    pushdown(q);
+    pushup(p), pushup(q);
+    return q;
+&amp;#125;
+void merge(int &amp;amp;p, int q) &amp;#123;
+    if (!p || !q) &amp;#123;
+        p += q;
+        return;
+    &amp;#125;
+    pushdown(p), pushdown(q);
+    if (pr[p] &amp;gt; pr[q])
+        merge(p, lc[q]), lc[q] = p, p = q;
+    else
+        merge(rc[p], q);
+    pushup(p);
+    return;
+&amp;#125;
+void init(int p) &amp;#123;
+    if (lc[p])
+        init(lc[p]);
+    if (rc[p])
+        init(rc[p]);
+    pushup(p);
+    return;
+&amp;#125;
+#undef lt
+#undef rt
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;code3.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    s[0][0][0][0] = s[0][0][1][1] = s[0][1][0][0] = s[0][1][1][1] = s[0][2][0][0] = s[0][2][1][1] = s[0][3][0][0] = s[0][3][1][1] = 1ll;
+    W[0][0] = W[0][1] = W[1][1] = 1ll;
+    E[0][1] = mod - 1ll, E[1][0] = 1ll, E[1][1] = 2ll;
+    A[0][1] = A[1][0] = 1ll, B[0][1] = B[1][0] = B[1][1] = 1ll;
+    int n, q, rt;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; q;
+    std::mt19937 rand(time(nullptr));
+    for (int i = 1; i &amp;lt;= n + q; ++i)
+        pr[i] = rand();
+    std::vector&amp;lt;char&amp;gt; a(n + 1);
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; a[i];
+        if (a[i] == &amp;#39;W&amp;#39;)
+            u[i][0] = W, u[i][1] = E;
+        else
+            u[i][0] = E, u[i][1] = W;
+    &amp;#125;
+    &amp;#123;
+        std::vector&amp;lt;int&amp;gt; l(n + 1), r(n + 1);
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            for (l[i] = i; l[i] != 1 &amp;amp;&amp;amp; pr[l[i] - 1] &amp;gt; pr[i]; l[i] = l[l[i] - 1]);
+            if (l[i] != 1)
+                rc[l[i] - 1] = i;
+        &amp;#125;
+        for (int i = n; i; --i) &amp;#123;
+            for (r[i] = i; r[i] != n &amp;amp;&amp;amp; pr[r[i] + 1] &amp;gt; pr[i]; r[i] = r[r[i] + 1]);
+            if (r[i] != n)
+                lc[r[i] + 1] = i;
+        &amp;#125;
+        rt = std::min_element(pr + 1, pr + n + 1) - pr;
+        init(rt);
+    &amp;#125;
+    auto print = [&amp;amp;](int rt) &amp;#123;
+        auto res = A * B * s[rt][0];
+        ll p = res[0][1], q = res[1][1];
+        std::cout &amp;lt;&amp;lt; q &amp;lt;&amp;lt; &amp;#39; &amp;#39;  &amp;lt;&amp;lt; p &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+        return;
+    &amp;#125;;
+    print(rt);
+    for (std::string op; q--; ) &amp;#123;
+        std::cin &amp;gt;&amp;gt; op;
+        if (op == &amp;quot;APPEND&amp;quot;) &amp;#123;
+            char t;
+            std::cin &amp;gt;&amp;gt; t, ++n;
+            if (t == &amp;#39;W&amp;#39;)
+                u[n][0] = W, u[n][1] = E;
+            else
+                u[n][0] = E, u[n][1] = W;
+            pushup(n), merge(rt, n);
+        &amp;#125;
+        else if (op == &amp;quot;FLIP&amp;quot;) &amp;#123;
+            int l, r;
+            std::cin &amp;gt;&amp;gt; l &amp;gt;&amp;gt; r;
+            int rt1 = split(rt, l - 1), rt2 = split(rt1, r - l + 1);
+            d1[rt1] ^= 1;
+            std::swap(u[rt1][0], u[rt1][1]);
+            std::swap(s[rt1][0b00], s[rt1][0b01]);
+            std::swap(s[rt1][0b10], s[rt1][0b11]);
+            merge(rt1, rt2), merge(rt, rt1);
+        &amp;#125;
+        else &amp;#123;
+            int l, r;
+            std::cin &amp;gt;&amp;gt; l &amp;gt;&amp;gt; r;
+            int rt1 = split(rt, l - 1), rt2 = split(rt1, r - l + 1);
+            d2[rt1] ^= 1;
+            std::swap(lc[rt1], rc[rt1]);
+            std::swap(s[rt1][0b00], s[rt1][0b10]);
+            std::swap(s[rt1][0b01], s[rt1][0b11]);
+            merge(rt1, rt2), merge(rt, rt1);
+        &amp;#125;
+        print(rt);
+    &amp;#125;
+#ifndef ONLINE_JUDGE
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt; (std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s\n&amp;quot;;
+#endif
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;a---bridge&#34;&gt;A - Bridge&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P9358&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P9358&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;如果把桥视作元素，假设对于下面的情形：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;image-1.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;容易发现如果 &lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt; 不存在，那么 &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 的后继都是 &lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;，但只保留 &lt;span class=&#34;math inline&#34;&gt;\(y\to a\)&lt;/span&gt; 的路径是不劣的&lt;/p&gt;
+&lt;p&gt;如果 &lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt; 存在，就要连 &lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，也就说每个点连到当前行和下一行中最近的后继点就可以了，每个点只对应两条边，最后会形成若干个链，看成序列就可以用平衡树维护。查询&lt;strong&gt;跳到树顶再跳到最右的儿子就可以了，复杂度 &lt;span class=&#34;math inline&#34;&gt;\(O(\log n)\)&lt;/span&gt;&lt;/strong&gt;。连边则可以直接用 set 维护。&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

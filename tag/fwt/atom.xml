@@ -1,0 +1,649 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://xsc062.netlify.app</id>
+    <title> • Posts by &#34;fwt&#34; tag</title>
+    <link href="https://xsc062.netlify.app" />
+    <updated>2025-03-29T07:00:21.000Z</updated>
+    <category term="并查集" />
+    <category term="斜率优化" />
+    <category term="悬线法" />
+    <category term="哈希" />
+    <category term="字典树" />
+    <category term="DP" />
+    <category term="单调队列" />
+    <category term="分治" />
+    <category term="二分图" />
+    <category term="CRT / exCRT" />
+    <category term="排列组合" />
+    <category term="网络流" />
+    <category term="费用流" />
+    <category term="二分" />
+    <category term="上下界网络流" />
+    <category term="容斥原理" />
+    <category term="线段树" />
+    <category term="树状数组" />
+    <category term="区间 DP" />
+    <category term="构造" />
+    <category term="Tarjan" />
+    <category term="数据结构" />
+    <category term="下饭" />
+    <category term="LCA" />
+    <category term="倍增" />
+    <category term="鸽巢原理" />
+    <category term="概率期望" />
+    <category term="调和级数" />
+    <category term="差分" />
+    <category term="思维" />
+    <category term="树形 DP" />
+    <category term="最小生成树" />
+    <category term="SAM" />
+    <category term="状压" />
+    <category term="分块" />
+    <category term="可持久化" />
+    <category term="笛卡尔树" />
+    <category term="高维前缀和" />
+    <category term="闲话" />
+    <category term="欧拉回路" />
+    <category term="树链剖分" />
+    <category term="长链剖分" />
+    <category term="KMP" />
+    <category term="border" />
+    <category term="字符串" />
+    <category term="AC 自动机" />
+    <category term="SA" />
+    <category term="数学" />
+    <category term="树上差分" />
+    <category term="FWT" />
+    <category term="堆" />
+    <category term="树的重心" />
+    <category term="二项式定理" />
+    <category term="二项式反演" />
+    <category term="贪心" />
+    <category term="均摊" />
+    <category term="计数" />
+    <category term="优化建图" />
+    <category term="反悔贪心" />
+    <category term="调整法" />
+    <category term="背包" />
+    <category term="博弈论" />
+    <category term="DP 优化" />
+    <category term="虚树" />
+    <category term="点分治" />
+    <category term="WQS 二分" />
+    <category term="闵可夫斯基和" />
+    <category term="slope trick" />
+    <category term="四边形不等式" />
+    <category term="暴力" />
+    <category term="状压 DP" />
+    <category term="组合数学" />
+    <category term="支配对" />
+    <category term="DDP" />
+    <category term="平衡树" />
+    <category term="容斥" />
+    <category term="猫树" />
+    <category term="Kruskal 重构树" />
+    <category term="李超线段树" />
+    <entry>
+        <id>https://xsc062.netlify.app/20250329/</id>
+        <title>学习笔记：FWT</title>
+        <link rel="alternate" href="https://xsc062.netlify.app/20250329/"/>
+        <content type="html">&lt;p&gt;活了哥们，复活了。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;p&gt;考虑以下问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对于 &lt;span class=&#34;math inline&#34;&gt;\(\forall \,i\in U\)&lt;/span&gt;，求 &lt;span class=&#34;math inline&#34;&gt;\(c_i=\sum\limits_{j\cup k=i}a_j\cdot b_k\)&lt;/span&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;当然这里可以把集合看成二进制状态，那么取并集就是按位或了。&lt;/p&gt;
+&lt;p&gt;咕咕咕&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;emiya-家明天的饭&#34;&gt;Emiya 家明天的饭&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P10242&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P10242&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;冷知识：&lt;em&gt;Emiya 家明天的饭&lt;/em&gt; 和 &lt;em&gt;Emiya 家今天的饭&lt;/em&gt; 拥有相同的难度评级 &lt;img src=&#34;/em/kt.gif&#34; alt=&#34;磕头&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;考虑暴力的做法，如果我们先钦定必须到达的人（这是 &lt;span class=&#34;math inline&#34;&gt;\(O(2^n)\)&lt;/span&gt; 的），再花费 &lt;span class=&#34;math inline&#34;&gt;\(O(nm)\)&lt;/span&gt; 的时间依次判定每道菜是否可以被选择，就可以 解决问题。但发现时间是不能承受的，这里我们选择优化 &lt;span class=&#34;math inline&#34;&gt;\(O(nm)\)&lt;/span&gt; 的判定。&lt;/p&gt;
+&lt;p&gt;现在已知人员集合 &lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;，对于一道菜 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;，设它适配的人员集合为 &lt;span class=&#34;math inline&#34;&gt;\(T_i\)&lt;/span&gt;，那么有 &lt;span class=&#34;math inline&#34;&gt;\(s\subseteq T_i\)&lt;/span&gt;。所求即为 &lt;span class=&#34;math inline&#34;&gt;\(\max\limits_s\{\sum\limits_{T_i\supseteq s}\sum\limits_{j\in s}a_{i,j}\}\)&lt;/span&gt;。&lt;span class=&#34;math inline&#34;&gt;\(O(nm)\)&lt;/span&gt; 预处理出 &lt;span class=&#34;math inline&#34;&gt;\(f_j(u)=\sum\limits_{T_i=u}a_{j, i}\)&lt;/span&gt;，那么待求即为 &lt;span class=&#34;math inline&#34;&gt;\(\max\limits_{s}\{\sum\limits_{j\in s}\sum\limits_{u\supseteq s}f_j(u)\}\)&lt;/span&gt;，发现这个东西可以用 FWT 求。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, m, k;
+    std::cin &amp;gt;&amp;gt; k &amp;gt;&amp;gt; m, n = 1 &amp;lt;&amp;lt; k;
+    using arr = std::vector&amp;lt;long long&amp;gt;;
+    std::vector&amp;lt;int&amp;gt; t(m + 1);
+    std::vector&amp;lt;arr&amp;gt; a(k + 1, arr(m + 1)), f(k + 1, arr(n));
+    for (int i = 1; i &amp;lt;= k; ++i)
+        for (int j = 1; j &amp;lt;= m; ++j) &amp;#123;
+            std::cin &amp;gt;&amp;gt; a[i][j];
+            if (a[i][j] &amp;gt;= 0)
+                t[j] |= 1 &amp;lt;&amp;lt; (i - 1);
+        &amp;#125;
+    for (int i = 1; i &amp;lt;= k; ++i)
+        for (int j = 1; j &amp;lt;= m; ++j)
+            if (a[i][j] &amp;gt;= 0)
+                f[i][t[j]] += a[i][j];
+    &amp;#123;
+        std::vector&amp;lt;arr&amp;gt; mT(2, arr(2));
+        mT[0][0] = 1ll, mT[0][1] = 1ll, mT[1][0] = 0ll, mT[1][1] = 1ll;
+        auto calc = [&amp;amp;](arr a, arr &amp;amp;f, std::vector&amp;lt;arr&amp;gt; &amp;amp;w) &amp;#123;
+            f = a;
+            for (int len = 2; len &amp;lt;= n; len &amp;lt;&amp;lt;= 1) &amp;#123;
+                for (int i = 0; i &amp;lt; n; i += len)
+                    for (int p = i, q = i + len / 2; q &amp;lt; i + len; ++p, ++q)
+                        std::tie(f[p], f[q]) = std::make_tuple(f[p] * w[0][0] + f[q] * w[0][1], f[p] * w[1][0] + f[q] * w[1][1]);
+            &amp;#125;
+            return;
+        &amp;#125;;
+        for (int i = 1; i &amp;lt;= k; ++i)
+            calc(f[i], f[i], mT);
+    &amp;#125;
+    long long res = 0ll;
+    for (int s = 0; s &amp;lt; n; ++s) &amp;#123;
+        long long sum = 0ll;
+        for (int i = 1; i &amp;lt;= k; ++i)
+            if ((s &amp;gt;&amp;gt; (i - 1)) &amp;amp; 1)
+                sum += f[i][s];
+        res = std::max(res, sum);
+    &amp;#125;
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;nim-counting&#34;&gt;Nim Counting&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/abc212/tasks/abc212_h&#34; class=&#34;uri&#34;&gt;https://atcoder.jp/contests/abc212/tasks/abc212_h&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;即，从 &lt;span class=&#34;math inline&#34;&gt;\(A_N\)&lt;/span&gt; 中有放回地选择 &lt;span class=&#34;math inline&#34;&gt;\(\le M\)&lt;/span&gt; 个数，问它们异或起来不为 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt; 的方案数。&lt;/p&gt;
+&lt;p&gt;如果令 &lt;span class=&#34;math inline&#34;&gt;\(f_{i, j}\)&lt;/span&gt; 表示选了 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 次，异或和为 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 的方案数，显然 &lt;span class=&#34;math inline&#34;&gt;\(f_{1,i}=\sum [a_j=i]\)&lt;/span&gt; 为关于 &lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt; 的桶。此时有 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,j}=\sum\limits_{k=1}^n f_{i-1,j\oplus a_k}=\sum\limits_{k=0}^V f_{i-1,j\oplus k}\cdot f_{1,k}\)&lt;/span&gt;，发现把 &lt;span class=&#34;math inline&#34;&gt;\(f_1\)&lt;/span&gt; 这个桶在 &lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt; 上做 &lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt; 次 xor-FWT 就可以得到 &lt;span class=&#34;math inline&#34;&gt;\(f_n\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;但如果直接卷 &lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt; 次是 &lt;span class=&#34;math inline&#34;&gt;\(O(N\cdot V\log V)\)&lt;/span&gt; 的，不太美好，但我们看看我们实际上需要做什么：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;求 &lt;span class=&#34;math inline&#34;&gt;\(f_i\)&lt;/span&gt; 的 FWT。&lt;/li&gt;
+&lt;li&gt;求初始桶 &lt;span class=&#34;math inline&#34;&gt;\(f_1\)&lt;/span&gt; 的 FWT。&lt;/li&gt;
+&lt;li&gt;对位相乘得到 &lt;span class=&#34;math inline&#34;&gt;\(f_{i+1}\)&lt;/span&gt; 的 FWT。&lt;/li&gt;
+&lt;li&gt;通过 FWT 求得原本的 &lt;span class=&#34;math inline&#34;&gt;\(f_{i+1}\)&lt;/span&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;当这个操作被放在 &lt;span class=&#34;math inline&#34;&gt;\(i=1\sim n\)&lt;/span&gt; 上依次进行时，我们发现第一步和最后一步会相互抵消，我们只需要求出 &lt;span class=&#34;math inline&#34;&gt;\(f_1\)&lt;/span&gt; 的 FWT，&lt;span class=&#34;math inline&#34;&gt;\(FWT_{i, j}(f)\)&lt;/span&gt; 即为 &lt;span class=&#34;math inline&#34;&gt;\(FWT_{1, j}(f)^i\)&lt;/span&gt;。因为我们要求的是 &lt;span class=&#34;math inline&#34;&gt;\(\sum\limits_{i, j}f_{i,j}\)&lt;/span&gt; 可以通过等比数列求和求出 &lt;span class=&#34;math inline&#34;&gt;\(FWT_j(s)=\sum f_{i, j}\)&lt;/span&gt;。由前文推导可知直接做一次逆变换求得 &lt;span class=&#34;math inline&#34;&gt;\(s_j\)&lt;/span&gt; 即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    struct mint &amp;#123;
+        const int mod = 998244353;
+        long long x;
+        mint(): x(0ll) &amp;#123;&amp;#125;
+        mint(long long x1): x((x1 + mod) % mod) &amp;#123;&amp;#125;
+        mint&amp;amp; operator= (const mint q) &amp;#123;
+            x = q.x;
+            return *this;
+        &amp;#125;
+        bool operator== (const mint q) const &amp;#123;
+            return x == q.x;
+        &amp;#125;
+        mint operator* (const mint q) const &amp;#123;
+            return x * q.x % mod;
+        &amp;#125;
+        mint&amp;amp; operator*= (const mint q) &amp;#123;
+            return *this = *this * q;
+        &amp;#125;
+        mint operator+ (const mint q) &amp;#123;
+            return (x + q.x) % mod;
+        &amp;#125;
+        mint&amp;amp; operator+= (const mint q) &amp;#123;
+            return *this = *this + q;
+        &amp;#125;
+        mint operator- (const mint q) &amp;#123;
+            return (x + mod - q.x) % mod;
+        &amp;#125;
+        mint qkp(int y) &amp;#123;
+            mint res(1ll), x(this-&amp;gt;x);
+            for (; y; y &amp;gt;&amp;gt;= 1, x *= x)
+                if (y &amp;amp; 1)
+                    res *= x;
+            return res;
+        &amp;#125;
+        mint inv(void) &amp;#123;
+            return qkp(mod - 2);
+        &amp;#125;
+    &amp;#125;;
+    int n, m, k = 16, l = 1 &amp;lt;&amp;lt; k;
+    std::cin &amp;gt;&amp;gt; m &amp;gt;&amp;gt; n;
+    using arr = std::vector&amp;lt;mint&amp;gt;;
+    arr a(n + 1), c(l);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        std::cin &amp;gt;&amp;gt; a[i].x, c[a[i].x] += 1;
+    std::vector&amp;lt;arr&amp;gt; mT(2, arr(2)), mI(2, arr(2));
+    mT[0][0] = 1ll, mT[0][1] = 1ll, mT[1][0] = 1ll, mT[1][1] = -1ll;
+    mI[0][0] = mI[0][1] = mI[1][0] = mint(2ll).inv(), mI[1][1] = mint(-2ll).inv();
+    auto calc = [&amp;amp;](arr a, arr &amp;amp;f, std::vector&amp;lt;arr&amp;gt; &amp;amp;w) &amp;#123;
+        f = a;
+        for (int len = 2; len &amp;lt;= l; len &amp;lt;&amp;lt;= 1)
+            for (int i = 0; i &amp;lt; l; i += len)
+                for (int p = i, q = i + len / 2; q &amp;lt; i + len; ++p, ++q)
+                    std::tie(f[p], f[q]) = std::make_tuple(f[p] * w[0][0] + f[q] * w[0][1], f[p] * w[1][0] + f[q] * w[1][1]);
+        return;
+    &amp;#125;;
+    calc(c, c, mT);
+    arr s(l);
+    for (int i = 0; i &amp;lt; l; ++i)
+        if (c[i] == 1ll)
+            s[i] = m;
+        else
+            s[i] = c[i] * (mint(1ll) - c[i].qkp(m)) * (mint(1ll) - c[i]).inv();
+    calc(s, s, mI);
+    mint res;
+    for (int i = 1; i &amp;lt; l; ++i)
+        res += s[i];
+    std::cout &amp;lt;&amp;lt; res.x &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;binary-table&#34;&gt;Binary Table&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/problemset/problem/662/C&#34; class=&#34;uri&#34;&gt;https://codeforces.com/problemset/problem/662/C&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;发现这个题和 &lt;em&gt;Emiya 家今天的饭&lt;/em&gt; 很像，都是有一个很小的维和一个相对比较大的维。&lt;/p&gt;
+&lt;p&gt;显然，我们所有的操作顺序都可以任意调换；朴素地，我们枚举 &lt;span class=&#34;math inline&#34;&gt;\(2^n\)&lt;/span&gt; 种给这 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 行反转的情况；再对于每一列，&lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt; 选择应该反转还是不反转，这样总共是 &lt;span class=&#34;math inline&#34;&gt;\(O(2^n\cdot nm)\)&lt;/span&gt; 的。&lt;/p&gt;
+&lt;p&gt;发现把一列初始状态压成一个二进制数 &lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;，假设我们现在枚举的行反转状态为 &lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;，显然用 &lt;span class=&#34;math inline&#34;&gt;\(s\oplus a\)&lt;/span&gt; 可以得到当前状态。怎么利用这个去 FWT 呢？这引导我们依然枚举 &lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;，用一个和 &lt;span class=&#34;math inline&#34;&gt;\(s\oplus a\)&lt;/span&gt; 有关的量跟一个和 &lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt; 有关的量相乘得到关于 &lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt; 的答案。&lt;/p&gt;
+&lt;p&gt;容易发现令 &lt;span class=&#34;math inline&#34;&gt;\(f_{s\oplus a}\)&lt;/span&gt; 表示 &lt;span class=&#34;math inline&#34;&gt;\(s\oplus a\)&lt;/span&gt; 这个状态反转和不反转两个选项中可以获取的最少 1 的个数；再令 &lt;span class=&#34;math inline&#34;&gt;\(c_s\)&lt;/span&gt; 表示状态为 &lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt; 的列的个数，那么 &lt;span class=&#34;math inline&#34;&gt;\(\sum\limits_s c_s\times f_{s\oplus a}\)&lt;/span&gt; 就可以得到枚举的反转方案为 &lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt; 的答案，求最小即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    struct mint &amp;#123;
+        const int mod = 998244353;
+        long long x;
+        mint(): x(0ll) &amp;#123;&amp;#125;
+        mint(long long x1): x((x1 + mod) % mod) &amp;#123;&amp;#125;
+        mint&amp;amp; operator= (const mint q) &amp;#123;
+            x = q.x;
+            return *this;
+        &amp;#125;
+        bool operator== (const mint q) const &amp;#123;
+            return x == q.x;
+        &amp;#125;
+        mint operator* (const mint q) const &amp;#123;
+            return x * q.x % mod;
+        &amp;#125;
+        mint&amp;amp; operator*= (const mint q) &amp;#123;
+            return *this = *this * q;
+        &amp;#125;
+        mint operator+ (const mint q) &amp;#123;
+            return (x + q.x) % mod;
+        &amp;#125;
+        mint&amp;amp; operator+= (const mint q) &amp;#123;
+            return *this = *this + q;
+        &amp;#125;
+        mint operator- (const mint q) &amp;#123;
+            return (x + mod - q.x) % mod;
+        &amp;#125;
+        mint qkp(int y) &amp;#123;
+            mint res(1ll), x(this-&amp;gt;x);
+            for (; y; y &amp;gt;&amp;gt;= 1, x *= x)
+                if (y &amp;amp; 1)
+                    res *= x;
+            return res;
+        &amp;#125;
+        mint inv(void) &amp;#123;
+            return qkp(mod - 2);
+        &amp;#125;
+    &amp;#125;;
+    int n, m, l;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; m, l = 1 &amp;lt;&amp;lt; n;
+    using arr = std::vector&amp;lt;mint&amp;gt;;
+    arr c(l), f(l);
+    std::vector&amp;lt;std::vector&amp;lt;char&amp;gt; &amp;gt; a(n + 1, std::vector&amp;lt;char&amp;gt; (m + 1));
+    for (int i = 1; i &amp;lt;= n; ++i)
+        for (int j = 1; j &amp;lt;= m; ++j)
+            std::cin &amp;gt;&amp;gt; a[i][j];
+    for (int j = 1; j &amp;lt;= m; ++j) &amp;#123;
+        int s = 0;
+        for (int i = 1; i &amp;lt;= n; ++i)
+            s = (s &amp;lt;&amp;lt; 1) + a[i][j] - &amp;#39;0&amp;#39;;
+        c[s] += 1;
+    &amp;#125;
+    for (int i = 0, t; i &amp;lt; l; ++i)
+        t = (__builtin_popcount(i)), f[i] = std::min(t, n - t);
+    std::vector&amp;lt;arr&amp;gt; mT(2, arr(2)), mI(2, arr(2));
+    mT[0][0] = 1ll, mT[0][1] = 1ll, mT[1][0] = 1ll, mT[1][1] = -1ll;
+    mI[0][0] = mI[0][1] = mI[1][0] = mint(2ll).inv(), mI[1][1] = mint(-2ll).inv();
+    auto calc = [&amp;amp;](arr a, arr &amp;amp;f, std::vector&amp;lt;arr&amp;gt; &amp;amp;w) &amp;#123;
+        f = a;
+        for (int len = 2; len &amp;lt;= l; len &amp;lt;&amp;lt;= 1)
+            for (int i = 0; i &amp;lt; l; i += len)
+                for (int p = i, q = i + len / 2; q &amp;lt; i + len; ++p, ++q)
+                    std::tie(f[p], f[q]) = std::make_tuple(f[p] * w[0][0] + f[q] * w[0][1], f[p] * w[1][0] + f[q] * w[1][1]);
+        return;
+    &amp;#125;;
+    calc(c, c, mT), calc(f, f, mT);
+    arr s(l);
+    for (int i = 0; i &amp;lt; l; ++i)
+        s[i] = c[i] * f[i];
+    calc(s, s, mI);
+    int res = 0x3f3f3f3f;
+    for (int i = 0; i &amp;lt; l; ++i)
+        res = std::min(res, (int)s[i].x);
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;hard-nim&#34;&gt;Hard Nim&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://hydro.ac/p/bzoj-P4589&#34; class=&#34;uri&#34;&gt;https://hydro.ac/p/bzoj-P4589&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Nim Counting&lt;/em&gt; 然后缝了个筛子。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 1e9 + 7;
+const int inv2 = 5e8 + 4;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    std::vector&amp;lt;int&amp;gt; p, tag(50001);
+    for (int i = 2; i &amp;lt;= 50000; ++i)
+        if (!tag[i]) &amp;#123;
+            p.push_back(i);
+            for (int j = 2 * i; j &amp;lt;= 50000; j += i)
+                tag[j] = 1;
+        &amp;#125;
+    auto qkp = [&amp;amp;](long long x, int y) &amp;#123;
+        long long res = 1ll;
+        for (; y; y &amp;gt;&amp;gt;= 1, (x *= x) %= mod)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    for (int n, m; std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; m; ) &amp;#123;
+        int k = std::__lg(m) + 1, l = 1 &amp;lt;&amp;lt; k;
+        using arr = std::vector&amp;lt;long long&amp;gt;;
+        arr c(l);
+        for (auto i : p)
+            if (i &amp;lt;= m)
+                c[i] += 1;
+            else
+                break;
+        std::vector&amp;lt;arr&amp;gt; mT(2, arr(2)), mI(2, arr(2));
+        mT[0][0] = 1ll, mT[0][1] = 1ll, mT[1][0] = 1ll, mT[1][1] = mod - 1ll;
+        mI[0][0] = mI[0][1] = mI[1][0] = inv2, mI[1][1] = mod - inv2;
+        auto calc = [&amp;amp;](arr &amp;amp;f, std::vector&amp;lt;arr&amp;gt; &amp;amp;w) &amp;#123;
+            for (int len = 2; len &amp;lt;= l; len &amp;lt;&amp;lt;= 1)
+                for (int i = 0; i &amp;lt; l; i += len)
+                    for (int p = i, q = i + len / 2; q &amp;lt; i + len; ++p, ++q)
+                        std::tie(f[p], f[q]) = std::make_tuple((f[p] * w[0][0] + f[q] * w[0][1]) % mod, (f[p] * w[1][0] + f[q] * w[1][1]) % mod);
+            return;
+        &amp;#125;;
+        calc(c, mT);
+        arr s(l);
+        for (int i = 0; i &amp;lt; l; ++i)
+            s[i] = qkp(c[i], n);
+        calc(s, mI);
+        std::cout &amp;lt;&amp;lt; s[0] &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    &amp;#125;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;子集卷积&#34;&gt;子集卷积&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P6097&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P6097&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这个是在许多 DP 中都可能见到过的结构，相信大家都深有体会。&lt;/p&gt;
+&lt;p&gt;等价于求 &lt;span class=&#34;math inline&#34;&gt;\(c_s=\sum\limits_{i\cap j=\varnothing\land i\cup j=s}a_i\cdot b_j\)&lt;/span&gt;，首先关注 &lt;span class=&#34;math inline&#34;&gt;\(i\cup j=s\)&lt;/span&gt;，可以用 FWT 解决；对于 &lt;span class=&#34;math inline&#34;&gt;\(i\cap j = \varnothing\)&lt;/span&gt; 呢？&lt;/p&gt;
+&lt;p&gt;有一个很聪明的办法，我们发现 &lt;span class=&#34;math inline&#34;&gt;\(i\cap j=\varnothing\land i\cup j = s\iff \operatorname{ctz}(i)+\operatorname{ctz}(j)=\operatorname{ctz}(s)\)&lt;/span&gt;，其中 &lt;span class=&#34;math inline&#34;&gt;\(\operatorname{ctz}(i)\)&lt;/span&gt; 表示 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 中 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 的个数，即 &lt;code&gt;popcount(i)&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;显然后者是个简单的加法运算，这里又有一个很聪明又很基本的办法，我们令 &lt;span class=&#34;math inline&#34;&gt;\(A_{\operatorname{ctz}(i),i}=a_i,B_{\operatorname{ctz}(j),j}=b_j\)&lt;/span&gt;，那么答案就转化为 &lt;span class=&#34;math inline&#34;&gt;\(\sum\limits_{i}\sum\limits_{j\cup k=s}A_{i,j}\cdot B_{\operatorname{ctz}(s)-i,j}\)&lt;/span&gt;，就可以 &lt;span class=&#34;math inline&#34;&gt;\(O(n\log^2n)\)&lt;/span&gt; 地解决问题了。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 1e9 + 9;
+using arr = std::vector&amp;lt;long long&amp;gt;;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    int l = 1 &amp;lt;&amp;lt; n;
+    std::vector&amp;lt;arr&amp;gt; a(n + 1, arr(l)), b(n + 1, arr(l)), c(n + 1, arr(l));
+    for (int i = 0, x; i &amp;lt; l; ++i)
+        std::cin &amp;gt;&amp;gt; x, a[__builtin_popcount(i)][i] = x;
+    for (int i = 0, x; i &amp;lt; l; ++i)
+        std::cin &amp;gt;&amp;gt; x, b[__builtin_popcount(i)][i] = x;
+    std::vector&amp;lt;arr&amp;gt; mT(2, arr(2)), mI(2, arr(2));
+    mT[0][0] = 1ll, mT[0][1] = 0ll, mT[1][0] = 1ll, mT[1][1] = 1ll;
+    mI[0][0] = 1ll, mI[0][1] = 0ll, mI[1][0] = mod - 1ll, mI[1][1] = 1ll;
+    auto calc = [&amp;amp;](arr &amp;amp;f, std::vector&amp;lt;arr&amp;gt; &amp;amp;w) &amp;#123;
+        for (int len = 2; len &amp;lt;= l; len &amp;lt;&amp;lt;= 1)
+            for (int i = 0; i &amp;lt; l; i += len)
+                for (int p = i, q = i + len / 2; q &amp;lt; i + len; ++p, ++q)
+                    std::tie(f[p], f[q]) = std::make_tuple((f[p] * w[0][0] + f[q] * w[0][1]) % mod, (f[p] * w[1][0] + f[q] * w[1][1]) % mod);
+        return;
+    &amp;#125;;
+    for (int i = 0; i &amp;lt;= n; ++i)
+        calc(a[i], mT), calc(b[i], mT);
+    for (int i = 0; i &amp;lt;= n; ++i) &amp;#123;
+        for (int k = 0; k &amp;lt;= i; ++k)
+            for (int j = 0; j &amp;lt; l; ++j)
+                (c[i][j] += a[k][j] * b[i - k][j]) %= mod;
+        calc(c[i], mI);
+    &amp;#125;
+    for (int j = 0; j &amp;lt; l; ++j)
+        std::cout &amp;lt;&amp;lt; c[__builtin_popcount(j)][j] &amp;lt;&amp;lt; &amp;#39; &amp;#39;;
+    std::cout &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;州区划分&#34;&gt;州区划分&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P4221&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P4221&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;人话：把 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 个点划分成若干个点集，保证每个点集的导出子图不是欧拉回路（每个点的度数为偶且图连通）。&lt;/p&gt;
+&lt;p&gt;那么枚举每一个点集判定是否合法，再令 &lt;span class=&#34;math inline&#34;&gt;\(f_{i}={w_i}^{-p}\times\sum\limits_{j\cup k = i\land j\cap k=\varnothing}f_{j}\times {w_k}^p\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;发现后面那个 sigma 里面是一个简单的子集卷积；但是我们发现前面有一个和 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 有关的常数，导致没办法直接卷 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 次。&lt;/p&gt;
+&lt;p&gt;但我们发现这个 DP 其实是有一定隐含条件的——都是按照 &lt;span class=&#34;math inline&#34;&gt;\(\text{ctz}\)&lt;/span&gt; 从小到大转移。考虑子集卷积的第一维，得到 &lt;span class=&#34;math inline&#34;&gt;\(FWT_{f_i}\)&lt;/span&gt; 后先 IFWT 回来，乘上 &lt;span class=&#34;math inline&#34;&gt;\({w_i}^{-p}\)&lt;/span&gt;，再 FWT 回去即可。考察子集卷积的结构，发现这个是可以想办法套进去的。&lt;/p&gt;
+&lt;p&gt;复杂度 &lt;a href=&#34;https://atcoder.jp/contests/abc400/tasks/abc400_c&#34;&gt;&lt;span class=&#34;math inline&#34;&gt;\(O(n^2\cdot 2^n)\)&lt;/span&gt;&lt;/a&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 998244353;
+using arr = std::vector&amp;lt;long long&amp;gt;;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, m, p;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; m &amp;gt;&amp;gt; p;
+    int l = 1 &amp;lt;&amp;lt; n;
+    auto qkp = [&amp;amp;](long long x, int y = mod - 2) &amp;#123;
+        auto res = 1ll;
+        for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    arr w(n), inv(l);
+    std::vector&amp;lt;arr&amp;gt; f(n + 1, arr(l)), s(n + 1, arr(l));
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g(n);
+    for (int x, y; m--; ) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y, --x, --y;
+        g[x].push_back(y);
+    &amp;#125;
+    auto check = [&amp;amp;](int s) &amp;#123;
+        std::vector&amp;lt;int&amp;gt; f(n), deg(n);
+        std::iota(f.begin(), f.end(), 0);
+        std::function&amp;lt;int(int)&amp;gt; find = [&amp;amp;](int x) &amp;#123;
+            return x == f[x] ? x : f[x] = find(f[x]);
+        &amp;#125;;
+        auto merge = [&amp;amp;](int x, int y) &amp;#123;
+            f[find(x)] = find(y);
+            return;
+        &amp;#125;;
+        for (int i = 0; i &amp;lt; n; ++i)
+            if ((s &amp;gt;&amp;gt; i) &amp;amp; 1)
+                for (auto j : g[i])
+                    if ((s &amp;gt;&amp;gt; j) &amp;amp; 1)
+                        merge(i, j), ++deg[i], ++deg[j];
+        int fa = -1;
+        for (int i = 0; i &amp;lt; n; ++i)
+            if ((s &amp;gt;&amp;gt; i) &amp;amp; 1) &amp;#123;
+                if (deg[i] &amp;amp; 1)
+                    return 1;
+                if (fa == -1 || fa == find(i))
+                    fa = find(i);
+                else
+                    return 1;
+            &amp;#125;
+        return 0;
+    &amp;#125;;
+    for (int i = 0; i &amp;lt; n; ++i)
+        std::cin &amp;gt;&amp;gt; w[i];
+    for (int i = 0; i &amp;lt; l; ++i) &amp;#123;
+        int ctz = __builtin_popcount(i);
+        for (int j = 0; j &amp;lt; n; ++j)
+            if ((i &amp;gt;&amp;gt; j) &amp;amp; 1) 
+                s[ctz][i] += w[j];
+        s[ctz][i] = qkp(s[ctz][i], p);
+        inv[i] = qkp(s[ctz][i]);
+        if (!check(i))
+            s[ctz][i] = 0ll;
+    &amp;#125;
+    std::vector&amp;lt;arr&amp;gt; mT(2, arr(2)), mI(2, arr(2));
+    mT[0][0] = 1ll, mT[0][1] = 0ll, mT[1][0] = 1ll, mT[1][1] = 1ll;
+    mI[0][0] = 1ll, mI[0][1] = 0ll, mI[1][0] = mod - 1ll, mI[1][1] = 1ll;
+    auto calc = [&amp;amp;](arr &amp;amp;f, std::vector&amp;lt;arr&amp;gt; &amp;amp;w) &amp;#123;
+        for (int len = 2; len &amp;lt;= l; len &amp;lt;&amp;lt;= 1)
+            for (int i = 0; i &amp;lt; l; i += len)
+                for (int p = i, q = i + len / 2; q &amp;lt; i + len; ++p, ++q)
+                    std::tie(f[p], f[q]) = std::make_tuple((f[p] * w[0][0] + f[q] * w[0][1]) % mod, (f[p] * w[1][0] + f[q] * w[1][1]) % mod);
+        return;
+    &amp;#125;;
+    f[0][0] = 1ll;
+    for (int i = 0; i &amp;lt;= n; ++i)
+        calc(s[i], mT);
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        calc(f[i - 1], mT);
+        for (int k = 0; k &amp;lt; i; ++k)
+            for (int j = 0; j &amp;lt; l; ++j)
+                (f[i][j] += f[k][j] * s[i - k][j]) %= mod;
+        calc(f[i], mI);
+        for (int j = 0; j &amp;lt; l; ++j)
+            (f[i][j] *= inv[j]) %= mod;
+    &amp;#125;
+    std::cout &amp;lt;&amp;lt; f[n][l - 1] &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;b---sum-the-fibonacci&#34;&gt;B - Sum the Fibonacci&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/problemset/problem/914/G&#34; class=&#34;uri&#34;&gt;https://codeforces.com/problemset/problem/914/G&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;首先，对于每个元素的 &lt;span class=&#34;math inline&#34;&gt;\(cnt\)&lt;/span&gt; 是好做的——做一次子集卷积得到 &lt;span class=&#34;math inline&#34;&gt;\(cnt_1(a\cup b)\)&lt;/span&gt;，做一次 xor-FWT 得到 &lt;span class=&#34;math inline&#34;&gt;\(cnt_2(d\oplus e)\)&lt;/span&gt;，中间的 &lt;span class=&#34;math inline&#34;&gt;\(cnt(c)\)&lt;/span&gt; 就是原样。&lt;/p&gt;
+&lt;p&gt;值得注意的是可以在一次 and-FWT 后把 &lt;span class=&#34;math inline&#34;&gt;\(cnt,cnt_1,cnt_2\)&lt;/span&gt; 直接卷起来——由矩阵乘法结合律得（哈哈大笑了）。但怎么把 &lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt; 塞进去呢？如果你拥有小学生的数学水平，你可以很容易地想到直接在 &lt;span class=&#34;math inline&#34;&gt;\(cnt,cnt_1,cnt_2\)&lt;/span&gt; IFWT 后的结果分别对位乘上 &lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt; 即可，很可惜我并没有这样的数学能力 &lt;img src=&#34;/em/kt.gif&#34; /&gt;&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int N = 17;
+const int mod = 1e9 + 7;
+using arr = std::vector&amp;lt;long long&amp;gt;;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, l;
+    std::cin &amp;gt;&amp;gt; n, l = 1 &amp;lt;&amp;lt; N;
+    std::vector&amp;lt;int&amp;gt; a(n + 1);
+    arr f(l), cnt(l), cnt1(l), cnt2(l);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        std::cin &amp;gt;&amp;gt; a[i], ++cnt[a[i]];
+    f[0] = 0ll, f[1] = 1ll;
+    for (int i = 2; i &amp;lt; l; ++i)
+        f[i] = (f[i - 1] + f[i - 2]) % mod;
+    auto qkp = [&amp;amp;](long long x, int y = mod - 2) &amp;#123;
+        auto res = 1ll;
+        for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    const int inv2 = qkp(2ll);
+    std::vector&amp;lt;arr&amp;gt; mT(2, arr(2)), mI(2, arr(2));
+    auto calc = [&amp;amp;](arr a, arr &amp;amp;f, std::vector&amp;lt;arr&amp;gt; &amp;amp;w) &amp;#123;
+        f = a;
+        for (int len = 2; len &amp;lt;= l; len &amp;lt;&amp;lt;= 1)
+            for (int i = 0; i &amp;lt; l; i += len)
+                for (int p = i, q = i + len / 2; q &amp;lt; i + len; ++p, ++q)
+                    std::tie(f[p], f[q]) = std::make_tuple((f[p] * w[0][0] + f[q] * w[0][1]) % mod, (f[p] * w[1][0] + f[q] * w[1][1]) % mod);
+        return;
+    &amp;#125;;
+    &amp;#123; // orFWT
+        mT[0][0] = 1ll, mT[0][1] = 0ll, mT[1][0] = 1ll, mT[1][1] = 1ll;
+        mI[0][0] = 1ll, mI[0][1] = 0ll, mI[1][0] = mod - 1ll, mI[1][1] = 1ll;
+        std::vector&amp;lt;arr&amp;gt; u(N + 1, arr(l)), d(N + 1, arr(l));
+        for (int i = 0; i &amp;lt; l; ++i)
+            u[__builtin_popcount(i)][i] = cnt[i];
+        for (int i = 0; i &amp;lt;= N; ++i)
+            calc(u[i], u[i], mT);
+        for (int i = 0; i &amp;lt;= N; ++i) &amp;#123;
+            for (int j = 0; j &amp;lt; l; ++j)
+                for (int k = 0; k &amp;lt;= i; ++k)
+                    (d[i][j] += u[k][j] * u[i - k][j]) %= mod;
+            calc(d[i], d[i], mI);
+        &amp;#125;
+        for (int i = 0; i &amp;lt; l; ++i)
+            cnt1[i] = d[__builtin_popcount(i)][i] * f[i] % mod;
+    &amp;#125;
+    &amp;#123; // xor FWT
+        mT[0][0] = 1ll, mT[0][1] = 1ll, mT[1][0] = 1ll, mT[1][1] = mod - 1ll;
+        mI[0][0] = mI[0][1] = mI[1][0] = inv2, mI[1][1] = mod - inv2;
+        calc(cnt, cnt2, mT);
+        for (int i = 0; i &amp;lt; l; ++i)
+            (cnt2[i] *= cnt2[i]) %= mod;
+        calc(cnt2, cnt2, mI);
+        for (int i = 0; i &amp;lt; l; ++i)
+            (cnt2[i] *= f[i]) %= mod;
+    &amp;#125;
+    &amp;#123; // andFWT
+        mT[0][0] = 0ll, mT[0][1] = 1ll, mT[1][0] = 1ll, mT[1][1] = 1ll;
+        mI[0][0] = mod - 1ll, mI[0][1] = 1ll, mI[1][0] = 1ll, mI[1][1] = 0ll;
+        for (int i = 0; i &amp;lt; l; ++i) // 这一步要放在 FWT 之前，原因显然 🤗
+            (cnt[i] *= f[i]) %= mod;
+        calc(cnt2, cnt2, mT), calc(cnt1, cnt1, mT), calc(cnt, cnt, mT);
+        for (int i = 0; i &amp;lt; l; ++i)
+            cnt[i] = cnt[i] * cnt1[i] % mod * cnt2[i] % mod % mod;
+        calc(cnt, cnt, mI);
+    &amp;#125;
+    long long res = 0ll;
+    for (int i = 0; i &amp;lt; N; ++i)
+        (res += cnt[1 &amp;lt;&amp;lt; i] % mod) %= mod;
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+</content>
+        <category term="高维前缀和" />
+        <category term="FWT" />
+        <updated>2025-03-29T07:00:21.000Z</updated>
+    </entry>
+</feed>

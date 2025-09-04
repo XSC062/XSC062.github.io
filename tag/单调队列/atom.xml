@@ -1,0 +1,233 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://xsc062.netlify.app</id>
+    <title> • Posts by &#34;单调队列&#34; tag</title>
+    <link href="https://xsc062.netlify.app" />
+    <updated>2023-01-10T18:21:35.000Z</updated>
+    <category term="并查集" />
+    <category term="斜率优化" />
+    <category term="悬线法" />
+    <category term="哈希" />
+    <category term="字典树" />
+    <category term="DP" />
+    <category term="单调队列" />
+    <category term="分治" />
+    <category term="二分图" />
+    <category term="CRT / exCRT" />
+    <category term="排列组合" />
+    <category term="网络流" />
+    <category term="费用流" />
+    <category term="二分" />
+    <category term="上下界网络流" />
+    <category term="容斥原理" />
+    <category term="线段树" />
+    <category term="树状数组" />
+    <category term="区间 DP" />
+    <category term="构造" />
+    <category term="Tarjan" />
+    <category term="数据结构" />
+    <category term="下饭" />
+    <category term="LCA" />
+    <category term="倍增" />
+    <category term="鸽巢原理" />
+    <category term="概率期望" />
+    <category term="调和级数" />
+    <category term="差分" />
+    <category term="思维" />
+    <category term="树形 DP" />
+    <category term="最小生成树" />
+    <category term="SAM" />
+    <category term="状压" />
+    <category term="分块" />
+    <category term="可持久化" />
+    <category term="笛卡尔树" />
+    <category term="高维前缀和" />
+    <category term="闲话" />
+    <category term="欧拉回路" />
+    <category term="树链剖分" />
+    <category term="长链剖分" />
+    <category term="KMP" />
+    <category term="border" />
+    <category term="字符串" />
+    <category term="AC 自动机" />
+    <category term="SA" />
+    <category term="数学" />
+    <category term="树上差分" />
+    <category term="FWT" />
+    <category term="堆" />
+    <category term="树的重心" />
+    <category term="二项式定理" />
+    <category term="二项式反演" />
+    <category term="贪心" />
+    <category term="均摊" />
+    <category term="计数" />
+    <category term="优化建图" />
+    <category term="反悔贪心" />
+    <category term="调整法" />
+    <category term="背包" />
+    <category term="博弈论" />
+    <category term="DP 优化" />
+    <category term="虚树" />
+    <category term="点分治" />
+    <category term="WQS 二分" />
+    <category term="闵可夫斯基和" />
+    <category term="slope trick" />
+    <category term="四边形不等式" />
+    <category term="暴力" />
+    <category term="状压 DP" />
+    <category term="组合数学" />
+    <category term="支配对" />
+    <category term="DDP" />
+    <category term="平衡树" />
+    <category term="容斥" />
+    <category term="猫树" />
+    <category term="Kruskal 重构树" />
+    <category term="李超线段树" />
+    <entry>
+        <id>https://xsc062.netlify.app/20230111/</id>
+        <title>瑰丽华尔兹</title>
+        <link rel="alternate" href="https://xsc062.netlify.app/20230111/"/>
+        <content type="html">&lt;p&gt;Solution to&lt;a href=&#34;http://222.180.160.110:61235/problem/8965&#34;&gt;「NOI2005」瑰丽华尔兹&lt;/a&gt;。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;p&gt;单调队列优化 DP。&lt;/p&gt;
+&lt;p&gt;不难发现，题意可转化为：&lt;/p&gt;
+&lt;p&gt;从 &lt;span class=&#34;math inline&#34;&gt;\((x,y)\)&lt;/span&gt; 出发，按顺序向 &lt;span class=&#34;math inline&#34;&gt;\(d_i\)&lt;/span&gt; 方向移动 &lt;span class=&#34;math inline&#34;&gt;\([0,t_i−s_i+1]\)&lt;/span&gt; 距离，问最大移动距离。&lt;/p&gt;
+&lt;p&gt;为了方便描述，我们把一次「向 &lt;span class=&#34;math inline&#34;&gt;\(d_i\)&lt;/span&gt; 方向移动 &lt;span class=&#34;math inline&#34;&gt;\([0,t_i−s_i+1]\)&lt;/span&gt; 距离」的操作称为「一步」。&lt;/p&gt;
+&lt;p&gt;设计状态。不难发现位置信息必须出现在 DP 的维度中（因为当前位置会影响下一步滑动的距离），而其他信息均不会对下一步滑动产生影响。&lt;/p&gt;
+&lt;p&gt;故可令 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,j}\)&lt;/span&gt; 表示完成当前次滑动后，从起点滑动到 &lt;span class=&#34;math inline&#34;&gt;\((i,j)\)&lt;/span&gt; 可得到的最大滑动距离。&lt;/p&gt;
+&lt;p&gt;以方向上为例，可列 DP 式：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_{i,j}=\max_{i&amp;lt;k≤i+(ti−si+1)}\{f_{k,j}+k−i\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;此时可枚举每一列的所有状态，使用单调队列优化。&lt;/p&gt;
+&lt;p&gt;但实际操作中会出现问题。因为单调队列从下向上更新状态时，&lt;span class=&#34;math inline&#34;&gt;\(f_{k,j}\)&lt;/span&gt; 会比 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,j}\)&lt;/span&gt; 先更新（参考 01 背包倒序枚举容量），导致每一「步」会重复被走很多次。但单调队列的特性限制了我们只能从下向上枚举，此时可新开一个数组记录 &lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt; 当次被更新之前的值。&lt;/p&gt;
+&lt;p&gt;障碍物如何处理呢？我们知道，如果 &lt;span class=&#34;math inline&#34;&gt;\((i,j)\)&lt;/span&gt; 下面某一位置有障碍物，那么障碍物下面所有的 &lt;span class=&#34;math inline&#34;&gt;\((k,j)\)&lt;/span&gt; 都不能用于更新 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,j}\)&lt;/span&gt;（因为被挡住了滑不上来）。所以我们在从下往上枚举时，遇到障碍物就清空单调队列即可。&lt;/p&gt;
+&lt;p&gt;下、左、右方向的处理方式类似。&lt;/p&gt;
+&lt;p&gt;只需顺序执行操作，根据当前操作方向对应处理即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 205;
+const int inf = 1e18;
+int q[maxn];
+char a[maxn][maxn];
+int f[maxn][maxn], d[maxn][maxn];
+int n, m, x, y, k, u, h, t, res;
+int max(int x, int y) &amp;#123;
+    return x &amp;gt; y ? x : y;
+&amp;#125;
+int main() &amp;#123;
+    memset(f, -0x3f, sizeof (f));
+    read(n), read(m);
+    read(x), read(y), read(k);
+    f[x][y] = 0;
+    for (int i = 1; i &amp;lt;= n; ++i)
+        scanf(&amp;quot;%s&amp;quot;, a[i] + 1);
+    while (k--) &amp;#123;
+        read(x), read(y), read(u);
+        y = y - x + 1;
+        if (u == 1) &amp;#123;
+            for (int j = 1; j &amp;lt;= m; ++j) &amp;#123;
+                h = 1, t = 0;
+                for (int i = n; i; --i) &amp;#123;
+                    if (a[i][j] == &amp;#39;x&amp;#39;) &amp;#123;
+                        h = 1, t = 0;
+                        continue;
+                    &amp;#125;
+                    while (h &amp;lt;= t &amp;amp;&amp;amp; q[h] - i &amp;gt; y)
+                        ++h;
+                    d[i][j] = f[i][j];
+                    if (h &amp;lt;= t) &amp;#123;
+                        f[i][j] = max(f[i][j],
+                                    d[q[h]][j] + q[h] - i);
+                    &amp;#125;
+                    while (h &amp;lt;= t &amp;amp;&amp;amp; d[i][j] + i
+                                    &amp;gt;= d[q[t]][j] + q[t])
+                        --t;
+                    q[++t] = i;
+                &amp;#125;
+            &amp;#125;
+        &amp;#125;
+        else if (u == 2) &amp;#123;
+            for (int j = 1; j &amp;lt;= m; ++j) &amp;#123;
+                h = 1, t = 0;
+                for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+                    if (a[i][j] == &amp;#39;x&amp;#39;) &amp;#123;
+                        h = 1, t = 0;
+                        continue;
+                    &amp;#125;
+                    while (h &amp;lt;= t &amp;amp;&amp;amp; i - q[h] &amp;gt; y)
+                        ++h;
+                    d[i][j] = f[i][j];
+                    if (h &amp;lt;= t) &amp;#123;
+                        f[i][j] = max(f[i][j],
+                                    d[q[h]][j] + i - q[h]);
+                    &amp;#125;
+                    while (h &amp;lt;= t &amp;amp;&amp;amp; d[i][j] - i
+                                &amp;gt;= d[q[t]][j] - q[t])
+                        --t;
+                    q[++t] = i;
+                &amp;#125;
+            &amp;#125;
+        &amp;#125;
+        else if (u == 3) &amp;#123;
+            for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+                h = 1, t = 0;
+                for (int j = m; j; --j) &amp;#123;
+                    if (a[i][j] == &amp;#39;x&amp;#39;) &amp;#123;
+                        h = 1, t = 0;
+                        continue;
+                    &amp;#125;
+                    while (h &amp;lt;= t &amp;amp;&amp;amp; q[h] - j &amp;gt; y)
+                        ++h;
+                    d[i][j] = f[i][j];
+                    if (h &amp;lt;= t) &amp;#123;
+                        f[i][j] = max(f[i][j],
+                                    d[i][q[h]] + q[h] - j);
+                    &amp;#125;
+                    while (h &amp;lt;= t &amp;amp;&amp;amp; d[i][j] + j
+                                &amp;gt;= d[i][q[t]] + q[t])
+                        --t;
+                    q[++t] = j;
+                &amp;#125;
+            &amp;#125;
+        &amp;#125;
+        else &amp;#123;
+            for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+                h = 1, t = 0;
+                for (int j = 1; j &amp;lt;= m; ++j) &amp;#123;
+                    if (a[i][j] == &amp;#39;x&amp;#39;) &amp;#123;
+                        h = 1, t = 0;
+                        continue;
+                    &amp;#125;
+                    while (h &amp;lt;= t &amp;amp;&amp;amp; j - q[h] &amp;gt; y)
+                        ++h;
+                    d[i][j] = f[i][j];
+                    if (h &amp;lt;= t) &amp;#123;
+                        f[i][j] = max(f[i][j],
+                                    d[i][q[h]] + j - q[h]);
+                    &amp;#125;
+                    while (h &amp;lt;= t &amp;amp;&amp;amp; d[i][j] - j
+                                &amp;gt;= d[i][q[t]] - q[t])
+                        --t;
+                    q[++t] = j;
+                &amp;#125;
+            &amp;#125;
+        &amp;#125;
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            for (int j = 1; j &amp;lt;= m; ++j)
+                res = max(res, f[i][j]);
+        &amp;#125;
+    &amp;#125;
+    print(res);
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+</content>
+        <category term="DP" />
+        <category term="单调队列" />
+        <updated>2023-01-10T18:21:35.000Z</updated>
+    </entry>
+</feed>

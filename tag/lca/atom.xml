@@ -1,0 +1,528 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://xsc062.netlify.app</id>
+    <title> • Posts by &#34;lca&#34; tag</title>
+    <link href="https://xsc062.netlify.app" />
+    <updated>2024-01-06T03:27:39.000Z</updated>
+    <category term="并查集" />
+    <category term="斜率优化" />
+    <category term="悬线法" />
+    <category term="哈希" />
+    <category term="字典树" />
+    <category term="DP" />
+    <category term="单调队列" />
+    <category term="分治" />
+    <category term="二分图" />
+    <category term="CRT / exCRT" />
+    <category term="排列组合" />
+    <category term="网络流" />
+    <category term="费用流" />
+    <category term="二分" />
+    <category term="上下界网络流" />
+    <category term="容斥原理" />
+    <category term="线段树" />
+    <category term="树状数组" />
+    <category term="区间 DP" />
+    <category term="构造" />
+    <category term="Tarjan" />
+    <category term="数据结构" />
+    <category term="下饭" />
+    <category term="LCA" />
+    <category term="倍增" />
+    <category term="鸽巢原理" />
+    <category term="概率期望" />
+    <category term="调和级数" />
+    <category term="差分" />
+    <category term="思维" />
+    <category term="树形 DP" />
+    <category term="最小生成树" />
+    <category term="SAM" />
+    <category term="状压" />
+    <category term="分块" />
+    <category term="可持久化" />
+    <category term="笛卡尔树" />
+    <category term="高维前缀和" />
+    <category term="闲话" />
+    <category term="欧拉回路" />
+    <category term="树链剖分" />
+    <category term="长链剖分" />
+    <category term="KMP" />
+    <category term="border" />
+    <category term="字符串" />
+    <category term="AC 自动机" />
+    <category term="SA" />
+    <category term="数学" />
+    <category term="树上差分" />
+    <category term="FWT" />
+    <category term="堆" />
+    <category term="树的重心" />
+    <category term="二项式定理" />
+    <category term="二项式反演" />
+    <category term="贪心" />
+    <category term="均摊" />
+    <category term="计数" />
+    <category term="优化建图" />
+    <category term="反悔贪心" />
+    <category term="调整法" />
+    <category term="背包" />
+    <category term="博弈论" />
+    <category term="DP 优化" />
+    <category term="虚树" />
+    <category term="点分治" />
+    <category term="WQS 二分" />
+    <category term="闵可夫斯基和" />
+    <category term="slope trick" />
+    <category term="四边形不等式" />
+    <category term="暴力" />
+    <category term="状压 DP" />
+    <category term="组合数学" />
+    <category term="支配对" />
+    <category term="DDP" />
+    <category term="平衡树" />
+    <category term="容斥" />
+    <category term="猫树" />
+    <category term="Kruskal 重构树" />
+    <category term="李超线段树" />
+    <entry>
+        <id>https://xsc062.netlify.app/20240106/</id>
+        <title>杂题全谈</title>
+        <link rel="alternate" href="https://xsc062.netlify.app/20240106/"/>
+        <content type="html">&lt;p&gt;想不到好标题了。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;p&gt;有句话怎么说来着，罗马不是一天建成的，是一天天建成的。&lt;/p&gt;
+&lt;p&gt;还有什么，Do in Rome as the Romans’ do，还有一句，All roads leads to Rome。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;a.-连续的零-zero&#34;&gt;A. 连续的零 zero&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/4647/problem/1&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/4647/problem/1&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;做个前缀和，看看任意一个长度为 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 的区间中有几个 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;。复杂度 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 5e5 + 5;
+const int inf = 0x3f3f3f3f;
+int n, m, res = inf;
+int a[maxn], s[maxn];
+int min(int x, int y) &amp;#123;
+    return x &amp;lt; y ? x : y;
+&amp;#125;
+int main() &amp;#123;
+    scanf(&amp;quot;%d %d&amp;quot;, &amp;amp;n, &amp;amp;m);
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        scanf(&amp;quot;%1d&amp;quot;, &amp;amp;a[i]);
+        s[i] = s[i - 1] + a[i];
+        if (i &amp;gt;= m)
+            res = min(res, s[i] - s[i - m]);
+    &amp;#125;
+    print(res, &amp;#39;\n&amp;#39;);
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;b.-反回文串-anti&#34;&gt;B. 反回文串 anti&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/4647/problem/2&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/4647/problem/2&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;当 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 为奇时，中间的元素一定和自己相等，故无解。&lt;/p&gt;
+&lt;p&gt;当数量最多的一个字符个数超过 &lt;span class=&#34;math inline&#34;&gt;\(\dfrac n2\)&lt;/span&gt; 时，由鸽巢得无解。&lt;/p&gt;
+&lt;p&gt;剩下的情况一定有解。&lt;/p&gt;
+&lt;details&gt;
+&lt;p&gt;&lt;summary&gt;证明&lt;/summary&gt;&lt;/p&gt;
+&lt;p&gt;可以找到一种合法的构造方式。我们列出一个列数为 &lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt;，行数为 &lt;span class=&#34;math inline&#34;&gt;\(\dfrac n2\)&lt;/span&gt; 的表格，将所有相同字母排列在一起，按照从左到右，从上到下的方式将字母填入表格，最后将第 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 行第一列的字母填入 &lt;span class=&#34;math inline&#34;&gt;\(a_i\)&lt;/span&gt;，第 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 行第二列的字母填入 &lt;span class=&#34;math inline&#34;&gt;\(a_{n-i+1}\)&lt;/span&gt;，即可完成构造。&lt;/p&gt;
+&lt;p&gt;一种字母只在第一列或第二列出现当然合法，如果从第一列持续到第二列，因为任意字母出现次数不超过 &lt;span class=&#34;math inline&#34;&gt;\(\dfrac n2\)&lt;/span&gt; 次，所以同一行的两列不会出现同一种字母。&lt;/p&gt;
+&lt;p&gt;这叫什么，有字证明。&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;感觉可以拿去出一道类似于「找到字符串字典序最小的反回文串」之类的小水题&lt;/del&gt;&lt;/p&gt;
+&lt;/details&gt;
+&lt;p&gt;然后现在我们知道有解了，怎么找到最优解呢。&lt;/p&gt;
+&lt;p&gt;比如有一组 &lt;span class=&#34;math inline&#34;&gt;\((a_i,a_{n-i+1})=(\texttt a, \texttt a)\)&lt;/span&gt;，还有一组 &lt;span class=&#34;math inline&#34;&gt;\((a_j, a_{n-j+1})=(\texttt b, \texttt b)\)&lt;/span&gt;，那我们直接把 &lt;span class=&#34;math inline&#34;&gt;\(a_i\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(a_j\)&lt;/span&gt; 交换，皆大欢喜。&lt;/p&gt;
+&lt;p&gt;这就说明我们需要把值不相等的非法 &lt;span class=&#34;math inline&#34;&gt;\(a_i\)&lt;/span&gt; 与 &lt;span class=&#34;math inline&#34;&gt;\(a_j\)&lt;/span&gt; 配对。&lt;/p&gt;
+&lt;p&gt;然后我们就可以沿用证明中的构造方式，分组配对，一定最优，每组代价为 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;同一行两个值 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 相等，因为已经最优了，所以不能再在非法串中寻找答案。应该找合法对中某个值交换，每组代价为 &lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt;。具体和谁交换我们不用担心，只要找到一组 &lt;span class=&#34;math inline&#34;&gt;\((a_i,a_{n-i+1})\)&lt;/span&gt; 满足 &lt;span class=&#34;math inline&#34;&gt;\(a_i\ne v\)&lt;/span&gt; 且 &lt;span class=&#34;math inline&#34;&gt;\(a_{n-i+1}\ne v\)&lt;/span&gt; 就可以了，然后我们又知道 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 的个数 &lt;span class=&#34;math inline&#34;&gt;\(\ne \dfrac n2\)&lt;/span&gt;，假设 &lt;span class=&#34;math inline&#34;&gt;\(\dfrac n2\)&lt;/span&gt; 对中每队都有至少一个 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt;，由于当前这一对有两个相同的 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt;，那么 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 的个数就会大于 &lt;span class=&#34;math inline&#34;&gt;\(\dfrac n2\)&lt;/span&gt;，矛盾了，所以一定能找到。&lt;/p&gt;
+&lt;p&gt;对于非法总对数是奇数的情况，我们要钦定一个非法对强制让其和合法对交换，贪心一下取非法对数量最多的 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 的某一对最优。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxm = 35;
+const int maxn = 2e5 + 5;
+char s[maxn];
+int cnt[maxm], p[maxn];
+int T, n, tot, res, now;
+int main() &amp;#123;
+    scanf(&amp;quot;%d&amp;quot;, &amp;amp;T);
+    while (T--) &amp;#123;
+        tot = 0;
+        scanf(&amp;quot;%d %s&amp;quot;, &amp;amp;n, s + 1);
+        if (n &amp;amp; 1) &amp;#123;
+            puts(&amp;quot;-1&amp;quot;);
+            continue;
+        &amp;#125;
+        memset(cnt, 0, sizeof (cnt));
+        for (int i = 1; i &amp;lt;= n; ++i)
+            ++cnt[s[i] - &amp;#39;a&amp;#39; + 1];
+        for (int i = 1; i &amp;lt;= 26; ++i) &amp;#123;
+            if (cnt[i] * 2 &amp;gt; n) &amp;#123;
+                puts(&amp;quot;-1&amp;quot;);
+                goto noSol;
+            &amp;#125;
+        &amp;#125;
+        memset(cnt, 0, sizeof (cnt));
+        for (int i = 1; i * 2 &amp;lt;= n; ++i) &amp;#123;
+            if (s[i] == s[n - i + 1])
+                ++cnt[s[i] - &amp;#39;a&amp;#39; + 1], ++tot;
+        &amp;#125;
+        std::sort(cnt + 1, cnt + 27,
+                    std::greater&amp;lt;int&amp;gt;());
+        res = now = 0;
+        if (tot &amp;amp; 1) &amp;#123;
+            res = 1, --cnt[1];
+            std::sort(cnt + 1, cnt + 27,
+                        std::greater&amp;lt;int&amp;gt;());
+        &amp;#125;
+        for (int i = 1; i &amp;lt;= 26; ++i) &amp;#123;
+            while (cnt[i]--) &amp;#123;
+                if (++now &amp;gt; tot / 2) &amp;#123;
+                    if (i == p[now - tot / 2])
+                        res += 2;
+                    else ++res;
+                &amp;#125;
+                else p[now] = i;
+            &amp;#125;
+        &amp;#125;
+        print(res, &amp;#39;\n&amp;#39;);
+        noSol: ;
+    &amp;#125;
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;c.-除与减-divsub&#34;&gt;C. 除与减 divsub&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/4647/problem/3&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/4647/problem/3&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;小数学，还好。&lt;/p&gt;
+&lt;p&gt;假设 &lt;span class=&#34;math inline&#34;&gt;\(n=d\times k^p\)&lt;/span&gt;，其中 &lt;span class=&#34;math inline&#34;&gt;\(k\nmid d\)&lt;/span&gt;，那么我们分两种情况讨论。&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(p=0\)&lt;/span&gt;，即 &lt;span class=&#34;math inline&#34;&gt;\(k\nmid n\)&lt;/span&gt;，那么 &lt;span class=&#34;math inline&#34;&gt;\(n\bmod k=1\)&lt;/span&gt;，即 &lt;span class=&#34;math inline&#34;&gt;\(k\mid (n-1)\)&lt;/span&gt;。&lt;/p&gt;
+这个时候问 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 的个数就相当于是在问 &lt;span class=&#34;math inline&#34;&gt;\(n-1\)&lt;/span&gt; 除 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 以外的因子个数。假设 &lt;span class=&#34;math inline&#34;&gt;\(n-1={x_1}^{p_1}{x_2}^{p_2}\cdots {x_m}^{p_m}\)&lt;/span&gt;，那么答案为 &lt;span class=&#34;math inline&#34;&gt;\((\prod p_i+1)-1\)&lt;/span&gt;，减去的是 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(p\ne 0\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(k\mid n\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;这个时候好像并没有什么好的转化。好消息是 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 的范围是 &lt;span class=&#34;math inline&#34;&gt;\(10^{12}\)&lt;/span&gt;，根号枚举因数复杂度跑得过。所以我们就可以暴力判定 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 的所有因数是否满足条件。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;时间复杂度，&lt;span class=&#34;math inline&#34;&gt;\(O(\sqrt n\times \log n)\)&lt;/span&gt;，枚举因数是根号，算次数（也就是算 &lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt;）是 &lt;span class=&#34;math inline&#34;&gt;\(\log\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#define int long long
+namespace XSC062 &amp;#123;
+using namespace fastIO;
+int n, m, res, cnt;
+int main() &amp;#123;
+    read(n), m = n;
+    for (int i = 2; i * i &amp;lt;= n; ++i) &amp;#123;
+        if (n % i == 0) &amp;#123;
+            m = n;
+            while (m % i == 0) m /= i;
+            if (m % i == 1) ++res;
+            if (i * i != n) &amp;#123;
+                m = n;
+                while (m % (n / i) == 0)
+                    m /= (n / i);
+                if (m % (n / i) == 1) ++res;
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    m = n - 1, cnt = 1;
+    for (int i = 2; i * i &amp;lt;= m; ++i) &amp;#123;
+        if (m % i == 0) &amp;#123;
+            int now = 0;
+            while (m % i == 0)
+                ++now, m /= i;
+            cnt *= now + 1;
+        &amp;#125;
+    &amp;#125;
+    if (m != 1) cnt *= 2;
+    print(res + cnt, &amp;#39;\n&amp;#39;);
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062
+#undef int&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;d.-图书管理员-librarian&#34;&gt;D. 图书管理员 librarian&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/4647/problem/4&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/4647/problem/4&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;[SDOI2008] 郁闷的小 J。&lt;/p&gt;
+&lt;p&gt;关于这个，我们发现自己不会考场现冲主席树。哎，打 CDQ 又怕写挂。&lt;/p&gt;
+&lt;p&gt;我们发现这道题的修改都是单点的，询问也只关于某一种颜色，不同的颜色之间没有影响。&lt;/p&gt;
+&lt;p&gt;于是我们可以把操作离线下来，初始视作将某颜色在某位置增加，修改视作将某颜色在某位置删除，将另一颜色在该位置增加，将所有操作按颜色离散化分类然后 &lt;code&gt;vector&lt;/code&gt; 下来，对于所有颜色从前到后树状数组做一遍操作就能 &lt;span class=&#34;math inline&#34;&gt;\(O(n\log n+q\log n)\)&lt;/span&gt; 解决。&lt;/p&gt;
+&lt;p&gt;树状数组清空是肯定不能 &lt;code&gt;memset&lt;/code&gt; 的，复杂度不对。那么怎么办呢？把所有操作撤回去就可以了。&lt;/p&gt;
+&lt;p&gt;顺带一提我是洛谷上最优解。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 2e5 + 5;
+struct __ &amp;#123;
+    int ty, l, r, v;
+    __() &amp;#123;&amp;#125;
+    __(int t1, int l1, int r1, int v1 = 0) &amp;#123;
+        if (t1 == 0)
+            ty = 0, l = l1, v = r1;
+        else ty = 1, l = l1, r = r1, v = v1;
+    &amp;#125;
+&amp;#125;;
+char ty;
+std::map&amp;lt;int, int&amp;gt; tab;
+std::vector&amp;lt;__&amp;gt; q[maxn];
+int n, m, tot, x, y, v, id;
+int Bit[maxn], a[maxn], res[maxn];
+int lowbit(int x) &amp;#123; return x &amp;amp; -x; &amp;#125;
+void add(int x, int v) &amp;#123;
+    for (; x &amp;lt;= n; x += lowbit(x))
+        Bit[x] += v;
+    return;
+&amp;#125;
+int ask(int x) &amp;#123;
+    int res = 0;
+    for (; x; x -= lowbit(x)) res += Bit[x];
+    return res;
+&amp;#125;
+int main() &amp;#123;
+    read(n), read(m);
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        read(a[i]);
+        if (!tab.count(a[i]))
+            tab[a[i]] = ++tot;
+        a[i] = tab[a[i]];
+        q[a[i]].emplace_back(0, i, 1);
+    &amp;#125;
+    while (m--) &amp;#123;
+        scanf(&amp;quot;%1s&amp;quot;, &amp;amp;ty);
+        if (ty == &amp;#39;C&amp;#39;) &amp;#123;
+            read(x), read(y);
+            if (!tab.count(y))
+                tab[y] = ++tot;
+            y = tab[y];
+            q[a[x]].emplace_back(0, x, -1);
+            q[a[x] = y].emplace_back(0, x, 1);
+        &amp;#125;
+        else &amp;#123;
+            ++id;
+            read(x), read(y), read(v);
+            if (!tab.count(v)) continue;
+            v = tab[v];
+            q[v].emplace_back(1, x, y, id);
+        &amp;#125;
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= tot; ++i) &amp;#123;
+        for (auto &amp;amp;j : q[i]) &amp;#123;
+            if (j.ty == 0) add(j.l, j.v);
+            else &amp;#123;
+                res[j.v] =
+                    ask(j.r) - ask(j.l - 1);
+            &amp;#125;
+        &amp;#125;
+        for (auto &amp;amp;j : q[i])
+            if (j.ty == 0) add(j.l, -j.v);
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= id; ++i)
+        print(res[i], &amp;#39;\n&amp;#39;);
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;p&gt;E 会单独开一篇。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;f.-树-tree&#34;&gt;F. 树 tree&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/4647/problem/6&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/4647/problem/6&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;CF916E。&lt;/p&gt;
+&lt;p&gt;大分讨给我整不会了，更给我整不会的是下来过后发现这只是个小分讨。&lt;/p&gt;
+&lt;p&gt;更新子树和子树查询我们都会。换根 DP 我们也都写过，都知道换根并不会对子树结构产生大的影响。所以应当是能根据已知信息推测出子树在原树上对应的点集的。&lt;/p&gt;
+&lt;p&gt;记 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt; 为当前树根，&lt;span class=&#34;math inline&#34;&gt;\(\text {LCA}(x,y)\)&lt;/span&gt; 为 &lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt; 在 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 为根时的 LCA，&lt;span class=&#34;math inline&#34;&gt;\(\text {LCA}&amp;#39;(x,y)\)&lt;/span&gt; 表示 &lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt; 在 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt; 为根时的 LCA。&lt;/p&gt;
+&lt;p&gt;那么对于 &lt;span class=&#34;math inline&#34;&gt;\(\text {LCA}&amp;#39;(x,y)\)&lt;/span&gt;，肯定是要讨论 &lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt; 的位置关系的。&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\text {LCA}(x,y)\)&lt;/span&gt; 是 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt; 的子孙。此时 &lt;span class=&#34;math inline&#34;&gt;\(\text {LCA}&amp;#39;(x,y) = \text {LCA}(x,y)\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\text {LCA}(x,y)\)&lt;/span&gt; 是 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt; 的祖先。那么说明至少有一个点不是 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt; 的子孙。此时 &lt;span class=&#34;math inline&#34;&gt;\(\text {LCA}(x,y)&amp;#39;\)&lt;/span&gt; 的值为 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt; 为另一个点的 LCA。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;整理可得 &lt;span class=&#34;math inline&#34;&gt;\(\text {LCA}&amp;#39;(x,y)\)&lt;/span&gt; 是 &lt;span class=&#34;math inline&#34;&gt;\(\text {LCA}(x,y)\)&lt;/span&gt;、&lt;span class=&#34;math inline&#34;&gt;\(\text {LCA}(x,r)\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(\text {LCA}(y,r)\)&lt;/span&gt; 中的深度最大者。&lt;/p&gt;
+&lt;p&gt;对于以 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt; 为根时的子树 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(x=r\)&lt;/span&gt;，此时子树为整棵树。&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\text {LCA}(x,r)\ne x\)&lt;/span&gt;，即 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt; 不为 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 的子孙，此时子树就是以 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 为根是的子树 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\text {LCA}(x,y)=x\)&lt;/span&gt;，即 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt; 为 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 的子孙，此时子树是整棵树除开 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 包含 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt; 的儿子及其子孙。修改和查询的时候容斥一下就好。这个时候的子树倍增跳一下就能找到。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;然后就是常规线段树维护了。时间复杂度 &lt;span class=&#34;math inline&#34;&gt;\(O(n\log n)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxm = 35;
+const int maxn = 1e5 + 5;
+#define lt (p &amp;lt;&amp;lt; 1)
+#define rt (lt | 1)
+struct _ &amp;#123; int l, r, u, d; &amp;#125;;
+_ t[maxn &amp;lt;&amp;lt; 2];
+int f[maxn][maxm];
+std::vector&amp;lt;int&amp;gt; g[maxn];
+int a[maxn], dfn[maxn], rfn[maxn];
+int n, q, r, ty, x, y, v, si, now;
+int top[maxn], dep[maxn], tab[maxn];
+void swap(int &amp;amp;x, int &amp;amp;y) &amp;#123;
+    x ^= y ^= x ^= y;
+    return;
+&amp;#125;
+void DFS(int x) &amp;#123;
+    dep[x] = dep[f[x][0]] + 1;
+    dfn[x] = ++now, tab[now] = x;
+    for (auto i : g[x]) &amp;#123;
+        if (i == f[x][0]) continue;
+        f[i][0] = x;
+        for (int j = 1; j &amp;lt;= si; ++j)
+            f[i][j] = f[f[i][j - 1]][j - 1];
+        DFS(i);
+    &amp;#125;
+    rfn[x] = now;
+    return;
+&amp;#125;
+void pushup(int p) &amp;#123;
+    t[p].u = t[lt].u + t[rt].u;
+    return;
+&amp;#125;
+void pushdown(int p) &amp;#123;
+    if (t[p].d) &amp;#123;
+        t[lt].d += t[p].d;
+        t[rt].d += t[p].d;
+        t[lt].u += t[p].d *
+                (t[lt].r - t[lt].l + 1);
+        t[rt].u += t[p].d *
+                (t[rt].r - t[rt].l + 1);
+        t[p].d = 0;
+    &amp;#125;
+    return;
+&amp;#125;
+void bld(int p, int l, int r) &amp;#123;
+    t[p].l = l, t[p].r = r;
+    if (l == r) &amp;#123;
+        t[p].u = a[tab[l]];
+        return;
+    &amp;#125;
+    int mid = (l + r) &amp;gt;&amp;gt; 1;
+    bld(lt, l, mid), bld(rt, mid + 1, r);
+    pushup(p);
+    return;
+&amp;#125;
+void add(int p, int x, int v) &amp;#123;
+    t[p].u += v;
+    if (t[p].l == t[p].r) return;
+    pushdown(p);
+    int mid = (t[p].l + t[p].r) &amp;gt;&amp;gt; 1;
+    if (x &amp;lt;= mid) add(lt, x, v);
+    else add(rt, x, v);
+    return;
+&amp;#125;
+void add(int p, int l, int r, int v) &amp;#123;
+    if (l &amp;lt;= t[p].l &amp;amp;&amp;amp; t[p].r &amp;lt;= r) &amp;#123;
+        t[p].d += v;
+        t[p].u += (t[p].r - t[p].l + 1) * v;
+        return;
+    &amp;#125;
+    pushdown(p);
+    int mid = (t[p].l + t[p].r) &amp;gt;&amp;gt; 1;
+    if (l &amp;lt;= mid) add(lt, l, r, v);
+    if (r &amp;gt; mid) add(rt, l, r, v);
+    pushup(p);
+    return;
+&amp;#125;
+int ask(int p, int l, int r) &amp;#123;
+    if (l &amp;lt;= t[p].l &amp;amp;&amp;amp; t[p].r &amp;lt;= r)
+        return t[p].u;
+    pushdown(p);
+    int res = 0,
+        mid = (t[p].l + t[p].r) &amp;gt;&amp;gt; 1;
+    if (l &amp;lt;= mid) res = ask(lt, l, r);
+    if (r &amp;gt; mid) res += ask(rt, l, r);
+    return res;
+&amp;#125;
+int LCA(int x, int y) &amp;#123;
+    if (dep[x] &amp;lt; dep[y]) swap(x, y);
+    for (int i = si; ~i; --i) &amp;#123;
+        if (dep[f[x][i]] &amp;gt;= dep[y])
+            x = f[x][i];
+    &amp;#125;
+    if (x == y) return x;
+    for (int i = si; ~i; --i) &amp;#123;
+        if (f[x][i] != f[y][i])
+            x = f[x][i], y = f[y][i];
+    &amp;#125;
+    return f[x][0];
+&amp;#125;
+void Add(int x, int v) &amp;#123;
+    int rlca = LCA(r, x);
+    if (x == r) add(1, 1, n, v);
+    else if (rlca != x)
+        add(1, dfn[x], rfn[x], v);
+    else &amp;#123;
+        add(1, 1, n, v);
+        int p = r;
+        for (int i = si; ~i; --i) &amp;#123;
+            if (dep[f[p][i]] &amp;gt;= dep[x] + 1)
+                p = f[p][i];
+        &amp;#125;
+        add(1, dfn[p], rfn[p], -v);
+    &amp;#125;
+    return;
+&amp;#125;
+void tAdd(int x, int y, int v) &amp;#123;
+    int llca = LCA(r, x), rlca = LCA(r, y),
+        ulca = LCA(x, y);
+    if (dep[llca] &amp;gt;= dep[rlca] &amp;amp;&amp;amp;
+        dep[llca] &amp;gt;= dep[ulca]) Add(llca, v);
+    else if (dep[rlca] &amp;gt;= dep[llca] &amp;amp;&amp;amp;
+        dep[rlca] &amp;gt;= dep[ulca]) Add(rlca, v);
+    else Add(ulca, v);
+    return;
+&amp;#125;
+int tAsk(int x) &amp;#123;
+    int rlca = LCA(r, x);
+    if (x == r) return t[1].u;
+    if (rlca != x)
+        return ask(1, dfn[x], rfn[x]);
+    int p = r;
+    for (int i = si; ~i; --i) &amp;#123;
+        if (dep[f[p][i]] &amp;gt;= dep[x] + 1)
+            p = f[p][i];
+    &amp;#125;
+    return t[1].u - ask(1, dfn[p], rfn[p]);
+&amp;#125;
+void add(int x, int y) &amp;#123;
+    g[x].push_back(y);
+    return;
+&amp;#125;
+int main() &amp;#123;
+    read(n), read(q), r = 1;
+    si = log(n) / log(2.0);
+    for (int i = 1; i &amp;lt;= n; ++i) read(a[i]);
+    for (int i = 1; i &amp;lt; n; ++i) &amp;#123;
+        read(x), read(y);
+        add(x, y), add(y, x);
+    &amp;#125;
+    dep[0] = 1, DFS(1), dep[0] = 0;
+    bld(1, 1, n);
+    while (q--) &amp;#123;
+        read(ty);
+        if (ty == 1) read(r);
+        else if (ty == 2) &amp;#123;
+            read(x), read(y), read(v);
+            tAdd(x, y, v);
+        &amp;#125;
+        else &amp;#123;
+            read(x);
+            print(tAsk(x), &amp;#39;\n&amp;#39;);
+        &amp;#125;
+    &amp;#125;
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062
+#undef int&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+</content>
+        <category term="线段树" />
+        <category term="树状数组" />
+        <category term="LCA" />
+        <category term="倍增" />
+        <category term="鸽巢原理" />
+        <updated>2024-01-06T03:27:39.000Z</updated>
+    </entry>
+</feed>

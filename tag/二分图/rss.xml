@@ -1,0 +1,963 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title> • Posts by &#34;二分图&#34; tag</title>
+        <link>https://xsc062.netlify.app</link>
+        <description></description>
+        <language>zh-CN</language>
+        <pubDate>Tue, 09 May 2023 20:48:00 +0800</pubDate>
+        <lastBuildDate>Tue, 09 May 2023 20:48:00 +0800</lastBuildDate>
+        <category>并查集</category>
+        <category>斜率优化</category>
+        <category>悬线法</category>
+        <category>哈希</category>
+        <category>字典树</category>
+        <category>DP</category>
+        <category>单调队列</category>
+        <category>分治</category>
+        <category>二分图</category>
+        <category>CRT / exCRT</category>
+        <category>排列组合</category>
+        <category>网络流</category>
+        <category>费用流</category>
+        <category>二分</category>
+        <category>上下界网络流</category>
+        <category>容斥原理</category>
+        <category>线段树</category>
+        <category>树状数组</category>
+        <category>区间 DP</category>
+        <category>构造</category>
+        <category>Tarjan</category>
+        <category>数据结构</category>
+        <category>下饭</category>
+        <category>LCA</category>
+        <category>倍增</category>
+        <category>鸽巢原理</category>
+        <category>概率期望</category>
+        <category>调和级数</category>
+        <category>差分</category>
+        <category>思维</category>
+        <category>树形 DP</category>
+        <category>最小生成树</category>
+        <category>SAM</category>
+        <category>状压</category>
+        <category>分块</category>
+        <category>可持久化</category>
+        <category>笛卡尔树</category>
+        <category>高维前缀和</category>
+        <category>闲话</category>
+        <category>欧拉回路</category>
+        <category>树链剖分</category>
+        <category>长链剖分</category>
+        <category>KMP</category>
+        <category>border</category>
+        <category>字符串</category>
+        <category>AC 自动机</category>
+        <category>SA</category>
+        <category>数学</category>
+        <category>树上差分</category>
+        <category>FWT</category>
+        <category>堆</category>
+        <category>树的重心</category>
+        <category>二项式定理</category>
+        <category>二项式反演</category>
+        <category>贪心</category>
+        <category>均摊</category>
+        <category>计数</category>
+        <category>优化建图</category>
+        <category>反悔贪心</category>
+        <category>调整法</category>
+        <category>背包</category>
+        <category>博弈论</category>
+        <category>DP 优化</category>
+        <category>虚树</category>
+        <category>点分治</category>
+        <category>WQS 二分</category>
+        <category>闵可夫斯基和</category>
+        <category>slope trick</category>
+        <category>四边形不等式</category>
+        <category>暴力</category>
+        <category>状压 DP</category>
+        <category>组合数学</category>
+        <category>支配对</category>
+        <category>DDP</category>
+        <category>平衡树</category>
+        <category>容斥</category>
+        <category>猫树</category>
+        <category>Kruskal 重构树</category>
+        <category>李超线段树</category>
+        <item>
+            <guid isPermalink="true">https://xsc062.netlify.app/20230509/</guid>
+            <title>二分图</title>
+            <link>https://xsc062.netlify.app/20230509/</link>
+            <category>二分图</category>
+            <pubDate>Tue, 09 May 2023 20:48:00 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;你说得对，所以我打网络流。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;二分图&#34;&gt;二分图&lt;/h2&gt;
+&lt;p&gt;&lt;del&gt;二分图总体概念不难&lt;/del&gt;。主要是其应用广泛，需要注意什么样的题目可以联系到二分图上来。&lt;/p&gt;
+&lt;h3 id=&#34;概念&#34;&gt;概念&lt;/h3&gt;
+&lt;p&gt;若图 &lt;span class=&#34;math inline&#34;&gt;\(G\)&lt;/span&gt; 可将点集 &lt;span class=&#34;math inline&#34;&gt;\(V\)&lt;/span&gt; 分成两个互不相交的子集 &lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(Y\)&lt;/span&gt;，且每条边连接的两个点都满足一个在 &lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt; 中，一个在 &lt;span class=&#34;math inline&#34;&gt;\(Y\)&lt;/span&gt; 中，则称 &lt;span class=&#34;math inline&#34;&gt;\(G\)&lt;/span&gt; 为二分图。&lt;/p&gt;
+&lt;p&gt;也就是说，如果一个图有任何一种分组方式满足：把图中的点分成两组，每一组的点两两之间没有连边，那么这个图就是二分图。&lt;/p&gt;
+&lt;p&gt;举个例子：&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;https://pic.imgdb.cn/item/62c8cd2cf54cd3f9371c4818.jpg&#34; alt=&#34;每一组中的点两两之间没有连边，所以该图是二分图。&#34; /&gt;&lt;figcaption&gt;每一组中的点两两之间没有连边，所以该图是二分图。&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h3 id=&#34;性质&#34;&gt;性质&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;二分图的每条边连接的点属于不同的集合。&lt;/p&gt;
+&lt;p&gt;显然。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;二分图中可能存在环，且长度一定为偶数。&lt;/p&gt;
+&lt;p&gt;我们指定环中任意一个点，从该点出发，易得，经过奇数条边时到达另一个集合，反之回到该集合。因为路径是一个环，所以我们最后一定会回到起点所在集合，即经过偶数条边。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;判定&#34;&gt;判定&lt;/h3&gt;
+&lt;p&gt;通常，我们使用图的深度优先遍历每一个点 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;显然，若已知点 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 在 &lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt; 集，那么所有与 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 有连边的点 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 一定在 &lt;span class=&#34;math inline&#34;&gt;\(Y\)&lt;/span&gt; 集（反之同理）。&lt;/p&gt;
+&lt;p&gt;当然，很多图是有环的，不免会产生 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 已经被分组的情况。若此时 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 恰好在 &lt;span class=&#34;math inline&#34;&gt;\(Y\)&lt;/span&gt; 集，皆大欢喜；若 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 也在 &lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt; 集，那么该图一定不为二分图。&lt;/p&gt;
+&lt;p&gt;由于每个点最多搜索一次，时间复杂度 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;int col[maxn];
+bool DFS(int x, int c) &amp;#123;
+    col[x] = c;
+    for (auto i : g[x]) &amp;#123;
+        if (col[i]) &amp;#123;
+            if (col[i] == c)
+                return 0;
+        &amp;#125;
+        else if (!DFS(i, 3 - c))
+            return 0;
+    &amp;#125;
+    return 1;
+&amp;#125;
+int main() &amp;#123; DFS(1, 1); &amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;厚颜无耻地推销一下 &lt;a href=&#34;https://www.luogu.com.cn/problem/U283873&#34;&gt;题目&lt;/a&gt;（（（&lt;/p&gt;
+&lt;h3 id=&#34;匹配&#34;&gt;匹配&lt;/h3&gt;
+&lt;p&gt;定义：对于一个二分图中的若干条边，若这些边没有任何公共点，则称这些边组成的集合 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 是数量为 &lt;span class=&#34;math inline&#34;&gt;\(|M|\)&lt;/span&gt; 的 &lt;strong&gt;匹配&lt;/strong&gt;。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;https://pic.imgdb.cn/item/62c8cd75f54cd3f9371c866f.jpg&#34; alt=&#34;图中红色边展示了一个数量为 4 的匹配&#34; /&gt;&lt;figcaption&gt;图中红色边展示了一个数量为 4 的匹配&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;容易看出，对于点 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;，只会存在 「有一条 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 集合内的边与 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 相连接」 和 「&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 连接的边均不在 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 集合内」 两种情况。也就是说，从 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 出发的 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 集合内的边，最多有 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 条。&lt;/p&gt;
+&lt;p&gt;接下来，我们称 「有任何一条与之相连的边在匹配集合内」 的点为匹配点，「在匹配集合内的边」 为匹配边。&lt;/p&gt;
+&lt;h3 id=&#34;完备匹配&#34;&gt;完备匹配&lt;/h3&gt;
+&lt;p&gt;如果 &lt;span class=&#34;math inline&#34;&gt;\(|M|=\dfrac n2\)&lt;/span&gt;，即 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 恰好连接了 &lt;span class=&#34;math inline&#34;&gt;\(1\sim n\)&lt;/span&gt; 所有点，我们就称匹配 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 为 &lt;strong&gt;完备匹配&lt;/strong&gt;。&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;https://pic.imgdb.cn/item/62c902d9f54cd3f93755faf9.jpg&#34; alt=&#34;一个完备匹配的例子&#34; /&gt;&lt;figcaption&gt;一个完备匹配的例子&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;比方说，现在我们知道一些男孩和女孩，他们之间有若干条互相喜欢的关系，我们把此关系抽象成一个二分图，如果每个人都能与自己喜欢的异性配对，那么我们认为这个关系网存在完备匹配。&lt;/p&gt;
+&lt;p&gt;显然，完备匹配存在，仅当两集合大小相等。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;匈牙利算法&#34;&gt;匈牙利算法&lt;/h2&gt;
+&lt;p&gt;匈牙利算法一般用于求解 &lt;span class=&#34;math inline&#34;&gt;\(\max\{|M|\}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;我们将图上满足下列条件的路径 &lt;span class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt; 称为&lt;strong&gt;增广路&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt; 的起点和终点均是非匹配点&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt; 的起点和终点不在二分图的同一组内&lt;/li&gt;
+&lt;li&gt;路径 &lt;span class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt; 经过的边按 &lt;strong&gt;非&lt;/strong&gt; 匹配边，匹配边，&lt;span class=&#34;math inline&#34;&gt;\(\cdots\)&lt;/span&gt;，&lt;strong&gt;非&lt;/strong&gt; 匹配边的规律交替。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;最终，&lt;span class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt; 会呈类 「&lt;span class=&#34;math inline&#34;&gt;\(\text Z\)&lt;/span&gt;」 形（值得一提的是，增广路不能经过一整个环，否则其长度将会因为二分图中只存在偶环而变为无穷大）。&lt;/p&gt;
+&lt;p&gt;显然，非匹配边比匹配边的数量始终多 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;此时，我们对 &lt;span class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt; 上匹配的状态取反。也就是说，原来的非匹配边变成匹配边，匹配边变成非匹配边。这样做相当于是在匹配边集仍然合法的情况下将匹配边集的大小扩大了 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;那么增广路经过的边按非匹配边，匹配边，&lt;span class=&#34;math inline&#34;&gt;\(\cdots\)&lt;/span&gt;，非匹配边顺序交替的原因就很显而易见了。取反前，匹配边不可能连续出现；取反后，匹配边（即取反前的非匹配边）也不可能连续出现。&lt;/p&gt;
+&lt;p&gt;而匈牙利算法的主要思路，就是反复寻找增广路，直到无法找到为止。&lt;/p&gt;
+&lt;p&gt;这里就必须再提到一个性质：&lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 为图 &lt;span class=&#34;math inline&#34;&gt;\(G\)&lt;/span&gt; 的最大匹配，当且仅当无法在 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 的基础上找到增广路。&lt;/p&gt;
+&lt;p&gt;证明如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;有引理：对于图 &lt;span class=&#34;math inline&#34;&gt;\(G\)&lt;/span&gt; 的任意两个匹配 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(M&amp;#39;\)&lt;/span&gt;，它们的 &lt;a href=&#34;https://baike.baidu.com/item/%E5%AF%B9%E7%A7%B0%E5%B7%AE&#34;&gt;对称差&lt;/a&gt; &lt;span class=&#34;math inline&#34;&gt;\(M\Delta M&amp;#39;\)&lt;/span&gt; 中的每一个连通块都是一条链或一个包含边数为偶数的环。&lt;/p&gt;
+&lt;p&gt;证明：&lt;/p&gt;
+&lt;p&gt;根据对称差的定义，对于任意边 &lt;span class=&#34;math inline&#34;&gt;\(e\in M\Delta M&amp;#39;\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(e\)&lt;/span&gt; 要么是 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 中的一条匹配边，要么是 &lt;span class=&#34;math inline&#34;&gt;\(M&amp;#39;\)&lt;/span&gt; 中的一条匹配边，但不同时被 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(M&amp;#39;\)&lt;/span&gt; 包含。&lt;/p&gt;
+&lt;p&gt;因为在同一个匹配中，任意两条匹配边不存在公共顶点，所以对于任意与 &lt;span class=&#34;math inline&#34;&gt;\(e\)&lt;/span&gt; 有公共顶点的匹配边 &lt;span class=&#34;math inline&#34;&gt;\(e&amp;#39;\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(e\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(e&amp;#39;\)&lt;/span&gt; 必然来自两个不同的匹配。&lt;/p&gt;
+&lt;p&gt;由此可得，对于任意匹配点 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 的度数为 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 或 &lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;所以，对称差中的每一个连通块都是链或环。&lt;/p&gt;
+&lt;p&gt;对于其中的环，所有相邻的边必定来自不同的匹配，所以环包含的边数为偶数。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;必要性：当 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 为最大匹配时，无法找到 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 的增广路。&lt;/p&gt;
+&lt;p&gt;我们已经知道了，找到某匹配的增广路 &lt;span class=&#34;math inline&#34;&gt;\(P\)&lt;/span&gt; 并将其匹配状态取反，可以使匹配大小加一。&lt;/p&gt;
+&lt;p&gt;如果 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 存在增广路，则我们可以将其取反，得到一个比 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 大小更大的匹配。与 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 是最大匹配矛盾。&lt;/p&gt;
+&lt;p&gt;所以一定不存在 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 的增广路。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;充分性：如果不存在 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 的增广路，&lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 为 &lt;span class=&#34;math inline&#34;&gt;\(G\)&lt;/span&gt; 的最大匹配。&lt;/p&gt;
+&lt;p&gt;设 &lt;span class=&#34;math inline&#34;&gt;\(M&amp;#39;\)&lt;/span&gt; 是一个比 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 更大的匹配。&lt;/p&gt;
+&lt;p&gt;由引理得：&lt;/p&gt;
+&lt;p&gt;在它们的对称差 &lt;span class=&#34;math inline&#34;&gt;\(M\Delta M&amp;#39;\)&lt;/span&gt; 中，连通块为链或环。&lt;/p&gt;
+&lt;p&gt;其中，环包含边的数量为偶数，所以必然有同样多的边来自 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(M&amp;#39;\)&lt;/span&gt;。所以我们可以忽视这些环。&lt;/p&gt;
+&lt;p&gt;由于 &lt;span class=&#34;math inline&#34;&gt;\(|M|&amp;lt;|M&amp;#39;|\)&lt;/span&gt;，存在至少一条链 &lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;，且 &lt;span class=&#34;math inline&#34;&gt;\(|L|=k-1\)&lt;/span&gt;，包含 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 条 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 中的边，&lt;span class=&#34;math inline&#34;&gt;\(k+1\)&lt;/span&gt; 条来自于 &lt;span class=&#34;math inline&#34;&gt;\(M&amp;#39;\)&lt;/span&gt; 的边。&lt;/p&gt;
+&lt;p&gt;显然，&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt; 就是一条 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 的增广路，所以我们必然可以找到一条 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 的增广路，命题成立。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;对于 「寻找增广路」 这个过程，我们使用 DFS 算法实现。&lt;/p&gt;
+&lt;p&gt;对于点 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，若与 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 有连边的点 &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; 可匹配上 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，需要满足下列两个条件之一：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; 是非匹配点，此时 &lt;span class=&#34;math inline&#34;&gt;\(x\to y\)&lt;/span&gt; 构成一条增广路，非匹配边的数量已经比匹配边数量多 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\((u,y)\)&lt;/span&gt; 是已匹配边，且 &lt;span class=&#34;math inline&#34;&gt;\((u,v)\)&lt;/span&gt; 是未匹配但合法的边，此时 &lt;span class=&#34;math inline&#34;&gt;\(x\to y\to u\to v\)&lt;/span&gt; 构成一条增广路。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在实现中，我们依次令 &lt;span class=&#34;math inline&#34;&gt;\(1\sim n\)&lt;/span&gt; 内 &lt;strong&gt;所有的非匹配点&lt;/strong&gt; 作为起始点 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 尝试找到任何一条增广路。当碰到任意非匹配点时结束（增广路判定：起点与终点均为非匹配点），否则向 &lt;strong&gt;该匹配点匹配的点&lt;/strong&gt; 继续搜索。&lt;/p&gt;
+&lt;p&gt;也就是说，一层 DFS 会寻找一条非匹配边并作为起点，产生以下两种行为：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;该非匹配边终点为非匹配点，以该匹配边结束增广路。&lt;/li&gt;
+&lt;li&gt;经过该非匹配边后还能再找到一条匹配边（若情况 1 不满足，显然一定能找到这样一条边），则在终点进行下一层 DFS，寻找下一条非匹配边。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;时间复杂度为 &lt;span class=&#34;math inline&#34;&gt;\(O(n^2+nm)\)&lt;/span&gt;，但一般二分图题目的 &lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt; 与 &lt;span class=&#34;math inline&#34;&gt;\(Y\)&lt;/span&gt; 部间的连边偏稠密，所以简化为 &lt;span class=&#34;math inline&#34;&gt;\(O(nm)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;bool Find(int x) &amp;#123;
+    vis[x] = now; // 时间戳标记
+    for (auto i : g[x]) &amp;#123;
+        if (vis[i] == now) // 不经过访问过的 i
+            continue;
+        if (!mat[i] /* 非匹配点，即终点 */ ||
+            (vis[mat[i]] != now /* mat[i] 未访问过，可以经过 */
+            &amp;amp;&amp;amp; Find(mat[i]) /* 可找到增广路 */)) &amp;#123;
+            mat[i] = x; // 匹配
+            return 1;
+        &amp;#125;
+    &amp;#125;
+    return 0;
+&amp;#125;
+int Hungary(int n) &amp;#123;
+    int res = 0;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        ++now;
+        res += Find(i);
+    &amp;#125;
+    return res;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;一般来说，二分图题目对点、边、分组方法和匹配范围的识别较为模糊。但一般的二分图题目都会有一些特点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;结点能分为两组，且各组内结点间没有连边&lt;/li&gt;
+&lt;li&gt;每个结点只能与一条边匹配&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;有时候，题目要求判定是否存在 「完备匹配」，也就是说，&lt;span class=&#34;math inline&#34;&gt;\(ans=n\)&lt;/span&gt;。即任意一次 &lt;code&gt;find(i)&lt;/code&gt; 返回 &lt;code&gt;false&lt;/code&gt; 时，完备匹配不存在。&lt;/p&gt;
+&lt;p&gt;最后给出与匈牙利算法有关的两个问题：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;p&gt;最小点覆盖：给定一个二分图，求出一个最小的点集，使得这个点集发出的所有边可以覆盖整个二分图。&lt;/p&gt;
+&lt;p&gt;定理：该点集的大小是二分图的最大匹配包含的边数。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;最大独立集：给定一个无向图，求出一个最大的点集，使得该点集中的所有点两两之间没有边相连。&lt;/p&gt;
+&lt;p&gt;定理：当该无向图是二分图时，最大独立集的大小等于 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 减去最大匹配数。&lt;/p&gt;
+&lt;p&gt;证明：由于最小点覆盖可以覆盖所有边，故不存在两个点，使得它们不属于最小点覆盖且有连边。&lt;/p&gt;
+&lt;p&gt;所以，当去掉最小点覆盖后，剩余点两两之间没有连边。因为最小点覆盖大小就是最大匹配大小，故原命题成立。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr /&gt;
+&lt;p&gt;注意二分图的点和边是可以互相转化的，即，若发现信息集中在点上，也可以用二分图解决。匹配边的数量即最终参与匹配的点数较多的一方的匹配点数量。&lt;/p&gt;
+&lt;p&gt;对于二分图建图的一个判断方式是，找冲突。找到彼此之间有冲突的两方，连边。这样就能建出二分图。当然要保证两方之间没有交集。&lt;/p&gt;
+&lt;p&gt;所谓冲突，就是我们通常理解中的选了一个就不能选另一个。因此也可以通过冲突存在的形式思考建图方式。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;a.-棋盘上的骑士&#34;&gt;A. 棋盘上的骑士&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/3699/problem/1&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/3699/problem/1&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这道题就是我们提到的边转化为点的情况。&lt;/p&gt;
+&lt;p&gt;为棋盘上的每个格子编号。骑士走的是日字，所以我们要把周围每个格子日字方向八个格子都连上边。&lt;/p&gt;
+&lt;p&gt;那要怎么将所有 &lt;span class=&#34;math inline&#34;&gt;\(n\times n\)&lt;/span&gt; 个格子分为有冲突的两方呢？注意到日字连接的两个格子一定奇偶性相异，故我们以奇偶性分类。&lt;/p&gt;
+&lt;p&gt;被挖掉的格子无视即可，不能连任何边，否则该边都有可能被选。然后跑一个最大匹配就行。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 205;
+const int maxm = 1e5 + 5;
+const int fx[] = &amp;#123; 1, 1, -1, -1, 2, 2, -2, -2 &amp;#125;;
+const int fy[] = &amp;#123; 2, -2, 2, -2, 1, -1, 1, -1 &amp;#125;;
+int a[maxn][maxn];
+int mat[maxm], vis[maxm];
+std::vector&amp;lt;int&amp;gt; g[maxm];
+int n, m, x, y, now, cnt, tot;
+bool Find(int x) &amp;#123;
+    vis[x] = now;
+    for (auto i : g[x]) &amp;#123;
+        if (vis[i] == now)
+            continue;
+        if (!mat[i] || (vis[mat[i]] != now
+                            &amp;amp;&amp;amp; Find(mat[i]))) &amp;#123;
+            mat[i] = x;
+            return 1;
+        &amp;#125;
+    &amp;#125;
+    return 0;
+&amp;#125;
+int Hungary(int n) &amp;#123;
+    int res = 0;
+    for (int i = 1; i &amp;lt;= n; ++i)
+        ++now, res += Find(i);
+    return res;
+&amp;#125;
+void add(int x, int y) &amp;#123;
+    g[x].push_back(y);
+    return;
+&amp;#125;
+int main() &amp;#123;
+    read(n), read(m);
+    while (m--) &amp;#123;
+        read(x), read(y);
+        a[x][y] = -1;
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        for (int j = 1; j &amp;lt;= n; ++j) &amp;#123;
+            if (a[i][j] != -1 &amp;amp;&amp;amp; !((i + j) &amp;amp; 1))
+                a[i][j] = ++cnt;
+        &amp;#125;
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        for (int j = 1; j &amp;lt;= n; ++j) &amp;#123;
+            if (a[i][j] == -1 || !((i + j) &amp;amp; 1))
+                continue;
+            a[i][j] = ++tot;
+            for (int k = 0; k &amp;lt; 8; ++k) &amp;#123;
+                int nx = i + fx[k];
+                int ny = j + fy[k];
+                if (nx &amp;lt; 1 || ny &amp;lt; 1 || nx &amp;gt; n ||
+                    ny &amp;gt; n || a[nx][ny] == -1)
+                    continue;
+                add(a[i][j], a[nx][ny] + n * n);
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    print(cnt + tot - Hungary(tot), &amp;#39;\n&amp;#39;);
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;b.-火力网&#34;&gt;B. 火力网&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/3699/problem/2&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/3699/problem/2&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这里用到了二分图在地图上一个较为常用的分组方法。&lt;/p&gt;
+&lt;p&gt;找到每行每列的「连通块」，满足在行上的连通块任意放一个炮台，炮台覆盖连通块内所有点，所有点均被连通块覆盖，列范围内同理。为连通块分别编号，则样例的情况可转化如下：&lt;/p&gt;
+&lt;pre class=&#34;plain&#34;&gt;&lt;code&gt;/* 对于行 */        /* 对于列 */
+  1 - 2 2            1 - 5 6
+  3 3 3 3            1 3 5 6
+  - - 4 4            - - 5 6
+  5 5 5 5            2 4 5 6&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;若一个格子为空地，则将其在行 / 列范围内所属的连通块连边。这样，我们在选取该格后，就相当于选取了这条边，由于匹配边不共点，所以合法。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 25;
+const int maxm = 1e5 + 5;
+char a[maxn][maxn];
+int mat[maxm], vis[maxm];
+std::vector&amp;lt;int&amp;gt; g[maxm];
+int n, x, y, now, cnt1, cnt2;
+int t[maxn][maxn], p[maxn][maxn];
+bool Find(int x) &amp;#123;
+    vis[x] = now;
+    for (auto i : g[x]) &amp;#123;
+        if (vis[i] == now)
+            continue;
+        if (!mat[i] || (vis[mat[i]] != now
+                            &amp;amp;&amp;amp; Find(mat[i]))) &amp;#123;
+            mat[i] = x;
+            return 1;
+        &amp;#125;
+    &amp;#125;
+    return 0;
+&amp;#125;
+int Hungary(int n) &amp;#123;
+    int res = 0;
+    for (int i = 1; i &amp;lt;= n; ++i)
+        ++now, res += Find(i);
+    return res;
+&amp;#125;
+void add(int x, int y) &amp;#123;
+    g[x].push_back(y);
+    return;
+&amp;#125;
+int main() &amp;#123;
+    scanf(&amp;quot;%d&amp;quot;, &amp;amp;n);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        scanf(&amp;quot;%s&amp;quot;, a[i] + 1);
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        for (int j = 1; j &amp;lt;= n; ++j) &amp;#123;
+            if (a[i][j] == &amp;#39;X&amp;#39;)
+                continue;
+            if (a[i][j - 1] != &amp;#39;.&amp;#39;)
+                t[i][j] = ++cnt1;
+            else t[i][j] = t[i][j - 1];
+        &amp;#125;
+    &amp;#125;
+    for (int j = 1; j &amp;lt;= n; ++j) &amp;#123;
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            if (a[i][j] == &amp;#39;X&amp;#39;)
+                continue;
+            if (a[i - 1][j] != &amp;#39;.&amp;#39;)
+                p[i][j] = ++cnt2;
+            else p[i][j] = p[i - 1][j];
+        &amp;#125;
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        for (int j = 1; j &amp;lt;= n; ++j) &amp;#123;
+            if (a[i][j] == &amp;#39;.&amp;#39;)
+                add(t[i][j], p[i][j] + cnt1);
+        &amp;#125;
+    &amp;#125;
+    print(Hungary(cnt1), &amp;#39;\n&amp;#39;);
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;c.-超级英雄-hero&#34;&gt;C. 超级英雄 Hero&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/3699/problem/3&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/3699/problem/3&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;分析冲突。每个锦囊只能被一道题使用，一道题只能使用一个锦囊，故考虑将锦囊和题连边。题目要求连续解题最多，故以题目进行匈牙利。&lt;/p&gt;
+&lt;p&gt;最后输出匹配数组即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 2e4 + 5;
+int n, m, x, y, now, t;
+int mat[maxn], vis[maxn];
+std::vector&amp;lt;int&amp;gt; g[maxn];
+bool Find(int x) &amp;#123;
+    vis[x] = now;
+    for (auto i : g[x]) &amp;#123;
+        if (vis[i] == now)
+            continue;
+        if (!mat[i] || (vis[mat[i]] != now
+                            &amp;amp;&amp;amp; Find(mat[i]))) &amp;#123;
+            mat[i] = x, mat[x] = i;
+            return 1;
+        &amp;#125;
+    &amp;#125;
+    return 0;
+&amp;#125;
+int Hungary(int n) &amp;#123;
+    int res = 0;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        ++now;
+        if (Find(i))
+            ++res;
+        else break;
+    &amp;#125;
+    return res;
+&amp;#125;
+void add(int x, int y) &amp;#123;
+    g[x].push_back(y);
+    return;
+&amp;#125;
+int main() &amp;#123;
+    read(n), read(m);
+    for (int i = 1; i &amp;lt;= m; ++i) &amp;#123;
+        read(x), read(y);
+        add(i, x + m + 1);
+        add(i, y + m + 1);
+    &amp;#125;
+    print(t = Hungary(m), &amp;#39;\n&amp;#39;);
+    for (int i = 1; i &amp;lt;= t; ++i)
+        print(mat[i] - m - 1, &amp;#39;\n&amp;#39;);
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;km-算法&#34;&gt;KM 算法&lt;/h2&gt;
+&lt;p&gt;还没写…… 咕咕咕&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;a.-ants&#34;&gt;A. Ants&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://vjudge.net/contest/554888#problem/A&#34; class=&#34;uri&#34;&gt;https://vjudge.net/contest/554888#problem/A&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;板板题。把黑蚂蚁和白蚂蚁按欧几里得距离连边后 KM 即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+typedef double db;
+const db inf = 1e18;
+const db eps = 1e-5;
+const int maxn = 205;
+int n, now;
+db g[maxn][maxn];
+db u[maxn], up[maxn];
+int vis[maxn], mat[maxn];
+int a[maxn][2], b[maxn][2];
+db max(db x, db y) &amp;#123;
+    return x &amp;gt; y ? x : y;
+&amp;#125;
+db min(db x, db y) &amp;#123;
+    return x &amp;lt; y ? x : y;
+&amp;#125;
+bool eq(db x, db y) &amp;#123;
+    return fabs(x - y) &amp;lt;= eps;
+&amp;#125;
+bool Find(int x) &amp;#123;
+    vis[x] = now;
+    for (int i = n + 1; i &amp;lt;= 2 * n; ++i) &amp;#123;
+        if (vis[i] == now)
+            continue;
+        if (eq(u[x] + u[i], g[x][i])) &amp;#123;
+            vis[i] = now;
+            if (!mat[i] || (vis[mat[i]] != now
+                            &amp;amp;&amp;amp; Find(mat[i]))) &amp;#123;
+                mat[i] = x;
+                return 1;
+            &amp;#125;
+        &amp;#125;
+        else &amp;#123;
+            up[i] = min(up[i],
+                u[x] + u[i] - g[x][i]);
+        &amp;#125;
+    &amp;#125;
+    return 0;
+&amp;#125;
+void Solve(void) &amp;#123;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        u[i] = -inf;
+        for (int j = n + 1; j &amp;lt;= 2 * n; ++j)
+            u[i] = max(u[i], g[i][j]);
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        for (;;) &amp;#123;
+            ++now;
+            for (int j = n + 1; j &amp;lt;= 2 * n; ++j)
+                up[j] = inf;
+            if (Find(i))
+                break;
+            db Delta = inf;
+            for (int j = n + 1;
+                            j &amp;lt;= 2 * n; ++j) &amp;#123;
+                if (vis[j] != now)
+                    Delta = min(Delta, up[j]);
+            &amp;#125;            for (int j = 1; j &amp;lt;= n; ++j) &amp;#123;
+                if (vis[j] == now)
+                    u[j] -= Delta;
+            &amp;#125;
+            for (int j = n + 1;
+                            j &amp;lt;= 2 * n; ++j) &amp;#123;
+                if (vis[j] == now)
+                    u[j] += Delta;
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    return;
+&amp;#125;
+db dist(int x1, int y1, int x2, int y2) &amp;#123;
+    return sqrt((db)(x1 - x2) * (x1 - x2) +
+                    (y1 - y2) * (y1 - y2));
+&amp;#125;
+int main() &amp;#123;
+    read(n);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        read(a[i][0]), read(a[i][1]);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        read(b[i][0]), read(b[i][1]);
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        for (int j = 1; j &amp;lt;= n; ++j) &amp;#123;
+            g[j][i + n] = -dist(a[i][0], a[i][1],
+                            b[j][0], b[j][1]);
+        &amp;#125;
+    &amp;#125;
+    Solve();
+    for (int i = n + 1; i &amp;lt;= 2 * n; ++i)
+        print(mat[i], &amp;#39;\n&amp;#39;);
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;h3 id=&#34;b.-奔小康赚大钱&#34;&gt;B. 奔小康赚大钱&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://vjudge.net/contest/554888#problem/B&#34; class=&#34;uri&#34;&gt;https://vjudge.net/contest/554888#problem/B&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;板板题。把居民和房子连边即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 605;
+const int inf = 0x3f3f3f3f;
+int n, now, res;
+int g[maxn][maxn];
+int u[maxn], up[maxn];
+int vis[maxn], mat[maxn];
+int max(int x, int y) &amp;#123;
+    return x &amp;gt; y ? x : y;
+&amp;#125;
+int min(int x, int y) &amp;#123;
+    return x &amp;lt; y ? x : y;
+&amp;#125;
+bool Find(int x) &amp;#123;
+    vis[x] = now;
+    for (int i = n + 1; i &amp;lt;= 2 * n; ++i) &amp;#123;
+        if (vis[i] == now)
+            continue;
+        if (u[x] + u[i] == g[x][i]) &amp;#123;
+            vis[i] = now;
+            if (!mat[i] || (vis[mat[i]] != now
+                            &amp;amp;&amp;amp; Find(mat[i]))) &amp;#123;
+                mat[i] = x;
+                return 1;
+            &amp;#125;
+        &amp;#125;
+        else &amp;#123;
+            up[i] = min(up[i],
+                u[x] + u[i] - g[x][i]);
+        &amp;#125;
+    &amp;#125;
+    return 0;
+&amp;#125;
+void Solve(void) &amp;#123;
+    for (int i = 1; i &amp;lt;= 2 * n; ++i)
+        mat[i] = u[i] = 0;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        u[i] = -inf;
+        for (int j = n + 1; j &amp;lt;= 2 * n; ++j)
+            u[i] = max(u[i], g[i][j]);
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        for (;;) &amp;#123;
+            ++now;
+            for (int j = n + 1; j &amp;lt;= 2 * n; ++j)
+                up[j] = inf;
+            if (Find(i))
+                break;
+            int Delta = inf;
+            for (int j = n + 1;
+                            j &amp;lt;= 2 * n; ++j) &amp;#123;
+                if (vis[j] != now)
+                    Delta = min(Delta, up[j]);
+            &amp;#125;
+            for (int j = 1; j &amp;lt;= n; ++j) &amp;#123;
+                if (vis[j] == now)
+                    u[j] -= Delta;
+            &amp;#125;
+            for (int j = n + 1;
+                            j &amp;lt;= 2 * n; ++j) &amp;#123;
+                if (vis[j] == now)
+                    u[j] += Delta;
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    return;
+&amp;#125;
+int main() &amp;#123;
+    while(read(n)) &amp;#123;
+        res = 0;
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            for (int j = 1; j &amp;lt;= n; ++j)
+                read(g[i][j + n]);
+        &amp;#125;
+        Solve();
+        for (int i = n + 1; i &amp;lt;= 2 * n; ++i)
+            res += g[mat[i]][i];
+        print(res, &amp;#39;\n&amp;#39;);
+    &amp;#125;
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;c.-going-home&#34;&gt;C. Going Home&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://vjudge.net/contest/554888#problem/C&#34; class=&#34;uri&#34;&gt;https://vjudge.net/contest/554888#problem/C&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;板板题。把人和房子按曼哈顿距离连边即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 205;
+const int inf = 0x3f3f3f3f;
+int g[maxn][maxn];
+char s[maxn][maxn];
+int u[maxn], up[maxn];
+int h, w, n, m, now, res;
+int vis[maxn], mat[maxn];
+int a[maxn][2], b[maxn][2];
+int max(int x, int y) &amp;#123;
+    return x &amp;gt; y ? x : y;
+&amp;#125;
+int min(int x, int y) &amp;#123;
+    return x &amp;lt; y ? x : y;
+&amp;#125;
+bool Find(int x) &amp;#123;
+    vis[x] = now;
+    for (int i = n + 1; i &amp;lt;= 2 * n; ++i) &amp;#123;
+        if (vis[i] == now)
+            continue;
+        if (u[x] + u[i] == g[x][i]) &amp;#123;
+            vis[i] = now;
+            if (!mat[i] || (vis[mat[i]] != now
+                            &amp;amp;&amp;amp; Find(mat[i]))) &amp;#123;
+                mat[i] = x;
+                return 1;
+            &amp;#125;
+        &amp;#125;
+        else &amp;#123;
+            up[i] = min(up[i],
+                u[x] + u[i] - g[x][i]);
+        &amp;#125;
+    &amp;#125;
+    return 0;
+&amp;#125;
+void Solve(void) &amp;#123;
+    for (int i = 1; i &amp;lt;= 2 * n; ++i)
+        mat[i] = u[i] = 0;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        u[i] = -inf;
+        for (int j = n + 1; j &amp;lt;= 2 * n; ++j)
+            u[i] = max(u[i], g[i][j]);
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        for (;;) &amp;#123;
+            ++now;
+            for (int j = n + 1; j &amp;lt;= 2 * n; ++j)
+                up[j] = inf;
+            if (Find(i))
+                break;
+            int Delta = inf;
+            for (int j = n + 1;
+                            j &amp;lt;= 2 * n; ++j) &amp;#123;
+                if (vis[j] != now)
+                    Delta = min(Delta, up[j]);
+            &amp;#125;
+            for (int j = 1; j &amp;lt;= n; ++j) &amp;#123;
+                if (vis[j] == now)
+                    u[j] -= Delta;
+            &amp;#125;
+            for (int j = n + 1;
+                            j &amp;lt;= 2 * n; ++j) &amp;#123;
+                if (vis[j] == now)
+                    u[j] += Delta;
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    return;
+&amp;#125;
+int abs(int x) &amp;#123;
+    return x &amp;gt;= 0 ? x : -x;
+&amp;#125;
+int dist(int x1, int y1, int x2, int y2) &amp;#123;
+    return abs(x1 - x2) + abs(y1- y2);
+&amp;#125;
+void Init(void) &amp;#123;
+    res = n = m = 0;
+    memset(g, 0, sizeof (g));
+    return;
+&amp;#125;
+int main() &amp;#123;
+    scanf(&amp;quot;%d %d&amp;quot;, &amp;amp;h, &amp;amp;w);
+    while (h || w) &amp;#123;
+        Init();
+        for (int i = 1; i &amp;lt;= h; ++i) &amp;#123;
+            scanf(&amp;quot;%s&amp;quot;, s[i] + 1);
+            for (int j = 1; j &amp;lt;= w; ++j) &amp;#123;
+                if (s[i][j] == &amp;#39;H&amp;#39;)
+                    a[++n][0] = i, a[n][1] = j;
+                else if (s[i][j] == &amp;#39;m&amp;#39;)
+                    b[++m][0] = i, b[m][1] = j;
+            &amp;#125;
+        &amp;#125;
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            for (int j = 1; j &amp;lt;= n; ++j) &amp;#123;
+                g[i][j + n] = -dist(a[i][0],
+                    a[i][1], b[j][0], b[j][1]);
+            &amp;#125;
+        &amp;#125;
+        Solve();
+        for (int i = n + 1; i &amp;lt;= 2 * n; ++i)
+            res += g[mat[i]][i];
+        print(-res, &amp;#39;\n&amp;#39;);
+        scanf(&amp;quot;%d %d&amp;quot;, &amp;amp;h, &amp;amp;w);
+    &amp;#125;
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;d.-cyclic-tour&#34;&gt;D. Cyclic Tour&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://vjudge.net/contest/554888#problem/D&#34; class=&#34;uri&#34;&gt;https://vjudge.net/contest/554888#problem/D&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;题意在讲什么啊，看了半天看不懂。&lt;/p&gt;
+&lt;p&gt;给定一个有向图，找到若干个互不相交的环覆盖整个图，使得所有环上边权和最小，若找不到方案输出 -1。&lt;/p&gt;
+&lt;p&gt;我们知道与这道题相类似的最小路径覆盖问题可以用二分图 + 拆点来解决。那么这里我们也可以小小地拆一拆点。把一个点拆成两个，一个作为起点，一个作为终点，两个点之间连双向边，这样该图就和原图等价。&lt;/p&gt;
+&lt;p&gt;拆出来起点之间没有边，拆出来的终点之间也没有边，所以原图是二分图。&lt;/p&gt;
+&lt;p&gt;不难发现，假设原图中的环上共有 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 个点、&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 条边，那么拆点后就会有 &lt;span class=&#34;math inline&#34;&gt;\(2\times x\)&lt;/span&gt; 个点和 &lt;span class=&#34;math inline&#34;&gt;\(2\times x\)&lt;/span&gt; 条边，其中 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 条边是点 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 连向点 &lt;span class=&#34;math inline&#34;&gt;\(i&amp;#39;\)&lt;/span&gt;（或反之）的边。&lt;/p&gt;
+&lt;p&gt;需要匹配到剩余的实边（而非自己连向自己的虚边）共有 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 条，左右部节点都有 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 个，考虑设虚边边权为正无穷，进行最小权完美匹配（点和自己连边的操作保证了一定能找到解，不会进入死循环）。&lt;/p&gt;
+&lt;p&gt;那么什么时候无解呢？当算法不得不选中虚边时，就说明找不到环了。所以我们判一下匹配有没有包含正无穷边即可。&lt;/p&gt;
+&lt;p&gt;记得判重边！&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 205;
+const int inf = 0x3f3f3f3f;
+int g[maxn][maxn];
+int u[maxn], up[maxn];
+int vis[maxn], mat[maxn];
+int n, m, x, y, now, res, w;
+int max(int x, int y) &amp;#123;
+    return x &amp;gt; y ? x : y;
+&amp;#125;
+int min(int x, int y) &amp;#123;
+    return x &amp;lt; y ? x : y;
+&amp;#125;
+bool Find(int x) &amp;#123;
+    vis[x] = now;
+    for (int i = n + 1; i &amp;lt;= 2 * n; ++i) &amp;#123;
+        if (vis[i] == now)
+            continue;
+        if (u[x] + u[i] == g[x][i]) &amp;#123;
+            vis[i] = now;
+            if (!mat[i] || (vis[mat[i]] != now
+                            &amp;amp;&amp;amp; Find(mat[i]))) &amp;#123;
+                mat[i] = x;
+                return 1;
+            &amp;#125;
+        &amp;#125;
+        else &amp;#123;
+            up[i] = min(up[i],
+                u[x] + u[i] - g[x][i]);
+        &amp;#125;
+    &amp;#125;
+    return 0;
+&amp;#125;
+void Solve(void) &amp;#123;
+    for (int i = 1; i &amp;lt;= 2 * n; ++i)
+        mat[i] = u[i] = 0;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        u[i] = -inf;
+        for (int j = n + 1; j &amp;lt;= 2 * n; ++j)
+            u[i] = max(u[i], g[i][j]);
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        for (;;) &amp;#123;
+            ++now;
+            for (int j = n + 1; j &amp;lt;= 2 * n; ++j)
+                up[j] = inf;
+            if (Find(i))
+                break;
+            int Delta = inf;
+            for (int j = n + 1;
+                            j &amp;lt;= 2 * n; ++j) &amp;#123;
+                if (vis[j] != now)
+                    Delta = min(Delta, up[j]);
+            &amp;#125;
+            for (int j = 1; j &amp;lt;= n; ++j) &amp;#123;
+                if (vis[j] == now)
+                    u[j] -= Delta;
+            &amp;#125;
+            for (int j = n + 1;
+                            j &amp;lt;= 2 * n; ++j) &amp;#123;
+                if (vis[j] == now)
+                    u[j] += Delta;
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    return;
+&amp;#125;
+int main() &amp;#123;
+    while (read(n)) &amp;#123;
+        read(m);
+        res = 0;
+        for (int i = 1; i &amp;lt;= 2 * n; ++i) &amp;#123;
+            for (int j = 1; j &amp;lt;= 2 * n; ++j) 
+                g[i][j] = -inf;
+        &amp;#125;
+        while (m--) &amp;#123;
+            read(x), read(y), read(w);
+            g[x][y + n] = max(g[x][y + n], -w);
+        &amp;#125;
+        Solve();
+        for (int i = n + 1; i &amp;lt;= 2 * n; ++i) &amp;#123;
+            if (g[mat[i]][i] &amp;lt;= -inf) &amp;#123;
+                puts(&amp;quot;-1&amp;quot;);
+                goto NoSol;
+            &amp;#125;
+            res += -g[mat[i]][i];
+        &amp;#125;
+        print(res, &amp;#39;\n&amp;#39;);
+        NoSol: ;
+    &amp;#125;
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;e.-tour&#34;&gt;E. Tour&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://vjudge.net/contest/554888#problem/E&#34; class=&#34;uri&#34;&gt;https://vjudge.net/contest/554888#problem/E&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;把上一题输入方式和数据范围改一改就好了。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 405;
+const int inf = 0x3f3f3f3f;
+int g[maxn][maxn];
+int u[maxn], up[maxn];
+int vis[maxn], mat[maxn];
+int T, n, m, x, y, now, res, w;
+int max(int x, int y) &amp;#123;
+    return x &amp;gt; y ? x : y;
+&amp;#125;
+int min(int x, int y) &amp;#123;
+    return x &amp;lt; y ? x : y;
+&amp;#125;
+bool Find(int x) &amp;#123;
+    vis[x] = now;
+    for (int i = n + 1; i &amp;lt;= 2 * n; ++i) &amp;#123;
+        if (vis[i] == now)
+            continue;
+        if (u[x] + u[i] == g[x][i]) &amp;#123;
+            vis[i] = now;
+            if (!mat[i] || (vis[mat[i]] != now
+                            &amp;amp;&amp;amp; Find(mat[i]))) &amp;#123;
+                mat[i] = x;
+                return 1;
+            &amp;#125;
+        &amp;#125;
+        else &amp;#123;
+            up[i] = min(up[i],
+                u[x] + u[i] - g[x][i]);
+        &amp;#125;
+    &amp;#125;
+    return 0;
+&amp;#125;
+void Solve(void) &amp;#123;
+    for (int i = 1; i &amp;lt;= 2 * n; ++i)
+        mat[i] = u[i] = 0;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        u[i] = -inf;
+        for (int j = n + 1; j &amp;lt;= 2 * n; ++j)
+            u[i] = max(u[i], g[i][j]);
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        for (;;) &amp;#123;
+            ++now;
+            for (int j = n + 1; j &amp;lt;= 2 * n; ++j)
+                up[j] = inf;
+            if (Find(i))
+                break;
+            int Delta = inf;
+            for (int j = n + 1;
+                            j &amp;lt;= 2 * n; ++j) &amp;#123;
+                if (vis[j] != now)
+                    Delta = min(Delta, up[j]);
+            &amp;#125;
+            for (int j = 1; j &amp;lt;= n; ++j) &amp;#123;
+                if (vis[j] == now)
+                    u[j] -= Delta;
+            &amp;#125;
+            for (int j = n + 1;
+                            j &amp;lt;= 2 * n; ++j) &amp;#123;
+                if (vis[j] == now)
+                    u[j] += Delta;
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    return;
+&amp;#125;
+int main() &amp;#123;
+    read(T);
+    while(T--) &amp;#123;
+        read(n), read(m);
+        res = 0;
+        for (int i = 1; i &amp;lt;= 2 * n; ++i) &amp;#123;
+            for (int j = 1; j &amp;lt;= 2 * n; ++j) 
+                g[i][j] = -inf;
+        &amp;#125;
+        while (m--) &amp;#123;
+            read(x), read(y), read(w);
+            g[x][y + n] = max(g[x][y + n], -w);
+        &amp;#125;
+        Solve();
+        for (int i = n + 1; i &amp;lt;= 2 * n; ++i) &amp;#123;
+            if (g[mat[i]][i] &amp;lt;= -inf) &amp;#123;
+                puts(&amp;quot;-1&amp;quot;);
+                goto NoSol;
+            &amp;#125;
+            res += -g[mat[i]][i];
+        &amp;#125;
+        print(res, &amp;#39;\n&amp;#39;);
+        NoSol: ;
+    &amp;#125;
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;d.-导弹防御塔&#34;&gt;D. 导弹防御塔&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/3699/problem/4&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/3699/problem/4&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;GM 说的好哇（指 &lt;em&gt;毛病多，一会儿分钟一会儿秒&lt;/em&gt;）。&lt;/p&gt;
+&lt;p&gt;寻找冲突。一个敌人只能被一炮打死，故考虑&lt;/p&gt;
+&lt;p&gt;但一个塔可以打很多炮，考虑拆点。&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

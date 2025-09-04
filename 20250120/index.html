@@ -28,9 +28,7 @@ const searchPath = "/search.xml"
 <script src="/js/jQuery.js"></script>
 
 <!-- 载入 Valine -->
-
-<script src="/js/Valine.min.js"></script>
-
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
 <!-- css 引入 -->
 
 <link rel="stylesheet" href="/css/layout.css">
@@ -39,6 +37,11 @@ const searchPath = "/search.xml"
 <link rel="stylesheet" href="/css/prcss/prism.css">
 
 
+
+<!-- rss -->
+<link rel="alternate" type="application/rss+xml" title="" href="https://xsc062.netlify.app/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="" href="https://xsc062.netlify.app/atom.xml" />
+<link rel="alternate" type="application/json" title="" href="https://xsc062.netlify.app/feed.json" />
 
 <meta charset="utf-8"> 
 <meta name="generator" content="Hexo 7.2.0"></head>
@@ -73,15 +76,7 @@ const searchPath = "/search.xml"
 <div id="search-bg">
 	<div id="search-box">
 		<input type="text" id="search-input" placeholder="Type to search...">
-		<div id="search-results"></div>
-		<p>恭喜你触发了这个 box，由于我还没有写关闭键，你只能通过刷新页面来关闭它。非常抱歉 ;-)</p>
-		<p>为了证明我没有摆烂，在这里放一个进度：</p>
-		<p>- 250715：尝试实现搜索功能，初步成功，能够搜索到包含关键词的文章了（<strong>也能关掉了</strong>）。不知道为啥输入 123 可以匹配所有文章，但是输入 1234 就一篇都匹配不上。（250814 upd：搜索的是 html 源码，<code>{</code> 的 ASCII 码为 123 / <code>&</code><code>#123;</code>）</p>
-		<p>- 250716：尝试加入关键词上下文来 de 上面的 bug，然后把 js 写成史了，现在这个框框并不具备搜索功能（也不具备关闭功能） :-(</p>
-		<p>- 250814：<strong>能关了</strong>，我很勤勉</p>
-		<p>什么？居然还能搜索！还能高亮关键词？谢谢你，hexo-generator-searchdb！但是你为什么没有注释，让我阅读理解了半天 :-(</p>
-		<p>css 等有空了再写吧，能用就行</p>
-		<p>**为什么有 bug？试着找一个关键词发现有的文章没有匹配上**/p>
+		<div id="search-results">键入以搜索</div>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
@@ -132,7 +127,7 @@ const searchPath = "/search.xml"
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-text">前置知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ac-%E8%87%AA%E5%8A%A8%E6%9C%BA%E7%9A%84%E5%BB%BA%E7%AB%8B"><span class="toc-text">AC 自动机的建立</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ac-%E8%87%AA%E5%8A%A8%E6%9C%BA%E7%9A%84%E5%BA%94%E7%94%A8%E4%B8%8E%E8%AF%86%E5%88%AB"><span class="toc-text">AC 自动机的应用与识别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9A%BE%E7%82%B9%E8%AE%BE%E8%AE%A1"><span class="toc-text">字符串难点设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#eg.-indie-album"><span class="toc-text">eg. Indie Album</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fail-%E6%A0%91%E7%9A%84%E7%BB%B4%E6%8A%A4"><span class="toc-text">fail 树的维护</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#eg1.-divljak"><span class="toc-text">eg1. Divljak</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%95%E4%B8%80%E6%8A%8A%E5%8A%A8%E6%80%81%E9%97%AE%E9%A2%98%E7%A6%BB%E7%BA%BF"><span class="toc-text">法一：把动态问题离线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%95%E4%BA%8C%E8%BD%AC%E8%80%8C%E5%A4%84%E7%90%86%E9%9D%99%E6%80%81%E9%97%AE%E9%A2%98"><span class="toc-text">法二：转而处理静态问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eg2."><span class="toc-text">eg2.</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ac-%E8%87%AA%E5%8A%A8%E6%9C%BA%E4%B8%8A%E7%9A%84-dp"><span class="toc-text">AC 自动机上的 DP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#eg1.-l-%E8%AF%AD%E8%A8%80"><span class="toc-text">eg1. L 语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eg2.-popcount-words"><span class="toc-text">eg2. Popcount Words</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eg3.-legen"><span class="toc-text">eg3. Legen…</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eg4.-you-are-given-some-strings"><span class="toc-text">eg4. You Are Given Some Strings…</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-text">前置知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ac-%E8%87%AA%E5%8A%A8%E6%9C%BA%E7%9A%84%E5%BB%BA%E7%AB%8B"><span class="toc-text">AC 自动机的建立</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ac-%E8%87%AA%E5%8A%A8%E6%9C%BA%E7%9A%84%E5%BA%94%E7%94%A8%E4%B8%8E%E8%AF%86%E5%88%AB"><span class="toc-text">AC 自动机的应用与识别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9A%BE%E7%82%B9%E8%AE%BE%E8%AE%A1"><span class="toc-text">字符串难点设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#eg.-indie-album"><span class="toc-text">eg. Indie Album</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fail-%E6%A0%91%E7%9A%84%E7%BB%B4%E6%8A%A4"><span class="toc-text">fail 树的维护</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#eg.-divljak"><span class="toc-text">eg. Divljak</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%95%E4%B8%80%E6%8A%8A%E5%8A%A8%E6%80%81%E9%97%AE%E9%A2%98%E7%A6%BB%E7%BA%BF"><span class="toc-text">法一：把动态问题离线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%95%E4%BA%8C%E8%BD%AC%E8%80%8C%E5%A4%84%E7%90%86%E9%9D%99%E6%80%81%E9%97%AE%E9%A2%98"><span class="toc-text">法二：转而处理静态问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ac-%E8%87%AA%E5%8A%A8%E6%9C%BA%E4%B8%8A%E7%9A%84-dp"><span class="toc-text">AC 自动机上的 DP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#eg1.-l-%E8%AF%AD%E8%A8%80"><span class="toc-text">eg1. L 语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eg2.-popcount-words"><span class="toc-text">eg2. Popcount Words</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eg3.-legen"><span class="toc-text">eg3. Legen…</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eg4.-you-are-given-some-strings"><span class="toc-text">eg4. You Are Given Some Strings…</span></a></li></ol></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -184,14 +179,15 @@ const searchPath = "/search.xml"
 <h2 id="ac-自动机的建立">AC 自动机的建立</h2>
 <p>结合上面的知识，我们下意识想到，能不能将 <span class="math inline">\(\{T_m\}\)</span> 建成一个树状结构，令 <span class="math inline">\(S\)</span> 在其上进行 KMP 呢？</p>
 <p>将 <span class="math inline">\(\{T_m\}\)</span> 全部加入 Trie，由于 <code>next</code> 只会由更深的点指向更浅的点，似乎从直觉上是有规则的。但随之而来的是一个问题：点 <span class="math inline">\(u\)</span> 的 <code>next</code> 不一定在 <span class="math inline">\(\text{root}\to u\)</span> 的链上（由于 Trie 的性质，可知指向的点是唯一的）。鉴于这一点不同，我们结合其「失配指针」的定义，将 <code>next</code> 在 Trie 上的同分异构体唤为 <code>fail</code>。</p>
-<p>考察 Trie 上该 <code>fail</code> 边的性质，假设其为 <span class="math inline">\(u\to v\)</span>，结合 KMP 中 <code>next</code> 的性质，假设 <span class="math inline">\(u\)</span> 的父节点为 <span class="math inline">\(u&#39;\)</span>，其 <code>fail</code> 为 <span class="math inline">\(u&#39;\to v&#39;\)</span>，那么有：</p>
+<p>考察 Trie 上该 <code>fail</code> 边的性质。现欲求解 <span class="math inline">\(u\)</span> 的 <code>fail</code> 指向的 <span class="math inline">\(c\)</span>，结合 KMP 中 <code>next</code> 的性质，假设 <span class="math inline">\(u\)</span> 的父节点的 <code>fail</code> 边指向 <span class="math inline">\(v&#39;\)</span>，那么 <span class="math inline">\(v\)</span> 的值为：</p>
 <ul>
-<li><span class="math inline">\(v&#39;\)</span> 上有边权为 <span class="math inline">\(u\)</span> 的边，<span class="math inline">\(v\)</span> 为该边右端结点。</li>
+<li><span class="math inline">\(v&#39;\)</span> 上有边权相同的边，那么 <span class="math inline">\(v\)</span> 就是该边指向的点。</li>
 <li>否则，前往 <span class="math inline">\(v&#39;\)</span> 的 <code>fail</code>，重复以上判定。</li>
 </ul>
-<p>那么我们就完成了失配的处理。那么相应地，完全匹配时的跳转应如何处理呢？我们直接暴力地将 <code>fail</code> 的儿子全部接到 <span class="math inline">\(u\)</span> 下面就行了。如果 <span class="math inline">\(u\)</span> 和 <code>fail</code> 具有同一条边呢？我们选择保留 <span class="math inline">\(u\)</span> 的这条边 <span class="math inline">\(u\to v\)</span>，因为 <span class="math inline">\(v\)</span> 的 <code>fail</code> 必定指向 <span class="math inline">\(u\)</span> 的 <code>fail</code> 的对应儿子。</p>
+<p>那么就完成了失配的处理。相应地，完全匹配时的跳转应如何处理？直接将 <code>fail</code> 的儿子全部接到 <span class="math inline">\(u\)</span> 下面即可。如果 <span class="math inline">\(u\)</span> 和 <code>fail</code> 具有同一个边权的边时，保留 <span class="math inline">\(u\)</span> 的这条边 <span class="math inline">\(u\to v\)</span>，因为 <span class="math inline">\(v\)</span> 的 <code>fail</code> 必定指向 <span class="math inline">\(u\)</span> 的 <code>fail</code> 的对应儿子。</p>
 <p>两点结合，我们发现从实现上，可以直接令 <span class="math inline">\(v\)</span> 的 <code>fail</code> 指向 <span class="math inline">\(u\)</span> 的 <code>fail</code> 的对应儿子（那么时间复杂度显而易见是 <span class="math inline">\(O(26\sum |T|)\)</span> 的）。</p>
 <p>匹配时，对于每个点和其返回到根的 <code>fail</code> 链，全部标记。则一个模式串匹配的次数即为被打标记的次数。</p>
+<p>那么可以发现 AC 自动机的本质就是添加了 <code>fail</code> 边的 Trie。</p>
 <hr />
 <p>那么根据上述要求，我们需要按照深度顺序求得 <code>fail</code>，考虑 BFS。</p>
 <details>
@@ -456,7 +452,7 @@ int main() &#123;
 </details>
 <hr />
 <h2 id="fail-树的维护">fail 树的维护</h2>
-<h3 id="eg1.-divljak">eg1. Divljak</h3>
+<h3 id="eg.-divljak">eg. Divljak</h3>
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5840" class="uri">https://www.luogu.com.cn/problem/P5840</a></p>
 <h4 id="法一把动态问题离线">法一：把动态问题离线</h4>
 <p>问题相当于将模式串 <span class="math inline">\(T:\{P\}\)</span> 动态化，但我们仍可以无脑离线下来解决问题。</p>
@@ -598,8 +594,6 @@ int main() &#123;
     return 0;
 &#125;</code></pre>
 </details>
-<hr />
-<h3 id="eg2.">eg2.</h3>
 <hr />
 <h2 id="ac-自动机上的-dp">AC 自动机上的 DP</h2>
 <p>鉴于 AC 自动机的优秀结构与性质，并不经常作为字符串匹配工具出现，其一个应用是作为 DP 的载体。</p>
@@ -950,7 +944,8 @@ int main() &#123;
 		appKey: 'TW6t8mFeGLmhPjWisvmllvvo',
 		recordIP: true,
 		enableQQ: true, 
-		// 目前 Valine 的 QQ 自动获取昵称似乎不可用 故不建议开启
+		// [EDITED] 目前 Valine 的 QQ 自动获取昵称似乎不可用
+		// 该问题在 v1.5.3 中已修复
 		pageSize: 10,
 		requiredFields:
 			

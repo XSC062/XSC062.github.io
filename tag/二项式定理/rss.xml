@@ -1,0 +1,1310 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title> • Posts by &#34;二项式定理&#34; tag</title>
+        <link>https://xsc062.netlify.app</link>
+        <description></description>
+        <language>zh-CN</language>
+        <pubDate>Mon, 07 Apr 2025 14:57:14 +0800</pubDate>
+        <lastBuildDate>Mon, 07 Apr 2025 14:57:14 +0800</lastBuildDate>
+        <category>并查集</category>
+        <category>斜率优化</category>
+        <category>悬线法</category>
+        <category>哈希</category>
+        <category>字典树</category>
+        <category>DP</category>
+        <category>单调队列</category>
+        <category>分治</category>
+        <category>二分图</category>
+        <category>CRT / exCRT</category>
+        <category>排列组合</category>
+        <category>网络流</category>
+        <category>费用流</category>
+        <category>二分</category>
+        <category>上下界网络流</category>
+        <category>容斥原理</category>
+        <category>线段树</category>
+        <category>树状数组</category>
+        <category>区间 DP</category>
+        <category>构造</category>
+        <category>Tarjan</category>
+        <category>数据结构</category>
+        <category>下饭</category>
+        <category>LCA</category>
+        <category>倍增</category>
+        <category>鸽巢原理</category>
+        <category>概率期望</category>
+        <category>调和级数</category>
+        <category>差分</category>
+        <category>思维</category>
+        <category>树形 DP</category>
+        <category>最小生成树</category>
+        <category>SAM</category>
+        <category>状压</category>
+        <category>分块</category>
+        <category>可持久化</category>
+        <category>笛卡尔树</category>
+        <category>高维前缀和</category>
+        <category>闲话</category>
+        <category>欧拉回路</category>
+        <category>树链剖分</category>
+        <category>长链剖分</category>
+        <category>KMP</category>
+        <category>border</category>
+        <category>字符串</category>
+        <category>AC 自动机</category>
+        <category>SA</category>
+        <category>数学</category>
+        <category>树上差分</category>
+        <category>FWT</category>
+        <category>堆</category>
+        <category>树的重心</category>
+        <category>二项式定理</category>
+        <category>二项式反演</category>
+        <category>贪心</category>
+        <category>均摊</category>
+        <category>计数</category>
+        <category>优化建图</category>
+        <category>反悔贪心</category>
+        <category>调整法</category>
+        <category>背包</category>
+        <category>博弈论</category>
+        <category>DP 优化</category>
+        <category>虚树</category>
+        <category>点分治</category>
+        <category>WQS 二分</category>
+        <category>闵可夫斯基和</category>
+        <category>slope trick</category>
+        <category>四边形不等式</category>
+        <category>暴力</category>
+        <category>状压 DP</category>
+        <category>组合数学</category>
+        <category>支配对</category>
+        <category>DDP</category>
+        <category>平衡树</category>
+        <category>容斥</category>
+        <category>猫树</category>
+        <category>Kruskal 重构树</category>
+        <category>李超线段树</category>
+        <item>
+            <guid isPermalink="true">https://xsc062.netlify.app/20250407/</guid>
+            <title>组合计数</title>
+            <link>https://xsc062.netlify.app/20250407/</link>
+            <category>排列组合</category>
+            <category>容斥原理</category>
+            <category>数学</category>
+            <category>二项式定理</category>
+            <category>二项式反演</category>
+            <pubDate>Mon, 07 Apr 2025 14:57:14 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;毅毅：统计不是数学（断章取义 ed）。&lt;del&gt;故删掉了数学标签。&lt;/del&gt; 其实并没有。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;a.-二分图染色&#34;&gt;A. 二分图染色&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/6181/problem/1&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/6181/problem/1&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;首先只看红色。显然一个左部点最多只能用红边连接一个右部点，反之同理。把左部点视为下标，其用红边相连的右部点视为值，则一个合法的方案为 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 的只保留一部分元素的排列。显然为 &lt;span class=&#34;math inline&#34;&gt;\(f(n)=\sum\limits_{i=0}^nC_n^i\cdot A_n^i\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;再加上蓝色，&lt;span class=&#34;math inline&#34;&gt;\(f^2(n)\)&lt;/span&gt; 会给一条边涂两种颜色，故钦定有两种颜色的边数，容斥得到 &lt;span class=&#34;math inline&#34;&gt;\(\sum\limits_{i=0}^n(-1)^i\cdot C_n^i\cdot A_n^i\cdot f^2(n-i)\)&lt;/span&gt;。发现 &lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt; 的计算可能需要优化一下。考虑已经知道 &lt;span class=&#34;math inline&#34;&gt;\(f(n-1)\)&lt;/span&gt;，此时对于新增的第 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 对点：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;任意连边（显然两个当中只能有一个点发出边），共有 &lt;span class=&#34;math inline&#34;&gt;\(2n-1\)&lt;/span&gt; 种方案，因为 &lt;span class=&#34;math inline&#34;&gt;\((n, n)\)&lt;/span&gt; 会被算重。&lt;/li&gt;
+&lt;li&gt;不连，共 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 种方案。&lt;/li&gt;
+&lt;li&gt;发现 1 中可能连到已经有连边的点上了，新边的目的地有 &lt;span class=&#34;math inline&#34;&gt;\(n-1\)&lt;/span&gt; 个选项，目的地原本连接的点也有 &lt;span class=&#34;math inline&#34;&gt;\(n-1\)&lt;/span&gt; 个选项，去掉两边共 &lt;span class=&#34;math inline&#34;&gt;\(4\)&lt;/span&gt; 个点，非法的即为 &lt;span class=&#34;math inline&#34;&gt;\((n-1)^2\cdot f(n-2)\)&lt;/span&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 1e9 + 7;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    std::vector&amp;lt;long long&amp;gt; f(n + 1), fac(n + 1), inv(n + 1);
+    f[0] = 1ll, f[1] = 2ll;
+    fac[0] = 1ll, fac[1] = 1ll, inv[0] = 1ll;
+    for (int i = 2; i &amp;lt;= n; ++i) &amp;#123;
+        fac[i] = fac[i - 1] * i % mod;
+        f[i] = (f[i - 1] * 2 * i % mod + mod - f[i - 2] * (i - 1) % mod * (i - 1) % mod) % mod;
+    &amp;#125;
+    auto qkp = [](long long x, int y) &amp;#123;
+        auto res = 1ll;
+        for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    inv[n] = qkp(fac[n], mod - 2);
+    for (int i = n - 1; i; --i)
+        inv[i] = inv[i + 1] * (i + 1) % mod;
+    auto C = [&amp;amp;](int n, int m) &amp;#123;
+        return fac[n] * inv[n - m] % mod * inv[m] % mod;
+    &amp;#125;;
+    auto A = [&amp;amp;](int n, int m) &amp;#123;
+        return fac[n] * inv[n - m] % mod;
+    &amp;#125;;
+    long long res = 0ll;
+    for (int i = 0, k = 1; i &amp;lt;= n; ++i, k = mod - k)
+        (res += k * C(n, i) % mod * A(n, i) % mod * f[n - i] % mod * f[n - i]) %= mod;
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;b.-七选五&#34;&gt;B. 七选五&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/6181/problem/2&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/6181/problem/2&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;首先 &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt; 固定，钦定有 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 个数相等，有 &lt;span class=&#34;math inline&#34;&gt;\(C_k^x\)&lt;/span&gt; 个方案，剩下的就是从 &lt;span class=&#34;math inline&#34;&gt;\(n-x\)&lt;/span&gt; 个元素里选出 &lt;span class=&#34;math inline&#34;&gt;\(k-x\)&lt;/span&gt; 个来错排，考虑钦定相同的个数来容斥：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum_{i=0}^{k-x}(-1)^i\cdot C_{k-x}^i\cdot A_{n-x-i}^{k-x-i}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 1e9 + 7;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, k, x;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; k &amp;gt;&amp;gt; x;
+    std::vector&amp;lt;long long&amp;gt; fac(n + 1), inv(n + 1);
+    fac[0] = 1ll, fac[1] = 1ll, inv[0] = 1ll;
+    for (int i = 2; i &amp;lt;= n; ++i)
+        fac[i] = fac[i - 1] * i % mod;
+    auto qkp = [](long long x, int y) &amp;#123;
+        auto res = 1ll;
+        for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    inv[n] = qkp(fac[n], mod - 2);
+    for (int i = n - 1; i; --i)
+        inv[i] = inv[i + 1] * (i + 1) % mod;
+    auto C = [&amp;amp;](int n, int m) &amp;#123;
+        return fac[n] * inv[n - m] % mod * inv[m] % mod;
+    &amp;#125;;
+    auto A = [&amp;amp;](int n, int m) &amp;#123;
+        return fac[n] * inv[n - m] % mod;
+    &amp;#125;;
+    long long res = C(k, x), sum = 0ll;
+    for (int i = 0, p = 1; i &amp;lt;= k - x; ++i, p = mod - p)
+        (sum += p * C(k - x, i) % mod * A(n - x - i, k - x - i) % mod) %= mod;
+    std::cout &amp;lt;&amp;lt; res * sum % mod &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;d.-硬币购物&#34;&gt;D. 硬币购物&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/6181/problem/4&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/6181/problem/4&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;每次多重背包会超时，考虑用钦定每种硬币是否超额来容斥。令 &lt;span class=&#34;math inline&#34;&gt;\(f_s\)&lt;/span&gt; 表示凑出 &lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt; 的方案数（完全背包），那么 &lt;span class=&#34;math inline&#34;&gt;\(f_{s-c_1\times (d_1 + 1)}\)&lt;/span&gt; 就表示钦定第 1 种硬币超额时凑出 &lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt; 的方案数，以此类推。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int c[4], T, m = 1e5;
+    std::vector&amp;lt;long long&amp;gt; f(m + 1);
+    f[0] = 1;
+    for (int i = 0; i &amp;lt; 4; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; c[i];
+        for (int j = c[i]; j &amp;lt;= m; ++j)
+            f[j] += f[j - c[i]];
+    &amp;#125;
+    std::cin &amp;gt;&amp;gt; T;
+    for (int d[4], m; T--; ) &amp;#123;
+        for (int i = 0; i &amp;lt; 4; ++i)
+            std::cin &amp;gt;&amp;gt; d[i];
+        std::cin &amp;gt;&amp;gt; m;
+        long long res = 0ll;
+        for (int i = 0; i &amp;lt; (1 &amp;lt;&amp;lt; 4); ++i) &amp;#123;
+            int s = m;
+            for (int j = 0; j &amp;lt; 4; ++j)
+                if ((i &amp;gt;&amp;gt; j) &amp;amp; 1)
+                    s -= (d[j] + 1) * c[j];
+            if (s &amp;gt;= 0) &amp;#123;
+                int k = (__builtin_popcount(i) &amp;amp; 1) ? -1 : 1;
+                res += k * f[s];
+            &amp;#125;
+        &amp;#125;
+        std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    &amp;#125;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;e.-distinct-multiples&#34;&gt;E. Distinct Multiples&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/6181/problem/5&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/6181/problem/5&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;推式子题。题意转化为，给定 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 个位置可选的值集合，要求任意两个位置值不等，问方案数。&lt;/p&gt;
+&lt;p&gt;如果把两个位置取等视作在团上选中边，那么有朴素做法钦定选边的集合 &lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt; 然后容斥，考虑它们构成的连通块 &lt;span class=&#34;math inline&#34;&gt;\(\{s\} \subseteq S\)&lt;/span&gt;，有 &lt;span class=&#34;math inline&#34;&gt;\(res=\sum\limits_{S\subseteq V}(-1)^{|S|}\cdot \prod\limits_{s_i} \left\lfloor \frac m{\operatorname{lcm} s_i} \right\rfloor\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;有个很神奇的操作是把 &lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt; 丢掉，直接枚举 &lt;span class=&#34;math inline&#34;&gt;\(\{s\}\)&lt;/span&gt; 尝试子集 DP。有：&lt;span class=&#34;math inline&#34;&gt;\(res=\sum\limits_{\{s\}}\prod\limits_s f(s)\cdot\left\lfloor \frac m{\operatorname{lcm} s} \right\rfloor\)&lt;/span&gt;。其中 &lt;span class=&#34;math inline&#34;&gt;\(f(s)\)&lt;/span&gt; 表示选取一个 &lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt; 的导出子图的容斥系数之和，其中次数为导出子图中边数。&lt;/p&gt;
+&lt;p&gt;怎么把 &lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt; 算出来呢？容易发现其值只与 &lt;span class=&#34;math inline&#34;&gt;\(|s|\)&lt;/span&gt; 有关，考虑钦定与 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 连通的点数容斥，则有：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f(n)=\sum\limits_{i=0}^{n - 1} (-1)^i \times C_{n-1}^{i-1} \times f(i) \cdot \sum_{j=0}^{m\gets i\times (i-1)\div 2} (-1)^j\cdot C_m^j
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;我们知道，二项式定理取 &lt;span class=&#34;math inline&#34;&gt;\(a=1, b = -1\)&lt;/span&gt; 有 &lt;span class=&#34;math inline&#34;&gt;\(0^m=[m=0]=\sum_{j=0}^m(-1)^j\cdot C_m^j\)&lt;/span&gt;，代入得：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\begin{aligned}
+f(n)&amp;amp;=\sum\limits_{i=0}^{n - 1} (-1)^i \times C_{n-1}^{n-i-1} \times f(n-i)\cdot [m=0\iff i=1]\\
+&amp;amp;=(1 - n)\cdot f(n-1)
+\end{aligned}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;然后就能线性求出。再用一个子集 DP，为了保证顺序枚举最小的未被确定的点所在连通块进行转移。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 998244353;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, l;
+    long long m;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; m, l = 1 &amp;lt;&amp;lt; n;
+    std::vector&amp;lt;long long&amp;gt; d(n), f(n + 1), dp(l), g(l);
+    f[1] = 1ll;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; d[i - 1];
+        if (i &amp;gt;= 2)
+            f[i] = (1 + mod - i) * f[i - 1] % mod;
+        // printf(&amp;quot;f[%d] = %lld\n&amp;quot;, i, f[i]);
+    &amp;#125;
+    for (int i = 0; i &amp;lt; l; ++i) &amp;#123;
+        long long now = 1ll;
+        for (int j = 0; j &amp;lt; n; ++j)
+            if ((i &amp;gt;&amp;gt; j) &amp;amp; 1) &amp;#123;
+                if (now / std::__gcd(now, d[j]) &amp;gt; m / d[j])
+                    goto nosol;
+                now = now / std::__gcd(now, d[j]) * d[j];
+            &amp;#125;
+        g[i] = (m / now) % mod;
+        // printf(&amp;quot;lcm = %lld, g[%d] = %lld\n&amp;quot;, now, i, g[i]);
+    nosol: ;
+    &amp;#125;
+    dp[0] = 1ll;
+    auto lowbit = [](int x) &amp;#123;
+        return x &amp;amp; -x;
+    &amp;#125;;
+    for (int i = 1; i &amp;lt; l; ++i) &amp;#123;
+        int to = std::__lg(lowbit(i));
+        for (int j = i; j; j = (j - 1) &amp;amp; i)
+            if ((j &amp;gt;&amp;gt; to) &amp;amp; 1)
+                (dp[i] += dp[i ^ j] * f[__builtin_popcount(j)] % mod * g[j] % mod) %= mod;
+    &amp;#125;
+    std::cout &amp;lt;&amp;lt; dp[l - 1] &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;f.-permutation&#34;&gt;F. Permutation&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/6181/problem/6&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/6181/problem/6&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;如果全是 &lt;code&gt;&amp;lt;&lt;/code&gt;，方案数为 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;现在把其中一些 &lt;code&gt;&amp;lt;&lt;/code&gt; 变成 &lt;code&gt;?&lt;/code&gt;，比如 &lt;code&gt;&amp;lt;&amp;lt;??&amp;lt;?&amp;lt;&amp;lt;&amp;lt;&amp;lt;&lt;/code&gt; 的方案数，&lt;del&gt;太好了是多重集排列，我们没救了&lt;/del&gt; 显然被 &lt;code&gt;&amp;lt;&lt;/code&gt; 连接起来的一段元素只有一种排列方式，所以可以视为多重集排列，方案数为 &lt;span class=&#34;math inline&#34;&gt;\(\dfrac {11!}{3!\times 2!\times 5!}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;似乎只需要枚举把 &lt;code&gt;&amp;gt;&lt;/code&gt; 变成 &lt;code&gt;&amp;lt;&lt;/code&gt; 或 &lt;code&gt;=&lt;/code&gt; 的 &lt;span class=&#34;math inline&#34;&gt;\(2^k\)&lt;/span&gt; 种情况再计算就可以了，可惜 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 有点大。但我们发现它在一定程度上是没有后效性的，比如 &lt;code&gt;&amp;lt;&amp;lt;??&amp;lt;&lt;/code&gt; 和 &lt;code&gt;&amp;lt;&amp;lt;?&amp;lt;&amp;lt;&lt;/code&gt;，前面的 &lt;code&gt;&amp;lt;&amp;lt;&lt;/code&gt; 不会对后面的内容带来影响。&lt;/p&gt;
+&lt;p&gt;故令 &lt;span class=&#34;math inline&#34;&gt;\(f_i\)&lt;/span&gt; 表示对于前 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 个元素的方案数，枚举最后一个被钦定为 &lt;code&gt;?&lt;/code&gt; 的 &lt;code&gt;&amp;gt;&lt;/code&gt; &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt;（即 &lt;span class=&#34;math inline&#34;&gt;\([j + 1, i-1]\)&lt;/span&gt; 间的 &lt;code&gt;&amp;gt;&lt;/code&gt; 都被替换为 &lt;code&gt;&amp;lt;&lt;/code&gt;），带上容斥系数，有 &lt;span class=&#34;math inline&#34;&gt;\(f_i=\sum\limits_{s_j=\texttt{&amp;#39;&amp;gt;&amp;#39;}}(-1)^{cnt_\texttt{&amp;#39;&amp;gt;&amp;#39;}[j + 1, i - 1]}\times f_j\times\dfrac1{(i-j)!}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 1e9 + 7;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    std::vector&amp;lt;long long&amp;gt; fac(n + 1), inv(n + 1);
+    fac[0] = 1ll, inv[0] = 1ll;
+    for (int i = 1; i &amp;lt;= n; ++i)
+        fac[i] = fac[i - 1] * i % mod;
+    auto qkp = [](long long x, int y) &amp;#123;
+        auto res = 1ll;
+        for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    inv[n] = qkp(fac[n], mod - 2);
+    for (int i = n - 1; i; --i)
+        inv[i] = inv[i + 1] * (i + 1) % mod;
+    std::vector&amp;lt;char&amp;gt; s(n + 1);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        std::cin &amp;gt;&amp;gt; s[i];
+    std::vector&amp;lt;long long&amp;gt; f(n + 1);
+    s[0] = &amp;#39;&amp;gt;&amp;#39;, f[0] = 1ll;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        int cnt = 0;
+        for (int j = i - 1; ~j; --j)
+            if (s[j] == &amp;#39;&amp;gt;&amp;#39;) &amp;#123;
+                long long k = (cnt &amp;amp; 1) ? mod - 1 : 1;
+                (k *= f[j]) %= mod, (k *= inv[i - j]) %= mod;
+                (f[i] += k) %= mod;
+                ++cnt;
+            &amp;#125;
+        // printf(&amp;quot;f[%d] = %lld\n&amp;quot;, i, f[i]);
+    &amp;#125;
+    std::cout &amp;lt;&amp;lt; f[n] * fac[n] % mod &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;em&gt;忳郁邑余侘傺兮，余独穷困乎此时也。&lt;/em&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;h.-k-perm-counting&#34;&gt;H. ~K Perm Counting&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/6181/problem/8&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/6181/problem/8&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;考虑钦定令几个元素不满足条件进行容斥，即答案为 &lt;span class=&#34;math inline&#34;&gt;\(\sum\limits_{i=0}^n (-1)^i\cdot f(i)\)&lt;/span&gt;。但我们发现 &lt;span class=&#34;math inline&#34;&gt;\([n-k,n+k]\)&lt;/span&gt; 都有两个不能选的值，直接取 &lt;span class=&#34;math inline&#34;&gt;\(f(i)=\prod 2\)&lt;/span&gt; 肯定会选到相同值，一个自然（？）的想法是再容斥一遍，可惜手玩一下发现似乎容不动。考虑把玩意儿拍在棋盘上：&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;1.png&#34; alt=&#34;以 k=2 为例&#34; /&gt;&lt;figcaption&gt;以 &lt;span class=&#34;math inline&#34;&gt;\(k=2\)&lt;/span&gt; 为例&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;其中 &lt;span class=&#34;math inline&#34;&gt;\(\times\)&lt;/span&gt; 是非法格子，边是非法格子间的不同选关系，同颜色的边隶属同一条链。容易发现如果棋盘继续扩大，这些链还会继续延长。&lt;/p&gt;
+&lt;p&gt;会发现这些链互不干扰，就是说我选了这条链上的某个点和链外的点没有任何关系（显然）。把这些链首尾相连拼起来，要做的就是拼接处可以选相邻，其余位置不能选相邻，选出来 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 个的方案数。提前预处理出来整个序列，令 &lt;span class=&#34;math inline&#34;&gt;\(tag_j\)&lt;/span&gt; 表示 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 是否能和 &lt;span class=&#34;math inline&#34;&gt;\(j-1\)&lt;/span&gt; 同选，设 &lt;span class=&#34;math inline&#34;&gt;\(dp_{j,i,0/1}\)&lt;/span&gt; 表示 DP 到了 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt;，已经选了 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 个数，第 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 个元素（不）选的方案数，那么有：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+dp_{j,i,0} = dp_{j - 1, i, 0} + dp_{j-1, i, 1}\\
+dp_{j,i,1} = \begin{cases}
+dp_{j-1, i - 1, 1} + dp_{j-1,i - 1,0}&amp;amp;tag_j=1
+\\
+dp_{j-1,i,0}&amp;amp;\text{otherwise}
+\end{cases}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;大力 DP 即可。&lt;span class=&#34;math inline&#34;&gt;\(f(i)\)&lt;/span&gt; 即为 &lt;span class=&#34;math inline&#34;&gt;\((n-i)!\times (dp_{m, i, 0} + dp_{m, i, 1})\)&lt;/span&gt;，其中 &lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt; 为总链长。&lt;/p&gt;
+&lt;details&gt;
+&lt;p&gt;注意不滚动可能会 MLE &lt;img src=&#34;/em/kt.gif&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 924844033;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, k;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; k;
+    std::vector&amp;lt;int&amp;gt; tag(1);
+    std::vector&amp;lt;long long&amp;gt; fac(n + 1);
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; vis(n + 1, std::vector&amp;lt;int&amp;gt; (n + 1));
+    auto calc = [&amp;amp;](int i, int j, int s) &amp;#123;
+        tag.push_back(1);
+        for (; ; s ^= 1) &amp;#123;
+            // printf(&amp;quot;(%d, %d) &amp;quot;, i, j);
+            vis[i][j] = 1;
+            if (!s) &amp;#123;
+                i = j + k;
+                if (i &amp;lt;= n)
+                    tag.push_back(0);
+                else
+                    break;
+            &amp;#125;
+            else &amp;#123;
+                j = i + k;
+                if (j &amp;lt;= n)
+                    tag.push_back(0);
+                else
+                    break;
+            &amp;#125;
+        &amp;#125;
+        // puts(&amp;quot;&amp;quot;);
+        return;
+    &amp;#125;;
+    fac[0] = 1ll;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        fac[i] = fac[i - 1] * i % mod;
+        int j = i - k;
+        if (j &amp;gt;= 1 &amp;amp;&amp;amp; !vis[i][j])
+            calc(i, j, 1);
+        j = i + k;
+        if (j &amp;lt;= n &amp;amp;&amp;amp; !vis[i][j])
+            calc(i, j, 0);
+    &amp;#125;
+    int m = (int)tag.size() - 1;
+    // printf(&amp;quot;m = %d\n&amp;quot;, m);
+    std::vector&amp;lt;std::vector&amp;lt;std::vector&amp;lt;long long&amp;gt; &amp;gt; &amp;gt; dp(2, std::vector&amp;lt;std::vector&amp;lt;long long&amp;gt; &amp;gt; (n + 1, std::vector&amp;lt;long long&amp;gt; (2)));
+    dp[0][0][0] = 1ll;
+    for (int j = 1, now = 1; j &amp;lt;= m; ++j, now ^= 1) &amp;#123;
+        for (int i = 0; i &amp;lt;= n &amp;amp;&amp;amp; i &amp;lt;= j; ++i) &amp;#123;
+            dp[now][i][0] = dp[!now][i][0];
+            dp[now][i][1] = 0ll;
+            if (i) &amp;#123;
+                (dp[now][i][0] += dp[!now][i][1]) %= mod;
+                dp[now][i][1] = dp[!now][i - 1][0];
+                if (tag[j]) &amp;#123;
+                    (dp[now][i][1] += dp[!now][i - 1][1]) %= mod;
+                    // assert(0);
+                &amp;#125;
+            &amp;#125;
+            // printf(&amp;quot;dp[%d][%d] = %lld / %lld\n&amp;quot;, j, i, dp[j][i][0], dp[j][i][1]);
+        &amp;#125;
+    &amp;#125;
+    long long res = 0ll;
+    for (int i = 0, p = 1; i &amp;lt;= n; ++i, p = mod - p)
+        (res += p * fac[n - i] % mod * (dp[m &amp;amp; 1][i][0] + dp[m &amp;amp; 1][i][1]) % mod) %= mod;
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;a---positions-in-permutations&#34;&gt;A - Positions in Permutations&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/problemset/problem/285/E&#34; class=&#34;uri&#34;&gt;https://codeforces.com/problemset/problem/285/E&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;（看向上一题）这照片是你吗？&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;在上一题的基础上，令 &lt;span class=&#34;math inline&#34;&gt;\(k=1\)&lt;/span&gt;。但是有个小小的问题——所求的「至少」不为 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，无法简单容斥。具体地，如果一个排列一共有 &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt; 个非法排列，那么它会被 &lt;span class=&#34;math inline&#34;&gt;\(f(i)\)&lt;/span&gt; 统计 &lt;span class=&#34;math inline&#34;&gt;\(C_p^i\)&lt;/span&gt; 次。令 &lt;span class=&#34;math inline&#34;&gt;\(g(p)\)&lt;/span&gt; 表示非法格子数恰好为 &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt; 的排列的真实数量，则 &lt;span class=&#34;math inline&#34;&gt;\(f(i)=\sum\limits_{j=i}^n C_j^i\cdot g(j)\)&lt;/span&gt;，二项式反演即可得到真实值 &lt;span class=&#34;math inline&#34;&gt;\(g(m)=\sum\limits_{j=m}^n (-1)^{j-m}\cdot C_j^m\cdot f(j)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 1e9 + 7;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, k;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; k;
+    std::vector&amp;lt;int&amp;gt; tag(1);
+    std::vector&amp;lt;long long&amp;gt; fac(n + 1), inv(n + 1);
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; vis(n + 1, std::vector&amp;lt;int&amp;gt; (n + 1));
+    auto calc = [&amp;amp;](int i, int j, int s) &amp;#123;
+        tag.push_back(1);
+        for (; i &amp;lt;= n &amp;amp;&amp;amp; j &amp;lt;= n; s ^= 1) &amp;#123;
+            vis[i][j] = 1;
+            if (!s) &amp;#123;
+                i = j + 1;
+                if (i &amp;lt;= n)
+                    tag.push_back(0);
+            &amp;#125;
+            else &amp;#123;
+                j = i + 1;
+                if (j &amp;lt;= n)
+                    tag.push_back(0);
+            &amp;#125;
+        &amp;#125;
+        return;
+    &amp;#125;;
+    auto qkp = [&amp;amp;](long long x, int y) &amp;#123;
+        auto res = 1ll;
+        for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    fac[0] = 1ll, inv[0] = 1ll;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        fac[i] = fac[i - 1] * i % mod;
+        int j = i - 1;
+        if (j &amp;gt;= 1 &amp;amp;&amp;amp; !vis[i][j])
+            calc(i, j, 1);
+        j = i + 1;
+        if (j &amp;lt;= n &amp;amp;&amp;amp; !vis[i][j])
+            calc(i, j, 0);
+    &amp;#125;
+    inv[n] = qkp(fac[n], mod - 2);
+    for (int i = n - 1; i; --i)
+        inv[i] = inv[i + 1] * (i + 1) % mod;
+    int m = (int)tag.size() - 1;
+    std::vector&amp;lt;std::vector&amp;lt;std::vector&amp;lt;long long&amp;gt; &amp;gt; &amp;gt; dp(2, std::vector&amp;lt;std::vector&amp;lt;long long&amp;gt; &amp;gt; (n + 1, std::vector&amp;lt;long long&amp;gt; (2)));
+    dp[0][0][0] = 1ll;
+    for (int j = 1, now = 1; j &amp;lt;= m; ++j, now ^= 1) &amp;#123;
+        for (int i = 0; i &amp;lt;= n &amp;amp;&amp;amp; i &amp;lt;= j; ++i) &amp;#123;
+            dp[now][i][0] = dp[!now][i][0];
+            dp[now][i][1] = 0ll;
+            if (i) &amp;#123;
+                (dp[now][i][0] += dp[!now][i][1]) %= mod;
+                dp[now][i][1] = dp[!now][i - 1][0];
+                if (tag[j])
+                    (dp[now][i][1] += dp[!now][i - 1][1]) %= mod;
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    auto C = [&amp;amp;](int n, int m) &amp;#123;
+        return fac[n] * inv[n - m] % mod * inv[m] % mod;
+    &amp;#125;;
+    long long res = 0ll;
+    for (int i = k, p = 1; i &amp;lt;= n; ++i, p = mod - p) &amp;#123;
+        // printf(&amp;quot;%d: %lld\n&amp;quot;, i, C(i, k) * fac[n - i] % mod * (dp[m &amp;amp; 1][i][0] + dp[m &amp;amp; 1][i][1]) % mod);
+        (res += p * C(i, k) % mod * fac[n - i] % mod * (dp[m &amp;amp; 1][i][0] + dp[m &amp;amp; 1][i][1]) % mod) %= mod;
+    &amp;#125;
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;d---all-pairs-similarity-p&#34;&gt;D - All Pairs Similarity P&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P11458&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P11458&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;省流：求 &lt;span class=&#34;math inline&#34;&gt;\(\forall\,i,f_i=\sum\limits_{j=1}^n \dfrac{|a_i\cap a_j|}{|a_i\cup a_j|}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;首先分离常数，有：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\begin{aligned}
+f_i&amp;amp;=\sum\limits_{j=1}^n \dfrac{|a_i\cap a_j|}{|a_i\cup a_j|}\\
+&amp;amp;=\sum_{j=1}^n\dfrac {|a_i|+|a_j|-|a_i\cup a_j|}{|a_i\cup a_j|}\\
+&amp;amp;=\sum_{j=1}^n \dfrac {|a_i|+|a_j|}{|a_i\cup a_j|}-1
+\end{aligned}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;尽量把分子变得更简：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\begin{aligned}
+f_i&amp;amp;=\sum_{j=1}^n \dfrac {|a_i|+|a_j|}{|a_i\cup a_j|}-1\\
+&amp;amp;=|a_i|\cdot\left(\sum_{j=1}^n\dfrac 1{|a_i\cup a_j|}\right)-n+\sum_{j=1}^n \dfrac {|a_j|}{|a_i\cup a_j|}
+\end{aligned}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;问题转化为求解 &lt;span class=&#34;math inline&#34;&gt;\(\sum\limits_{j=1}^n\dfrac 1{|a_i\cup a_j|}\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(\sum\limits_{j=1}^n\dfrac {|a_j|}{|a_i\cup a_j|}\)&lt;/span&gt;，以 &lt;span class=&#34;math inline&#34;&gt;\(*=\sum\limits_{j=1}^n\dfrac 1{|a_i\cup a_j|}\)&lt;/span&gt; 为例。令 &lt;span class=&#34;math inline&#34;&gt;\(b_i\)&lt;/span&gt; 为 &lt;span class=&#34;math inline&#34;&gt;\(a_i\)&lt;/span&gt; 补集，则：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\begin{aligned}
+*&amp;amp;=\sum\limits_{j=1}^n\dfrac 1{|a_i\cup a_j|}\\
+&amp;amp;=\sum_{j=1}^n\dfrac 1{k-|b_i\cap b_j|}
+\end{aligned}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;为什么要做这个转换呢？相比起并集运算，交集运算有着优秀的性质：&lt;span class=&#34;math inline&#34;&gt;\(s\subseteq(b_i\cap b_j)\iff s\subseteq b_i\land s\subseteq b_j\)&lt;/span&gt;，&lt;del&gt;直接取或当然也有相似的性质，但是太烧脑了&lt;/del&gt;。&lt;/p&gt;
+&lt;p&gt;基于这个性质，我们有一个想法：对于所有 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt;，在 &lt;span class=&#34;math inline&#34;&gt;\(\forall \, s\subseteq b_j\)&lt;/span&gt; 处放置 &lt;span class=&#34;math inline&#34;&gt;\(\dfrac 1{k-|s|}\)&lt;/span&gt; 的贡献；对于 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;，将 &lt;span class=&#34;math inline&#34;&gt;\(\forall \, s\subseteq b_i\)&lt;/span&gt; 处的贡献求和。但是这样肯定会拿到很多我们不想要的贡献，例如 &lt;span class=&#34;math inline&#34;&gt;\(\forall \, s\subset (b_i\cap b_j)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;考虑精细布置贡献——构造 &lt;span class=&#34;math inline&#34;&gt;\(g(|s|)\)&lt;/span&gt; 满足 &lt;span class=&#34;math inline&#34;&gt;\(\sum\limits_{j=1}^n\sum\limits_{s\subseteq b_j}g(|s|)=*\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;这里可以二项式反演得到 &lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;，具体地，令 &lt;span class=&#34;math inline&#34;&gt;\(F(|S|)=\dfrac 1{k-|S|}=\sum\limits_{s\subseteq S}g(|s|)=\sum\limits_{j=0}^{|S|} C_{|S|}^j g(j)\)&lt;/span&gt;，则 &lt;span class=&#34;math inline&#34;&gt;\(g(i)=\sum\limits_{j=0}^iC_i^j\cdot \dfrac {(-1)^{i-j}}{k-j}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;再令 &lt;span class=&#34;math inline&#34;&gt;\(h(s)=\sum\limits_{b_j\supseteq s}g(|s|)=g(|s|)\cdot \sum\limits_{b_j\supseteq s}1\)&lt;/span&gt;，那么 &lt;span class=&#34;math inline&#34;&gt;\(h\)&lt;/span&gt; 就是高维后缀和。我们正在做的事情就是求解 &lt;span class=&#34;math inline&#34;&gt;\(*=\sum\limits_{s\subseteq b_i}h(s)\)&lt;/span&gt;，这就又是一个高维前缀和了。&lt;/p&gt;
+&lt;p&gt;对于 &lt;span class=&#34;math inline&#34;&gt;\(\sum\limits_{j=1}^n\dfrac {|a_j|}{|a_i\cup a_j|}\)&lt;/span&gt; 呢，令 &lt;span class=&#34;math inline&#34;&gt;\(h(s)=\sum\limits_{b_j\supseteq s}g(|s|)\cdot {\color{red}{|a_j|}} = g(|s|) \cdot \sum\limits_{b_j\supseteq s} \color{red}{k - |b_j|}\)&lt;/span&gt;，改变高维后缀和求和对象即可。&lt;/p&gt;
+&lt;p&gt;复杂度就是 &lt;span class=&#34;math inline&#34;&gt;\(O(n+k\cdot 2^k)\)&lt;/span&gt;，其中 &lt;span class=&#34;math inline&#34;&gt;\(k\cdot 2^k\)&lt;/span&gt; 来自整体高维前 / 后缀和，&lt;span class=&#34;math inline&#34;&gt;\(n\cdot k\)&lt;/span&gt; 来自枚举 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 1e9 + 7;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, k, l;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; k, l = 1 &amp;lt;&amp;lt; k;
+    std::vector&amp;lt;int&amp;gt; a(n + 1), b(n + 1), cnt(l);
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; a[i], b[i] = (l - 1) ^ a[i];
+        ++cnt[b[i]];
+    &amp;#125;
+    std::vector&amp;lt;long long&amp;gt; g(k + 1), fac(k + 1);
+    auto qkp = [&amp;amp;](long long x, int y = mod - 2) &amp;#123;
+        auto res = 1ll;
+        for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    auto C = [&amp;amp;](int n, int m) &amp;#123;
+        return fac[n] * qkp(fac[n - m]) % mod * qkp(fac[m]) % mod;
+    &amp;#125;;
+    fac[0] = 1ll;
+    for (int i = 1; i &amp;lt;= k; ++i)
+        fac[i] = fac[i - 1] * i % mod;
+    for (int i = 0; i &amp;lt;= k; ++i) &amp;#123;
+        for (int j = 0, p = (i &amp;amp; 1) ? mod - 1 : 1; j &amp;lt;= i; ++j, p = mod - p)
+            (g[i] += C(i, j) * p % mod * qkp(k - j) % mod) %= mod;
+        // printf(&amp;quot;g[%d] = %lld\n&amp;quot;, i, g[i]);
+    &amp;#125;
+    // for (int i = 0; i &amp;lt;= k; ++i) &amp;#123;
+    //     long long F = 0ll;
+    //     for (int j = 0; j &amp;lt;= i; ++j)
+    //         (F += C(i, j) * g[j] % mod) %= mod;
+    //     printf(&amp;quot;%d: %lld / %lld\n&amp;quot;, i, F, qkp(k - i));
+    // &amp;#125;
+    std::vector&amp;lt;long long&amp;gt; h(l);
+    std::copy(cnt.begin(), cnt.end(), h.begin());
+    for (int i = 0; i &amp;lt; k; ++i)
+        for (int j = l - 1; ~j; --j)
+            if (!((j &amp;gt;&amp;gt; i) &amp;amp; 1))
+                (h[j] += h[j ^ (1 &amp;lt;&amp;lt; i)]) %= mod;
+    auto f1(h);
+    for (int i = 0; i &amp;lt; l; ++i)
+        (f1[i] *= g[__builtin_popcount(i)]) %= mod;
+    for (int i = 0; i &amp;lt; k; ++i)
+        for (int j = 0; j &amp;lt; l; ++j)
+            if ((j &amp;gt;&amp;gt; i) &amp;amp; 1)
+                (f1[j] += f1[j ^ (1 &amp;lt;&amp;lt; i)]) %= mod;
+    for (int i = 0; i &amp;lt; l; ++i)
+        h[i] = cnt[i] * (k - __builtin_popcount(i));
+    for (int i = 0; i &amp;lt; k; ++i)
+        for (int j = l - 1; ~j; --j)
+            if (!((j &amp;gt;&amp;gt; i) &amp;amp; 1))
+                (h[j] += h[j ^ (1 &amp;lt;&amp;lt; i)]) %= mod;
+    auto f2(h);
+    for (int i = 0; i &amp;lt; l; ++i)
+        (f2[i] *= g[__builtin_popcount(i)]) %= mod;
+    for (int i = 0; i &amp;lt; k; ++i)
+        for (int j = 0; j &amp;lt; l; ++j)
+            if ((j &amp;gt;&amp;gt; i) &amp;amp; 1)
+                (f2[j] += f2[j ^ (1 &amp;lt;&amp;lt; i)]) %= mod;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        // fprintf(stderr, &amp;quot;%d: %d * %lld - %d + %lld\n&amp;quot;, i, __builtin_popcount(a[i]), f1[b[i]], n, f2[b[i]]);
+        std::cout &amp;lt;&amp;lt; (__builtin_popcount(a[i]) * f1[b[i]] % mod + mod - n + f2[b[i]]) % mod &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    &amp;#125;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;e---prefix-xors&#34;&gt;E - Prefix XORs&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/arc137/tasks/arc137_d&#34; class=&#34;uri&#34;&gt;https://atcoder.jp/contests/arc137/tasks/arc137_d&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;省流：做 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 次前缀和，&lt;span class=&#34;math inline&#34;&gt;\(k=1,2,\cdots,m\)&lt;/span&gt;，分别询问：令 &lt;span class=&#34;math inline&#34;&gt;\(x_i\gets a_i\)&lt;/span&gt; 对 &lt;span class=&#34;math inline&#34;&gt;\(s_n\)&lt;/span&gt; 的贡献次数，则 &lt;span class=&#34;math inline&#34;&gt;\(\sum a_i\cdot (x_i\bmod 2)\)&lt;/span&gt;？&lt;/p&gt;
+&lt;p&gt;对于 &lt;span class=&#34;math inline&#34;&gt;\(a_p\)&lt;/span&gt;，容易发现第一轮其对任意 &lt;span class=&#34;math inline&#34;&gt;\(s_q\)&lt;/span&gt; 有 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 次贡献，拉开来就是常数列；第二轮有 &lt;span class=&#34;math inline&#34;&gt;\((q-p+1)\)&lt;/span&gt; 次贡献，是公差为 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 的等差数列；第三轮是类三角形数——至此，肯定和组合数有关了。手玩可以发现第 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 轮 &lt;span class=&#34;math inline&#34;&gt;\(a_p\)&lt;/span&gt; 对 &lt;span class=&#34;math inline&#34;&gt;\(s_n\)&lt;/span&gt; 的贡献为 &lt;span class=&#34;math inline&#34;&gt;\(C_{n-p+(k-2)}^{n-p}\)&lt;/span&gt;，尽量令其中一个不动，得到 &lt;span class=&#34;math inline&#34;&gt;\(C_{n-p+(k-2)}^{k-1}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;但是我们发现直接枚举每轮每个数会起飞，而且模数为 &lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt; 似乎只能 Lucas（再带个 &lt;span class=&#34;math inline&#34;&gt;\(\log\)&lt;/span&gt;），怎么办呢？&lt;/p&gt;
+&lt;p&gt;那就 Lucas 呗。由其观察容易发现 &lt;span class=&#34;math inline&#34;&gt;\(C_{n-p+(k-2)}^{k-2}\bmod2=1\)&lt;/span&gt; 当且仅当 &lt;span class=&#34;math inline&#34;&gt;\((k-2)\subseteq (n-p+k-2)\iff (k-2)\subseteq \complement_U(n-p)\)&lt;/span&gt;，故问题转化为高维后缀和，&lt;del&gt;当然你也可以做一次 and-FWT&lt;/del&gt;，那么 &lt;span class=&#34;math inline&#34;&gt;\(res_k=\sum (C_{n-p+(k-2)}^{k-2}\bmod 2)\cdot a_p=S_{k-2}\)&lt;/span&gt;，其中 &lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt; 为高维后缀和，初值为 &lt;span class=&#34;math inline&#34;&gt;\(S_{\complement_u(n-i)}\gets a_i\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, m, l, k;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; m, k = std::__lg(n + m) + 1, l = 1 &amp;lt;&amp;lt; k;
+    std::vector&amp;lt;int&amp;gt; s(l);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        std::cin &amp;gt;&amp;gt; s[l - 1 - (n - i)];
+    for (int i = 0; i &amp;lt; k; ++i)
+        for (int j = l - 1; ~j; --j)
+            if (!((j &amp;gt;&amp;gt; i) &amp;amp; 1))
+                s[j] ^= s[j ^ (1 &amp;lt;&amp;lt; i)];
+    for (int i = 1; i &amp;lt;= m; ++i)
+        std::cout &amp;lt;&amp;lt; s[i - 1] &amp;lt;&amp;lt; &amp;#39; &amp;#39;;
+    std::cout &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;b---the-top-scorer&#34;&gt;B - The Top Scorer&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/problemset/problem/1096/E&#34; class=&#34;uri&#34;&gt;https://codeforces.com/problemset/problem/1096/E&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;鉴于每种方案等概率（翻译没说，但原题面有提到），考虑计算小明能够取胜的方案数，再对总方案数做除法。先枚举最高分 &lt;span class=&#34;math inline&#34;&gt;\(k\ge r\)&lt;/span&gt;，再枚举包括小明在内恰有 &lt;span class=&#34;math inline&#34;&gt;\(c\ge 1\)&lt;/span&gt; 个人 拿到 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 分。但剩下的人呢？显然是不能插板随机分配的，因为存在 &lt;span class=&#34;math inline&#34;&gt;\(&amp;lt;k\)&lt;/span&gt; 的限制。&lt;/p&gt;
+&lt;p&gt;考虑容斥，钦定剩下的 &lt;span class=&#34;math inline&#34;&gt;\(p-c\)&lt;/span&gt; 个人中拿到 &lt;span class=&#34;math inline&#34;&gt;\(\ge k\)&lt;/span&gt; 分的人数后再可空地插板即可，则总方案数为：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\sum_{k=r}^s\sum_{c=1}^p\dfrac {C_{p - 1}^{c-1}}c\cdot \sum_{i=0}^{p-c}C_{p-c}^i\cdot C_{s-k\cdot (c+i)+(p-c-1)}^{p-c-1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;其中分母上的 &lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt; 来源于等概率分配给最高分，虽然不是整数，但也代表着「小明获胜可行方案数」。最后将答案除上总方案数 &lt;span class=&#34;math inline&#34;&gt;\(C_{s-r+p-1}^{p-1}\)&lt;/span&gt; 即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 998244353;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int p, s, r;
+    std::cin &amp;gt;&amp;gt; p &amp;gt;&amp;gt; s &amp;gt;&amp;gt; r;
+    std::vector&amp;lt;long long&amp;gt; fac(s + p), inv(s + p);
+    fac[0] = inv[0] = 1ll;
+    for (int i = 1; i &amp;lt; s + p; ++i) &amp;#123;
+        fac[i] = fac[i - 1] * i % mod;
+    &amp;#125;
+    auto qkp = [&amp;amp;](long long x, int y) &amp;#123;
+        auto res = 1ll;
+        for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    inv.back() = qkp(fac.back(), mod - 2);
+    for (int i = s + p - 2; i &amp;gt; 0; --i)
+        inv[i] = inv[i + 1] * (i + 1) % mod;
+    auto C = [&amp;amp;](int n, int m) &amp;#123;
+        if (n == -1 &amp;amp;&amp;amp; m == -1)
+            return 1ll;
+        return fac[n] * inv[n - m] % mod * inv[m] % mod;
+    &amp;#125;;
+    auto res(0ll);
+    for (int k = r; k &amp;lt;= s; ++k)
+        for (int c = 1; c &amp;lt;= p; ++c)
+            if ((p - c) * (k - 1) + c * k &amp;gt;= s) &amp;#123;
+                auto t(0ll);
+                for (int i = 0, now = 1; i &amp;lt;= p - c &amp;amp;&amp;amp; k * (c + i) &amp;lt;= s; ++i, now = mod - now)
+                    (t += now * C(p - c, i) % mod * C(s - k * (c + i) + (p - c - 1), p - c - 1) % mod) %= mod;
+                (res += C(p - 1, c - 1) * qkp(c, mod - 2) % mod * t % mod) %= mod;
+            &amp;#125;
+    std::cout &amp;lt;&amp;lt; res * qkp(C(s - r + p - 1, p - 1), mod - 2) % mod &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;c---sky-full-of-stars&#34;&gt;C - Sky Full of Stars&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/problemset/problem/997/C&#34; class=&#34;uri&#34;&gt;https://codeforces.com/problemset/problem/997/C&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;发现用 &lt;span class=&#34;math inline&#34;&gt;\(3^{n\times n}\)&lt;/span&gt; 减去任意一行一列不同色的方案就是答案。&lt;/p&gt;
+&lt;p&gt;考虑一元容斥，如令 &lt;span class=&#34;math inline&#34;&gt;\(f_i\)&lt;/span&gt; 表示至少 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 行 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 列同色的方案，但会发现 &lt;span class=&#34;math inline&#34;&gt;\(f_0\)&lt;/span&gt; 中包含 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt; 行 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 列同色等与预期不符的情况。受此启发考虑令 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,j}\)&lt;/span&gt; 表示至少 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 行 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 列同色进行二元容斥。容易发现当 &lt;span class=&#34;math inline&#34;&gt;\(i\times j\ne 0\)&lt;/span&gt; 时，被选中的 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 行 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 列全部连通，应为同一种颜色；将它们挪到角落，可以发现未被选中的格子共有 &lt;span class=&#34;math inline&#34;&gt;\((n-i)\times (n-j)\)&lt;/span&gt; 个。故有：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_{i,j}=\begin{cases}
+C_n^j\times 3^j\times 3^{n\times(n - j)}&amp;amp;i=0\\
+C_n^i\times 3^i\times 3^{n\times(n-i)}&amp;amp;j=0\\
+C_n^i\times C_n^j\times 3\times 3^{(n-i)\times (n-j)}&amp;amp;\text{otherwise}
+\end{cases}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;令 &lt;span class=&#34;math inline&#34;&gt;\(g_{i,j}\)&lt;/span&gt; 表示恰好 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 行 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 列同色的方案数，那么答案为 &lt;span class=&#34;math inline&#34;&gt;\(3^{n\times n}-g_{0,0}\)&lt;/span&gt;。二项式反演 / 容斥原理得 &lt;span class=&#34;math inline&#34;&gt;\(g_{0,0}=\sum\limits_{i=0}^n\sum\limits_{j=0}^n (-1)^{i+j}\cdot f_{i,j}\)&lt;/span&gt;。很惊讶地发现这是 &lt;span class=&#34;math inline&#34;&gt;\(O(n^2)\)&lt;/span&gt; 的！考虑优化。把 &lt;span class=&#34;math inline&#34;&gt;\(f_{1\to n,1\to n}\)&lt;/span&gt; 合并同类项，得到：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\begin{aligned}
+g_{0, 0}
+&amp;amp;=\left[\sum_{j=0}^n (-1)^j\cdot f_{0,j}\right]+\sum_{i=1}^n (-1)^i\cdot f_{i,0}+\sum_{j=1}^n (-1)^{i+j}\cdot C_n^i\times C_n^j\times 3^{(n-i)\times (n-j)+1}\\
+&amp;amp;=\left[\sum_{j=0}^n (-1)^j\cdot f_{0,j}\right]+\sum_{i=1}^n (-1)^i\cdot f_{i,0}+(-1)^i\cdot C_n^i\times 3^{n^2-n\times i+1}\times\sum_{j=1}^n (-1)^j\cdot C_n^j\times 3^{j\times(-n+i)}\\
+&amp;amp;=\left[\sum_{j=0}^n (-1)^j\cdot f_{0,j}\right]+\sum_{i=1}^n (-1)^i\cdot f_{i,0}+(-1)^i\cdot C_n^i\times 3^{n^2-n\times i+1}\times\left[\left(\sum_{j=0}^n (-1)^j\cdot C_n^j\times (3^{-n+i})^j\right)-1\right]\\
+&amp;amp;=\left[\sum_{j=0}^n (-1)^j\cdot f_{0,j}\right]+\sum_{i=1}^n (-1)^i\cdot f_{i,0}+(-1)^i\cdot C_n^i\times 3^{n^2-n\times i+1}\times\left[(-3^{-n+i}+1)^n-1\right]
+\end{aligned}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;由此便可 &lt;span class=&#34;math inline&#34;&gt;\(O(n\log n)\)&lt;/span&gt; 计算。担心超时可以把所有 &lt;span class=&#34;math inline&#34;&gt;\(3^{-n+i}\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(3^{n\times i}\)&lt;/span&gt; 线性预处理出来，复杂度不会变就是了。&lt;/p&gt;
+&lt;p&gt;这里解释一下最后一步的二项式定理，非常遗憾地发现 &lt;span class=&#34;math inline&#34;&gt;\(-1\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(3^{-n+i}\)&lt;/span&gt; 都是 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 次的，没办法把二者相加减做二项式定理；但由于次数相同，这提示我们可以把 &lt;span class=&#34;math inline&#34;&gt;\(-1\)&lt;/span&gt; 乘到 &lt;span class=&#34;math inline&#34;&gt;\(3^{-n+i}\)&lt;/span&gt; 里去，给每一项配上 &lt;span class=&#34;math inline&#34;&gt;\(1^{n-k}\)&lt;/span&gt; 就可以做 &lt;span class=&#34;math inline&#34;&gt;\(-3^{n-i}\)&lt;/span&gt;（注意不是 &lt;span class=&#34;math inline&#34;&gt;\((-3)^{n-i}\)&lt;/span&gt;） 和 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 的二项式定理。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 998244353;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    long long n;
+    std::cin &amp;gt;&amp;gt; n;
+    std::vector&amp;lt;long long&amp;gt; fac(n + 1), inv(n + 1), invn(n + 1), invi(n + 1), powi(n + 1), pown(n + 1);
+    auto qkp = [&amp;amp;](long long x, long long y) &amp;#123;
+        auto res(1ll);
+        for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    const long long pnn = qkp(3ll, n * n), pn = qkp(3ll, n);
+    fac[0] = inv[0] = invn[0] = invi[0] = powi[0] = pown[0] = 1ll;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        fac[i] = fac[i - 1] * i % mod;
+        powi[i] = powi[i - 1] * 3 % mod;
+        pown[i] = pown[i - 1] * pn % mod;
+    &amp;#125;
+    inv[n] = qkp(fac[n], mod - 2);
+    invi[n] = qkp(powi[n], mod - 2);
+    invn[n] = qkp(pown[n], mod - 2);
+    for (int i = n - 1; i; --i) &amp;#123;
+        inv[i] = inv[i + 1] * (i + 1) % mod;
+        invi[i] = invi[i + 1] * 3 % mod;
+        invn[i] = invn[i + 1] * pn % mod;
+    &amp;#125;
+    auto C = [&amp;amp;](int n, int m) &amp;#123;
+        return fac[n] * inv[n - m] % mod * inv[m] % mod;
+    &amp;#125;;
+    long long g = 0ll;
+    auto f = [&amp;amp;](int i, int j) &amp;#123; // make sure (!i || !j)
+        if (i == 0 &amp;amp;&amp;amp; j == 0)
+            return pnn;
+        else if (i == 0)
+            return C(n, j) * powi[j] % mod * pown[n - j] % mod;
+        return C(n, i) * powi[i] % mod * pown[n - i] % mod;
+    &amp;#125;;
+    for (int j = 0, p = 1; j &amp;lt;= n; ++j, p = mod - p)
+        (g += p * f(0, j)) %= mod;
+    for (int i = 1, p = mod - 1; i &amp;lt;= n; ++i, p = mod - p)
+        (g += p * f(i, 0) % mod + p * C(n, i) % mod * pnn % mod * invn[i] % mod * 3 % mod * (qkp(mod - invi[n - i] + 1, n) + mod - 1) % mod) %= mod;
+    std::cout &amp;lt;&amp;lt; (pnn + mod - g) % mod &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;d---去-m-nom&#34;&gt;D - 去 M / NoM&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P11316&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P11316&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;假设 &lt;span class=&#34;math inline&#34;&gt;\(f(i)\)&lt;/span&gt; 为至少有 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 对不合法元素的方案数，则容斥得到答案 &lt;span class=&#34;math inline&#34;&gt;\(\sum\limits_{i=0}^n (-1)^i\cdot f(i)\)&lt;/span&gt;。考虑怎么计算 &lt;span class=&#34;math inline&#34;&gt;\(f(i)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;mark&gt;&lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 整除 &lt;span class=&#34;math inline&#34;&gt;\(dis(x, y) \iff (pos_x - pos_y)\bmod M=0\iff pos_x\equiv pos_y\pmod M\)&lt;/span&gt;。&lt;/mark&gt;&lt;/p&gt;
+&lt;p&gt;考虑把关于 &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 同余的位置放在一个组，也就是说需要让一对元素不能选同一组的位置。&lt;/p&gt;
+&lt;p&gt;考虑容斥，令 &lt;span class=&#34;math inline&#34;&gt;\(f(i)\)&lt;/span&gt; 表示至少有 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 对点选到一组的方案数，考虑怎么计算。假设我们要在第 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 组（size 为 &lt;span class=&#34;math inline&#34;&gt;\(s_k\)&lt;/span&gt;）中选出 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 对位置，实际上只需要选择 &lt;span class=&#34;math inline&#34;&gt;\(2x\)&lt;/span&gt; 个位置然后任意分配给这 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 对数，即 &lt;span class=&#34;math inline&#34;&gt;\(A_{s_k}^{2x}\)&lt;/span&gt;。设 &lt;span class=&#34;math inline&#34;&gt;\(dp_{i, j}\)&lt;/span&gt; 表示 DP 到第 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 个组，已经选了 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 对，那么有 &lt;span class=&#34;math inline&#34;&gt;\(dp_{i,j}=\sum\limits_{k=0}^jC_{n-(j - k)}^{j-k}\times dp_{i-1,j-k}\times A_{s_i}^{2k}\)&lt;/span&gt;。乍一看好像是 &lt;span class=&#34;math inline&#34;&gt;\(O(n^3)\)&lt;/span&gt; 的，但是别忘了 &lt;span class=&#34;math inline&#34;&gt;\(\sum s_i=2n\)&lt;/span&gt;，所以只有 &lt;span class=&#34;math inline&#34;&gt;\(O(n^2)\)&lt;/span&gt;。&lt;span class=&#34;math inline&#34;&gt;\(f(i)\)&lt;/span&gt; 即为 &lt;span class=&#34;math inline&#34;&gt;\(dp_{m,i}\times (2n-2i)!\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 1e9 + 7;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, m;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; m;
+    std::vector&amp;lt;int&amp;gt; s(m + 1);
+    std::vector&amp;lt;long long&amp;gt; fac(2 * n + 1), inv(2 * n + 1);
+    fac[0] = inv[0] = 1ll;
+    for (int i = 1; i &amp;lt;= 2 * n; ++i)
+        ++s[i % m + 1], fac[i] = fac[i - 1] * i % mod;
+    auto qkp = [](long long x, int y) &amp;#123;
+        auto res = 1ll;
+        for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    inv[2 * n] = qkp(fac[2 * n], mod - 2);
+    for (int i = 2 * n - 1; i; --i)
+        inv[i] = inv[i + 1] * (i + 1) % mod;
+    auto A = [&amp;amp;](int n, int m) &amp;#123;
+        return fac[n] * inv[n - m] % mod;
+    &amp;#125;;
+    auto C = [&amp;amp;](int n, int m) &amp;#123;
+        return fac[n] * inv[n - m] % mod * inv[m] % mod;
+    &amp;#125;;
+    std::vector&amp;lt;std::vector&amp;lt;long long&amp;gt; &amp;gt; dp(m + 1, std::vector&amp;lt;long long&amp;gt; (n + 1));
+    dp[0][0] = 1ll;
+    for (int i = 1; i &amp;lt;= m; ++i)
+        for (int j = 0; j &amp;lt;= n; ++j) &amp;#123;
+            for (int k = 0; k &amp;lt;= j &amp;amp;&amp;amp; 2 * k &amp;lt;= s[i]; ++k)
+                (dp[i][j] += C(n - (j - k), k) * dp[i - 1][j - k] % mod * A(s[i], 2 * k) % mod) %= mod;
+            // printf(&amp;quot;s = %d, dp[%d][%d] = %lld\n&amp;quot;, s[i], i, j, dp[i][j]);
+        &amp;#125;
+    long long res = 0ll;
+    for (int i = 0, p = 1; i &amp;lt;= n; ++i, p = mod - p)
+        (res += p * dp[m][i] % mod * fac[2 * n - 2 * i] % mod) %= mod;
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;e---kdoi-11彩灯晚会&#34;&gt;E - 「KDOI-11」彩灯晚会&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P11292&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P11292&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;考虑 &lt;span class=&#34;math inline&#34;&gt;\({cnt_i}^2\)&lt;/span&gt; 的含义，即在所有颜色为 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;、长度为 &lt;span class=&#34;math inline&#34;&gt;\(l\)&lt;/span&gt; 的链中有放回地选两次的方案数。&lt;/p&gt;
+&lt;p&gt;显然复杂度里是不能包含 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 的，所以放弃直接统计 &lt;span class=&#34;math inline&#34;&gt;\(cnt_i\)&lt;/span&gt; 的想法。显然每种颜色是等价的，考虑计算选择两条链可以给答案带来的贡献：答案的形式是个和式；对于两条同色链 &lt;span class=&#34;math inline&#34;&gt;\(p,q\)&lt;/span&gt;，假设颜色为 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;，那么会对 &lt;span class=&#34;math inline&#34;&gt;\({cnt_i}^2\)&lt;/span&gt; 带来 &lt;span class=&#34;math inline&#34;&gt;\(k^{n-2l-|p\cap q|}\)&lt;/span&gt; 的贡献，对总答案带来 &lt;span class=&#34;math inline&#34;&gt;\(k^{n-2l-|p\cap q| + 1}\)&lt;/span&gt; 的贡献。&lt;/p&gt;
+&lt;p&gt;然而如果要枚举计算 &lt;span class=&#34;math inline&#34;&gt;\(|p\cap q|\)&lt;/span&gt; 就无法避免 &lt;span class=&#34;math inline&#34;&gt;\(O(n^5)\)&lt;/span&gt;，考虑更有潜力的方法：将问题转化为对于每个 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，求交集大小恰好为 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 的链对个数。然而「恰好」是不方便计算的——假如当前两链在 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 次重合，如果假设下一次在 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 次重合，就需要保证在 &lt;span class=&#34;math inline&#34;&gt;\(u,v\)&lt;/span&gt; 之间不能重合——这并不好操作。二项式反演将恰好转化为至少，则限制减弱。&lt;/p&gt;
+&lt;p&gt;令 &lt;span class=&#34;math inline&#34;&gt;\(f_{u,c,l_1,l_2}\)&lt;/span&gt; 表示 &lt;span class=&#34;math inline&#34;&gt;\(p,q\)&lt;/span&gt; 当前在 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 处重合，视野内的 &lt;span class=&#34;math inline&#34;&gt;\(p,q\)&lt;/span&gt; 长度为 &lt;span class=&#34;math inline&#34;&gt;\(l_1,l_2\)&lt;/span&gt;，至少已经重合了 &lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt; 次的方案数。预处理出走到 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 步数为 &lt;span class=&#34;math inline&#34;&gt;\(l_1,l_2\)&lt;/span&gt; 的方案数为初始值。枚举可能的后续重合点 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt;（满足 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 的拓扑序 &lt;span class=&#34;math inline&#34;&gt;\(&amp;gt;u\)&lt;/span&gt;）有 &lt;span class=&#34;math inline&#34;&gt;\(f_{v,c+1,l_1&amp;#39;,l_2&amp;#39;}\gets f_{v,c+1,l_1&amp;#39;,l_2&amp;#39;} + f_{u,c,l_1,l_2}\)&lt;/span&gt;。预处理出 &lt;span class=&#34;math inline&#34;&gt;\(u\to v\)&lt;/span&gt; 长度为 &lt;span class=&#34;math inline&#34;&gt;\(\Delta\)&lt;/span&gt; 的方案数（这是 &lt;span class=&#34;math inline&#34;&gt;\(O(n^3l)\)&lt;/span&gt; 的）优化转移，在算出 &lt;span class=&#34;math inline&#34;&gt;\(nex_{u,l}\)&lt;/span&gt; 表示从 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 出发走 &lt;span class=&#34;math inline&#34;&gt;\(l\)&lt;/span&gt; 步的方案数处理答案，则 &lt;span class=&#34;math inline&#34;&gt;\(F(i)=\sum_{u,l_1,l_2}f_{u,l_1,l_2}\cdot nex_{u,l-l_1}\cdot nex_{u,l-l_2}\)&lt;/span&gt;，枚举 &lt;span class=&#34;math inline&#34;&gt;\(u,c,l_1,l_2,v,l_1&amp;#39;,l_2&amp;#39;\)&lt;/span&gt;，就可以达到优秀的 &lt;span class=&#34;math inline&#34;&gt;\(O(n^2l^5+n^3l)\)&lt;/span&gt;！简直是令人震撼 &lt;img src=&#34;/em/kt.gif&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;给出第一个优化：发现 &lt;span class=&#34;math inline&#34;&gt;\(l_1\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(l_2\)&lt;/span&gt; 的转移彼此不干扰，考虑建立一个临时数组 &lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;，先从 &lt;span class=&#34;math inline&#34;&gt;\(f_u,c\)&lt;/span&gt; 转移 &lt;span class=&#34;math inline&#34;&gt;\(l_1\)&lt;/span&gt; 到 &lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;，再从 &lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt; 转移 &lt;span class=&#34;math inline&#34;&gt;\(l_2\)&lt;/span&gt; 到 &lt;span class=&#34;math inline&#34;&gt;\(f_{v,c+1}\)&lt;/span&gt;，则复杂度降为 &lt;span class=&#34;math inline&#34;&gt;\(O(n^2l^4+n^3l)\)&lt;/span&gt;，仍不足以通过。&lt;/p&gt;
+&lt;p&gt;DP 过程上的优化已经万策尽，考虑从式子本身消元减少 DP 维度入手。令 &lt;span class=&#34;math inline&#34;&gt;\(h(i)\)&lt;/span&gt; 表示交集大小恰好恰好为 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 的方案数，则此时答案式为 &lt;span class=&#34;math inline&#34;&gt;\(\sum\limits_{i=0}^l k^{n-2l+i+1}\times h(i)\)&lt;/span&gt;。又 &lt;span class=&#34;math inline&#34;&gt;\(F(i)=\sum\limits_{j=i}^lC_j^i\cdot h(j)\)&lt;/span&gt;，二项式反演得：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\begin{aligned}
+res&amp;amp;=\sum\limits_{i=0}^lk^{n-2l+i+1}\cdot \sum_{j=i}^l(-1)^{j-i}\cdot C_j^i\cdot F(j)\\
+&amp;amp;=k^{n-2l+1}\cdot\sum_{j=0}^l \sum_{i=0}^j k^i\cdot (-1)^{j-i}\cdot C_j^i\cdot F(j)\\
+&amp;amp;=k^{n-2l+1}\cdot \sum_{j=0}^l (k-1)^j\cdot F(j)
+\end{aligned}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;mark&gt;注意这里利用了二项式反演的系数可以和交换求和顺序后的 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 次项（或 &lt;span class=&#34;math inline&#34;&gt;\(j-i\)&lt;/span&gt; 次项，参见 &lt;a href=&#34;#c---sky-full-of-stars&#34;&gt;Sky Full of Stars 中最后一步的处理&lt;/a&gt;）组成二项式定理的特点&lt;/mark&gt;，以便基于式子结构尽可能消元。&lt;/p&gt;
+&lt;p&gt;那么此时答案式已经和 &lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt; 无关，可以丢掉 &lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt; 这一维，和 &lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt; 有关的计算已经在转移时处理了。则 &lt;span class=&#34;math inline&#34;&gt;\(f_{v,l_1&amp;#39;,l_2&amp;#39;}=\sum f_{u,l_1,l_2}\times (k-1)\)&lt;/span&gt;，复杂度降为 &lt;span class=&#34;math inline&#34;&gt;\(O(n^2l^3+n^3l)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;p&gt;记得还要算上 &lt;span class=&#34;math inline&#34;&gt;\(F(0)\)&lt;/span&gt;，即任选一条合法链的方案数平方。&lt;/p&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;// 兄弟你好香
+// 兄弟你是依托打分，我踏马吃吃吃吃吃
+#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 998244353;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;party3.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    using arr = std::vector&amp;lt;long long&amp;gt;;
+    using arrr = std::vector&amp;lt;arr&amp;gt;;
+    using arrrr = std::vector&amp;lt;arrr&amp;gt;;
+    int n, k, l, m;
+    std::cin &amp;gt;&amp;gt; n, std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; k &amp;gt;&amp;gt; l &amp;gt;&amp;gt; m;
+    std::vector&amp;lt;int&amp;gt; deg(n + 1), id;
+    std::vector&amp;lt;std::vector&amp;lt;std::pair&amp;lt;int, int&amp;gt; &amp;gt; &amp;gt; g(n + 1);
+    for (int x, y, c; m--; ) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y &amp;gt;&amp;gt; c;
+        ++deg[y], g[x].emplace_back(y, c);
+    &amp;#125;
+    arrrr to(n + 1, arrr(n + 1, arr(l + 1)));
+    arrr pre(n + 1, arr(l + 1)), nex(n + 1, arr(l + 1));
+    &amp;#123;
+        std::queue&amp;lt;int&amp;gt; q;
+        for (int i = 1; i &amp;lt;= n; ++i)
+            if (!deg[i])
+                q.push(i);
+        for (int u; !q.empty(); ) &amp;#123;
+            u = q.front(), q.pop();
+            to[u][u][0] = 1ll, id.push_back(u);
+            for (auto i : id)
+                for (int j = 0; j &amp;lt;= l; ++j) &amp;#123;
+                    (pre[u][j] += to[i][u][j]) %= mod;
+                    // printf(&amp;quot;to[%d][%d][%d] = %lld\n&amp;quot;, i, u, j, to[i][u][j]);
+                &amp;#125;
+            // for (int j = 0; j &amp;lt;= l; ++j)
+            //     printf(&amp;quot;pre[%d][%d] = %lld\n&amp;quot;, u, j, pre[u][j]);
+            for (auto [v, c] : g[u]) &amp;#123;
+                for (auto i : id)
+                    for (int j = 1; j &amp;lt;= l; ++j)
+                        (to[i][v][j] += to[i][u][j - 1] * c) %= mod;
+                if (!--deg[v])
+                    q.push(v);
+            &amp;#125;
+        &amp;#125;
+        for (int u = 1; u &amp;lt;= n; ++u)
+            for (int v = 1; v &amp;lt;= n; ++v)
+                for (int i = 0; i &amp;lt;= l; ++i)
+                    (nex[u][i] += to[u][v][i]) %= mod;
+    &amp;#125;
+    arrrr f(n + 1, arrr(l + 1, arr(l + 1)));
+    &amp;#123;
+        for (int i = 1; i &amp;lt;= n; ++i)
+            for (int l1 = 1; l1 &amp;lt;= l; ++l1)
+                for (int l2 = 1; l2 &amp;lt;= l; ++l2)
+                    f[i][l1][l2] = pre[i][l1 - 1] * pre[i][l2 - 1] % mod * (k - 1) % mod;
+        for (auto i = 0; i &amp;lt; n; ++i) &amp;#123;
+            int u = id[i];
+            // for (int l1 = 1; l1 &amp;lt;= l; ++l1)
+            //     for (int l2 = 1; l2 &amp;lt;= l; ++l2)
+            //         printf(&amp;quot;f[%d][%d][%d] = %lld\n&amp;quot;, u, l1, l2, f[u][l1][l2]);
+            for (auto j = i + 1; j &amp;lt; n; ++j) &amp;#123;
+                arrr g(l + 1, arr(l + 1));
+                int v = id[j];
+                for (int l1 = 1; l1 &amp;lt; l; ++l1)
+                    for (int _l1 = l1 + 1; _l1 &amp;lt;= l; ++_l1) &amp;#123;
+                        auto K = to[u][v][_l1 - l1];
+                        if (K)
+                            for (int l2 = 1; l2 &amp;lt; l; ++l2)
+                                (g[_l1][l2] += f[u][l1][l2] * K) %= mod;
+                    &amp;#125;
+                for (int _l1 = 2; _l1 &amp;lt;= l; ++_l1)
+                    for (int l2 = 1; l2 &amp;lt; l; ++l2)
+                        if (g[_l1][l2])
+                            for (int _l2 = l2 + 1; _l2 &amp;lt;= l; ++_l2)
+                                (f[v][_l1][_l2] += g[_l1][l2] * to[u][v][_l2 - l2] % mod * (k - 1)) %= mod; 
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    auto qkp = [](long long x, int y) &amp;#123;
+        auto res(1ll);
+        for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    auto res(0ll);
+    for (int u = 1; u &amp;lt;= n; ++u)
+        for (int v = 1; v &amp;lt;= n; ++v)
+            (res += to[u][v][l - 1]) %= mod;
+    (res *= res) %= mod;
+    for (int u = 1; u &amp;lt;= n; ++u)
+        for (int l1 = 1; l1 &amp;lt;= l; ++l1)
+            for (int l2 = 1; l2 &amp;lt;= l; ++l2)
+                (res += f[u][l1][l2] * nex[u][l - l1] % mod * nex[u][l - l2] % mod) %= mod;
+    res = res % mod * (qkp(k, n + 1) * qkp(qkp(k, 2 * l), mod - 2) % mod) % mod;
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;g---小星星&#34;&gt;G - 小星星&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P3349&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P3349&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;首先考虑比较暴力的做法，那么有 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,j,S}\)&lt;/span&gt; 表示在 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 这个子树里面选了集合 &lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;，且 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 的颜色为 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 的方案数，维数里之所以有 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 是为了满足连边限制。&lt;/p&gt;
+&lt;p&gt;然后树上子集 DP，发现是 &lt;span class=&#34;math inline&#34;&gt;\(O(n^4\cdot 2^n)\)&lt;/span&gt; 的，&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;cf785d-anton-and-school---2&#34;&gt;CF785D Anton and School - 2&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/problemset/problem/785/D&#34; class=&#34;uri&#34;&gt;https://codeforces.com/problemset/problem/785/D&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;容易想到枚举每个 &lt;code&gt;(&lt;/code&gt; 作为分界点的情况，那么钦定当前枚举的 &lt;code&gt;(&lt;/code&gt; 是要选的。对于当前 &lt;code&gt;(&lt;/code&gt;，若其左边（不含）的 &lt;code&gt;(&lt;/code&gt; 有 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 个而右边的 &lt;code&gt;)&lt;/code&gt; 有 &lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt; 个，枚举除了当前 &lt;code&gt;(&lt;/code&gt; 还要选 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 个 &lt;code&gt;(&lt;/code&gt;，那么答案为 &lt;span class=&#34;math inline&#34;&gt;\(\sum_{i=0}C_n^{i-1}\cdot C_m^i\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;发现这个形式可以范德蒙德卷积：&lt;span class=&#34;math inline&#34;&gt;\(\sum_{i=0}C_n^{i-1}\cdot C_m^i=\sum_{i=0}C_n^{n-i+1}\cdot C_m^i=C_{n+m}^{n+1}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;关于怎么记忆范德蒙德卷积，发现上下相加，也可以从组合意义记忆：在 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 个球中选出 &lt;span class=&#34;math inline&#34;&gt;\(k-i\)&lt;/span&gt; 个球，再从 &lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt; 个球中选出 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 个球的总方案就是从 &lt;span class=&#34;math inline&#34;&gt;\(n+m\)&lt;/span&gt; 个球中直接选出 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 个球的方案。&lt;/p&gt;
+&lt;p&gt;注意判断右侧没有 &lt;code&gt;)&lt;/code&gt; 的时候贡献为 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 1e9 + 7;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    std::string s;
+    std::cin &amp;gt;&amp;gt; s;
+    int n = s.length();
+    s = &amp;quot; &amp;quot; + s;
+    std::vector&amp;lt;int&amp;gt; cnt1(n + 1), cnt2(n + 1);
+    std::vector&amp;lt;long long&amp;gt; fac(n + 1), inv(n + 1);
+    fac[0] = inv[0] = 1ll;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        fac[i] = fac[i - 1] * i % mod;
+        cnt1[i] = cnt1[i - 1] + (s[i] == &amp;#39;(&amp;#39;);
+    &amp;#125;
+    auto qkp = [](long long x, int y) &amp;#123;
+        auto res(1ll);
+        for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    inv[n] = qkp(fac[n], mod - 2);
+    cnt2[n] = (s[n] == &amp;#39;)&amp;#39;);
+    for (int i = n - 1; i; --i) &amp;#123;
+        cnt2[i] = cnt2[i + 1] + (s[i] == &amp;#39;)&amp;#39;);
+        inv[i] = inv[i + 1] * (i + 1) % mod;
+    &amp;#125;
+    long long res = 0ll;
+    auto C = [&amp;amp;](int n, int m) &amp;#123;
+        if (n &amp;lt; m)
+            return 0ll;
+        return fac[n] * inv[n - m] % mod * inv[m] % mod;
+    &amp;#125;;
+    for (int i = 1; i &amp;lt;= n; ++i)
+        if (s[i] == &amp;#39;(&amp;#39;)
+            (res += C(cnt1[i] + cnt2[i] - 1, cnt1[i])) %= mod;
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;cf1332e-height-all-the-same&#34;&gt;CF1332E Height All the Same&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/problemset/problem/1332/E&#34; class=&#34;uri&#34;&gt;https://codeforces.com/problemset/problem/1332/E&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;容易发现第一个操作是用来改变两个数奇偶性的；而第二个操作能在全图奇偶性相同的任何情况下达成要求。&lt;/p&gt;
+&lt;p&gt;注意到如果我们想同时仅改变任意两个数的奇偶性，可以在棋盘上任找一条路径一路使用操作一。只要某种奇偶性的元素个数共有偶数个，就能通过若干次操作一把它们全部变成另一种奇偶性。&lt;/p&gt;
+&lt;p&gt;令 &lt;span class=&#34;math inline&#34;&gt;\(K_1\)&lt;/span&gt; 为 &lt;span class=&#34;math inline&#34;&gt;\(L\sim R\)&lt;/span&gt; 中奇数的个数，&lt;span class=&#34;math inline&#34;&gt;\(K_2\)&lt;/span&gt; 为偶数，那么有：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+res=\sum_{i=0}^{nm} C_{nm}^i\times {K_1}^i\cdot {K_2}^{nm-i}\cdot [i\bmod 2=0]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;我们发现这个东西和二项式定理简直像得不能再像了！但多了一个系数导致没办法省略枚举过程。如果进行变形呢？&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+res=(K_1+K_2)^{nm}-\sum_{i=0}^{nm} C_{nm}^i\times {K_1}^i\cdot {K_2}^{nm-i}\cdot [i\bmod 2=1]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;似乎依然没有出路！但这里有个神奇的操作：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+res=(-K_1+K_2)^{nm}+\sum_{i=0}^{nm} C_{nm}^i\times {K_1}^i\cdot {K_2}^i\cdot [i\bmod 2=1]
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;二式相加就可以&lt;mark&gt;消元&lt;/mark&gt;，得到 &lt;span class=&#34;math inline&#34;&gt;\(2\cdot res=(K_1+K_2)^{nm}+(K_1-K_2)^{nm}\)&lt;/span&gt;。&lt;mark&gt;这启示我们二项式定理中的符号和奇偶性的深切联系。&lt;/mark&gt;&lt;/p&gt;
+&lt;details&gt;
+&lt;p&gt;如果你使用费马小定理对次数进行了处理，你可能需要注意次数可能为 &lt;span class=&#34;math inline&#34;&gt;\(\text{mod} -1\)&lt;/span&gt; 的倍数。&lt;/p&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 998244353;
+const int inv2 = 499122177;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    long long n, m, l, r, k1, k2;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; m &amp;gt;&amp;gt; l &amp;gt;&amp;gt; r, k1 = (r - l + 1) / 2, k2 = (r - l + 1) - k1;
+    auto qkp = [](long long x, long long y) &amp;#123;
+        auto res(1ll);
+        for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    if (n * m % 2)
+        std::cout &amp;lt;&amp;lt; qkp(r - l + 1, n * m) &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    else
+        std::cout &amp;lt;&amp;lt; (qkp(r - l + 1, n * m) + qkp((k1 + mod - k2) % mod, n * m)) % mod * inv2 % mod &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;a---交错序列&#34;&gt;A - 交错序列&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P4456&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P4456&lt;/a&gt;&lt;/p&gt;
+&lt;figure&gt;
+&lt;img src=&#34;2.png&#34; alt=&#34;出题人疑似需要加强数学功底（？）&#34; /&gt;&lt;figcaption&gt;出题人疑似需要加强数学功底（？）&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;容易想到把答案用二项式定理拆开：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\begin{aligned}
+res&amp;amp;=\sum_y f_y\cdot y^b\cdot (n-y)^a\\
+&amp;amp;=\sum_y f_y\cdot y^b\cdot \sum_{i=0}^a C_a^i\cdot n^i\cdot(-y)^{a-i}\\
+&amp;amp;=\sum_y\sum_{i=0}^a f_y\cdot C_a^i\cdot n^i\cdot(-1)^{a-i}\cdot y^{a+b-i}\\
+&amp;amp;=\sum_{i=0}^a C_a^i\cdot n^i\cdot(-1)^{a-i}\cdot \sum_y f_y\cdot y^{a+b-i}\\
+\end{aligned}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;然后发现后面那个 sigma 不太有办法求。一个比较优雅的方法是把 &lt;span class=&#34;math inline&#34;&gt;\(y^{a+b-i}\)&lt;/span&gt; 直接作为系数而非下标塞到 &lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt; 里去，即令 &lt;span class=&#34;math inline&#34;&gt;\(f_{i}\)&lt;/span&gt; 表示 &lt;span class=&#34;math inline&#34;&gt;\(\forall \,y\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(\sum y^i\)&lt;/span&gt; 之和。&lt;/p&gt;
+&lt;p&gt;具体地，令 &lt;span class=&#34;math inline&#34;&gt;\(dp_{n,i,0/1}\)&lt;/span&gt; 表示当前 DP 到第 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 位，要求幂次为 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;，最后一位为 &lt;span class=&#34;math inline&#34;&gt;\(0/1\)&lt;/span&gt; 的答案。则显然有 &lt;span class=&#34;math inline&#34;&gt;\(dp_{n,i,0}=dp_{n-1,i,0}+dp_{n-1,i,1}\)&lt;/span&gt;。对于 &lt;span class=&#34;math inline&#34;&gt;\(dp_{n,i,1}\)&lt;/span&gt;，因为此时 &lt;span class=&#34;math inline&#34;&gt;\(\forall\, k,k\gets k+1\)&lt;/span&gt;，则 &lt;span class=&#34;math inline&#34;&gt;\((k+1)^i=\sum\limits_{j=0}^i C_i^j \cdot k^j\)&lt;/span&gt; 即 &lt;span class=&#34;math inline&#34;&gt;\(dp_{n,i,1}=\sum\limits_{j=0}^i C_i^j\cdot dp_{n-1,j,0}\)&lt;/span&gt;。发现 &lt;span class=&#34;math inline&#34;&gt;\(i,j\)&lt;/span&gt; 的范围是 &lt;span class=&#34;math inline&#34;&gt;\(90\)&lt;/span&gt;，很恐怖的事情是这是可以矩阵的。&lt;/p&gt;
+&lt;details&gt;
+&lt;p&gt;就像我们都知道的那样，矩阵在加完之后再取模就会快很多……&lt;/p&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int mod;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, a, b;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; a &amp;gt;&amp;gt; b &amp;gt;&amp;gt; mod;
+    std::vector&amp;lt;std::vector&amp;lt;long long&amp;gt; &amp;gt; C(a + b + 1, std::vector&amp;lt;long long&amp;gt;(a + b + 1));
+    for (int i = 0; i &amp;lt;= a + b; ++i) &amp;#123;
+        C[i][0] = 1ll;
+        for (int j = 1; j &amp;lt;= i; ++j)
+            C[i][j] = (C[i - 1][j - 1] + C[i - 1][j]) % mod;
+    &amp;#125;
+    struct mat &amp;#123;
+        int n, m;
+        std::vector&amp;lt;std::vector&amp;lt;long long&amp;gt; &amp;gt; a;
+        mat(int n, int m, bool flag = 0): n(n), m(m), a(n, std::vector&amp;lt;long long&amp;gt; (m)) &amp;#123;
+            if (flag)
+                for (int i = 0; i &amp;lt; n; ++i)
+                    a[i][i] = 1ll;
+            return;
+        &amp;#125;
+        mat operator* (const mat &amp;amp;q) const &amp;#123;
+            mat res(n, q.m);
+            for (int i = 0; i &amp;lt; n; ++i)
+                for (int k = 0; k &amp;lt; q.m; ++k) &amp;#123;
+                    for (int j = 0; j &amp;lt; m; ++j)
+                        res.a[i][k] += a[i][j] * q.a[j][k];
+                    res.a[i][k] %= mod;
+                &amp;#125;
+            return res;
+        &amp;#125;
+        mat operator^ (int q) const &amp;#123;
+            mat res(n, n, 1), x(*this);
+            for (; q; x = x * x, q &amp;gt;&amp;gt;= 1)
+                if (q &amp;amp; 1)
+                    res = res * x;
+            return res;
+        &amp;#125;
+    &amp;#125; f(1, 2 * (a + b + 1)), op(2 * (a + b + 1), 2 * (a + b + 1));
+    auto fun = [&amp;amp;](int i, int j) &amp;#123;
+        return i + j * (a + b + 1);
+    &amp;#125;;
+    f.a[0][fun(0, 0)] = 1ll;
+    for (int i = 0; i &amp;lt;= a + b; ++i)
+        op.a[fun(i, 0)][fun(i, 0)] = op.a[fun(i, 1)][fun(i, 0)] = 1ll;
+    for (int i = 0; i &amp;lt;= a + b; ++i)
+        for (int j = 0; j &amp;lt;= i; ++j)
+            op.a[fun(j, 0)][fun(i, 1)] = C[i][j];
+    f = f * (op ^ n);
+    // for (int i = 0; i &amp;lt;= n; ++i) &amp;#123;
+    //     if (i)
+    //         f = f * op;
+    //     for (int j = 0; j &amp;lt;= a + b; ++j)
+    //         printf(&amp;quot;f[%d][%d] = %lld / %lld\n&amp;quot;, i, j, f.a[0][fun(j, 0)], f.a[0][fun(j, 1)]);
+    // &amp;#125;
+    auto res = 0ll;
+    for (int i = 0; i &amp;lt;= a; ++i) &amp;#123;
+        static auto p(1ll), k((a % 2) ? mod - 1ll : 1ll);
+        (res += C[a][i] * p % mod * k % mod * (f.a[0][fun(a + b - i, 0)] + f.a[0][fun(a + b - i, 1)]) % mod) %= mod;
+        (p *= n) %= mod, k = mod - k;
+    &amp;#125;
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;b---different-subsets-for-all-tuples&#34;&gt;B - Different Subsets For All Tuples&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/CF660E&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/CF660E&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;首先你可能需要知道，如果已知一个序列，如何得到答案？&lt;/p&gt;
+&lt;p&gt;令 &lt;span class=&#34;math inline&#34;&gt;\(f_i\)&lt;/span&gt; 表示在 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 处取一个子序列的末尾，枚举上一个元素 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，找到 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 之前最靠后的一个 &lt;span class=&#34;math inline&#34;&gt;\(a_j=x\)&lt;/span&gt;，那么有 &lt;span class=&#34;math inline&#34;&gt;\(f_i=\sum f_j\)&lt;/span&gt;，换言之需要保证 &lt;span class=&#34;math inline&#34;&gt;\((j,i)\)&lt;/span&gt; 范围内没有 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 出现。&lt;/p&gt;
+&lt;p&gt;此时序列未知，令 &lt;span class=&#34;math inline&#34;&gt;\(f_{i, x}\)&lt;/span&gt; 表示在 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 处取一个子序列末尾，且 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 的值为 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;；按照贡献的视角来看待，每个可以和 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 组成新子序列的方案可以带来 &lt;span class=&#34;math inline&#34;&gt;\(m^{i-1}\)&lt;/span&gt; 的贡献（因为 &lt;span class=&#34;math inline&#34;&gt;\(a_i\)&lt;/span&gt; 已经固定为 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，其他位置可以任选），那么有 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,x}=m^i\times \sum_{j&amp;lt;i,y}f_{j,y}\times (m-1)^{i-j-1}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;然后就惊讶地发现式子和 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 这一维没有关系了。所以直接带上系数得到：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\begin{aligned}
+f_i&amp;amp;=m^i\times \sum_{j&amp;lt;i} f_j\times (m-1)^{i-j-1}\times m\\
+&amp;amp;=m^i\times (m-1)^{i-1}\times m\cdot \sum_{j&amp;lt;i} f_j\times (m-1)^{-j}
+\end{aligned}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;前缀和优化一下就可以快速求了。最终的答案就是 &lt;span class=&#34;math inline&#34;&gt;\(res=m^n+\sum f_i\times (m-1)^{n-i}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 1e9 + 7;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, m;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; m;
+    if (m == 1)
+        std::cout &amp;lt;&amp;lt; (n + 1) &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    else &amp;#123;
+        std::vector&amp;lt;long long&amp;gt; f(n + 1), s(n + 1), pm1(n + 1);
+        pm1[0] = 1ll;
+        for (int i = 1; i &amp;lt;= n; ++i)
+            pm1[i] = pm1[i - 1] * (m - 1) % mod;
+        auto qkp = [](long long x, int y) &amp;#123;
+            auto res(1ll);
+            for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+                if (y &amp;amp; 1)
+                    (res *= x) %= mod;
+            return res;
+        &amp;#125;;
+        auto res(qkp(m, n));
+        const auto invm = qkp(m - 1, mod - 2);
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            static long long p(m), inv(invm);
+            f[i] = (p + pm1[i - 1] * m % mod * s[i - 1] % mod) % mod;
+            s[i] = (s[i - 1] + f[i] * inv % mod) % mod;
+            (res += f[i] * pm1[n - i] % mod) %= mod;
+            (p *= m) %= mod, (inv *= invm) %= mod;
+        &amp;#125;
+        std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;; 
+    &amp;#125;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;g---gardens&#34;&gt;G - Gardens&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/abc235/tasks/abc235_g&#34; class=&#34;uri&#34;&gt;https://atcoder.jp/contests/abc235/tasks/abc235_g&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;如果没有『每个人必须有一个元素』这个限制，就可以随便做了。现在加上了这个限制，很容易想到用没得到的人来容斥。钦定至少有 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 个人没拿到，得到答案为 &lt;span class=&#34;math inline&#34;&gt;\(\sum\limits_{i=0}^n (-1)^i\cdot C_n^i\cdot \left(\sum\limits_{j=0}^a C_i^j\right)\cdot \left(\sum\limits_{j=0}^b C_i^j\right)\cdot \left(\sum\limits_{j=0}^c C_i^j\right)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;怎么算 &lt;span class=&#34;math inline&#34;&gt;\(\sum\limits_{j=0}^a C_i^j\)&lt;/span&gt; 呢？当 &lt;span class=&#34;math inline&#34;&gt;\(a&amp;gt; i\)&lt;/span&gt; 时，二项式是好求的；当 &lt;span class=&#34;math inline&#34;&gt;\(a\le i\)&lt;/span&gt; 时呢？看到这个式子很容易带到杨辉三角里去，也就是求一行的前 &lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt; 个数。注意到可以用上一行的前 &lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt; 个数 &lt;span class=&#34;math inline&#34;&gt;\(O(1)\)&lt;/span&gt; 得到（假设第 &lt;span class=&#34;math inline&#34;&gt;\(j-1\)&lt;/span&gt; 行前 &lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt; 个数之和为 &lt;span class=&#34;math inline&#34;&gt;\(f_a(j-1)\)&lt;/span&gt;）：&lt;span class=&#34;math inline&#34;&gt;\(f_a(j)=f_a(j-1)\times 2-C_{j-1,a}\)&lt;/span&gt;。&lt;mark&gt;你需要意识到，由于上一行也是答案中要求的，所以可以使用递推解决问题。&lt;strong&gt;在组合计数中，递推 / DP 无论是在化简式子还是求容斥 / 二项式反演里具体某一限制下的方案数都是很有用的，在需要优化复杂度时，可以从递推 / DP、恒等式、前缀和、预处理等方法入手考虑&lt;/strong&gt;&lt;/mark&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 998244353;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, a, b, c;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; a &amp;gt;&amp;gt; b &amp;gt;&amp;gt; c;
+    std::vector&amp;lt;long long&amp;gt; fac(n + 1), inv(n + 1), fa(n + 1), fb(n + 1), fc(n + 1), pow2(n + 1);
+    fac[0] = inv[0] = pow2[0] = 1ll;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        fac[i] = fac[i - 1] * i % mod;
+        pow2[i] = pow2[i - 1] * 2 % mod;
+    &amp;#125;
+    auto qkp = [&amp;amp;](long long x, int y) &amp;#123;
+        auto res(1ll);
+        for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    inv[n] = qkp(fac[n], mod - 2);
+    for (int i = n - 1; i; --i)
+        inv[i] = inv[i + 1] * (i + 1) % mod;
+    auto C = [&amp;amp;](int n, int m) &amp;#123;
+        return fac[n] * inv[n - m] % mod * inv[m] % mod;
+    &amp;#125;;
+    for (int i = 0; i &amp;lt;= a; ++i)
+        (fa[a] += C(a, i)) %= mod;
+    for (int i = a + 1; i &amp;lt;= n; ++i)
+        fa[i] = (2 * fa[i - 1] % mod + mod - C(i - 1, a)) % mod;
+    for (int i = 0; i &amp;lt;= b; ++i)
+        (fb[b] += C(b, i)) %= mod;
+    for (int i = b + 1; i &amp;lt;= n; ++i)
+        fb[i] = (2 * fb[i - 1] % mod + mod - C(i - 1, b)) % mod;
+    for (int i = 0; i &amp;lt;= c; ++i)
+        (fc[c] += C(c, i)) %= mod;
+    for (int i = c + 1; i &amp;lt;= n; ++i)
+        fc[i] = (2 * fc[i - 1] % mod + mod - C(i - 1, c)) % mod;
+    auto res(0ll);
+    for (int i = n, p = 1; ~i; --i, p = mod - p)
+        (res += p * C(n, i) % mod * (i &amp;gt;= a ? fa[i] : pow2[i]) % mod * (i &amp;gt;= b ? fb[i] : pow2[i]) % mod * (i &amp;gt;= c ? fc[i] : pow2[i]) % mod) %= mod;
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

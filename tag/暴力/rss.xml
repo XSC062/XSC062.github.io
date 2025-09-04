@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title> • Posts by &#34;暴力&#34; tag</title>
+        <link>https://xsc062.netlify.app</link>
+        <description></description>
+        <language>zh-CN</language>
+        <pubDate>Sat, 26 Jul 2025 14:47:23 +0800</pubDate>
+        <lastBuildDate>Sat, 26 Jul 2025 14:47:23 +0800</lastBuildDate>
+        <category>并查集</category>
+        <category>斜率优化</category>
+        <category>悬线法</category>
+        <category>哈希</category>
+        <category>字典树</category>
+        <category>DP</category>
+        <category>单调队列</category>
+        <category>分治</category>
+        <category>二分图</category>
+        <category>CRT / exCRT</category>
+        <category>排列组合</category>
+        <category>网络流</category>
+        <category>费用流</category>
+        <category>二分</category>
+        <category>上下界网络流</category>
+        <category>容斥原理</category>
+        <category>线段树</category>
+        <category>树状数组</category>
+        <category>区间 DP</category>
+        <category>构造</category>
+        <category>Tarjan</category>
+        <category>数据结构</category>
+        <category>下饭</category>
+        <category>LCA</category>
+        <category>倍增</category>
+        <category>鸽巢原理</category>
+        <category>概率期望</category>
+        <category>调和级数</category>
+        <category>差分</category>
+        <category>思维</category>
+        <category>树形 DP</category>
+        <category>最小生成树</category>
+        <category>SAM</category>
+        <category>状压</category>
+        <category>分块</category>
+        <category>可持久化</category>
+        <category>笛卡尔树</category>
+        <category>高维前缀和</category>
+        <category>闲话</category>
+        <category>欧拉回路</category>
+        <category>树链剖分</category>
+        <category>长链剖分</category>
+        <category>KMP</category>
+        <category>border</category>
+        <category>字符串</category>
+        <category>AC 自动机</category>
+        <category>SA</category>
+        <category>数学</category>
+        <category>树上差分</category>
+        <category>FWT</category>
+        <category>堆</category>
+        <category>树的重心</category>
+        <category>二项式定理</category>
+        <category>二项式反演</category>
+        <category>贪心</category>
+        <category>均摊</category>
+        <category>计数</category>
+        <category>优化建图</category>
+        <category>反悔贪心</category>
+        <category>调整法</category>
+        <category>背包</category>
+        <category>博弈论</category>
+        <category>DP 优化</category>
+        <category>虚树</category>
+        <category>点分治</category>
+        <category>WQS 二分</category>
+        <category>闵可夫斯基和</category>
+        <category>slope trick</category>
+        <category>四边形不等式</category>
+        <category>暴力</category>
+        <category>状压 DP</category>
+        <category>组合数学</category>
+        <category>支配对</category>
+        <category>DDP</category>
+        <category>平衡树</category>
+        <category>容斥</category>
+        <category>猫树</category>
+        <category>Kruskal 重构树</category>
+        <category>李超线段树</category>
+        <item>
+            <guid isPermalink="true">https://xsc062.netlify.app/20250726/</guid>
+            <title>解题报告 [GCJ 2018 #1B] Transmutation</title>
+            <link>https://xsc062.netlify.app/20250726/</link>
+            <category>二分</category>
+            <category>暴力</category>
+            <pubDate>Sat, 26 Jul 2025 14:47:23 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;对于『跑 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 遍』性质的利用。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P10805&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P10805&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;容易注意到可以二分答案；但似乎没办法找到一种很好的方法在 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt; 内完成一次 check。&lt;/p&gt;
+&lt;p&gt;化用一下网络流中流量的概念；例如下面这个图，假如先从 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt; 开始跑，发现没办法很好地确定 &lt;span class=&#34;math inline&#34;&gt;\(8\to 2\)&lt;/span&gt; 这条边的流量（原因：没办法确定 &lt;span class=&#34;math inline&#34;&gt;\(8\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt; 的搜索顺序）。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;image.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;这个时候想到；如果是 &lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt; 先被搜到，自然很好；但如果是 &lt;span class=&#34;math inline&#34;&gt;\(8\)&lt;/span&gt; 先被搜到，可以忽略这条由它出发、且未确定的边，先由现在认为的流出量确定流入量。等搜到 &lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt; 的时候，再更新一下 &lt;span class=&#34;math inline&#34;&gt;\(8\to 2\)&lt;/span&gt; 的流量。这样 &lt;span class=&#34;math inline&#34;&gt;\(8\)&lt;/span&gt; 的流入量就是错的；容易想到再搜一次来更新。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;类比一下 SPFA，可以认为跑 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 遍就已经达到能更新的最终状态&lt;/strong&gt;。此时 check 一下是否每个点都合法。&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

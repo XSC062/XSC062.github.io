@@ -1,0 +1,848 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title> • Posts by &#34;点分治&#34; tag</title>
+        <link>https://xsc062.netlify.app</link>
+        <description></description>
+        <language>zh-CN</language>
+        <pubDate>Thu, 12 Jun 2025 17:18:55 +0800</pubDate>
+        <lastBuildDate>Thu, 12 Jun 2025 17:18:55 +0800</lastBuildDate>
+        <category>并查集</category>
+        <category>斜率优化</category>
+        <category>悬线法</category>
+        <category>哈希</category>
+        <category>字典树</category>
+        <category>DP</category>
+        <category>单调队列</category>
+        <category>分治</category>
+        <category>二分图</category>
+        <category>CRT / exCRT</category>
+        <category>排列组合</category>
+        <category>网络流</category>
+        <category>费用流</category>
+        <category>二分</category>
+        <category>上下界网络流</category>
+        <category>容斥原理</category>
+        <category>线段树</category>
+        <category>树状数组</category>
+        <category>区间 DP</category>
+        <category>构造</category>
+        <category>Tarjan</category>
+        <category>数据结构</category>
+        <category>下饭</category>
+        <category>LCA</category>
+        <category>倍增</category>
+        <category>鸽巢原理</category>
+        <category>概率期望</category>
+        <category>调和级数</category>
+        <category>差分</category>
+        <category>思维</category>
+        <category>树形 DP</category>
+        <category>最小生成树</category>
+        <category>SAM</category>
+        <category>状压</category>
+        <category>分块</category>
+        <category>可持久化</category>
+        <category>笛卡尔树</category>
+        <category>高维前缀和</category>
+        <category>闲话</category>
+        <category>欧拉回路</category>
+        <category>树链剖分</category>
+        <category>长链剖分</category>
+        <category>KMP</category>
+        <category>border</category>
+        <category>字符串</category>
+        <category>AC 自动机</category>
+        <category>SA</category>
+        <category>数学</category>
+        <category>树上差分</category>
+        <category>FWT</category>
+        <category>堆</category>
+        <category>树的重心</category>
+        <category>二项式定理</category>
+        <category>二项式反演</category>
+        <category>贪心</category>
+        <category>均摊</category>
+        <category>计数</category>
+        <category>优化建图</category>
+        <category>反悔贪心</category>
+        <category>调整法</category>
+        <category>背包</category>
+        <category>博弈论</category>
+        <category>DP 优化</category>
+        <category>虚树</category>
+        <category>点分治</category>
+        <category>WQS 二分</category>
+        <category>闵可夫斯基和</category>
+        <category>slope trick</category>
+        <category>四边形不等式</category>
+        <category>暴力</category>
+        <category>状压 DP</category>
+        <category>组合数学</category>
+        <category>支配对</category>
+        <category>DDP</category>
+        <category>平衡树</category>
+        <category>容斥</category>
+        <category>猫树</category>
+        <category>Kruskal 重构树</category>
+        <category>李超线段树</category>
+        <item>
+            <guid isPermalink="true">https://xsc062.netlify.app/20250612/</guid>
+            <title>点分治</title>
+            <link>https://xsc062.netlify.app/20250612/</link>
+            <category>点分治</category>
+            <pubDate>Thu, 12 Jun 2025 17:18:55 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;一时兴起在博客里搜索『点分治』，发现没有匹配项。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;定义&#34;&gt;定义&lt;/h2&gt;
+&lt;p&gt;适用于解决和点对、路径相关的问题。&lt;/p&gt;
+&lt;p&gt;对于任意点 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，树上任意简单路径 &lt;span class=&#34;math inline&#34;&gt;\((u,v)\)&lt;/span&gt; 被分为几类：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;不经过 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;经过 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;：
+&lt;ul&gt;
+&lt;li&gt;一个端点为 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;两个端点都不为 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;：可以由上一种情况拼接得到。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;如果我们把每个点作为 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 的情况都枚举一遍，再统计不重复的 &lt;span class=&#34;math inline&#34;&gt;\((u,v)\)&lt;/span&gt;，在一种特定的枚举顺序下可以做到 &lt;span class=&#34;math inline&#34;&gt;\(O(n\log n)\)&lt;/span&gt; 完成所有点对的枚举。&lt;/p&gt;
+&lt;p&gt;证明略，每次取子树重心，只遍历没遍历过的点即可。&lt;/p&gt;
+&lt;p&gt;关于子树重心，一则阅读材料：&lt;a href=&#34;https://liu-cheng-ao.blog.uoj.ac/blog/2969&#34;&gt;一种基于错误的寻找重心方法的点分治的复杂度分析&lt;/a&gt;。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;cf1575e-eye-pleasing-city-park-tour&#34;&gt;CF1575E Eye-Pleasing City Park Tour&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/problemset/problem/1575/E&#34; class=&#34;uri&#34;&gt;https://codeforces.com/problemset/problem/1575/E&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;随便用线段树维护一下就行了。复杂度 &lt;span class=&#34;math inline&#34;&gt;\(O(n\log^2 n)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;p&gt;随便维护一下 &lt;img src=&#34;/em/ll.gif&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 1e9 + 7;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, k;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; k;
+    std::vector&amp;lt;int&amp;gt; a(n + 1);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        std::cin &amp;gt;&amp;gt; a[i];
+    std::vector&amp;lt;std::vector&amp;lt;std::pair&amp;lt;int, int&amp;gt; &amp;gt; &amp;gt; g(n + 1);
+    for (int i = 1, x, y, c; i &amp;lt; n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y &amp;gt;&amp;gt; c;
+        g[x].emplace_back(y, c), g[y].emplace_back(x, c);
+    &amp;#125;
+    std::vector&amp;lt;std::vector&amp;lt;std::pair&amp;lt;int, long long&amp;gt; &amp;gt; &amp;gt; bit(2, std::vector&amp;lt;std::pair&amp;lt;int, long long&amp;gt; &amp;gt; (n + 1));
+    auto lowbit = [&amp;amp;](int x) &amp;#123;
+        return x &amp;amp; -x;
+    &amp;#125;;
+    auto add = [&amp;amp;](int id, int x, long long v, int type) &amp;#123;
+        for (++x; x &amp;lt;= n; x += lowbit(x))
+            bit[id][x].first += type, (bit[id][x].second += v * type) %= mod;
+        return;
+    &amp;#125;;
+    auto ask = [&amp;amp;](int id, int x) &amp;#123;
+        std::pair&amp;lt;int, long long&amp;gt; res;
+        for (++x; x; x -= lowbit(x))
+            res.first += bit[id][x].first, (res.second += bit[id][x].second) %= mod;
+        return res;
+    &amp;#125;;
+    std::vector&amp;lt;int&amp;gt; p, siz(n + 1), mx(n + 1), tag(n + 1);
+    std::function&amp;lt;void(int, int)&amp;gt; findp = [&amp;amp;](int x, int fa) &amp;#123;
+        p.push_back(x);
+        siz[x] = 1, mx[x] = 0;
+        for (auto [i, c] : g[x])
+            if (i != fa &amp;amp;&amp;amp; !tag[i]) &amp;#123;
+                findp(i, x);
+                siz[x] += siz[i];
+                mx[x] = std::max(mx[x], siz[i]);
+            &amp;#125;
+        return;
+    &amp;#125;;
+    auto findrt = [&amp;amp;](int x) &amp;#123;
+        std::vector&amp;lt;int&amp;gt;().swap(p), findp(x, -1);
+        int n = (int)p.size();
+        for (auto i : p)
+            if (mx[i] &amp;lt;= n / 2 &amp;amp;&amp;amp; n - siz[i] &amp;lt;= n / 2)
+                return i;
+        return -1;
+    &amp;#125;;
+    auto res(0ll);
+    std::function&amp;lt;void(int, int, int, int, int, long long, int, int)&amp;gt; calc = [&amp;amp;](int x, int fa, int oc, int la, int cnt, long long s, int os, int type) &amp;#123;
+        if (cnt &amp;gt; k)
+            return;
+        if (type == 0) &amp;#123;
+            auto t0(ask(oc, k - cnt)), t1(ask(!oc, k - cnt - 1));
+            // auto lr(res);
+            (res += t0.first * (s - os) + t0.second) %= mod;
+            (res += t1.first * (s - os) + t1.second) %= mod;
+            // printf(&amp;quot;  %d(%d, %lld): ask[0](%d) = (%d, %lld), ask[1](%d) = (%d, %lld), res += %lld\n&amp;quot;, x, cnt, s - os, k - cnt, t0.first, t0.second, k - cnt - 1, t1.first, t1.second, res - lr);
+        &amp;#125;
+        else if (type != 0) &amp;#123;
+            // printf(&amp;quot;  %d(%d, %lld): add(%d, %lld)\n&amp;quot;, x, cnt, s - os, oc, s * type);
+            add(oc, cnt, s, type);
+        &amp;#125;
+        for (auto [i, c] : g[x])
+            if (i != fa &amp;amp;&amp;amp; !tag[i])
+                calc(i, x, oc, c, cnt + (la != c), (s + a[i]) % mod, os, type);
+        return;
+    &amp;#125;;
+    std::function&amp;lt;void(int)&amp;gt; DFS = [&amp;amp;](int x) &amp;#123;
+        x = findrt(x);
+        // printf(&amp;quot;DFS %d\n&amp;quot;, x);
+        for (auto [i, c] : g[x])
+            if (!tag[i]) &amp;#123;
+                calc(i, x, c, c, 0, (a[x] + a[i]) % mod, a[x], 0);
+                calc(i, x, c, c, 0, (a[x] + a[i]) % mod, a[x], 1);
+            &amp;#125;
+        (res += ask(0, k).second + ask(1, k).second) %= mod;
+        (res += a[x]) %= mod;
+        // printf(&amp;quot;res += %lld + %lld\n&amp;quot;, ask(0, k).second, ask(1, k).second);
+        for (auto [i, c] : g[x])
+            if (!tag[i])
+                calc(i, x, c, c, 0, (a[x] + a[i]) % mod, a[x], -1);
+        // assert(!ask(0, k).second);
+        tag[x] = 1;
+        for (auto [i, c] : g[x])
+            if (!tag[i])
+                DFS(i);
+        return;
+    &amp;#125;;
+    DFS(1);
+    std::cout &amp;lt;&amp;lt; (res + mod) % mod &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;a---三元图-graf&#34;&gt;A - 三元图 Graf&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P10829&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P10829&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;发现很圆方树；观察题图，肯定想要把中间的方点作为树根。&lt;/p&gt;
+&lt;p&gt;发现它就是重心；进一步地，整个圆方树其实是一个点分治的结构。显然除了最后一层，每次找到的重心都应该是方点；并且其应该有三个等大的儿子。check 上述两点即可。&lt;/p&gt;
+&lt;p&gt;唉还是挺常规的，限制我做出来这道题的应该是我已经 &amp;gt; 1y 没写过连通性问题了 😅&lt;/p&gt;
+&lt;details&gt;
+&lt;p&gt;怎么还有人不会判重边的 😅&lt;/p&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, m;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; m;
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g(n + 1), _g(n + 1);
+    auto nosol = [](void) &amp;#123;
+        std::cout &amp;lt;&amp;lt; &amp;quot;ne&amp;quot; &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+        exit(0);
+        return;
+    &amp;#125;;
+    std::set&amp;lt;std::pair&amp;lt;int, int&amp;gt; &amp;gt; t;
+    for (int x, y; m--; ) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y;
+        if (x == y || t.count(&amp;#123; x, y &amp;#125;))
+            nosol();
+        t.insert(&amp;#123; x, y &amp;#125;), t.insert(&amp;#123; y, x &amp;#125;);
+        _g[x].push_back(y), _g[y].push_back(x);
+    &amp;#125;
+    std::vector&amp;lt;int&amp;gt; st, dfn(n + 1), low(n + 1);
+    std::function&amp;lt;void(int, int)&amp;gt; DFS = [&amp;amp;](int x, int fa) &amp;#123;
+        static int now = 0;
+        st.push_back(x);
+        dfn[x] = low[x] = ++now;
+        for (auto i : _g[x])
+            if (!dfn[i]) &amp;#123;
+                DFS(i, x);
+                low[x] = std::min(low[x], low[i]);
+                if (low[i] &amp;gt;= dfn[x]) &amp;#123;
+                    ++n, g.emplace_back();
+                    for (int p = st.back(); ; p = st.back()) &amp;#123;
+                        g[n].push_back(p), g[p].push_back(n);
+                        st.pop_back();
+                        if (p == i)
+                            break;
+                    &amp;#125;
+                    g[n].push_back(x), g[x].push_back(n);
+                &amp;#125;
+            &amp;#125;
+            else if (i != fa)
+                low[x] = std::min(low[x], dfn[i]);
+        return;
+    &amp;#125;;
+    int n1 = n;
+    DFS(1, -1);
+    std::vector&amp;lt;int&amp;gt; siz(n + 1), p, mx(n + 1), tag(n + 1);
+    DFS = [&amp;amp;](int x, int fa) &amp;#123;
+        siz[x] = 1, mx[x] = 0;
+        p.push_back(x);
+        for (auto i : g[x])
+            if (i != fa &amp;amp;&amp;amp; !tag[i]) &amp;#123;
+                DFS(i, x);
+                siz[x] += siz[i];
+                mx[x] = std::max(mx[x], siz[i]);
+            &amp;#125;
+        return;
+    &amp;#125;;
+    auto findrt = [&amp;amp;](int x) &amp;#123;
+        p.clear(), DFS(x, -1);
+        int n = (int)p.size();
+        for (auto i : p)
+            if (mx[i] &amp;lt;= n / 2 &amp;amp;&amp;amp; n - siz[i] &amp;lt;= n / 2)
+                return i;
+        return -1;
+    &amp;#125;;
+    std::function&amp;lt;void(int)&amp;gt; DFS1 = [&amp;amp;](int x) &amp;#123;
+        x = findrt(x), DFS(x, -1);
+        int si = -1, cnt = 0;
+        if (siz[x] == 1) &amp;#123;
+            if (x &amp;gt; n1)
+                nosol();
+            return;
+        &amp;#125;
+        if (x &amp;lt;= n1)
+            nosol();
+        for (auto i : g[x])
+            if (!tag[i]) &amp;#123;
+                ++cnt;
+                if (~si &amp;amp;&amp;amp; si != siz[i])
+                    nosol();
+                if (si == -1)
+                    si = siz[i];
+            &amp;#125;
+        if (cnt != 3)
+            nosol();
+        tag[x] = 1;
+        for (auto i : g[x])
+            if (!tag[i])
+                DFS1(i);
+        return;
+    &amp;#125;; 
+    DFS1(1);
+    std::cout &amp;lt;&amp;lt; &amp;quot;da&amp;quot; &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;b---distance-on-triangulation&#34;&gt;B - Distance on Triangulation&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P6976&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P6976&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;众（除了我）所周知 &lt;a href=&#34;/20231117/#经典建模&#34;&gt;凸多边形的三角剖分可以转化为树上问题&lt;/a&gt;，故把树建出来；一个重要的点是要认识到这个树的意义。树上的点其实是没什么物理含义的；经过了某一个树上的点和经过了三角形上的任一点是等价的；也就是说，想要从某个点走到另一个点，肯定要经过对应的树上路径，但这不能反应实际距离什么的，只是能获取路径可能包含的点和必须包含的点（的超集），具体还是要最短路。&lt;/p&gt;
+&lt;p&gt;接着转化为点分治。但其实这里的点分治有点像序列分治：先跑一遍根节点（三个）在当前分治范围内的最短路，然后处理经过了这个点的询问，然后递归。容易发现三个点里有一些之前被算过了，且一定包含了这个分治范围，直接跳过就行了。&lt;/p&gt;
+&lt;p&gt;注意询问要写成整体二分那种动态下传的形式，只把被某个子树完全包含的询问传下去；不然复杂度是错的。以及这样就可以剪枝：发现询问数组空了就可以停了。直接 TLE to 200ms 了 😅&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    std::vector&amp;lt;int&amp;gt; deg(n + 1);
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; _g(n + 1), g(n + 1);
+    for (int i = 1; i &amp;lt; n; ++i) &amp;#123;
+        _g[i].push_back(i + 1), _g[i + 1].push_back(i);
+        ++deg[i], ++deg[i + 1];
+    &amp;#125;
+    _g[1].push_back(n), _g[n].push_back(1);
+    ++deg[1], ++deg[n];
+    for (int i = 1, x, y; i &amp;lt;= n - 3; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y;
+        _g[x].push_back(y), _g[y].push_back(x);
+        ++deg[x], ++deg[y];
+    &amp;#125;
+    int cnt = 0;
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; t(1);
+    &amp;#123;
+        std::queue&amp;lt;int&amp;gt; q;
+        std::vector&amp;lt;int&amp;gt; inq(n + 1);
+        for (int i = 1; i &amp;lt;= n; ++i)
+            if (deg[i] == 2)
+                q.push(i);
+        std::map&amp;lt;std::pair&amp;lt;int, int&amp;gt;, int&amp;gt; st;
+        for (; !q.empty(); ) &amp;#123;
+            int x = q.front();
+            q.pop(), inq[x] = 1;
+            if (deg[x] == 2) &amp;#123;
+                ++cnt, t.push_back(&amp;#123; x &amp;#125;);
+                for (auto i : _g[x])
+                    if (!inq[i]) &amp;#123;
+                        t[cnt].push_back(i);
+                    &amp;#125;
+                std::sort(t[cnt].begin(), t[cnt].end());
+                for (int a = 0; a &amp;lt; 2; ++a)
+                    for (int b = a + 1; b &amp;lt; 3; ++b) &amp;#123;
+                        std::pair&amp;lt;int, int&amp;gt; now(t[cnt][a], t[cnt][b]);
+                        if (st.count(now)) &amp;#123;
+                            int to = st[now];
+                            // printf(&amp;quot;add %d &amp;lt;-&amp;gt; %d\n&amp;quot;, to, cnt);
+                            g[cnt].push_back(to), g[to].push_back(cnt);
+                        &amp;#125;
+                        else
+                            st[now] = cnt;
+                    &amp;#125;
+            &amp;#125;
+            for (auto i : _g[x])
+                if (--deg[i] == 2)
+                    q.push(i);
+        &amp;#125;
+    &amp;#125;
+    int q;
+    std::cin &amp;gt;&amp;gt; q;
+    std::vector&amp;lt;int&amp;gt; res(q + 1, 0x3f3f3f3f);
+    std::vector&amp;lt;std::tuple&amp;lt;int, int, int&amp;gt; &amp;gt; u(q);
+    for (int i = 1, x, y; i &amp;lt;= q; ++i)
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y, u[i - 1] = &amp;#123; x, y, i &amp;#125;;
+    int tik = 0;
+    std::vector&amp;lt;int&amp;gt; siz(cnt + 1), mx(cnt + 1), p, now(n + 1), p1;
+    std::vector&amp;lt;int&amp;gt; dis(n + 1), tag(n + 1), vis(n + 1), faa(n + 1);
+    std::function&amp;lt;void(int, int)&amp;gt; DFS1 = [&amp;amp;](int x, int fa) &amp;#123;
+        siz[x] = 1, mx[x] = 0;
+        p.push_back(x);
+        for (auto i : t[x])
+            now[i] = tik, p1.push_back(i);
+        for (auto i : g[x])
+            if (i != fa &amp;amp;&amp;amp; !tag[i]) &amp;#123;
+                DFS1(i, x);
+                siz[x] += siz[i];
+                mx[x] = std::max(mx[x], siz[i]);
+            &amp;#125;
+        return;
+    &amp;#125;;
+    auto findrt = [&amp;amp;](int x) &amp;#123;
+        p.clear(), p1.clear(), DFS1(x, -1);
+        int n = (int)p.size();
+        for (auto i : p)
+            if (mx[i] &amp;lt;= n / 2 &amp;amp;&amp;amp; n - siz[i] &amp;lt;= n / 2)
+                return i;
+        return -1;
+    &amp;#125;;
+    auto BFS = [&amp;amp;](int x) &amp;#123;
+        std::queue&amp;lt;int&amp;gt; q;
+        for (auto i : p1)
+            dis[i] = 0x3f3f3f3f;
+        q.push(x), dis[x] = 0;
+        for (; !q.empty(); ) &amp;#123;
+            int x = q.front();
+            q.pop();
+            for (auto i : _g[x])
+                if (dis[i] == 0x3f3f3f3f &amp;amp;&amp;amp; now[i] == tik)
+                    dis[i] = dis[x] + 1, q.push(i);
+        &amp;#125;
+        return;
+    &amp;#125;;
+    std::function&amp;lt;void(int, int, int)&amp;gt; calc = [&amp;amp;](int x, int fa, int rt) &amp;#123;
+        for (auto i : t[x])
+            faa[i] = rt;
+        for (auto i : g[x])
+            if (i != fa &amp;amp;&amp;amp; !tag[i])
+                calc(i, x, rt);
+        return;
+    &amp;#125;;
+    std::vector&amp;lt;std::vector&amp;lt;std::tuple&amp;lt;int, int, int&amp;gt; &amp;gt; &amp;gt; tmp(n + 1);
+    std::function&amp;lt;void(int, std::vector&amp;lt;std::tuple&amp;lt;int, int, int&amp;gt; &amp;gt;)&amp;gt; DFS = [&amp;amp;](int x, std::vector&amp;lt;std::tuple&amp;lt;int, int, int&amp;gt; &amp;gt; q) &amp;#123;
+        if (q.empty())
+            return;
+        ++tik, x = findrt(x);
+        for (auto i : g[x])
+            calc(i, x, i);
+        for (auto k : t[x])
+            if (!vis[k]) &amp;#123;
+                vis[k] = 1, BFS(k);
+                for (auto [u, v, id] : q)
+                    res[id] = std::min(res[id], dis[u] + dis[v]);
+            &amp;#125;
+        for (auto [u, v, id] : q)
+            if (faa[u] == faa[v])
+                tmp[faa[u]].emplace_back(u, v, id);
+        std::vector&amp;lt;std::tuple&amp;lt;int, int, int&amp;gt; &amp;gt;().swap(q);
+        tag[x] = 1;
+        for (auto i : g[x])
+            if (!tag[i])
+                DFS(i, std::move(tmp[i]));
+        return;
+    &amp;#125;;
+    DFS(1, std::move(u));
+    for (int i = 1; i &amp;lt;= q; ++i)
+        std::cout &amp;lt;&amp;lt; res[i] &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;c---shopping&#34;&gt;C - Shopping&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P6326&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P6326&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;意识到连通块 DP 也是可以放在点分上做的，令 &lt;span class=&#34;math inline&#34;&gt;\(f_{u,i}\)&lt;/span&gt; 表示在（点分时的）子树 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 中，&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 选了至少一个，共用了 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 体积的最大价值。剩下就是一个树上的多重 + 01 背包；发现这个 01 背包不满足可以优化的形式，所以考虑树上背包序列化，转换成序列上多重背包问题；不知道真实数据强度，但我认为应该用 &lt;a href=&#34;/20250707-1/#例单调队列优化多重背包&#34;&gt;单调队列优化多重背包&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;注意树背包序列化的细节其实是有点多的。可能需要一些邪思。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int inf = 0x3f3f3f3f;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int T;
+    for (std::cin &amp;gt;&amp;gt; T; T--; ) &amp;#123;
+        int n, m;
+        std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; m;
+        std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g(n + 1);
+        std::vector&amp;lt;int&amp;gt; v(n + 1), w(n + 1), c(n + 1);
+        for (int i = 1; i &amp;lt;= n; ++i)
+            std::cin &amp;gt;&amp;gt; w[i];
+        for (int i = 1; i &amp;lt;= n; ++i)
+            std::cin &amp;gt;&amp;gt; v[i];
+        for (int i = 1; i &amp;lt;= n; ++i)
+            std::cin &amp;gt;&amp;gt; c[i];
+        for (int i = 1, x, y; i &amp;lt; n; ++i) &amp;#123;
+            std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y;
+            g[x].push_back(y), g[y].push_back(x);
+        &amp;#125;
+        std::vector&amp;lt;int&amp;gt; siz(n + 1), mx(n + 1), tag(n + 1), p;
+        std::function&amp;lt;void(int, int)&amp;gt; DFS1 = [&amp;amp;](int x, int fa) &amp;#123;
+            p.push_back(x);
+            siz[x] = 1, mx[x] = 0;
+            for (auto i : g[x])
+                if (i != fa &amp;amp;&amp;amp; !tag[i]) &amp;#123;
+                    DFS1(i, x);
+                    siz[x] += siz[i];
+                    mx[x] = std::max(mx[x], siz[i]);
+                &amp;#125;
+            return;
+        &amp;#125;;
+        int now = 0;
+        std::vector&amp;lt;int&amp;gt; nex(n + 1), tab(n + 1);
+        auto findrt = [&amp;amp;](int x) &amp;#123;
+            p.clear(), DFS1(x, -1);
+            int n = (int)p.size();
+            for (auto i : p)
+                if (mx[i] &amp;lt;= n / 2 &amp;amp;&amp;amp; n - siz[i] &amp;lt;= n / 2)
+                    return i;
+            assert(0);
+            return -1;
+        &amp;#125;;
+        std::function&amp;lt;void(int, int)&amp;gt; DFS2 = [&amp;amp;](int x, int fa) &amp;#123;
+            tab[++now] = x;
+            for (auto i : g[x])
+                if (i != fa &amp;amp;&amp;amp; !tag[i])
+                    DFS2(i, x);
+            nex[x] = now;
+            return;
+        &amp;#125;;
+        int res = -inf;
+        std::function&amp;lt;void(int)&amp;gt; DFS = [&amp;amp;](int x) &amp;#123;
+            x = findrt(x), now = 0, DFS2(x, -1);
+            std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; f(now + 1, std::vector&amp;lt;int&amp;gt; (m + 1, -inf));
+            for (int i = 1; i &amp;lt;= c[x] &amp;amp;&amp;amp; i * v[x] &amp;lt;= m; ++i)
+                f[1][i * v[x]] = i * w[x];
+            for (int i = 1; i &amp;lt; now; ++i) &amp;#123;
+                int V = v[tab[i + 1]], W = w[tab[i + 1]], C = c[tab[i + 1]];
+                for (int b = 0; b &amp;lt; V; ++b) &amp;#123;
+                    std::vector&amp;lt;int&amp;gt; q;
+                    int h = 0, t = -1;
+                    for (int a = 0; a * V + b &amp;lt;= m; ++a) &amp;#123;
+                        for (; h &amp;lt;= t &amp;amp;&amp;amp; a - q[h] &amp;gt; C; ++h);
+                        if (h &amp;lt;= t &amp;amp;&amp;amp; f[i][q[h] * V + b] != -inf)
+                            f[i + 1][a * V + b] = std::max(f[i + 1][a * V + b], f[i][q[h] * V + b] + (a - q[h]) * W);
+                        for (; h &amp;lt;= t &amp;amp;&amp;amp; f[i][a * V + b] - a * W &amp;gt;= f[i][q[t] * V + b] - q[t] * W; --t);
+                        q.resize(++t + 1), q[t] = a;
+                    &amp;#125;
+                &amp;#125;
+                int to = nex[tab[i + 1]];
+                for (int j = 0; j &amp;lt;= m; ++j)
+                    f[to][j] = std::max(f[to][j], f[i][j]);
+            &amp;#125;
+            res = std::max(res, *std::max_element(f[now].begin(), f[now].end()));
+            std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt;().swap(f);
+            tag[x] = 1;
+            for (auto i : g[x])
+                if (!tag[i])
+                    DFS(i);
+            return;
+        &amp;#125;;
+        DFS(1);
+        std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    &amp;#125;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;d---加油站&#34;&gt;D - 加油站&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P10805&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P10805&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;点分治后分为 &lt;span class=&#34;math inline&#34;&gt;\(u\to rt\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(rt\to v\)&lt;/span&gt; 两个部分考虑。前者只需要倍增找到第一次加油的点即可；后者需要对于每个点作为加油站的情况，统计起点个数。&lt;/p&gt;
+&lt;p&gt;具体地，需要分类讨论：若 &lt;span class=&#34;math inline&#34;&gt;\(d(rt,v)&amp;lt;k\)&lt;/span&gt;，说明&lt;strong&gt;上次加油一定不在当前子树内&lt;/strong&gt;；在根节点上登记的加油站中统计走得到 &lt;span class=&#34;math inline&#34;&gt;\(fa_v\)&lt;/span&gt; 但走不到 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 的，就可以找到 &lt;span class=&#34;math inline&#34;&gt;\(fa_v\)&lt;/span&gt; 作为加油站对应的起点个数。对 &lt;span class=&#34;math inline&#34;&gt;\(d(rt,v)\ge k\)&lt;/span&gt;，只需要倍增找到上一次加油的点即可找到 &lt;span class=&#34;math inline&#34;&gt;\(fa_v\)&lt;/span&gt; 的答案。&lt;/p&gt;
+&lt;p&gt;说着很轻巧，实现着很恶心。摆了。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;e---首都&#34;&gt;E - 首都&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P7215&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P7215&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;启示我们点分治处理的问题不一是与『树结构』强相关者；也可以仅利用点分治划分出来的块，例如『若超出当前块，则一定不优』之类的。&lt;/p&gt;
+&lt;p&gt;本题的该性质通过分讨是好证的；所以直接每个块内暴力即可。复杂度 &lt;span class=&#34;math inline&#34;&gt;\(O(n\log n)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, k;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; k;
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g(n + 1), t(k + 1);
+    for (int i = 1, x, y; i &amp;lt; n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y;
+        g[x].push_back(y), g[y].push_back(x);
+    &amp;#125;
+    std::vector&amp;lt;int&amp;gt; col(n + 1), mx(n + 1), siz(n + 1);
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; col[i];
+        t[col[i]].push_back(i);
+    &amp;#125;
+    std::vector&amp;lt;int&amp;gt; tag(n + 1), p, tik(n + 1), faa(n + 1), vis(n + 1), book(k + 1);
+    std::function&amp;lt;void(int, int)&amp;gt; DFS1 = [&amp;amp;](int x, int fa) &amp;#123;
+        siz[x] = 1, mx[x] = 0;
+        p.push_back(x), tik[x] = 1;
+        for (auto i : g[x])
+            if (!tag[i] &amp;amp;&amp;amp; i != fa) &amp;#123;
+                DFS1(i, x);
+                siz[x] += siz[i];
+                mx[x] = std::max(mx[x], siz[i]);
+            &amp;#125;
+        return;
+    &amp;#125;;
+    auto findrt = [&amp;amp;](int x) &amp;#123;
+        p.clear(), DFS1(x, -1);
+        int n = (int)p.size();
+        for (auto i : p)
+            if (mx[i] &amp;lt;= n / 2 &amp;amp;&amp;amp; n - siz[i] &amp;lt;= n / 2)
+                return i;
+        assert(0);
+        return -1;
+    &amp;#125;;
+    std::function&amp;lt;void(int)&amp;gt; DFS2 = [&amp;amp;](int x) &amp;#123;
+        for (auto i : g[x])
+            if (!tag[i] &amp;amp;&amp;amp; i != faa[x])
+                faa[i] = x, DFS2(i);
+        return;
+    &amp;#125;;
+    int res = 0x3f3f3f3f;
+    std::function&amp;lt;void(int)&amp;gt; DFS = [&amp;amp;](int x) &amp;#123;
+        x = findrt(x);
+        faa[x] = -1, DFS2(x);
+        std::queue&amp;lt;int&amp;gt; q;
+        q.push(col[x]), book[col[x]] = 1;
+        int cnt = 0;
+        for (; !q.empty(); ) &amp;#123;
+            int f = q.front();
+            q.pop();
+            for (auto i : t[f])
+                if (tik[i]) 
+                    for (int p = i; ~p &amp;amp;&amp;amp; !vis[p]; p = faa[p]) &amp;#123;
+                        vis[p] = 1;
+                        if (!book[col[p]]) &amp;#123;
+                            if (++cnt &amp;gt;= res)
+                                goto outo;
+                            q.push(col[p]), book[col[p]] = 1;
+                        &amp;#125;
+                    &amp;#125;
+                else
+                    goto outo;
+        &amp;#125;
+        res = cnt;
+        // printf(&amp;quot;x = %d: cnt = %d\n&amp;quot;, x, cnt);
+    outo:
+        for (auto i : p)
+            vis[i] = tik[i] = book[col[i]] = 0;
+        tag[x] = 1;
+        for (auto i : g[x])
+            if (!tag[i])
+                DFS(i);
+        return;
+    &amp;#125;;
+    DFS(1);
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;    
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;f---开店&#34;&gt;F - 开店&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P3241&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P3241&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;转化问题，原问题即求解权值在 &lt;span class=&#34;math inline&#34;&gt;\([L,R]\)&lt;/span&gt; 间的元素到 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 的距离和。&lt;/p&gt;
+&lt;p&gt;一般求解距离的方法是找到 LCA 后计算，考虑如果不利用树上 LCA，而是利用点分树上 LCA 如何计算。分讨易证得点分树上 LCA 一定在两点路径上。&lt;/p&gt;
+&lt;p&gt;储存点分树上每个点到其每个祖先的距离，就可以方便地计算任意两点间距离。接下来处理原问题的弱化：对于每个 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 求解其到树上所有点距离和。显然这是一个类似换根的问题，随便做即可。&lt;/p&gt;
+&lt;p&gt;现在需要在线地解决原问题。&lt;strong&gt;可以用 vector 存储这一层所有点的权值与深度信息，按权值排序后二分查询&lt;/strong&gt;。复杂度 &lt;span class=&#34;math inline&#34;&gt;\(O(n\log^2 n)\)&lt;/span&gt;。实现的时候应该可以注意到原题限制点度数对复杂度的保证。&lt;/p&gt;
+&lt;details&gt;
+&lt;p&gt;打起来的时候感觉很史，但实际上调得比大多数题快。&lt;/p&gt;
+&lt;p&gt;大概懂得为什么经常看大佬写游记做到史题的实现预期都是『一遍过』了。&lt;/p&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const long long inf = 1e18;
+const int maxn = 1.5e5 + 5;
+std::vector&amp;lt;std::pair&amp;lt;int, int&amp;gt; &amp;gt; g[maxn];
+int top[maxn], siz[maxn], fa[maxn], son[maxn], dep[maxn], dis[maxn];
+void DFS1(int x) &amp;#123;
+    siz[x] = 1;
+    for (auto [i, w] : g[x])
+        if (i != fa[x]) &amp;#123;
+            fa[i] = x;
+            dep[i] = dep[x] + 1, dis[i] = dis[x] + w;
+            DFS1(i);
+            siz[x] += siz[i];
+            if (siz[i] &amp;gt; siz[son[x]])
+                son[x] = i;
+        &amp;#125;
+    return;
+&amp;#125;
+void DFS2(int x) &amp;#123;
+    if (son[x])
+        top[son[x]] = top[x], DFS2(son[x]);
+    for (auto [i, w] : g[x])
+        if (i != fa[x] &amp;amp;&amp;amp; i != son[x])
+            top[i] = i, DFS2(i);
+    return;
+&amp;#125;
+int ask(int x, int y) &amp;#123;
+    int sx = x, sy = y;
+    for (; top[x] != top[y]; x = fa[top[x]])
+        if (dep[top[x]] &amp;lt; dep[top[y]])
+            std::swap(x, y);
+    x = dep[x] &amp;lt; dep[y] ? x : y;
+    return dis[sx] + dis[sy] - 2 * dis[x];
+&amp;#125;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, q, A;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; q &amp;gt;&amp;gt; A;
+    std::vector&amp;lt;int&amp;gt; c(n + 1);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        std::cin &amp;gt;&amp;gt; c[i];
+    for (int i = 1, x, y, w; i &amp;lt; n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y &amp;gt;&amp;gt; w;
+        g[x].emplace_back(y, w), g[y].emplace_back(x, w);
+    &amp;#125;
+    DFS1(1), DFS2(1);
+    std::vector&amp;lt;int&amp;gt; mx(n + 1), siz(n + 1), p, tag(n + 1);
+    std::function&amp;lt;void(int, int)&amp;gt; DFS1 = [&amp;amp;](int x, int fa) &amp;#123;
+        siz[x] = 1, mx[x] = 0;
+        p.push_back(x);
+        for (auto [i, w] : g[x])
+            if (!tag[i] &amp;amp;&amp;amp; i != fa) &amp;#123;
+                DFS1(i, x);
+                siz[x] += siz[i];
+                mx[x] = std::max(mx[x], siz[i]);
+            &amp;#125;
+        return;
+    &amp;#125;;
+    auto findrt = [&amp;amp;](int x) &amp;#123;
+        p.clear(), DFS1(x, -1);
+        int n = (int)p.size();
+        for (auto i : p)
+            if (mx[i] &amp;lt;= n / 2 &amp;amp;&amp;amp; n - siz[i] &amp;lt;= n / 2)
+                return i;
+        assert(0);
+        return -1;
+    &amp;#125;;
+    std::vector&amp;lt;int&amp;gt; dis(n + 1);
+    std::vector&amp;lt;std::array&amp;lt;std::vector&amp;lt;std::pair&amp;lt;int, long long&amp;gt; &amp;gt;, 3&amp;gt; &amp;gt; t(n + 1);
+    std::function&amp;lt;void(int, int, std::vector&amp;lt;std::pair&amp;lt;int, long long&amp;gt; &amp;gt;&amp;amp;)&amp;gt; DFS2 = [&amp;amp;](int x, int fa, std::vector&amp;lt;std::pair&amp;lt;int, long long&amp;gt; &amp;gt; &amp;amp;t) &amp;#123;
+        t.emplace_back(c[x], dis[x]);
+        for (auto [i, w] : g[x])
+            if (!tag[i] &amp;amp;&amp;amp; i != fa) &amp;#123;
+                dis[i] = dis[x] + w;
+                DFS2(i, x, t);
+            &amp;#125;
+        return;
+    &amp;#125;;
+    std::vector&amp;lt;std::pair&amp;lt;int, int&amp;gt; &amp;gt; to(n + 1);
+    std::function&amp;lt;std::pair&amp;lt;int, int&amp;gt; (int)&amp;gt; DFS = [&amp;amp;](int x) &amp;#123;
+        x = findrt(x);
+        int ret = dis[x];
+        for (int j = 0; j &amp;lt; (int)g[x].size(); ++j) &amp;#123;
+            auto [i, w] = g[x][j];
+            if (!tag[i]) &amp;#123;
+                dis[i] = w;
+                DFS2(i, x, t[x][j]);
+                std::sort(t[x][j].begin(), t[x][j].end());
+                // printf(&amp;quot;[%d, %d]: %d(%lld)&amp;quot;, x, j, t[x][j][0].first, t[x][j][0].second);
+                for (int k = 1; k &amp;lt; (int)t[x][j].size(); ++k) &amp;#123;
+                    t[x][j][k].second += t[x][j][k - 1].second;
+                    // printf(&amp;quot; %d(%lld)&amp;quot;, t[x][j][k].first, t[x][j][k].second);
+                &amp;#125;
+                // puts(&amp;quot;&amp;quot;);
+            &amp;#125;
+        &amp;#125;
+        tag[x] = 1;
+        for (int j = 0; j &amp;lt; (int)g[x].size(); ++j) &amp;#123;
+            auto [i, w] = g[x][j];
+            if (!tag[i]) &amp;#123;
+                auto [rt, d] = DFS(i);
+                to[rt] = &amp;#123; x, j &amp;#125;;
+            &amp;#125;
+        &amp;#125;
+        return std::make_pair(x, ret);
+    &amp;#125;;
+    int rt = DFS(1).first;
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; fd(n + 1);
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        int now = i;
+        for (;; now = to[now].first) &amp;#123;
+            fd[i].push_back(ask(now, i));
+            if (now == rt)
+                break;
+        &amp;#125;
+    &amp;#125;
+    for (int u, a, b; q--; ) &amp;#123;
+        static long long la = 0ll;
+        std::cin &amp;gt;&amp;gt; u &amp;gt;&amp;gt; a &amp;gt;&amp;gt; b;
+        int l = std::min((a + la) % A, (b + la) % A), r = std::max((a + la) % A, (b + la) % A);
+        // printf(&amp;quot;ask %d, [%d, %d]\n&amp;quot;, u, l, r);
+        auto ask = [&amp;amp;](int x, int j) &amp;#123;
+            auto res(0ll);
+            int cnt = 0, p = 0;
+            p = std::lower_bound(t[x][j].begin(), t[x][j].end(), std::make_pair(l, -1ll)) - t[x][j].begin();
+            cnt -= p;
+            if (p != 0)
+                res -= t[x][j][p - 1].second;
+            p = std::upper_bound(t[x][j].begin(), t[x][j].end(), std::make_pair(r, inf)) - t[x][j].begin();
+            cnt += p;
+            if (p != 0)
+                res += t[x][j][p - 1].second;
+            return std::make_pair(res, cnt);
+        &amp;#125;;
+        la = ask(u, 0).first + ask(u, 1).first + ask(u, 2).first;
+        // int U = u;
+        for (auto d = ++fd[u].begin(); u != rt; ++d) &amp;#123;
+            auto [fa, k] = to[u];
+            // fprintf(stderr, &amp;quot;u = %d, fa = %d, d = %d\n&amp;quot;, U, fa, *d);
+            for (int j = 0; j &amp;lt; 3; ++j)
+                if (j != k) &amp;#123;
+                    auto [len, cnt] = ask(fa, j);
+                    la += len + (long long)cnt * *d;
+                &amp;#125;
+            if (c[fa] &amp;gt;= l &amp;amp;&amp;amp; c[fa] &amp;lt;= r)
+                la += *d;
+            u = fa;
+        &amp;#125;
+        std::cout &amp;lt;&amp;lt; la &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    &amp;#125;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

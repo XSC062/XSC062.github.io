@@ -1,0 +1,826 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title> • Posts by &#34;费用流&#34; tag</title>
+        <link>https://xsc062.netlify.app</link>
+        <description></description>
+        <language>zh-CN</language>
+        <pubDate>Thu, 20 Jul 2023 17:57:23 +0800</pubDate>
+        <lastBuildDate>Thu, 20 Jul 2023 17:57:23 +0800</lastBuildDate>
+        <category>并查集</category>
+        <category>斜率优化</category>
+        <category>悬线法</category>
+        <category>哈希</category>
+        <category>字典树</category>
+        <category>DP</category>
+        <category>单调队列</category>
+        <category>分治</category>
+        <category>二分图</category>
+        <category>CRT / exCRT</category>
+        <category>排列组合</category>
+        <category>网络流</category>
+        <category>费用流</category>
+        <category>二分</category>
+        <category>上下界网络流</category>
+        <category>容斥原理</category>
+        <category>线段树</category>
+        <category>树状数组</category>
+        <category>区间 DP</category>
+        <category>构造</category>
+        <category>Tarjan</category>
+        <category>数据结构</category>
+        <category>下饭</category>
+        <category>LCA</category>
+        <category>倍增</category>
+        <category>鸽巢原理</category>
+        <category>概率期望</category>
+        <category>调和级数</category>
+        <category>差分</category>
+        <category>思维</category>
+        <category>树形 DP</category>
+        <category>最小生成树</category>
+        <category>SAM</category>
+        <category>状压</category>
+        <category>分块</category>
+        <category>可持久化</category>
+        <category>笛卡尔树</category>
+        <category>高维前缀和</category>
+        <category>闲话</category>
+        <category>欧拉回路</category>
+        <category>树链剖分</category>
+        <category>长链剖分</category>
+        <category>KMP</category>
+        <category>border</category>
+        <category>字符串</category>
+        <category>AC 自动机</category>
+        <category>SA</category>
+        <category>数学</category>
+        <category>树上差分</category>
+        <category>FWT</category>
+        <category>堆</category>
+        <category>树的重心</category>
+        <category>二项式定理</category>
+        <category>二项式反演</category>
+        <category>贪心</category>
+        <category>均摊</category>
+        <category>计数</category>
+        <category>优化建图</category>
+        <category>反悔贪心</category>
+        <category>调整法</category>
+        <category>背包</category>
+        <category>博弈论</category>
+        <category>DP 优化</category>
+        <category>虚树</category>
+        <category>点分治</category>
+        <category>WQS 二分</category>
+        <category>闵可夫斯基和</category>
+        <category>slope trick</category>
+        <category>四边形不等式</category>
+        <category>暴力</category>
+        <category>状压 DP</category>
+        <category>组合数学</category>
+        <category>支配对</category>
+        <category>DDP</category>
+        <category>平衡树</category>
+        <category>容斥</category>
+        <category>猫树</category>
+        <category>Kruskal 重构树</category>
+        <category>李超线段树</category>
+        <item>
+            <guid isPermalink="true">https://xsc062.netlify.app/20230720/</guid>
+            <title>费用流练习</title>
+            <link>https://xsc062.netlify.app/20230720/</link>
+            <category>网络流</category>
+            <category>费用流</category>
+            <pubDate>Thu, 20 Jul 2023 17:57:23 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/3820&#34;&gt;费用流入门练习&lt;/a&gt;。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;a.-订货&#34;&gt;A. 订货&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/3820/problem/1&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/3820/problem/1&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这个带继承关系的模型很熟悉，想到了 &lt;a href=&#34;https://www.cnblogs.com/XSC062/p/17548925.html&#34;&gt;猪&lt;/a&gt; 那一题。所以我们试着仿照这个方式来建图。&lt;/p&gt;
+&lt;p&gt;题目提到了单位费用，这简直就是直接把边的费用拍你脸上嘲讽。&lt;/p&gt;
+&lt;p&gt;我们拉一个大源点，朝每个月连一条容量为无穷大、费用为当月购买单位费用的边，表示每个月的购买。&lt;/p&gt;
+&lt;p&gt;拉一个大汇点，每个月朝它连一条容量为当月需求量、费用为 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt; 的边，表示每个月的需求。&lt;/p&gt;
+&lt;p&gt;再让每个月朝下一个月连一条容量为仓库容量、费用为贮存费用的边，表示继承。跑一个最小费用最大流即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#define int long long
+namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 405;
+const int inf = 1e18;
+const int maxm = 5e5 + 5;
+struct _ &amp;#123;
+    int v, c, w, n;
+    _() &amp;#123;&amp;#125;
+    _(int v1, int c1, int w1, int n1) &amp;#123;
+        v = v1, c = c1, w = w1, n = n1;
+    &amp;#125;
+&amp;#125;;
+_ u[maxm];
+bool inq[maxn];
+int n, m, S, x, res;
+int gs, gt, tot = 1;
+int h[maxn], dis[maxn];
+int fl[maxn], pre[maxn];
+int min(int x, int y) &amp;#123;
+    return x &amp;lt; y ? x : y;
+&amp;#125;
+bool SPFA(int s, int n) &amp;#123;
+    std::queue&amp;lt;int&amp;gt; q;
+    std::fill(dis + 1, dis + n + 1, inf);
+    q.push(s), dis[s] = 0, inq[s] = 1;
+    pre[s] = inf, pre[gt] = 0, fl[s] = inf;
+    while (!q.empty()) &amp;#123;
+        int f = q.front();
+        q.pop(), inq[f] = 0;
+        for (int i = h[f]; i; i = u[i].n) &amp;#123;
+            if (u[i].c == 0)
+                continue;
+            int v = u[i].v, w = u[i].w;
+            if (dis[v] &amp;gt; dis[f] + w) &amp;#123;
+                pre[v] = i ^ 1;
+                dis[v] = dis[f] + w;
+                fl[v] = min(fl[f], u[i].c);
+                if (!inq[v])
+                    inq[v] = 1, q.push(v);
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    return pre[gt];
+&amp;#125;
+void SSP(int s, int n) &amp;#123;
+    int p, mn, d;
+    while (SPFA(s, n)) &amp;#123;
+        mn = fl[gt], d = 0;
+        for (p = gt; p != s; p = u[pre[p]].v) &amp;#123;
+            u[pre[p]].c += mn;
+            u[pre[p] ^ 1].c -= mn;
+            d += u[pre[p] ^ 1].w;
+        &amp;#125;
+        res += mn * d;
+    &amp;#125;
+    return;
+&amp;#125;
+void add(int x, int y, int c, int w) &amp;#123;
+    u[++tot] = _(y, c, w, h[x]);
+    h[x] = tot;
+    return;
+&amp;#125;
+void addf(int x, int y, int c, int w) &amp;#123;
+    add(x, y, c, w), add(y, x, 0, -w);
+    return;
+&amp;#125;
+int main() &amp;#123;
+    read(n), read(m), read(S);
+    gs = n + 1, gt = gs + 1;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        read(x);
+        addf(i, gt, x, 0);
+        if (i != n)
+            addf(i, i + 1, S, m);
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        read(x);
+        addf(gs, i, inf, x);
+    &amp;#125;    
+    SSP(gs, gt);
+    print(res, &amp;#39;\n&amp;#39;);
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062
+#undef int  &lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;b.-网络扩容&#34;&gt;B. 网络扩容&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/3820/problem/2&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/3820/problem/2&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;鉴于一道费用流不会无缘无故先让你求一遍最大流，我们先持观望态度，暂且认为最大流对题目有提示作用 &lt;del&gt;而不是说这道题就是个缝合怪&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;其实看完题我们就悟了，这怎么这么像上下界网络流那个差量网络呀，要不我们试试这么干？&lt;/p&gt;
+&lt;p&gt;我们先求得普通网络中的最大流，然后每条边减去流量，就成为了一个「差量网络 Pro」。那么我们现在就要通过扩容让该网络中的最大流变为 &lt;span class=&#34;math inline&#34;&gt;\(K\)&lt;/span&gt;。对于扩容的操作，不难想到把每条边的边权设为正无穷，然后费用设为扩容费用。&lt;/p&gt;
+&lt;p&gt;现在有了一个问题：原图中未留满的边，在现在的新网络中的残余容量应该如何处理呢？很简单，我们就把它当作已经扩过了这么多容，通过拆边操作拆出来一条容量为原图中残余容量、费用为 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;「会员通道」，那么算法就会优先选择这条边。&lt;/p&gt;
+&lt;p&gt;怎么去控制流量为 &lt;span class=&#34;math inline&#34;&gt;\(K\)&lt;/span&gt;？联想到之前的拆边操作，我们考虑拆点。在 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt; 中任选一个拆开作为新的源点 / 汇点，新点和旧点之间的容量为 &lt;span class=&#34;math inline&#34;&gt;\(K\)&lt;/span&gt;、费用为 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt; 即可。&lt;/p&gt;
+&lt;p&gt;然后跑一个最小费用最大流就行。&lt;del&gt;该说不说题目的正解思路引导做得还挺好的&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;其实注意到在跑完最大流之后，所有正向边的残余容量已经求得，只要在跑最大流时令所有边的费用为 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;（毕竟最大流不关心费用），就可以沿用原图，只加新边再跑费用流。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#define int long long
+namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int inf = 1e18;
+const int maxn = 1e3 + 5;
+const int maxm = 5e5 + 5;
+struct _ &amp;#123;
+    int v, c, w, n;
+    _() &amp;#123;&amp;#125;
+    _(int v1, int c1, int w1, int n1) &amp;#123;
+        v = v1, c = c1, w = w1, n = n1;
+    &amp;#125;
+&amp;#125;;
+struct __ &amp;#123; int x, y, c, w; &amp;#125;;
+_ u[maxm];
+__ w[maxm];
+bool inq[maxn];
+int n, m, k, res;
+int gs, gt, tot = 1;
+int h[maxn], dis[maxn];
+int fl[maxn], pre[maxn];
+int vis[maxn], now[maxn], dep[maxn];
+int min(int x, int y) &amp;#123;
+    return x &amp;lt; y ? x : y;
+&amp;#125;
+bool BFS(int n) &amp;#123;
+    std::fill(vis + 1, vis + n + 1, 0);
+    std::fill(dep + 1, dep + n + 1, 0); 
+    std::queue&amp;lt;int&amp;gt; q;
+    dep[gs] = 1, vis[gs] = 1;
+    q.push(gs), now[gs] = h[gs];
+    while (!q.empty()) &amp;#123;
+        int f = q.front();
+        q.pop();
+        for (int i = h[f]; i; i = u[i].n) &amp;#123;
+            int v = u[i].v, w = u[i].c;
+            if (vis[v] == 1 || w == 0)
+                continue;
+            vis[v] = 1, now[v] = h[v];
+            dep[v] = dep[f] + 1, q.push(v);
+            if (v == gt)
+                return 1;
+        &amp;#125;
+    &amp;#125;
+    return 0;
+&amp;#125;
+int findP(int x, int flow = inf) &amp;#123;
+    if (x == gt)
+        return flow;
+    int rest = flow, i;
+    for (i = now[x]; rest &amp;amp;&amp;amp; i; i = u[i].n) &amp;#123;
+        int v = u[i].v, w = u[i].c;
+        now[x] = i;
+        if (dep[v] != dep[x] + 1 || w == 0)
+            continue;
+        int t = findP(v, min(rest, w));
+        if (t == 0)
+            dep[v] = 0;
+        rest -= t;
+        u[i].c -= t, u[i ^ 1].c += t;
+    &amp;#125;
+    return flow - rest;
+&amp;#125;
+int Dinic(int n) &amp;#123;
+    int res = 0;
+    while (BFS(n)) &amp;#123;
+        int t = findP(gs);
+        while (t) &amp;#123;
+            res += t;
+            t = findP(gs);
+        &amp;#125;
+    &amp;#125;
+    return res;
+&amp;#125;
+bool SPFA(int s, int n) &amp;#123;
+    std::queue&amp;lt;int&amp;gt; q;
+    std::fill(dis + 1, dis + n + 1, inf);
+    q.push(s), dis[s] = 0, inq[s] = 1;
+    pre[s] = inf, pre[gt] = 0, fl[s] = inf;
+    while (!q.empty()) &amp;#123;
+        int f = q.front();
+        q.pop(), inq[f] = 0;
+        for (int i = h[f]; i; i = u[i].n) &amp;#123;
+            if (u[i].c == 0)
+                continue;
+            int v = u[i].v, w = u[i].w;
+            if (dis[v] &amp;gt; dis[f] + w) &amp;#123;
+                pre[v] = i ^ 1;
+                dis[v] = dis[f] + w;
+                fl[v] = min(fl[f], u[i].c);
+                if (!inq[v])
+                    inq[v] = 1, q.push(v);
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    return pre[gt];
+&amp;#125;
+void SSP(int s, int n) &amp;#123;
+    int p, mn, d;
+    while (SPFA(s, n)) &amp;#123;
+        mn = fl[gt], d = 0;
+        for (p = gt; p != s; p = u[pre[p]].v) &amp;#123;
+            u[pre[p]].c += mn;
+            u[pre[p] ^ 1].c -= mn;
+            d += u[pre[p] ^ 1].w;
+        &amp;#125;
+        res += mn * d;
+    &amp;#125;
+    return;
+&amp;#125;
+void add(int x, int y, int c, int w) &amp;#123;
+    u[++tot] = _(y, c, w, h[x]);
+    h[x] = tot;
+    return;
+&amp;#125;
+void addf(int x, int y, int c, int w = 0) &amp;#123;
+    add(x, y, c, w), add(y, x, 0, -w);
+    return;
+&amp;#125;
+int main() &amp;#123;
+    read(n), read(m), read(k);
+    gs = 1, gt = n;
+    for (int i = 1; i &amp;lt;= m; ++i) &amp;#123;
+        read(w[i].x), read(w[i].y);
+        read(w[i].c), read(w[i].w);
+        addf(w[i].x, w[i].y, w[i].c);
+    &amp;#125;
+    print(Dinic(n), &amp;#39; &amp;#39;);
+    gs = n + 1, addf(gs, 1, k, 0);
+    for (int i = 1; i &amp;lt;= m; ++i)
+        addf(w[i].x, w[i].y, inf, w[i].w);
+    SSP(gs, gt);
+    print(res, &amp;#39;\n&amp;#39;);
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062
+#undef int&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;c.-航班安排&#34;&gt;C. 航班安排&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/3820/problem/3&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/3820/problem/3&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;很简单一个道理，时间的具体值对我们来说并不重要。能到就是能到，不能到就是不能到。&lt;/p&gt;
+&lt;p&gt;边权矩阵也并不是全部有用，这条边和任务有关系吗？没有，那就当它是空气。&lt;/p&gt;
+&lt;p&gt;那什么会对我们产生限制？飞机数量。故容量由飞机数量决定。什么是我们要最大化的值？收益，故我们的费用是支出。&lt;/p&gt;
+&lt;p&gt;如果飞机能在一个任务结束之后，在另一个任务开始之前飞过去，那就将两个任务连边，容量为 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，费用为两点间花费。特别地，应将机场拆为大源点和大汇点，并在二者中任选其一拆点（和 T2 类似），好作出 &lt;span class=&#34;math inline&#34;&gt;\(K\)&lt;/span&gt; 的流量限制。&lt;/p&gt;
+&lt;p&gt;还有一个小细节，对于一个任务的流量我们也要加以约束，不然碰到流入 &lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt; 流出 &lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt; 这种平衡但不合法的情况就不行了，所以对于任务我们也要按老套路拆点。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#define int long long
+namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int inf = 1e18;
+const int maxn = 405;
+const int maxm = 4e5 + 5;
+struct _ &amp;#123;
+    int v, c, w, n;
+    _() &amp;#123;&amp;#125;
+    _(int v1, int c1, int w1, int n1) &amp;#123;
+        v = v1, c = c1, w = w1, n = n1;
+    &amp;#125;
+&amp;#125;;
+struct __ &amp;#123;
+    int x, y, l, r, c;
+    bool operator&amp;lt; (const __ &amp;amp;q) const &amp;#123;
+        return l &amp;lt; q.l;
+    &amp;#125;
+&amp;#125;;
+_ u[maxm];
+__ w[maxn];
+bool inq[maxn];
+int gs, gt, tot = 1;
+int h[maxn], dis[maxn];
+int fl[maxn], pre[maxn];
+int n, m, k, T, res, fs, ft;
+int t[maxn][maxn], f[maxn][maxn];
+int min(int x, int y) &amp;#123;
+    return x &amp;lt; y ? x : y;
+&amp;#125;
+bool SPFA(int s, int n) &amp;#123;
+    std::queue&amp;lt;int&amp;gt; q;
+    std::fill(dis + 1, dis + n + 1, inf);
+    q.push(s), dis[s] = 0, inq[s] = 1;
+    pre[s] = inf, pre[gt] = 0, fl[s] = inf;
+    while (!q.empty()) &amp;#123;
+        int f = q.front();
+        q.pop(), inq[f] = 0;
+        for (int i = h[f]; i; i = u[i].n) &amp;#123;
+            if (u[i].c == 0)
+                continue;
+            int v = u[i].v, w = u[i].w;
+            if (dis[v] &amp;gt; dis[f] + w) &amp;#123;
+                pre[v] = i ^ 1;
+                dis[v] = dis[f] + w;
+                fl[v] = min(fl[f], u[i].c);
+                if (!inq[v])
+                    inq[v] = 1, q.push(v);
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    return pre[gt];
+&amp;#125;
+void SSP(int s, int n) &amp;#123;
+    int p, mn, d;
+    while (SPFA(s, n)) &amp;#123;
+        mn = fl[gt], d = 0;
+        for (p = gt; p != s; p = u[pre[p]].v) &amp;#123;
+            u[pre[p]].c += mn;
+            u[pre[p] ^ 1].c -= mn;
+            d += u[pre[p] ^ 1].w;
+        &amp;#125;
+        res += mn * d;
+    &amp;#125;
+    return;
+&amp;#125;
+void add(int x, int y, int c, int w) &amp;#123;
+    u[++tot] = _(y, c, w, h[x]);
+    h[x] = tot;
+    return;
+&amp;#125;
+void addf(int x, int y, int c, int w) &amp;#123;
+    add(x, y, c, w), add(y, x, 0, -w);
+    return;
+&amp;#125;
+int main() &amp;#123;
+    read(n), read(m), read(k), read(T);
+    fs = 2 * m + 1, ft = 2 * m + 2;
+    gs = 2 * m + 3, gt = 2 * m + 4;
+    addf(gs, fs, k, 0), addf(ft, gt, k, 0);
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        for (int j = 1; j &amp;lt;= n; ++j)
+            read(t[i][j]);
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        for (int j = 1; j &amp;lt;= n; ++j)
+            read(f[i][j]);
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= m; ++i) &amp;#123;
+        read(w[i].x), read(w[i].y);
+        read(w[i].l), read(w[i].r);
+        read(w[i].c), ++w[i].x, ++w[i].y;
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= m; ++i) &amp;#123;
+        addf(i + m, i, 1, 0);
+        if (t[1][w[i].x] &amp;lt;= w[i].l) &amp;#123;
+            addf(fs, i + m, 1,
+                f[1][w[i].x] - w[i].c);
+        &amp;#125;
+        if (w[i].r + t[w[i].y][1] &amp;lt;= T)
+            addf(i, ft, 1, f[w[i].y][1]);
+        for (int j = 1; j &amp;lt;= m; ++j) &amp;#123;
+            if (i != j &amp;amp;&amp;amp; w[i].r +
+                t[w[i].y][w[j].x] &amp;lt;= w[j].l) &amp;#123;
+                addf(i, j + m, 1,
+                    f[w[i].y][w[j].x] - w[j].c);
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    SSP(gs, gt);
+    print(-res, &amp;#39;\n&amp;#39;);
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062
+#undef int&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;d.-修车&#34;&gt;D. 修车&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/3820/problem/4&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/3820/problem/4&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;顾客数一定，所谓平均等待时间不过是个幌子，只需要求得最小等待总时间。&lt;/p&gt;
+&lt;p&gt;技术人员不能同时修两辆车，&lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; 的范围又这么小，不往拆点想都难。可问题来了，怎么拆呢？&lt;/p&gt;
+&lt;p&gt;我一开始的想法是，用点 &lt;span class=&#34;math inline&#34;&gt;\((i, j)\)&lt;/span&gt; 表示人 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 修车 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt;，但是这样建图怎样也无法达到目的。&lt;/p&gt;
+&lt;p&gt;于是我添加了一个维度 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;，用点 &lt;span class=&#34;math inline&#34;&gt;\((i, j, k)\)&lt;/span&gt; 表示人 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 修车 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt;，并且这是他修的倒数第 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 辆车，这样建图就轻而易举了。但接下来就面临了一个问题：这数据范围跑不过。于是乎审视我们的点，其实 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 这个维度是可以被合并的，只保留 &lt;span class=&#34;math inline&#34;&gt;\((i, k)\)&lt;/span&gt;，因为不可能存在两辆车同时为人 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 的倒数第 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 辆车。&lt;/p&gt;
+&lt;p&gt;故将大源点和每辆车连边，容量为 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，费用为 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;；将每辆车 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 和每个 &lt;span class=&#34;math inline&#34;&gt;\((i, k)\)&lt;/span&gt; 连边，容量为 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，费用为 &lt;span class=&#34;math inline&#34;&gt;\(T_{i, j}\times k\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;这里有一点点费用提前计算的意思，所以就直接将每个 &lt;span class=&#34;math inline&#34;&gt;\((i, j)\)&lt;/span&gt; 和大汇点连边，容量为 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，费用为 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#define int long long
+namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int inf = 1e18;
+const int maxn = 1e4 + 5;
+const int maxm = 1e6 + 5;
+struct _ &amp;#123;
+    int v, c, w, n;
+    _() &amp;#123;&amp;#125;
+    _(int v1, int c1, int w1, int n1) &amp;#123;
+        v = v1, c = c1, w = w1, n = n1;
+    &amp;#125;
+&amp;#125;;
+_ u[maxm];
+bool inq[maxn];
+int n, m, x, res;
+int gs, gt, tot = 1;
+int h[maxn], dis[maxn];
+int fl[maxn], pre[maxn];
+int fun(int i, int j) &amp;#123;
+    return n + (i - 1) * n + j;
+&amp;#125;
+int min(int x, int y) &amp;#123;
+    return x &amp;lt; y ? x : y;
+&amp;#125;
+bool SPFA(int s, int n) &amp;#123;
+    std::queue&amp;lt;int&amp;gt; q;
+    std::fill(dis + 1, dis + n + 1, inf);
+    q.push(s), dis[s] = 0, inq[s] = 1;
+    pre[s] = inf, pre[gt] = 0, fl[s] = inf;
+    while (!q.empty()) &amp;#123;
+        int f = q.front();
+        q.pop(), inq[f] = 0;
+        for (int i = h[f]; i; i = u[i].n) &amp;#123;
+            if (u[i].c == 0)
+                continue;
+            int v = u[i].v, w = u[i].w;
+            if (dis[v] &amp;gt; dis[f] + w) &amp;#123;
+                pre[v] = i ^ 1;
+                dis[v] = dis[f] + w;
+                fl[v] = min(fl[f], u[i].c);
+                if (!inq[v])
+                    inq[v] = 1, q.push(v);
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    return pre[gt];
+&amp;#125;
+void SSP(int s, int n) &amp;#123;
+    int p, mn, d;
+    while (SPFA(s, n)) &amp;#123;
+        mn = fl[gt], d = 0;
+        for (p = gt; p != s; p = u[pre[p]].v) &amp;#123;
+            u[pre[p]].c += mn;
+            u[pre[p] ^ 1].c -= mn;
+            d += u[pre[p] ^ 1].w;
+        &amp;#125;
+        res += mn * d;
+    &amp;#125;
+    return;
+&amp;#125;
+void add(int x, int y, int c, int w) &amp;#123;
+    u[++tot] = _(y, c, w, h[x]);
+    h[x] = tot;
+    return;
+&amp;#125;
+void addf(int x, int y, int c, int w) &amp;#123;
+    add(x, y, c, w), add(y, x, 0, -w);
+    return;
+&amp;#125;
+int main() &amp;#123;
+    read(m), read(n);
+    gs = n * m + n + 1, gt = gs + 1;
+    for (int i = 1; i &amp;lt;= n; ++i)
+        addf(gs, i, 1, 0);
+    for (int i = 1; i &amp;lt;= n * m; ++i)
+        addf(i + n, gt, 1, 0);
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        for (int j = 1; j &amp;lt;= m; ++j) &amp;#123;
+            read(x);
+            for (int k = 1; k &amp;lt;= n; ++k) &amp;#123;
+                addf(i, fun(j, k),
+                            1, x * k);
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    SSP(gs, gt);
+    printf(&amp;quot;%.2lf&amp;quot;, res * 1.0 / n);
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062
+#undef int&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;e.-连连看&#34;&gt;E. 连连看&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/3820/problem/5&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/3820/problem/5&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;样例已经告诉了我们事实：小心删数，因为会有数同时出现在多组勾股数中。&lt;/p&gt;
+&lt;p&gt;还是熟悉的单点 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 流量限制，故拆点为入点和出点，入点连大源点容量为 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 费用为 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，出点连大汇点容量为 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 费用为 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，满足条件的 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; 我们为了不整细节就暴力地连双向边然后跑最大费用最大流。&lt;/p&gt;
+&lt;p&gt;由于双向边这个神必操作，最后的最大流和最大费用都会翻倍，输出的时候要减半。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#define int long long
+namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int inf = 1e18;
+const int maxn = 2e3 + 5;
+const int maxm = 4e5 + 5;
+struct _ &amp;#123;
+    int v, c, w, n;
+    _() &amp;#123;&amp;#125;
+    _(int v1, int c1, int w1, int n1) &amp;#123;
+        v = v1, c = c1, w = w1, n = n1;
+    &amp;#125;
+&amp;#125;;
+_ u[maxm];
+bool inq[maxn];
+int l, r, res, cnt;
+bool f[maxn][maxn];
+int gs, gt, tot = 1;
+int h[maxn], dis[maxn];
+int fl[maxn], pre[maxn];
+int gcd(int x, int y) &amp;#123;
+    return y ? gcd(y, x % y) : x;
+&amp;#125;
+int min(int x, int y) &amp;#123;
+    return x &amp;lt; y ? x : y;
+&amp;#125;
+bool SPFA(int s, int n) &amp;#123;
+    std::queue&amp;lt;int&amp;gt; q;
+    std::fill(dis + 1, dis + n + 1, -inf);
+    q.push(s), dis[s] = 0, inq[s] = 1;
+    pre[s] = inf, pre[gt] = 0, fl[s] = inf;
+    while (!q.empty()) &amp;#123;
+        int f = q.front();
+        q.pop(), inq[f] = 0;
+        for (int i = h[f]; i; i = u[i].n) &amp;#123;
+            if (u[i].c == 0)
+                continue;
+            int v = u[i].v, w = u[i].w;
+            if (dis[v] &amp;lt; dis[f] + w) &amp;#123;
+                pre[v] = i ^ 1;
+                dis[v] = dis[f] + w;
+                fl[v] = min(fl[f], u[i].c);
+                if (!inq[v])
+                    inq[v] = 1, q.push(v);
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    return pre[gt];
+&amp;#125;
+void SSP(int s, int n) &amp;#123;
+    int p, mn, d;
+    while (SPFA(s, n)) &amp;#123;
+        mn = fl[gt], d = 0;
+        for (p = gt; p != s; p = u[pre[p]].v) &amp;#123;
+            u[pre[p]].c += mn;
+            u[pre[p] ^ 1].c -= mn;
+            d += u[pre[p] ^ 1].w;
+        &amp;#125;
+        res += mn * d, cnt += mn;
+    &amp;#125;
+    return;
+&amp;#125;
+void add(int x, int y, int c, int w) &amp;#123;
+    u[++tot] = _(y, c, w, h[x]);
+    h[x] = tot;
+    return;
+&amp;#125;
+void addf(int x, int y, int c, int w) &amp;#123;
+    if (f[x][y])
+        return;
+    f[x][y] = f[y][x] = 1;
+    add(x, y, c, w), add(y, x, 0, -w);
+    return;
+&amp;#125;
+bool check(int x, int y) &amp;#123;
+    int z = sqrt(x * x - y * y);
+    if (z * z + y * y == x * x)
+        return (gcd(z, y) == 1);
+    return 0;
+&amp;#125;
+int main() &amp;#123;
+    read(l), read(r);
+    gs = 2 * r + 1, gt = 2 * r + 2;
+    for (int i = l; i &amp;lt;= r; ++i) &amp;#123;
+        addf(gs, i, 1, 0);
+        addf(i + r, gt, 1, 0);
+        for (int j = l; j &amp;lt; i; ++j) &amp;#123;
+            if (check(i, j)) &amp;#123;
+                addf(j, i + r, 1, i + j);
+                addf(i, j + r, 1, i + j);
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    SSP(gs, gt);
+    print(cnt / 2, &amp;#39; &amp;#39;), print(res / 2, &amp;#39;\n&amp;#39;);
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062
+#undef int&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;p&gt;依我看，队名就叫「曾总说的都队」吧 🐵&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">https://xsc062.netlify.app/20230717/</guid>
+            <title>学习小组</title>
+            <link>https://xsc062.netlify.app/20230717/</link>
+            <category>网络流</category>
+            <category>费用流</category>
+            <pubDate>Mon, 17 Jul 2023 15:52:02 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;Solution to &lt;a href=&#34;https://codeforces.com/problemset/problem/756/D&#34;&gt;CF756D Bacterial Melee&lt;/a&gt;。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;p&gt;给我整不会了。怎么处理平方？怎么控制参与总学生最多？其中一定又有什么我不知道的奇技淫巧。&lt;/p&gt;
+&lt;p&gt;一切尽在连边。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;处理学生与社团间的选择关系&lt;/p&gt;
+&lt;p&gt;把学生向社团连边。学生只能选取某社团一次，故容量为 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;一个学生选取某个社团并不会立即对最终花费带来可计算的影响，因为最终花费由该社团参与的 &lt;strong&gt;所有学生平方数&lt;/strong&gt; 决定。&lt;/p&gt;
+故这一步我们先不慌计算社团的代价，只算参与社团本身需要的手续费 &lt;span class=&#34;math inline&#34;&gt;\(F_i\)&lt;/span&gt;。但是需要注意到手续费是财务部的收入而非支出，故实际边权为 &lt;span class=&#34;math inline&#34;&gt;\(-F_i\)&lt;/span&gt;，计算答案时视作负支出（明显不会因此而产生负环，因此可以放心加边）。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;处理学生的选择数量上限&lt;/p&gt;
+&lt;p&gt;学生最多只能选择 &lt;span class=&#34;math inline&#34;&gt;\(K\)&lt;/span&gt; 个社团，为保证这一点，我们将源点向学生连边，容量为 &lt;span class=&#34;math inline&#34;&gt;\(K\)&lt;/span&gt;。&lt;/p&gt;
+很明显，代价也不在此处计算，故令费用为 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;保证代价最小&lt;/p&gt;
+&lt;p&gt;一开始，我认为最小费用最大流一定会找到最小费用，这个处理是无意义的，后来被打脸了。&lt;/p&gt;
+&lt;p&gt;我们若欲在此图中寻得最小费用最大流，则 &lt;strong&gt;流一定最大&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;而学生的流入容量为 &lt;span class=&#34;math inline&#34;&gt;\(K\)&lt;/span&gt;，为了满流，学生一定会尽可能多地选择社团，那么费用就会噌噌上涨。回到目标，即保证学生都选取至少一个社团时，支出最小。&lt;/p&gt;
+&lt;p&gt;那我们只要给机会让学生可以只选取一个社团就好了（当然也可以是两个、三个……）。&lt;/p&gt;
+&lt;p&gt;故让学生向终点连边，容量为 &lt;span class=&#34;math inline&#34;&gt;\(K-1\)&lt;/span&gt;，那么学生可以在选取了所有比较赚的社团后就不再选了，选这条边达到满流。同样因为该边流量只有 &lt;span class=&#34;math inline&#34;&gt;\(K-1\)&lt;/span&gt;，学生为了满流就只能再选至少一个社团，满足题意。&lt;/p&gt;
+不选社团明显是没有手续费和社团支出的，故费用为 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;处理社团本身支出&lt;/p&gt;
+&lt;p&gt;问题在于如何处理 &lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt; 这个平方项。&lt;/p&gt;
+&lt;p&gt;对于平方，我们可以联想到许多数学知识，譬如完全平方、平方差等，这里用到了平方差。&lt;/p&gt;
+&lt;p&gt;假如原来的代价是 &lt;span class=&#34;math inline&#34;&gt;\(C_i\times x^2\)&lt;/span&gt;，又加入了一个人，那么费用会变成 &lt;span class=&#34;math inline&#34;&gt;\(C_i\times (x + 1)^2\)&lt;/span&gt;。由平方差得两者之差为 &lt;span class=&#34;math inline&#34;&gt;\(C_i\times (2\times x + 1)\)&lt;/span&gt;。当 &lt;span class=&#34;math inline&#34;&gt;\(x - 1\)&lt;/span&gt; 取为任意正整数时，&lt;span class=&#34;math inline&#34;&gt;\(2\times x + 1\)&lt;/span&gt; 即为所有奇数。&lt;/p&gt;
+&lt;p&gt;所以我们将社团向汇点连边，连很多条边，每条边表示 &lt;strong&gt;新增一个团员的代价&lt;/strong&gt;，容量为 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 表示一个新增团员，费用为从 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 开始，一直到 &lt;span class=&#34;math inline&#34;&gt;\(2\times (N - 1) + 1\)&lt;/span&gt; 的所有奇数。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;那么问题到这里就算处理完了。直接上费用流即可。&lt;/p&gt;
+&lt;p&gt;不知道我的代码遭遇了哪家宇宙射线的侵蚀，Dinic 死活过不去，换成 EK 就过了。同学们如果发现自己的 Dinic 过不了也可以试试换 EK。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#define int long long
+namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 405;
+const int inf = 1e18;
+const int maxm = 5e5 + 5;
+struct _ &amp;#123;
+    int v, c, w, n;
+    _() &amp;#123;&amp;#125;
+    _(int v1, int c1, int w1, int n1) &amp;#123;
+        v = v1, c = c1, w = w1, n = n1;
+    &amp;#125;
+&amp;#125;;
+_ u[maxm];
+bool inq[maxn];
+int n, m, k, x, res;
+int gs, gt, tot = 1;
+int c[maxn], f[maxn];
+int h[maxn], dis[maxn];
+int fl[maxn], pre[maxn];
+int min(int x, int y) &amp;#123;
+    return x &amp;lt; y ? x : y;
+&amp;#125;
+bool SPFA(int s, int n) &amp;#123;
+    std::queue&amp;lt;int&amp;gt; q;
+    std::fill(dis + 1, dis + n + 1, inf);
+    q.push(s), dis[s] = 0, inq[s] = 1;
+    pre[s] = inf, pre[gt] = 0, fl[s] = inf;
+    while (!q.empty()) &amp;#123;
+        int f = q.front();
+        q.pop(), inq[f] = 0;
+        for (int i = h[f]; i; i = u[i].n) &amp;#123;
+            if (u[i].c == 0)
+                continue;
+            int v = u[i].v, w = u[i].w;
+            if (dis[v] &amp;gt; dis[f] + w) &amp;#123;
+                pre[v] = i ^ 1;
+                dis[v] = dis[f] + w;
+                fl[v] = min(fl[f], u[i].c);
+                if (!inq[v])
+                    inq[v] = 1, q.push(v);
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    return pre[gt];
+&amp;#125;
+void SSP(int s, int n) &amp;#123;
+    int p, mn, d;
+    while (SPFA(s, n)) &amp;#123;
+        mn = fl[gt], d = 0;
+        for (p = gt; p != s; p = u[pre[p]].v) &amp;#123;
+            u[pre[p]].c += mn;
+            u[pre[p] ^ 1].c -= mn;
+            d += u[pre[p] ^ 1].w;
+        &amp;#125;
+        res += mn * d;
+    &amp;#125;
+    return;
+&amp;#125;
+void add(int x, int y, int c, int w) &amp;#123;
+    u[++tot] = _(y, c, w, h[x]);
+    h[x] = tot;
+    return;
+&amp;#125;
+void readx(int &amp;amp;x) &amp;#123;
+    char ch = nec();
+    while (ch != &amp;#39;0&amp;#39; &amp;amp;&amp;amp; ch != &amp;#39;1&amp;#39;)
+        ch = nec();
+    x = ch - &amp;#39;0&amp;#39;;
+    return;
+&amp;#125;
+int main() &amp;#123;
+    read(n), read(m), read(k);
+    gs = n + m + 1, gt = gs + 1;
+    for (int i = 1; i &amp;lt;= m; ++i) &amp;#123;
+        read(c[i]);
+        for (int j = 0; j &amp;lt; n; ++j) &amp;#123;
+            add(i + n, gt, 1,
+                    (2 * j + 1) * c[i]);
+            add(gt, i + n, 0,
+                    -(2 * j + 1) * c[i]);
+        &amp;#125;
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= m; ++i)
+        read(f[i]);
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        add(gs, i, k, 0);
+        add(i, gs, 0, 0);
+        add(i, gt, k - 1, 0);
+        add(gt, i, 0, 0);
+        for (int j = 1; j &amp;lt;= m; ++j) &amp;#123;
+            readx(x);
+            if (x == 1) &amp;#123;
+                add(i, j + n, 1, -f[j]); // 负代价
+                add(j + n, i, 0, f[j]);
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    SSP(gs, gt);
+    print(res, &amp;#39;\n&amp;#39;);
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062
+#undef int&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

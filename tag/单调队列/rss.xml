@@ -1,0 +1,237 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title> • Posts by &#34;单调队列&#34; tag</title>
+        <link>https://xsc062.netlify.app</link>
+        <description></description>
+        <language>zh-CN</language>
+        <pubDate>Wed, 11 Jan 2023 02:21:35 +0800</pubDate>
+        <lastBuildDate>Wed, 11 Jan 2023 02:21:35 +0800</lastBuildDate>
+        <category>并查集</category>
+        <category>斜率优化</category>
+        <category>悬线法</category>
+        <category>哈希</category>
+        <category>字典树</category>
+        <category>DP</category>
+        <category>单调队列</category>
+        <category>分治</category>
+        <category>二分图</category>
+        <category>CRT / exCRT</category>
+        <category>排列组合</category>
+        <category>网络流</category>
+        <category>费用流</category>
+        <category>二分</category>
+        <category>上下界网络流</category>
+        <category>容斥原理</category>
+        <category>线段树</category>
+        <category>树状数组</category>
+        <category>区间 DP</category>
+        <category>构造</category>
+        <category>Tarjan</category>
+        <category>数据结构</category>
+        <category>下饭</category>
+        <category>LCA</category>
+        <category>倍增</category>
+        <category>鸽巢原理</category>
+        <category>概率期望</category>
+        <category>调和级数</category>
+        <category>差分</category>
+        <category>思维</category>
+        <category>树形 DP</category>
+        <category>最小生成树</category>
+        <category>SAM</category>
+        <category>状压</category>
+        <category>分块</category>
+        <category>可持久化</category>
+        <category>笛卡尔树</category>
+        <category>高维前缀和</category>
+        <category>闲话</category>
+        <category>欧拉回路</category>
+        <category>树链剖分</category>
+        <category>长链剖分</category>
+        <category>KMP</category>
+        <category>border</category>
+        <category>字符串</category>
+        <category>AC 自动机</category>
+        <category>SA</category>
+        <category>数学</category>
+        <category>树上差分</category>
+        <category>FWT</category>
+        <category>堆</category>
+        <category>树的重心</category>
+        <category>二项式定理</category>
+        <category>二项式反演</category>
+        <category>贪心</category>
+        <category>均摊</category>
+        <category>计数</category>
+        <category>优化建图</category>
+        <category>反悔贪心</category>
+        <category>调整法</category>
+        <category>背包</category>
+        <category>博弈论</category>
+        <category>DP 优化</category>
+        <category>虚树</category>
+        <category>点分治</category>
+        <category>WQS 二分</category>
+        <category>闵可夫斯基和</category>
+        <category>slope trick</category>
+        <category>四边形不等式</category>
+        <category>暴力</category>
+        <category>状压 DP</category>
+        <category>组合数学</category>
+        <category>支配对</category>
+        <category>DDP</category>
+        <category>平衡树</category>
+        <category>容斥</category>
+        <category>猫树</category>
+        <category>Kruskal 重构树</category>
+        <category>李超线段树</category>
+        <item>
+            <guid isPermalink="true">https://xsc062.netlify.app/20230111/</guid>
+            <title>瑰丽华尔兹</title>
+            <link>https://xsc062.netlify.app/20230111/</link>
+            <category>DP</category>
+            <category>单调队列</category>
+            <pubDate>Wed, 11 Jan 2023 02:21:35 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;Solution to&lt;a href=&#34;http://222.180.160.110:61235/problem/8965&#34;&gt;「NOI2005」瑰丽华尔兹&lt;/a&gt;。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;p&gt;单调队列优化 DP。&lt;/p&gt;
+&lt;p&gt;不难发现，题意可转化为：&lt;/p&gt;
+&lt;p&gt;从 &lt;span class=&#34;math inline&#34;&gt;\((x,y)\)&lt;/span&gt; 出发，按顺序向 &lt;span class=&#34;math inline&#34;&gt;\(d_i\)&lt;/span&gt; 方向移动 &lt;span class=&#34;math inline&#34;&gt;\([0,t_i−s_i+1]\)&lt;/span&gt; 距离，问最大移动距离。&lt;/p&gt;
+&lt;p&gt;为了方便描述，我们把一次「向 &lt;span class=&#34;math inline&#34;&gt;\(d_i\)&lt;/span&gt; 方向移动 &lt;span class=&#34;math inline&#34;&gt;\([0,t_i−s_i+1]\)&lt;/span&gt; 距离」的操作称为「一步」。&lt;/p&gt;
+&lt;p&gt;设计状态。不难发现位置信息必须出现在 DP 的维度中（因为当前位置会影响下一步滑动的距离），而其他信息均不会对下一步滑动产生影响。&lt;/p&gt;
+&lt;p&gt;故可令 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,j}\)&lt;/span&gt; 表示完成当前次滑动后，从起点滑动到 &lt;span class=&#34;math inline&#34;&gt;\((i,j)\)&lt;/span&gt; 可得到的最大滑动距离。&lt;/p&gt;
+&lt;p&gt;以方向上为例，可列 DP 式：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_{i,j}=\max_{i&amp;lt;k≤i+(ti−si+1)}\{f_{k,j}+k−i\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;此时可枚举每一列的所有状态，使用单调队列优化。&lt;/p&gt;
+&lt;p&gt;但实际操作中会出现问题。因为单调队列从下向上更新状态时，&lt;span class=&#34;math inline&#34;&gt;\(f_{k,j}\)&lt;/span&gt; 会比 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,j}\)&lt;/span&gt; 先更新（参考 01 背包倒序枚举容量），导致每一「步」会重复被走很多次。但单调队列的特性限制了我们只能从下向上枚举，此时可新开一个数组记录 &lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt; 当次被更新之前的值。&lt;/p&gt;
+&lt;p&gt;障碍物如何处理呢？我们知道，如果 &lt;span class=&#34;math inline&#34;&gt;\((i,j)\)&lt;/span&gt; 下面某一位置有障碍物，那么障碍物下面所有的 &lt;span class=&#34;math inline&#34;&gt;\((k,j)\)&lt;/span&gt; 都不能用于更新 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,j}\)&lt;/span&gt;（因为被挡住了滑不上来）。所以我们在从下往上枚举时，遇到障碍物就清空单调队列即可。&lt;/p&gt;
+&lt;p&gt;下、左、右方向的处理方式类似。&lt;/p&gt;
+&lt;p&gt;只需顺序执行操作，根据当前操作方向对应处理即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 205;
+const int inf = 1e18;
+int q[maxn];
+char a[maxn][maxn];
+int f[maxn][maxn], d[maxn][maxn];
+int n, m, x, y, k, u, h, t, res;
+int max(int x, int y) &amp;#123;
+    return x &amp;gt; y ? x : y;
+&amp;#125;
+int main() &amp;#123;
+    memset(f, -0x3f, sizeof (f));
+    read(n), read(m);
+    read(x), read(y), read(k);
+    f[x][y] = 0;
+    for (int i = 1; i &amp;lt;= n; ++i)
+        scanf(&amp;quot;%s&amp;quot;, a[i] + 1);
+    while (k--) &amp;#123;
+        read(x), read(y), read(u);
+        y = y - x + 1;
+        if (u == 1) &amp;#123;
+            for (int j = 1; j &amp;lt;= m; ++j) &amp;#123;
+                h = 1, t = 0;
+                for (int i = n; i; --i) &amp;#123;
+                    if (a[i][j] == &amp;#39;x&amp;#39;) &amp;#123;
+                        h = 1, t = 0;
+                        continue;
+                    &amp;#125;
+                    while (h &amp;lt;= t &amp;amp;&amp;amp; q[h] - i &amp;gt; y)
+                        ++h;
+                    d[i][j] = f[i][j];
+                    if (h &amp;lt;= t) &amp;#123;
+                        f[i][j] = max(f[i][j],
+                                    d[q[h]][j] + q[h] - i);
+                    &amp;#125;
+                    while (h &amp;lt;= t &amp;amp;&amp;amp; d[i][j] + i
+                                    &amp;gt;= d[q[t]][j] + q[t])
+                        --t;
+                    q[++t] = i;
+                &amp;#125;
+            &amp;#125;
+        &amp;#125;
+        else if (u == 2) &amp;#123;
+            for (int j = 1; j &amp;lt;= m; ++j) &amp;#123;
+                h = 1, t = 0;
+                for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+                    if (a[i][j] == &amp;#39;x&amp;#39;) &amp;#123;
+                        h = 1, t = 0;
+                        continue;
+                    &amp;#125;
+                    while (h &amp;lt;= t &amp;amp;&amp;amp; i - q[h] &amp;gt; y)
+                        ++h;
+                    d[i][j] = f[i][j];
+                    if (h &amp;lt;= t) &amp;#123;
+                        f[i][j] = max(f[i][j],
+                                    d[q[h]][j] + i - q[h]);
+                    &amp;#125;
+                    while (h &amp;lt;= t &amp;amp;&amp;amp; d[i][j] - i
+                                &amp;gt;= d[q[t]][j] - q[t])
+                        --t;
+                    q[++t] = i;
+                &amp;#125;
+            &amp;#125;
+        &amp;#125;
+        else if (u == 3) &amp;#123;
+            for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+                h = 1, t = 0;
+                for (int j = m; j; --j) &amp;#123;
+                    if (a[i][j] == &amp;#39;x&amp;#39;) &amp;#123;
+                        h = 1, t = 0;
+                        continue;
+                    &amp;#125;
+                    while (h &amp;lt;= t &amp;amp;&amp;amp; q[h] - j &amp;gt; y)
+                        ++h;
+                    d[i][j] = f[i][j];
+                    if (h &amp;lt;= t) &amp;#123;
+                        f[i][j] = max(f[i][j],
+                                    d[i][q[h]] + q[h] - j);
+                    &amp;#125;
+                    while (h &amp;lt;= t &amp;amp;&amp;amp; d[i][j] + j
+                                &amp;gt;= d[i][q[t]] + q[t])
+                        --t;
+                    q[++t] = j;
+                &amp;#125;
+            &amp;#125;
+        &amp;#125;
+        else &amp;#123;
+            for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+                h = 1, t = 0;
+                for (int j = 1; j &amp;lt;= m; ++j) &amp;#123;
+                    if (a[i][j] == &amp;#39;x&amp;#39;) &amp;#123;
+                        h = 1, t = 0;
+                        continue;
+                    &amp;#125;
+                    while (h &amp;lt;= t &amp;amp;&amp;amp; j - q[h] &amp;gt; y)
+                        ++h;
+                    d[i][j] = f[i][j];
+                    if (h &amp;lt;= t) &amp;#123;
+                        f[i][j] = max(f[i][j],
+                                    d[i][q[h]] + j - q[h]);
+                    &amp;#125;
+                    while (h &amp;lt;= t &amp;amp;&amp;amp; d[i][j] - j
+                                &amp;gt;= d[i][q[t]] - q[t])
+                        --t;
+                    q[++t] = j;
+                &amp;#125;
+            &amp;#125;
+        &amp;#125;
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            for (int j = 1; j &amp;lt;= m; ++j)
+                res = max(res, f[i][j]);
+        &amp;#125;
+    &amp;#125;
+    print(res);
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

@@ -28,9 +28,7 @@ const searchPath = "/search.xml"
 <script src="/js/jQuery.js"></script>
 
 <!-- 载入 Valine -->
-
-<script src="/js/Valine.min.js"></script>
-
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
 <!-- css 引入 -->
 
 <link rel="stylesheet" href="/css/layout.css">
@@ -39,6 +37,11 @@ const searchPath = "/search.xml"
 <link rel="stylesheet" href="/css/prcss/prism.css">
 
 
+
+<!-- rss -->
+<link rel="alternate" type="application/rss+xml" title="" href="https://xsc062.netlify.app/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="" href="https://xsc062.netlify.app/atom.xml" />
+<link rel="alternate" type="application/json" title="" href="https://xsc062.netlify.app/feed.json" />
 
 <meta charset="utf-8"> 
 <meta name="generator" content="Hexo 7.2.0"></head>
@@ -73,15 +76,7 @@ const searchPath = "/search.xml"
 <div id="search-bg">
 	<div id="search-box">
 		<input type="text" id="search-input" placeholder="Type to search...">
-		<div id="search-results"></div>
-		<p>恭喜你触发了这个 box，由于我还没有写关闭键，你只能通过刷新页面来关闭它。非常抱歉 ;-)</p>
-		<p>为了证明我没有摆烂，在这里放一个进度：</p>
-		<p>- 250715：尝试实现搜索功能，初步成功，能够搜索到包含关键词的文章了（<strong>也能关掉了</strong>）。不知道为啥输入 123 可以匹配所有文章，但是输入 1234 就一篇都匹配不上。（250814 upd：搜索的是 html 源码，<code>{</code> 的 ASCII 码为 123 / <code>&</code><code>#123;</code>）</p>
-		<p>- 250716：尝试加入关键词上下文来 de 上面的 bug，然后把 js 写成史了，现在这个框框并不具备搜索功能（也不具备关闭功能） :-(</p>
-		<p>- 250814：<strong>能关了</strong>，我很勤勉</p>
-		<p>什么？居然还能搜索！还能高亮关键词？谢谢你，hexo-generator-searchdb！但是你为什么没有注释，让我阅读理解了半天 :-(</p>
-		<p>css 等有空了再写吧，能用就行</p>
-		<p>**为什么有 bug？试着找一个关键词发现有的文章没有匹配上**/p>
+		<div id="search-results">键入以搜索</div>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
@@ -132,7 +127,7 @@ const searchPath = "/search.xml"
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%B8%E5%87%BD%E6%95%B0"><span class="toc-text">什么是凸函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E5%AE%9A"><span class="toc-text">判定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%B4%A8"><span class="toc-text">性质</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#wqs-%E4%BA%8C%E5%88%86"><span class="toc-text">WQS 二分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E4%BB%BB%E5%8A%A1"><span class="toc-text">主要任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%86%E8%8A%82%E5%A4%84%E7%90%86"><span class="toc-text">细节处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E7%A7%8D%E6%A0%91"><span class="toc-text">例：种树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8Braper"><span class="toc-text">例：Raper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%BA%E9%97%B4%E5%88%86%E6%8B%86%E9%97%AE%E9%A2%98"><span class="toc-text">区间分拆问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%BD%E5%8F%AF%E5%A4%AB%E6%96%AF%E5%9F%BA%E5%92%8C"><span class="toc-text">闽可夫斯基和</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8Bits-mooin-time-p"><span class="toc-text">例：It&#39;s Mooin&#39; Time P</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E5%81%87%E4%BA%BA"><span class="toc-text">例：假人</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#slope-trick"><span class="toc-text">slope trick</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E5%BA%8F%E5%88%97-sequence"><span class="toc-text">例：序列 sequence</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E7%83%9F%E8%8A%B1%E8%A1%A8%E6%BC%94"><span class="toc-text">例：烟花表演</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8Bbuy-low-sell-high"><span class="toc-text">例：Buy Low Sell High</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%B8%E5%87%BD%E6%95%B0"><span class="toc-text">什么是凸函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E5%AE%9A"><span class="toc-text">判定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%B4%A8"><span class="toc-text">性质</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#wqs-%E4%BA%8C%E5%88%86"><span class="toc-text">WQS 二分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E4%BB%BB%E5%8A%A1"><span class="toc-text">主要任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%86%E8%8A%82%E5%A4%84%E7%90%86"><span class="toc-text">细节处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E7%A7%8D%E6%A0%91"><span class="toc-text">例：种树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8Braper"><span class="toc-text">例：Raper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%BA%E9%97%B4%E5%88%86%E6%8B%86%E9%97%AE%E9%A2%98"><span class="toc-text">区间分拆问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%B5%E5%8F%AF%E5%A4%AB%E6%96%AF%E5%9F%BA%E5%92%8C"><span class="toc-text">闵可夫斯基和</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8Bits-mooin-time-p"><span class="toc-text">例：It&#39;s Mooin&#39; Time P</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E5%81%87%E4%BA%BA"><span class="toc-text">例：假人</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#slope-trick"><span class="toc-text">slope trick</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E5%BA%8F%E5%88%97-sequence"><span class="toc-text">例：序列 sequence</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E7%83%9F%E8%8A%B1%E8%A1%A8%E6%BC%94"><span class="toc-text">例：烟花表演</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8Bbuy-low-sell-high"><span class="toc-text">例：Buy Low Sell High</span></a></li></ol></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -163,7 +158,7 @@ const searchPath = "/search.xml"
 					
 						<a href="/tags/WQS-二分/" class="citem">WQS 二分</a>
 					
-						<a href="/tags/闽可夫斯基和/" class="citem">闽可夫斯基和</a>
+						<a href="/tags/闵可夫斯基和/" class="citem">闵可夫斯基和</a>
 					
 						<a href="/tags/slope-trick/" class="citem">slope trick</a>
 					
@@ -199,7 +194,7 @@ f(x)-f(x - 1)\le f(x + 1) - f(x)
 <li><p>其由两个凸函数线性相加得到：</p>
 <p>对于 <span class="math inline">\(\forall\, \lambda,\mu\ge 0\)</span> 和凸函数 <span class="math inline">\(f,g\)</span>，若 <span class="math inline">\(h=\lambda f+\mu g\)</span>，则 <span class="math inline">\(h\)</span> 为凸函数。</p>
 此外，此时 <span class="math inline">\(h\)</span> 的差分数组和 <span class="math inline">\(f,g\)</span> 差分数组也满足上述关系。</li>
-<li>其是两个凸函数的 <a href="#闽可夫斯基和">闽可夫斯基和</a>。</li>
+<li>其是两个凸函数的 <a href="#闵可夫斯基和">闵可夫斯基和</a>。</li>
 <li><p>其由两个凸函数线性 max 得到。</p>
 <p>对于两个凸函数的线性 min，一般不是凸函数，甚至可能是凹的。</p></li>
 </ul>
@@ -371,17 +366,17 @@ f(i,j)=\min(f(i-1,p-1)+w(p,j)).
 </blockquote>
 <p>那很好了。直接冲刺 WQS 即可。</p>
 <hr />
-<h2 id="闽可夫斯基和">闽可夫斯基和</h2>
+<h2 id="闵可夫斯基和">闵可夫斯基和</h2>
 <p>给定两个凸函数（当然是指 OI 中那种长得很直的函数），将它们的『边』拆下来过后，以某种方式拼在一起，使得最后得到一个新的凸函数。</p>
-<p>按每条『边』的斜率归并一下就可以得到，显然答案存在且唯一，这个过程被称为闽可夫斯基和。可以发现这是一种最值 - 加卷积。</p>
-<p>假设我们要求的 DP 数组是两个已知的子数组以类似的方法卷起来的，最后要求完整的 DP 数组（而非 WQS 中的单点值），就可以考虑闽可夫斯基和。</p>
+<p>按每条『边』的斜率归并一下就可以得到，显然答案存在且唯一，这个过程被称为闵可夫斯基和。可以发现这是一种最值 - 加卷积。</p>
+<p>假设我们要求的 DP 数组是两个已知的子数组以类似的方法卷起来的，最后要求完整的 DP 数组（而非 WQS 中的单点值），就可以考虑闵可夫斯基和。</p>
 <p>发现这个结构是很适合归并的，使用归并要求状态中含有版本维、因变量维。</p>
 <hr />
 <h3 id="例its-mooin-time-p">例：It's Mooin' Time P</h3>
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P11459" class="uri">https://www.luogu.com.cn/problem/P11459</a></p>
 <p>定义 <span class="math inline">\(w_i\)</span> 为将 <span class="math inline">\([i,i+L)\)</span> 改为 <code>MOO</code> 的代价，问题转化为选取 <span class="math inline">\(1\sim \frac nL\)</span> 个不重区间的最小代价和。</p>
 <p>尝试归并，每次将 <span class="math inline">\([l,mid]\)</span> 和 <span class="math inline">\((mid, r]\)</span> 卷起来。但是会有一点问题：如果恰好有区间卡在中间呢？</p>
-<p>可以令 <span class="math inline">\(f_{l,r,0/1/2,0/1/2}(i)\)</span> 表示在 <span class="math inline">\([l,r]\)</span> 内选了 <span class="math inline">\(i\)</span> 个 <code>MOO</code>，且两侧最远的被选点距离端点为 <span class="math inline">\(0/1/\ge 2\)</span> 的 DP 值。然后可以进行相应的讨论、平移、闽可夫斯基和，最后将所有情况线性取 max 得到这一层的答案，容易发现得到的答案也是凸的。</p>
+<p>可以令 <span class="math inline">\(f_{l,r,0/1/2,0/1/2}(i)\)</span> 表示在 <span class="math inline">\([l,r]\)</span> 内选了 <span class="math inline">\(i\)</span> 个 <code>MOO</code>，且两侧最远的被选点距离端点为 <span class="math inline">\(0/1/\ge 2\)</span> 的 DP 值。然后可以进行相应的讨论、平移、闵可夫斯基和，最后将所有情况线性取 max 得到这一层的答案，容易发现得到的答案也是凸的。</p>
 <details>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
 const long long inf = 1e18;
@@ -503,7 +498,7 @@ int main() &#123;
 <p>令 <span class="math inline">\(f_{i,j}\)</span> 表示前 <span class="math inline">\(i\)</span> 组选完占了 <span class="math inline">\(j\)</span> 体积的最大价值。那么有 <span class="math inline">\(f_{i,j}=\max\{f_{i-1,k}+a_{i,j-k}\}\)</span>。</p>
 <p><em>袜，这个东西好凸的样子！啊？居然不是凸的？</em></p>
 <p>事实上，有结论：若干个体积为 <span class="math inline">\(0\sim 4\)</span> 的物品做背包，可以凑出值域内任意 <span class="math inline">\(24\)</span> 的倍数。所以先把体积全部 <span class="math inline">\(-1\)</span>，然后就可以得到体积为 <span class="math inline">\(0\sim 4\)</span> 的物品。然后会发现他们按照模 <span class="math inline">\(12\)</span> 的余数分别是凸的。</p>
-<p>能感受到恶意了。然后就可以枚举体积，再闽可夫斯基和了。同样需要在状态中引入作为版本号的 <span class="math inline">\([l,r]\)</span> 维，显然因变量是体积、版本号是组数。</p>
+<p>能感受到恶意了。然后就可以枚举体积，再闵可夫斯基和了。同样需要在状态中引入作为版本号的 <span class="math inline">\([l,r]\)</span> 维，显然因变量是体积、版本号是组数。</p>
 <details>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
 const long long inf = 1e18;
@@ -654,11 +649,11 @@ f_{u,d}=\sum\limits_{(v, w)\in u}\min\limits_{0\le w&#39;\le d}\{f_{v,d-w&#39;}+
 <p>可以归纳证明 <span class="math inline">\(f_{u,d}\)</span> 为凸；和上一题相似地，考虑用 <span class="math inline">\(f_v\)</span> 的堆得到 <span class="math inline">\(f_u\)</span> 的堆。</p>
 <p>首先最外层是一个线性加，这其实就是把差分数组 / 斜率加起来，放到我们这个堆里面就是合并两个堆。虽然你可能和我一样不认识可并堆，但是你可以和我一样不会 pd_ds。</p>
 <p>再看内层，发现和上一题长得像但其实不一样，呜呜呜。发现 <span class="math inline">\(|w-w&#39;|\)</span> 是一个左右斜率分别为 <span class="math inline">\(-1,1\)</span> 的分段函数，而左边类比可得斜率最大为 <span class="math inline">\(1\)</span>。</p>
-<p>由闽可夫斯基和，内层函数斜率 <span class="math inline">\(&lt;-1\)</span> 的部分来自 <span class="math inline">\(f_{v,d-w&#39;}\)</span>；<span class="math inline">\(=-1\)</span> 的部分来自 <span class="math inline">\(f_{v,d-w&#39;}\)</span> 和 <span class="math inline">\(|w-w&#39;|\)</span> 的左半边（感谢 <span class="math inline">\(w&#39;\)</span> 是有下确界的）；<span class="math inline">\(=0\)</span> 的部分来自 <span class="math inline">\(f_{v,d-w&#39;}\)</span>；<span class="math inline">\(&gt;0\)</span> 的部分我们不关心。</p>
+<p>由闵可夫斯基和，内层函数斜率 <span class="math inline">\(&lt;-1\)</span> 的部分来自 <span class="math inline">\(f_{v,d-w&#39;}\)</span>；<span class="math inline">\(=-1\)</span> 的部分来自 <span class="math inline">\(f_{v,d-w&#39;}\)</span> 和 <span class="math inline">\(|w-w&#39;|\)</span> 的左半边（感谢 <span class="math inline">\(w&#39;\)</span> 是有下确界的）；<span class="math inline">\(=0\)</span> 的部分来自 <span class="math inline">\(f_{v,d-w&#39;}\)</span>；<span class="math inline">\(&gt;0\)</span> 的部分我们不关心。</p>
 <p>最终函数图像的变化：水平部分的左端点右移了 <span class="math inline">\(w\)</span>。找到 <span class="math inline">\(f_{v,d}\)</span> 中的水平线段和斜率为 <span class="math inline">\(1\)</span> 的线段，令其在堆中的值 <span class="math inline">\(+w\)</span> 就能达到平移的目的。</p>
 <p>但需要注意，此时仍然需要 <strong>保留内层函数中斜率为 <span class="math inline">\(1\)</span> 的部分，但斜率 <span class="math inline">\(&gt;1\)</span> 的部分被删除</strong>。原因如下：</p>
 <ul>
-<li>绝对值函数与内层函数定义域相同，作闽可夫斯基和后，斜率为 <span class="math inline">\(1\)</span> 的右侧线段会将 <span class="math inline">\(f_{v,d-w&#39;}\)</span> 中原有的 <span class="math inline">\(&gt;1\)</span> 的部分『挤』出定义域，故可以将其直接删除。</li>
+<li>绝对值函数与内层函数定义域相同，作闵可夫斯基和后，斜率为 <span class="math inline">\(1\)</span> 的右侧线段会将 <span class="math inline">\(f_{v,d-w&#39;}\)</span> 中原有的 <span class="math inline">\(&gt;1\)</span> 的部分『挤』出定义域，故可以将其直接删除。</li>
 <li>斜率为 <span class="math inline">\(1\)</span> 的部分，虽然对内层函数中极值点无贡献，但在外层函数中极值点可能向右偏移，此时会对其产生影响，需要维护。</li>
 </ul>
 <p>容易发现由于 <span class="math inline">\(w&#39;\)</span> 的取值上限是 <span class="math inline">\(d\)</span>，但 <span class="math inline">\(d\)</span> 没有上界，所以每个内层函数的右侧都一定是一条斜率为 <span class="math inline">\(1\)</span> 的射线；也就是说，每个外层函数一定有（儿子个数）个拐点（堆中元素），弹出这么多个就可以删除外层函数中斜率 <span class="math inline">\(&gt;1\)</span> 的线段，顺便找到斜率为 <span class="math inline">\(0\)</span> 和 <span class="math inline">\(1\)</span> 的线段。</p>
@@ -785,7 +780,8 @@ int main() &#123;
 		appKey: 'TW6t8mFeGLmhPjWisvmllvvo',
 		recordIP: true,
 		enableQQ: true, 
-		// 目前 Valine 的 QQ 自动获取昵称似乎不可用 故不建议开启
+		// [EDITED] 目前 Valine 的 QQ 自动获取昵称似乎不可用
+		// 该问题在 v1.5.3 中已修复
 		pageSize: 10,
 		requiredFields:
 			

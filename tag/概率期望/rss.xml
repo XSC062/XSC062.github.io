@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title> • Posts by &#34;概率期望&#34; tag</title>
+        <link>https://xsc062.netlify.app</link>
+        <description></description>
+        <language>zh-CN</language>
+        <pubDate>Thu, 11 Jan 2024 11:25:19 +0800</pubDate>
+        <lastBuildDate>Thu, 11 Jan 2024 11:25:19 +0800</lastBuildDate>
+        <category>并查集</category>
+        <category>斜率优化</category>
+        <category>悬线法</category>
+        <category>哈希</category>
+        <category>字典树</category>
+        <category>DP</category>
+        <category>单调队列</category>
+        <category>分治</category>
+        <category>二分图</category>
+        <category>CRT / exCRT</category>
+        <category>排列组合</category>
+        <category>网络流</category>
+        <category>费用流</category>
+        <category>二分</category>
+        <category>上下界网络流</category>
+        <category>容斥原理</category>
+        <category>线段树</category>
+        <category>树状数组</category>
+        <category>区间 DP</category>
+        <category>构造</category>
+        <category>Tarjan</category>
+        <category>数据结构</category>
+        <category>下饭</category>
+        <category>LCA</category>
+        <category>倍增</category>
+        <category>鸽巢原理</category>
+        <category>概率期望</category>
+        <category>调和级数</category>
+        <category>差分</category>
+        <category>思维</category>
+        <category>树形 DP</category>
+        <category>最小生成树</category>
+        <category>SAM</category>
+        <category>状压</category>
+        <category>分块</category>
+        <category>可持久化</category>
+        <category>笛卡尔树</category>
+        <category>高维前缀和</category>
+        <category>闲话</category>
+        <category>欧拉回路</category>
+        <category>树链剖分</category>
+        <category>长链剖分</category>
+        <category>KMP</category>
+        <category>border</category>
+        <category>字符串</category>
+        <category>AC 自动机</category>
+        <category>SA</category>
+        <category>数学</category>
+        <category>树上差分</category>
+        <category>FWT</category>
+        <category>堆</category>
+        <category>树的重心</category>
+        <category>二项式定理</category>
+        <category>二项式反演</category>
+        <category>贪心</category>
+        <category>均摊</category>
+        <category>计数</category>
+        <category>优化建图</category>
+        <category>反悔贪心</category>
+        <category>调整法</category>
+        <category>背包</category>
+        <category>博弈论</category>
+        <category>DP 优化</category>
+        <category>虚树</category>
+        <category>点分治</category>
+        <category>WQS 二分</category>
+        <category>闵可夫斯基和</category>
+        <category>slope trick</category>
+        <category>四边形不等式</category>
+        <category>暴力</category>
+        <category>状压 DP</category>
+        <category>组合数学</category>
+        <category>支配对</category>
+        <category>DDP</category>
+        <category>平衡树</category>
+        <category>容斥</category>
+        <category>猫树</category>
+        <category>Kruskal 重构树</category>
+        <category>李超线段树</category>
+        <item>
+            <guid isPermalink="true">https://xsc062.netlify.app/20240111/</guid>
+            <title>杂题别选谈了</title>
+            <link>https://xsc062.netlify.app/20240111/</link>
+            <category>DP</category>
+            <category>概率期望</category>
+            <pubDate>Thu, 11 Jan 2024 11:25:19 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;Solution to &lt;a href=&#34;http://222.180.160.110:61235/contest/4665/problem/2&#34;&gt;SP4060 Game with Probability Problem&lt;/a&gt;。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;p&gt;设 &lt;span class=&#34;math inline&#34;&gt;\(f_i,g_i\)&lt;/span&gt; 分别表示还剩 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 个的时候轮到 Alice 和 Bob 时 &lt;strong&gt;Alice&lt;/strong&gt; 分别的胜率。&lt;/p&gt;
+&lt;p&gt;概率经典倒推。那么显然有 &lt;span class=&#34;math inline&#34;&gt;\(f_0=0,g_0=1\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;然后就是一个分讨，讨论这个人想要正面还是反面。很显然，对于同样的剩余棋子数，两个人先手的情况对于这颗棋子的喜爱程度是一样的。也就是说，要么都想要，要么都不想要。&lt;/p&gt;
+&lt;p&gt;什么时候想要呢？拿掉过后自己胜率更大，也就是 &lt;span class=&#34;math inline&#34;&gt;\(g_{i-1}&amp;gt;f_{i-1}\)&lt;/span&gt;。此时有：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_i=(1-p)\times g_i+p\times g_{i-1}\\
+g_i=(1-q)\times f_i+q\times f_{i-1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;发现是互相影响的，这个时候先不要着急怀疑自己推错了，因为我们这里有两个未知数，又刚好有两个方程，暴解一下就有：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_i=\dfrac {(1-p)\times q\times f_{i-1}+p\times g_{i-1}}{1-(1-p)(1-q)}\\
+g_i=\dfrac {(1-q)\times p\times g_{i-1}+q\times f_{i-1}}{1-(1-p)(1-q)}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;然后 &lt;span class=&#34;math inline&#34;&gt;\(g_{i-1}&amp;lt;f_{i-1}\)&lt;/span&gt; 的情况也差不多，把拿的概率和不拿的概率换一下：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_i=p\times g_i+(1-p)\times g_{i-1}\\
+g_i=q\times f_i+(1-q)\times f_{i-1}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;解方程组有：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_i=\dfrac {(1-q)\times p\times f_{i-1}+(1-p)\times g_{i-1}}{1-p\times q}\\
+g_i=\dfrac {(1-p)\times q\times g_{i-1}+(1-q)\times f_{i-1}}{1-p\times q}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;然后就可以开始 DP 了。最后的答案就是 &lt;span class=&#34;math inline&#34;&gt;\(f_{\min(n,1000)}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;还有个问题就是 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 特别大然后这个看起来也不太能矩乘，但是这个 DP 式有个好处是它的增长趋势是指数级的，所以我们 DP 到 &lt;span class=&#34;math inline&#34;&gt;\(1000\)&lt;/span&gt; 就可以了。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+namespace XSC062 &amp;#123;
+const int maxn = 1e3 + 5;
+using db = double;
+db p, q;
+int T, n;
+db f[maxn], g[maxn];
+int min(int x, int y) &amp;#123;
+    return x &amp;lt; y ? x : y;
+&amp;#125;
+int main() &amp;#123;
+    scanf(&amp;quot;%d&amp;quot;, &amp;amp;T);
+    while (T--) &amp;#123;
+        scanf(&amp;quot;%d %lf %lf&amp;quot;, &amp;amp;n, &amp;amp;p, &amp;amp;q);
+        f[0] = .0, g[0] = 1.0;
+        for (int i = 1; i &amp;lt;= n &amp;amp;&amp;amp; i &amp;lt;= 1000; ++i) &amp;#123;
+            if (g[i - 1] &amp;gt; f[i - 1]) &amp;#123;
+                f[i] = ((1 - p) * q * f[i - 1] + p * g[i - 1]) / (1 - (1 - p) * (1 - q));
+                g[i] = ((1 - q) * p * g[i - 1] + q * f[i - 1]) / (1 - (1 - p) * (1 - q));
+            &amp;#125;
+            else &amp;#123;
+                f[i] = ((1 - q) * p * f[i - 1] + (1 - p) * g[i - 1]) / (1 - p * q);
+                g[i] = ((1 - p) * q * g[i - 1] + (1 - q) * f[i - 1]) / (1 - p * q);
+            &amp;#125;
+        &amp;#125;
+        printf(&amp;quot;%.6lf\n&amp;quot;, f[min(n, 1000)]);
+    &amp;#125;
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062
+int main() &amp;#123;
+    XSC062::main();
+    return 0;
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

@@ -28,9 +28,7 @@ const searchPath = "/search.xml"
 <script src="/js/jQuery.js"></script>
 
 <!-- 载入 Valine -->
-
-<script src="/js/Valine.min.js"></script>
-
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
 <!-- css 引入 -->
 
 <link rel="stylesheet" href="/css/layout.css">
@@ -39,6 +37,11 @@ const searchPath = "/search.xml"
 <link rel="stylesheet" href="/css/prcss/prism.css">
 
 
+
+<!-- rss -->
+<link rel="alternate" type="application/rss+xml" title="" href="https://xsc062.netlify.app/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="" href="https://xsc062.netlify.app/atom.xml" />
+<link rel="alternate" type="application/json" title="" href="https://xsc062.netlify.app/feed.json" />
 
 <meta charset="utf-8"> 
 <meta name="generator" content="Hexo 7.2.0"></head>
@@ -73,15 +76,7 @@ const searchPath = "/search.xml"
 <div id="search-bg">
 	<div id="search-box">
 		<input type="text" id="search-input" placeholder="Type to search...">
-		<div id="search-results"></div>
-		<p>恭喜你触发了这个 box，由于我还没有写关闭键，你只能通过刷新页面来关闭它。非常抱歉 ;-)</p>
-		<p>为了证明我没有摆烂，在这里放一个进度：</p>
-		<p>- 250715：尝试实现搜索功能，初步成功，能够搜索到包含关键词的文章了（<strong>也能关掉了</strong>）。不知道为啥输入 123 可以匹配所有文章，但是输入 1234 就一篇都匹配不上。（250814 upd：搜索的是 html 源码，<code>{</code> 的 ASCII 码为 123 / <code>&</code><code>#123;</code>）</p>
-		<p>- 250716：尝试加入关键词上下文来 de 上面的 bug，然后把 js 写成史了，现在这个框框并不具备搜索功能（也不具备关闭功能） :-(</p>
-		<p>- 250814：<strong>能关了</strong>，我很勤勉</p>
-		<p>什么？居然还能搜索！还能高亮关键词？谢谢你，hexo-generator-searchdb！但是你为什么没有注释，让我阅读理解了半天 :-(</p>
-		<p>css 等有空了再写吧，能用就行</p>
-		<p>**为什么有 bug？试着找一个关键词发现有的文章没有匹配上**/p>
+		<div id="search-results">键入以搜索</div>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
@@ -224,13 +219,13 @@ int main() &#123;
 <h2 id="e.-poborcy-podatkowi">E. Poborcy podatkowi</h2>
 <p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/6393/problem/5" class="uri">http://222.180.160.110:61235/contest/6393/problem/5</a></p>
 <p>首先令 <span class="math inline">\(f_{u,l}(i),l=0,1,2,3\)</span> 表示在 <span class="math inline">\(u\)</span> 上挂了长度为 <span class="math inline">\(l\)</span> 的半条链，共有 <span class="math inline">\(i\)</span> 条整链的最大收益。</p>
-<p>可以观察到是凸的。那么不难发现需要闽可夫斯基和，考虑 <span class="math inline">\(u\)</span> 位置上的合并。<strong>首先需要注意到儿子上长度为 <span class="math inline">\(l\)</span> 的链到父亲上会变成 <span class="math inline">\(l+1\)</span></strong>。显然每条可以不选；如果选了 <span class="math inline">\(cnt_a\)</span> 条长度为 <span class="math inline">\(a\)</span> 的半链，那么合并出来的结果是 <span class="math inline">\(cnt_1-cnt_3\)</span> 条长度为 <span class="math inline">\(1\)</span> 或 <span class="math inline">\(3\)</span> 的链、<span class="math inline">\(cnt_2\bmod 2\)</span> 条长度为 <span class="math inline">\(2\)</span> 的链，并且要求两者不同时出现。发现这个东西基本上处理不了。</p>
+<p>可以观察到是凸的。那么不难发现需要闵可夫斯基和，考虑 <span class="math inline">\(u\)</span> 位置上的合并。<strong>首先需要注意到儿子上长度为 <span class="math inline">\(l\)</span> 的链到父亲上会变成 <span class="math inline">\(l+1\)</span></strong>。显然每条可以不选；如果选了 <span class="math inline">\(cnt_a\)</span> 条长度为 <span class="math inline">\(a\)</span> 的半链，那么合并出来的结果是 <span class="math inline">\(cnt_1-cnt_3\)</span> 条长度为 <span class="math inline">\(1\)</span> 或 <span class="math inline">\(3\)</span> 的链、<span class="math inline">\(cnt_2\bmod 2\)</span> 条长度为 <span class="math inline">\(2\)</span> 的链，并且要求两者不同时出现。发现这个东西基本上处理不了。</p>
 <p>接着注意到这个形式有点像背包。但怎么处理 <span class="math inline">\(cnt_1\)</span> 和 <span class="math inline">\(cnt_3\)</span> 配对的这个要求呢？有个非常精妙的在物品体积上做文章的方法：</p>
 <p>首先注意到我们最后的查询的答案肯定要求把所有儿子用完。那么不妨设体积之和为儿子总数 <span class="math inline">\(tot\)</span>。接着，对 <span class="math inline">\(cnt_0\)</span>（同时也是 <span class="math inline">\(cnt_4\)</span>）没有限制，直接令其体积为 <span class="math inline">\(1\)</span>。<span class="math inline">\(cnt_2\)</span> 单独处理（等会儿会说），为了不对现在的问题产生影响也令其体积为 <span class="math inline">\(1\)</span>。对于 <span class="math inline">\(cnt_1\)</span> 和 <span class="math inline">\(cnt_3\)</span>，显然两者平均体积需要为 <span class="math inline">\(1\)</span>；你可以令 <span class="math inline">\(cnt_3\)</span> 体积为 <span class="math inline">\(2\)</span>，令 <span class="math inline">\(cnt_1\)</span> 体积为 <span class="math inline">\(0\)</span>。</p>
 <p>接下来就有个很好的性质：<span class="math inline">\(cnt_1\)</span> 必须和 <span class="math inline">\(cnt_3\)</span> 配对才能让平均体积为 <span class="math inline">\(1\)</span>。在 <span class="math inline">\(tot\)</span> 处查找的答案，由 <span class="math inline">\(x\)</span> 个体积不为 <span class="math inline">\(0\)</span> 的物品和 <span class="math inline">\(tot-x\)</span> 个体积为 <span class="math inline">\(0\)</span> 的物品（<span class="math inline">\(cnt_1\)</span>）组成，原因是背包会贪心地在所有『剩余』的分组中选择体积为 <span class="math inline">\(0\)</span> 的一项。再计算一下 <span class="math inline">\(cnt_3\)</span>，发现显然为 <span class="math inline">\(tot-x\)</span>。符合目的。</p>
 <p>在 <span class="math inline">\(dp_{tot}\)</span> 处查找可以找到 <span class="math inline">\(cnt_1=cnt_3\)</span> 时的答案；同理，在 <span class="math inline">\(dp_{tot-1},dp_{tot1+1}\)</span> 处可以查找到 <span class="math inline">\(cnt_1=cnt_3\pm 1\)</span> 的答案。</p>
 <p>接下来再考虑 <span class="math inline">\(cnt_2\)</span>，解决『<span class="math inline">\(cnt\bmod2=1\)</span> 和 <span class="math inline">\(cnt_1\ne cnt_3\)</span> 不能同时成立』的限制。那太好了，直接多开一维记录 <span class="math inline">\(cnt_2\bmod 2\)</span> 即可。</p>
-<p>啊啊太妙了。像利用体积为 <span class="math inline">\(-1,1\)</span> 的随机数据背包期望最大体积不超过 <span class="math inline">\(\sqrt V\)</span> 的那个方法，显然就没有办法利用凸性了。所以这或许是闽可夫斯基和做法的唯一解？</p>
+<p>啊啊太妙了。像利用体积为 <span class="math inline">\(-1,1\)</span> 的随机数据背包期望最大体积不超过 <span class="math inline">\(\sqrt V\)</span> 的那个方法，显然就没有办法利用凸性了。所以这或许是闵可夫斯基和做法的唯一解？</p>
 <p>需要知道，如果设 <span class="math inline">\(cnt_1\)</span> 为 <span class="math inline">\(2\)</span> 而 <span class="math inline">\(cnt_3\)</span> 为 <span class="math inline">\(0\)</span>，始终会出一些问题。这个我和 yly 讨论了一下没啥结果。</p>
 <details>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
@@ -363,7 +358,8 @@ int main() &#123;
 		appKey: 'TW6t8mFeGLmhPjWisvmllvvo',
 		recordIP: true,
 		enableQQ: true, 
-		// 目前 Valine 的 QQ 自动获取昵称似乎不可用 故不建议开启
+		// [EDITED] 目前 Valine 的 QQ 自动获取昵称似乎不可用
+		// 该问题在 v1.5.3 中已修复
 		pageSize: 10,
 		requiredFields:
 			

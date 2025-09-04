@@ -1,0 +1,1026 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title> • Posts by &#34;贪心&#34; tag</title>
+        <link>https://xsc062.netlify.app</link>
+        <description></description>
+        <language>zh-CN</language>
+        <pubDate>Sat, 16 Aug 2025 16:14:12 +0800</pubDate>
+        <lastBuildDate>Sat, 16 Aug 2025 16:14:12 +0800</lastBuildDate>
+        <category>并查集</category>
+        <category>斜率优化</category>
+        <category>悬线法</category>
+        <category>哈希</category>
+        <category>字典树</category>
+        <category>DP</category>
+        <category>单调队列</category>
+        <category>分治</category>
+        <category>二分图</category>
+        <category>CRT / exCRT</category>
+        <category>排列组合</category>
+        <category>网络流</category>
+        <category>费用流</category>
+        <category>二分</category>
+        <category>上下界网络流</category>
+        <category>容斥原理</category>
+        <category>线段树</category>
+        <category>树状数组</category>
+        <category>区间 DP</category>
+        <category>构造</category>
+        <category>Tarjan</category>
+        <category>数据结构</category>
+        <category>下饭</category>
+        <category>LCA</category>
+        <category>倍增</category>
+        <category>鸽巢原理</category>
+        <category>概率期望</category>
+        <category>调和级数</category>
+        <category>差分</category>
+        <category>思维</category>
+        <category>树形 DP</category>
+        <category>最小生成树</category>
+        <category>SAM</category>
+        <category>状压</category>
+        <category>分块</category>
+        <category>可持久化</category>
+        <category>笛卡尔树</category>
+        <category>高维前缀和</category>
+        <category>闲话</category>
+        <category>欧拉回路</category>
+        <category>树链剖分</category>
+        <category>长链剖分</category>
+        <category>KMP</category>
+        <category>border</category>
+        <category>字符串</category>
+        <category>AC 自动机</category>
+        <category>SA</category>
+        <category>数学</category>
+        <category>树上差分</category>
+        <category>FWT</category>
+        <category>堆</category>
+        <category>树的重心</category>
+        <category>二项式定理</category>
+        <category>二项式反演</category>
+        <category>贪心</category>
+        <category>均摊</category>
+        <category>计数</category>
+        <category>优化建图</category>
+        <category>反悔贪心</category>
+        <category>调整法</category>
+        <category>背包</category>
+        <category>博弈论</category>
+        <category>DP 优化</category>
+        <category>虚树</category>
+        <category>点分治</category>
+        <category>WQS 二分</category>
+        <category>闵可夫斯基和</category>
+        <category>slope trick</category>
+        <category>四边形不等式</category>
+        <category>暴力</category>
+        <category>状压 DP</category>
+        <category>组合数学</category>
+        <category>支配对</category>
+        <category>DDP</category>
+        <category>平衡树</category>
+        <category>容斥</category>
+        <category>猫树</category>
+        <category>Kruskal 重构树</category>
+        <category>李超线段树</category>
+        <item>
+            <guid isPermalink="true">https://xsc062.netlify.app/20250816/</guid>
+            <title>近期杂题 II</title>
+            <link>https://xsc062.netlify.app/20250816/</link>
+            <category>线段树</category>
+            <category>AC 自动机</category>
+            <category>贪心</category>
+            <category>DP 优化</category>
+            <category>虚树</category>
+            <pubDate>Sat, 16 Aug 2025 16:14:12 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;和 Aug 9th 的杂题不太能合并，所以分开了&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;b.-gas-fire-extinguishers&#34;&gt;B. GAS-Fire Extinguishers&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P3479&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P3479&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;显然可以贪心，不妨从下到上，记录当前遍历过的、空余出来的灭火器（其实算的是可以供给的房间数）和还未分配灭火器的房间，按距离为 &lt;span class=&#34;math inline&#34;&gt;\(0\sim k\)&lt;/span&gt; 分组。&lt;/p&gt;
+&lt;p&gt;不难发现如果在某个点 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 处存在距离为 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 的空闲灭火器，可以贪心地分配给 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;；如果存在距离为 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 的未分配房间，也可以在 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 处放置灭火器并分配给这些房间。类似地，进行两两配对一定是不劣的。&lt;/p&gt;
+&lt;p&gt;发现同子树内距离为 &lt;span class=&#34;math inline&#34;&gt;\(k-1\)&lt;/span&gt; 的点对留到 &lt;span class=&#34;math inline&#34;&gt;\(fa\)&lt;/span&gt; 再匹配是不行的，因为这时距离会变成 &lt;span class=&#34;math inline&#34;&gt;\(k+1\)&lt;/span&gt;，不能匹配上；可以感受到这样是更劣的。&lt;/p&gt;
+&lt;p&gt;然后就可以做了，根节点特殊乱贪心一下就行了。记得开 long long。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+#define int long long
+signed main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n, s, k, res = 0;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; s &amp;gt;&amp;gt; k;
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g(n + 1), p(n + 1, std::vector&amp;lt;int&amp;gt; (k + 1)), q(n + 1, std::vector&amp;lt;int&amp;gt; (k + 1));
+    for (int i = 1, x, y; i &amp;lt; n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y;
+        g[x].push_back(y), g[y].push_back(x);
+    &amp;#125;
+    std::function&amp;lt;void(int, int)&amp;gt; DFS = [&amp;amp;](int x, int fa) &amp;#123;
+        for (auto i : g[x])
+            if (i != fa)  &amp;#123;
+                DFS(i, x);
+                for (int j = 0; j &amp;lt; k; ++j)
+                    p[x][j + 1] += p[i][j], q[x][j + 1] += q[i][j];
+            &amp;#125;
+        ++q[x][0];
+        if (x != 1) &amp;#123;
+            int v = (q[x][k] + s - 1) / s;
+            p[x][0] = v * s, res += v;
+            for (int i = 0; i &amp;lt;= k; ++i) &amp;#123;
+                int v = std::min(p[x][i], q[x][k - i]);
+                p[x][i] -= v, q[x][k - i] -= v;
+            &amp;#125;
+            for (int i = 0; i &amp;lt; k; ++i) &amp;#123;
+                int v = std::min(p[x][i], q[x][k - 1 - i]);
+                p[x][i] -= v, q[x][k - 1 - i] -= v;
+            &amp;#125;
+        &amp;#125;
+        else &amp;#123;
+            // std::cerr &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+            int sum = 0ll, r = 0;
+            for (int i = k; ~i; --i) &amp;#123;
+                sum += p[x][k - i];
+                // std::cerr &amp;lt;&amp;lt; sum &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+                int v = std::min(sum, q[x][i]);
+                sum -= v, q[x][i] -= v;
+                r += q[x][i];
+            &amp;#125;
+            res += (r + s - 1) / s;
+        &amp;#125;
+        return;
+    &amp;#125;;
+    DFS(1, -1);
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+#ifndef ONLINE_JUDGE
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt; (std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s\n&amp;quot;;
+#endif
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;c.-扫地机器人&#34;&gt;C. 扫地机器人&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/6502/problem/3&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/6502/problem/3&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;题意：给定 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 堆货物，每堆货物有重量 &lt;span class=&#34;math inline&#34;&gt;\(v_i\)&lt;/span&gt; 和一个参数 &lt;span class=&#34;math inline&#34;&gt;\(a_i\)&lt;/span&gt;。有一个初始负载为 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;、负载上限为 &lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt; 的机器人，从 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 到 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 遍历这些货物，对每一处货物执行以下操作，直到清空这堆货物：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当前负载未满：可以选择进行装载直到达到负载上限，或货物清空。花费 &lt;span class=&#34;math inline&#34;&gt;\(a_i\)&lt;/span&gt; 的代价。&lt;/li&gt;
+&lt;li&gt;不管当前负载满没满：可以选择清空当前负载，花费 &lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt; 的代价。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;每一处可以任意操作，要求遍历完之后机器人负载为 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，问最小代价。&lt;span class=&#34;math inline&#34;&gt;\(n\le 2\times 10^5,c\le 10^9\)&lt;/span&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;题面是重构过的，原来的题面太有歧义了。绝大多数人没做出来就是因为没看懂题吧！&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;考虑暴力，可以想到令 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,j}\)&lt;/span&gt; 表示处理完 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 过后负载为 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 的最小代价（显然 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,c}\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,0}\)&lt;/span&gt; 是等效的，故舍弃前者）。记 &lt;span class=&#34;math inline&#34;&gt;\(k=\left\lceil\dfrac {v_i}c\right\rceil,w=(v_i\bmod c - 1)\bmod c+1\)&lt;/span&gt;，那么有：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_{i,(j+v_i)\bmod c}\gets f_{i-1,j}+k\cdot a_i+(k-1)\cdot b +
+\begin{cases}
+b&amp;amp;j+w=c\\
+a_i+b&amp;amp;j+w&amp;gt; c\\
+0&amp;amp;\text{otherwise}
+\end{cases}\\
+f_{i,0}\gets f_{i,j}+b
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;发现 &lt;span class=&#34;math inline&#34;&gt;\(f_{i-1}\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(f_i\)&lt;/span&gt; 之间是存在对应关系的，所以考虑直接继承（真实的 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt; 应该位于 &lt;span class=&#34;math inline&#34;&gt;\(-s_i\)&lt;/span&gt; 的位置），再做全局加、区间加，&lt;span class=&#34;math inline&#34;&gt;\(f_{i,0}\)&lt;/span&gt; 的转移是全局 min，线段树维护即可；每次只会新增一个状态，动态开点即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int maxn = 5e6 + 5;
+const __int128 inf = 1e18;
+struct &amp;#123;
+    int l, r;
+    __int128 u, d;
+&amp;#125; t[maxn];
+#define lt t[p].l
+#define rt t[p].r
+int tot;
+void pushdown(int p) &amp;#123;
+    if (t[p].d) &amp;#123;
+        t[lt].d += t[p].d, t[lt].u += t[p].d;
+        t[rt].d += t[p].d, t[rt].u += t[p].d;
+        t[p].d = 0ll;
+    &amp;#125;
+    return;
+&amp;#125;
+void upd(int &amp;amp;p, int l, int r, int x, __int128 v) &amp;#123;
+    if (!p)
+        p = ++tot, t[p].u = v;
+    else
+        t[p].u = std::min(t[p].u, v);
+    if (l == r)
+        return;
+    pushdown(p);
+    int mid = (l + r) &amp;gt;&amp;gt; 1;
+    if (x &amp;lt;= mid)
+        upd(lt, l, mid, x, v);
+    else
+        upd(rt, mid + 1, r, x, v);
+    return;
+&amp;#125;
+void add(int p, int l, int r, int ql, int qr, __int128 v) &amp;#123;
+    if (!p)
+        return;
+    if (ql &amp;lt;= l &amp;amp;&amp;amp; r &amp;lt;= qr) &amp;#123;
+        t[p].d += v, t[p].u += v;
+        return;
+    &amp;#125;
+    int mid = (l + r) &amp;gt;&amp;gt; 1;
+    pushdown(p);
+    if (ql &amp;lt;= mid)
+        add(lt, l, mid, ql, qr, v);
+    if (qr &amp;gt; mid)
+        add(rt, mid + 1, r, ql, qr, v);
+    t[p].u = std::min(t[lt].u, t[rt].u);
+    return;
+&amp;#125;
+__int128 ask(int p, int l, int r, int x) &amp;#123;
+    if (l == r)
+        return t[p].u;
+    int mid = (l + r) &amp;gt;&amp;gt; 1;
+    pushdown(p);
+    if (x &amp;lt;= mid)
+        return ask(lt, l, mid, x);
+    return ask(rt, mid + 1, r, x);
+&amp;#125;
+#undef lt
+#undef rt
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+    std::freopen(&amp;quot;robot.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;robot.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#else
+    std::freopen(&amp;quot;ex_robot4.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    t[0].u = inf;
+    int n, b, c, p0 = 0, rt = 0;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; c &amp;gt;&amp;gt; b;
+    std::vector&amp;lt;int&amp;gt; a(n + 1), v(n + 1);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        std::cin &amp;gt;&amp;gt; a[i];
+    for (int i = 1; i &amp;lt;= n; ++i)
+        std::cin &amp;gt;&amp;gt; v[i];
+    upd(rt, 0, c - 1, 0, 0ll);
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        __int128 k = (v[i] + c - 1) / c, w = (v[i] % c == 0 ? c : v[i] % c);
+        t[rt].d += k * a[i] + (k - 1) * b;
+        t[rt].u += k * a[i] + (k - 1) * b;
+        if (w &amp;lt;= c)
+            add(rt, 0, c - 1, (c - w + p0) % c, (c - w + p0) % c, b);
+        if (w != 1) &amp;#123;
+            int l = (c - w + p0 + 1) % c, r = (p0 + c - 1) % c;
+            if (l &amp;lt;= r)
+                add(rt, 0, c - 1, l, r, a[i] + b);
+            else &amp;#123;
+                add(rt, 0, c - 1, 0, r, a[i] + b);
+                add(rt, 0, c - 1, l, c - 1, a[i] + b);
+            &amp;#125;
+        &amp;#125;
+        p0 = (p0 + c - v[i] % c) % c;
+        upd(rt, 0, c - 1, p0, t[rt].u + b);
+    &amp;#125;
+    std::cout &amp;lt;&amp;lt; (long long)ask(rt, 0, c - 1, p0) &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+#ifndef ONLINE_JUDGE
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt; (std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s\n&amp;quot;;
+#endif
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;d.-套娃&#34;&gt;D. 套娃&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/6502/problem/4&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/6502/problem/4&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;题意：给定初始为全 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt; 的数组 &lt;span class=&#34;math inline&#34;&gt;\(a_{1\sim n + 1}\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 次单点 +1 操作，每次操作后，求解：&lt;/p&gt;
+&lt;p&gt;令 &lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt; 的前缀和数组为 &lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;，找到一个最小的 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;，使得对于每个 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;，均有 &lt;span class=&#34;math inline&#34;&gt;\(k\cdot i\ge s_i\)&lt;/span&gt; 成立。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\le 10^6\)&lt;/span&gt;，时限 0.5s。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;details&gt;
+&lt;p&gt;&lt;summary&gt;趣事一则&lt;/summary&gt;&lt;/p&gt;
+&lt;p&gt;考场上最后 10min 拿到题，憋了一个能拿到 96pts 的假做法：注意到前缀和是单增的，需要维护最大的 &lt;span class=&#34;math inline&#34;&gt;\(\dfrac {s_i}i\)&lt;/span&gt;，由于后缀 +1 带来的影响很小，所以可以猜测在大多数情况下最大的 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 只会在原来的和修改的点之间变化。只用 10 行的核心代码就能拿到很多分。但是居然有这么多，可能出题人都没有想到真有人敢交这种做法吧。&lt;/p&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+    std::freopen(&amp;quot;doll.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;doll.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+    auto stime = std::chrono::steady_clock::now();
+    int n, res = 0;
+    std::cin &amp;gt;&amp;gt; n;
+    std::vector&amp;lt;int&amp;gt; bit(n + 2);
+    auto lowbit = [](int x) &amp;#123;
+        return x &amp;amp; -x;
+    &amp;#125;;
+    auto add = [&amp;amp;](int x) &amp;#123;
+        for (; x &amp;lt;= n + 1; x += lowbit(x))
+            ++bit[x];
+        return;
+    &amp;#125;;
+    auto ask = [&amp;amp;](int x) &amp;#123;
+        int res = 0;
+        for (; x; x -= lowbit(x))
+            res += bit[x];
+        return res;
+    &amp;#125;;
+    int p = 1;
+    for (int i = 1, x; i &amp;lt;= n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x, add(++x);
+        long long s = ask(x), t = ask(p);
+        if (s * p == t * x ? x &amp;gt; p : s * p &amp;gt; t * x)
+            p = x;
+        else
+            s = t;
+        if (s &amp;gt; p * res)
+            ++res;
+        std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39; &amp;#39;;
+    &amp;#125;
+    std::cout &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    std::cerr &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt;(std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;p&gt;很容易写出暴力，观察样例就能发现每次修改后答案最多增加 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;。记当前答案为 &lt;span class=&#34;math inline&#34;&gt;\(res\)&lt;/span&gt;，线段树维护 &lt;span class=&#34;math inline&#34;&gt;\(s_i-res\cdot i\)&lt;/span&gt; 的最小值，若其为负则 res++，然后重构线段树（等差数列和 min 不兼容）。&lt;/p&gt;
+&lt;p&gt;怎么又有不等式 😱&lt;/p&gt;
+&lt;p&gt;目的是在本来合法的范围里找到新的不合法值。考虑合法范围：&lt;span class=&#34;math inline&#34;&gt;\(s_i-res\cdot i\ge 0\)&lt;/span&gt;，解一下得到 &lt;span class=&#34;math inline&#34;&gt;\(i\le \dfrac {s_i}{res}\)&lt;/span&gt;，放缩得到 &lt;span class=&#34;math inline&#34;&gt;\(i\le\dfrac {n}{res}\)&lt;/span&gt;，每次 &lt;span class=&#34;math inline&#34;&gt;\(res\)&lt;/span&gt; 变化时只重构 &lt;span class=&#34;math inline&#34;&gt;\(\dfrac {n}{res}\)&lt;/span&gt; 以前的位置，重构的总长是 &lt;span class=&#34;math inline&#34;&gt;\(O(n\ln n)\)&lt;/span&gt; 的。（线段树建树是线性的）&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int maxn = 1e6 + 5;
+const int inf = 0x3f3f3f3f;
+struct &amp;#123;
+    int l, r, u, d;
+&amp;#125; t[maxn &amp;lt;&amp;lt; 2];
+#define lt (p &amp;lt;&amp;lt; 1)
+#define rt (lt | 1)
+void bld(int p, int l, int r) &amp;#123;
+    t[p].u = t[p].l = l, t[p].r = r;
+    if (l == r)
+        return;
+    int mid = (l + r) &amp;gt;&amp;gt; 1;
+    bld(lt, l, mid), bld(rt, mid + 1, r);
+    return;
+&amp;#125;
+void pushdown(int p) &amp;#123;
+    if (t[p].d) &amp;#123;
+        t[lt].d += t[p].d, t[rt].d += t[p].d;
+        t[lt].u -= t[p].d, t[rt].u -= t[p].d;
+        t[p].d = 0;
+    &amp;#125;
+    return;
+&amp;#125;
+void add(int p, int x) &amp;#123;
+    if (x &amp;lt;= t[p].l) &amp;#123;
+        ++t[p].d, --t[p].u;
+        return;
+    &amp;#125;
+    pushdown(p);
+    int mid = (t[p].l + t[p].r) &amp;gt;&amp;gt; 1;
+    if (x &amp;lt;= mid)
+        add(lt, x);
+    add(rt, x);
+    t[p].u = std::min(t[lt].u, t[rt].u);
+    // printf(&amp;quot;[%d, %d]: %d, [%d, %d]: %d\n&amp;quot;, t[p].l, mid, t[lt].u, mid + 1, t[p].r, t[rt].u);
+    return;
+&amp;#125;
+void rem(int p, int r) &amp;#123;
+    if (t[p].l == t[p].r) &amp;#123;
+        t[p].u += t[p].l;
+        return;
+    &amp;#125;
+    pushdown(p);
+    int mid = (t[p].l + t[p].r) &amp;gt;&amp;gt; 1;
+    if (r &amp;lt;= mid)
+        rem(lt, r), t[rt].u = inf;
+    else
+        rem(lt, r), rem(rt, r);
+    t[p].u = std::min(t[lt].u, t[rt].u);
+    return;
+&amp;#125;
+#undef lt
+#undef rt
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+    std::freopen(&amp;quot;doll.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;doll.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    bld(1, 1, n + 1);
+    for (int i = 1, x, res = 1, now = n; i &amp;lt;= n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x;
+        if (x &amp;lt;= now)
+            add(1, ++x);
+        if (t[1].u &amp;lt; 0) &amp;#123;
+            std::cout &amp;lt;&amp;lt; ++res &amp;lt;&amp;lt; &amp;#39; &amp;#39;;
+            rem(1, now = n / res);
+        &amp;#125;
+        else
+            std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39; &amp;#39;;
+        // puts(&amp;quot;&amp;quot;);
+    &amp;#125;
+    std::cout &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+#ifndef ONLINE_JUDGE
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt; (std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s\n&amp;quot;;
+#endif
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;e---subarray-sum-divisibility&#34;&gt;E - Subarray Sum Divisibility&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/abc419/tasks/abc419_e&#34; class=&#34;uri&#34;&gt;https://atcoder.jp/contests/abc419/tasks/abc419_e&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;模意义下的数列全等，可以对应原数组全等、差分全等、前缀和全等（都是模意义下的，还有其他的一些线性和非线性的变换也可以）&lt;/p&gt;
+&lt;p&gt;本着修改的点尽量少的想法，如果题目给定单点修改就可以在原数组上做文章，给定区间修改可以考虑差分数组，前缀和对于一些区间查询有优势&lt;/p&gt;
+&lt;p&gt;其他两种用得也很多，像这题只需要用原数组全等就可以做了&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int inf = 0x3f3f3f3f;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n, m, l;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; m &amp;gt;&amp;gt; l;
+    std::vector&amp;lt;int&amp;gt; a(n + 1);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        std::cin &amp;gt;&amp;gt; a[i];
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; u(l + 1, std::vector&amp;lt;int&amp;gt; (m));
+    for (int i = 1; i &amp;lt;= l; ++i)
+        for (int j = 0; j &amp;lt; m; ++j)
+            for (int k = i; k &amp;lt;= n; k += l)
+                u[i][j] += (j + m - a[k]) % m;
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; f(l + 1, std::vector&amp;lt;int&amp;gt; (m, inf));
+    f[0][0] = 0;
+    for (int i = 1; i &amp;lt;= l; ++i)
+        for (int j = 0; j &amp;lt; m; ++j)
+            for (int k = 0; k &amp;lt; m; ++k)
+                f[i][(j + k) % m] = std::min(f[i][(j + k) % m], f[i - 1][j] + u[i][k]);
+    std::cout &amp;lt;&amp;lt; f[l][0] &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+#ifndef ONLINE_JUDGE
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt; (std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s\n&amp;quot;;
+#endif
+    return 0;
+&amp;#125;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;f---all-included&#34;&gt;F - All Included&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/abc419/tasks/abc419_f&#34; class=&#34;uri&#34;&gt;https://atcoder.jp/contests/abc419/tasks/abc419_f&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;原题意转化为在 AC 自动机上走 &lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt; 步，要求经过 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 个叶子的方案数。不太可做，转化成容斥（令字符串终点不可达）。在外层枚举步数暴力游走。&lt;/p&gt;
+&lt;p&gt;要求恰好走 &lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt; 步，也可以用矩阵；但原图很稀疏，所以矩阵并没有优势。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 998244353;
+int tot = 1, T[805][26], fail[805];
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n, l;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; l;
+    std::vector&amp;lt;std::string&amp;gt; a;
+    &amp;#123;
+        std::vector&amp;lt;std::string&amp;gt; s(n + 1);
+        for (int i = 1; i &amp;lt;= n; ++i)
+            std::cin &amp;gt;&amp;gt; s[i];
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            bool flag = 1;
+            for (int j = 1; j &amp;lt;= n; ++j)
+                if (j != i)
+                    if (s[j].find(s[i]) != std::string::npos) &amp;#123;
+                        flag = 0;
+                        break;
+                    &amp;#125;
+            if (flag)
+                a.push_back(s[i]);
+        &amp;#125;
+        n = (int)a.size();
+    &amp;#125;
+    std::vector&amp;lt;int&amp;gt; pos(n);
+    for (int i = 0; i &amp;lt; n; ++i) &amp;#123;
+        int &amp;amp;p = pos[i];
+        for (auto j : a[i]) &amp;#123;
+            if (!T[p][j - &amp;#39;a&amp;#39;])
+                T[p][j - &amp;#39;a&amp;#39;] = tot++;
+            p = T[p][j - &amp;#39;a&amp;#39;];
+        &amp;#125;
+    &amp;#125;
+    &amp;#123;
+        std::queue&amp;lt;int&amp;gt; q;
+        for (int i = 0; i &amp;lt; 26; ++i)
+            if (T[0][i])
+                q.push(T[0][i]);
+        for (; !q.empty(); ) &amp;#123;
+            int u = q.front();
+            q.pop();
+            for (int i = 0; i &amp;lt; 26; ++i)
+                if (T[u][i]) &amp;#123;
+                    int v = T[u][i];
+                    fail[v] = T[fail[u]][i];
+                    q.push(v);
+                &amp;#125;
+                else
+                    T[u][i] = T[fail[u]][i];
+        &amp;#125;
+    &amp;#125;
+    auto res = 0ll;
+    int siz = 1 &amp;lt;&amp;lt; n;
+    for (int i = 0; i &amp;lt; siz; ++i) &amp;#123;
+        std::vector&amp;lt;int&amp;gt; tag(tot);
+        for (int j = 0; j &amp;lt; n; ++j)
+            if ((i &amp;gt;&amp;gt; j) &amp;amp; 1)
+                tag[pos[j]] = 1;
+        std::vector&amp;lt;std::vector&amp;lt;long long&amp;gt; &amp;gt; f(l + 1, std::vector&amp;lt;long long&amp;gt; (tot));
+        f[0][0] = 1ll;
+        for (int j = 0; j &amp;lt; l; ++j)
+            for (int k = 0; k &amp;lt; tot; ++k)
+                for (int a = 0; a &amp;lt; 26; ++a) &amp;#123;
+                    if (!tag[T[k][a]])
+                        (f[j + 1][T[k][a]] += f[j][k]) %= mod;
+                &amp;#125;
+        int k = (__builtin_popcount(i) &amp;amp; 1 ? mod - 1 : 1);
+        auto s = 0ll;
+        for (int j = 0; j &amp;lt; tot; ++j)
+            if (!tag[j])
+                (s += f[l][j]) %= mod;
+        (res += k * s) %= mod;
+    &amp;#125;
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+#ifndef ONLINE_JUDGE
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt; (std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s\n&amp;quot;;
+#endif
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;g---count-simple-paths-2&#34;&gt;G - Count Simple Paths 2&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/abc419/tasks/abc419_g&#34; class=&#34;uri&#34;&gt;https://atcoder.jp/contests/abc419/tasks/abc419_g&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;很新的性质。考虑『以 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 为起点的简单路径数』和反祖边数量的关系：选定一条反祖边必须被经过时（显然只有一种可能的经过方向），树的形态发生变化：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;image.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;也就是说，一种反祖边的选取方案对应一种树，遍历其从 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 开始的简单路径复杂度为 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt;。设反祖边数量为 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;，那么合法的方案数不超过 &lt;span class=&#34;math inline&#34;&gt;\(2^k\)&lt;/span&gt;，暴力 DFS 的整个图复杂度为 &lt;span class=&#34;math inline&#34;&gt;\(O(2^k\cdot n)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;发现很多跟反祖边无关的遍历是不必要的（只有一种走法，可以设成边权），考虑对所有连接反祖边的点建立虚树，并把原树上的反祖边也移到虚树上，就能 &lt;span class=&#34;math inline&#34;&gt;\(O(2^k\cdot k)\)&lt;/span&gt; 解决问题。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n, m;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; m;
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g(n + 1), g1(n + 1);
+    std::vector&amp;lt;std::vector&amp;lt;std::pair&amp;lt;int, int&amp;gt; &amp;gt; &amp;gt; g2(n + 1);
+    for (int x, y; m--; ) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y;
+        g[x].push_back(y), g[y].push_back(x);
+    &amp;#125;
+    std::vector&amp;lt;int&amp;gt; tag(n + 1), vis(n + 1);
+    std::vector&amp;lt;std::pair&amp;lt;int, int&amp;gt; &amp;gt; be;
+    std::function&amp;lt;void(int, int)&amp;gt; DFS = [&amp;amp;](int x, int fa) &amp;#123;
+        static int now = 0;
+        tag[x] = 1, vis[x] = ++now;
+        for (auto i : g[x])
+            if (!tag[i]) &amp;#123;
+                // fprintf(stderr, &amp;quot;%d -&amp;gt; %d\n&amp;quot;, x, i);
+                g1[x].push_back(i), DFS(i, x);
+            &amp;#125;
+            else if (i != fa &amp;amp;&amp;amp; vis[i] &amp;lt; vis[x])
+                be.emplace_back(i, x);
+        return;
+    &amp;#125;;
+    DFS(1, -1);
+    &amp;#123; // 求虚树
+        std::vector&amp;lt;int&amp;gt; dep(n + 1), fa(n + 1), top(n + 1), siz(n + 1), son(n + 1), dfn(n + 1), rfn(n + 1);
+        std::function&amp;lt;void(int)&amp;gt; DFS = [&amp;amp;](int x) &amp;#123;
+            siz[x] = 1;
+            for (auto i : g1[x]) &amp;#123;
+                dep[i] = dep[x] + 1;
+                fa[i] = x, DFS(i);
+                siz[x] += siz[i];
+                if (siz[i] &amp;gt; siz[son[x]])
+                    son[x] = i;
+            &amp;#125;
+            return;
+        &amp;#125;;
+        DFS(1);
+        DFS = [&amp;amp;](int x) &amp;#123;
+            static int now = 0;
+            dfn[x] = ++now;
+            if (son[x])
+                top[son[x]] = top[x], DFS(son[x]);
+            for (auto i : g1[x])
+                if (i != son[x])
+                    top[i] = i, DFS(i);
+            rfn[x] = now;
+            // printf(&amp;quot;%d: [%d, %d]\n&amp;quot;, x, dfn[x], rfn[x]);
+            return;
+        &amp;#125;;
+        top[1] = 1, DFS(1);
+        auto getLCA = [&amp;amp;](int x, int y) &amp;#123;
+            for (; top[x] != top[y]; x = fa[top[x]])
+                if (dep[top[x]] &amp;lt; dep[top[y]])
+                    std::swap(x, y);
+            return dep[x] &amp;lt; dep[y] ? x : y;
+        &amp;#125;;
+        tag.assign(n + 1, 0);
+        tag[1] = tag[n] = 1;
+        for (auto [u, v] : be)
+            tag[u] = 1, tag[v] = 1;
+        std::vector&amp;lt;int&amp;gt; p;
+        for (int i = 1; i &amp;lt;= n; ++i)
+            if (tag[i])
+                p.push_back(i);
+        std::sort(p.begin(), p.end(), [&amp;amp;](int i, int j) &amp;#123; return dfn[i] &amp;lt; dfn[j]; &amp;#125;);
+        for (int i = 1; i &amp;lt; (int)p.size(); ++i) &amp;#123;
+            int fa = getLCA(p[i], p[i - 1]);
+            if (!tag[fa])
+                tag[fa] = 1;
+        &amp;#125;
+        p.clear();
+        for (int i = 1; i &amp;lt;= n; ++i)
+            if (tag[i])
+                p.push_back(i);
+        std::sort(p.begin(), p.end(), [&amp;amp;](int i, int j) &amp;#123; return dfn[i] &amp;lt; dfn[j]; &amp;#125;);
+        std::vector&amp;lt;int&amp;gt; st;
+        for (auto i : p) &amp;#123;
+            if (st.empty())
+                st.push_back(i);
+            else &amp;#123;
+                for (; rfn[st.back()] &amp;lt; dfn[i]; st.pop_back());
+                g2[st.back()].emplace_back(i, dep[i] - dep[st.back()]);
+                g2[i].emplace_back(st.back(), dep[i] - dep[st.back()]);
+                // printf(&amp;quot;add (%d, %d): %d\n&amp;quot;, st.back(), i, dep[i] - dep[st.back()]);
+                st.push_back(i);
+            &amp;#125;
+        &amp;#125;
+        for (auto [u, v] : be) &amp;#123;
+            g2[u].emplace_back(v, 1), g2[v].emplace_back(u, 1);
+            // printf(&amp;quot;# add(%d, %d): 1\n&amp;quot;, u, v);
+        &amp;#125;
+    &amp;#125;
+    tag.assign(n + 1, 0);
+    std::vector&amp;lt;int&amp;gt; res(n + 1);
+    DFS = [&amp;amp;](int x, int s) &amp;#123;
+        if (x == n)
+            ++res[s];
+        tag[x] = 1;
+        for (auto [i, w] : g2[x])
+            if (!tag[i])
+                DFS(i, s + w);
+        tag[x] = 0;
+        return;
+    &amp;#125;;
+    DFS(1, 0);
+    for (int i = 1; i &amp;lt; n; ++i)
+        std::cout &amp;lt;&amp;lt; res[i] &amp;lt;&amp;lt; &amp;#39; &amp;#39;;
+    std::cout &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+#ifndef ONLINE_JUDGE
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt; (std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s\n&amp;quot;;
+#endif
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">https://xsc062.netlify.app/20250421/</guid>
+            <title>杂题</title>
+            <link>https://xsc062.netlify.app/20250421/</link>
+            <category>DP</category>
+            <category>贪心</category>
+            <category>均摊</category>
+            <pubDate>Mon, 21 Apr 2025 14:42:31 +0800</pubDate>
+            <description><![CDATA[ &lt;figure&gt;
+&lt;img src=&#34;/20250421/neko.png&#34; alt=&#34;猫&#34; style=&#34;width: 75px&#34;&gt;
+&lt;figcaption&gt;
+猫
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;a---t-shirt&#34;&gt;A - T-shirt&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/problemset/problem/183/D&#34; class=&#34;uri&#34;&gt;https://codeforces.com/problemset/problem/183/D&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;如果知道一个衣服序列，怎么算出期望呢？&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;b---two-melodies&#34;&gt;B - Two Melodies&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/problemset/problem/813/D&#34; class=&#34;uri&#34;&gt;https://codeforces.com/problemset/problem/813/D&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;如果设 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,j}\)&lt;/span&gt; 表示第一个以 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 结尾，第二个以 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 结尾的方案数，就会有一个弊端——假设现在有 &lt;span class=&#34;math inline&#34;&gt;\(i&amp;gt;j\)&lt;/span&gt;，又假设有 &lt;span class=&#34;math inline&#34;&gt;\(j&amp;lt;j&amp;#39;&amp;lt;i\)&lt;/span&gt;，那么就不可以直接把 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,j}\)&lt;/span&gt; 转移到 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,j&amp;#39;}\)&lt;/span&gt;，因为 &lt;span class=&#34;math inline&#34;&gt;\(j&amp;#39;\)&lt;/span&gt; 可能已经被第一个选过了。但如果从 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 转移就没有这样的问题（不管 &lt;span class=&#34;math inline&#34;&gt;\(i&amp;#39;\)&lt;/span&gt; 是比 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 大还是比 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 小）。&lt;/p&gt;
+&lt;p&gt;那就可以固定从较大的一维转移，也可以枚举所有情况。但是这样就会有一个问题，这是一个 &lt;span class=&#34;math inline&#34;&gt;\(n^3\)&lt;/span&gt; 的过程，而且对于不单调的内层 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt;，维护它的数值只能用带 &lt;span class=&#34;math inline&#34;&gt;\(\log\)&lt;/span&gt; 的数据结构优化，似乎不太过得了；但 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 却可以前缀优化。&lt;/p&gt;
+&lt;p&gt;其实，两个组是无序的，这意味着可以强制 &lt;span class=&#34;math inline&#34;&gt;\(i&amp;gt;j\)&lt;/span&gt; 再从 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 转移；这个时候转移就和 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 没有太大的关系了，可以把 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 放到外层，对 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 前缀优化。可能需要注意边界的处理。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, res = 0;
+    std::cin &amp;gt;&amp;gt; n;
+    std::vector&amp;lt;int&amp;gt; a(n + 1);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        std::cin &amp;gt;&amp;gt; a[i];
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; f(n + 1, std::vector&amp;lt;int&amp;gt; (n + 1));
+    for (int j = 0; j &amp;lt; n; ++j) &amp;#123;
+        std::vector&amp;lt;int&amp;gt; mx(100002), mmx(7);
+        for (int i = 1; i &amp;lt; j; ++i) &amp;#123;
+            mx[a[i]] = std::max(mx[a[i]], f[j][i]);
+            mmx[a[i] % 7] = std::max(mmx[a[i] % 7], f[j][i]);
+        &amp;#125;
+        for (int i = j + 1; i &amp;lt;= n; ++i) &amp;#123;
+            f[i][j] = std::max(&amp;#123; !!i + !!j, mx[a[i] - 1] + 1, mx[a[i] + 1] + 1, mmx[a[i] % 7] + 1, f[j][0] + 1 &amp;#125;);
+            mx[a[i]] = std::max(mx[a[i]], f[i][j]);
+            mmx[a[i] % 7] = std::max(mmx[a[i] % 7], f[i][j]);
+            // printf(&amp;quot;f[%d][%d] = %d\n&amp;quot;, i, j, f[i][j]);
+            res = std::max(res, f[i][j]);
+        &amp;#125;
+    &amp;#125;
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;cf633f-the-chocolate-spree&#34;&gt;CF633F The Chocolate Spree&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/problemset/problem/633/F&#34; class=&#34;uri&#34;&gt;https://codeforces.com/problemset/problem/633/F&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;树形 DP 求直径的时候，有一种方法是找到每个点下面的最大两条不交链。&lt;/p&gt;
+&lt;p&gt;这里也可以有类似的求法。假设答案出现在子树 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 中（下面的 &lt;span class=&#34;math inline&#34;&gt;\(v_i\)&lt;/span&gt; 都是 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 的直接儿子），可以讨论 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 参与构成两条路径的情况：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;不参与构成任何一条路径，答案是 &lt;span class=&#34;math inline&#34;&gt;\(v_1,v_2\)&lt;/span&gt; 子树中的最长路径之和。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;参与构成其中一条：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;这一条与子树 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 完全相离，答案是 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 中最长路径，和 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 下面不经过 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 的最大两条不交链。&lt;/li&gt;
+&lt;li&gt;这一条有一支来自 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 子树，但和 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 中最长路径没有重合的点。答案是 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 的点权、&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 下面不经过 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 的最大链、&lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 中一条路径（不经过 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt;）和 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 下面一条链之和的最大值；&lt;/li&gt;
+&lt;li&gt;这一条两支都来自 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 子树：有重合，不可能发生。&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;参与构成其中两条，答案是 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 下面最长的四条链：路径重复经过 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;，不可能发生。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;2.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;可以记录 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 下方最大的四条不交链、&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 中选取一条不经过 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 的路径和 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 下方一条链之和的最大值、&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 中最长路径求解。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp language-cpp&#34; data-line=&#34;42-44&#34;&gt;&lt;code class=&#34;cpp langauage-cpp&#34;&gt;#include &amp;lt;bits/stdc++.h&gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&#34;.in&#34;, &#34;r&#34;, stdin);
+    std::freopen(&#34;.out&#34;, &#34;w&#34;, stdout);
+#endif
+    int n;
+    std::cin &gt;&gt; n;
+    std::vector&amp;lt;int&gt; a(n + 1);
+    std::vector&amp;lt;std::vector&amp;lt;int&gt; &gt; g(n + 1);
+    for (int i = 1; i &lt;= n; ++i)
+        std::cin &gt;&gt; a[i];
+    for (int i = 1, x, y; i &lt; n; ++i) &amp;#123;
+        std::cin &gt;&gt; x &gt;&gt; y;
+        g[x].push_back(y), g[y].push_back(x);
+    &amp;#125;
+    auto res(0ll);
+    std::vector&amp;lt;long long&gt; s(n + 1), w(n + 1);
+    std::vector&amp;lt;std::vector&amp;lt;std::pair&amp;lt;long long, int&gt; &gt; &gt; f(n + 1, std::vector&amp;lt;std::pair&amp;lt;long long, int&gt; &gt; (4));
+    std::function&amp;lt;void(int, int)&gt; DFS = [&amp;](int x, int fa) &amp;#123;
+        f[x][0] = &amp;#123; 0, x &amp;#125;;
+        w[x] = s[x] = a[x];
+        for (auto i : g[x])
+            if (i != fa) &amp;#123;
+                DFS(i, x);
+                &amp;#123;
+                    if (f[i][0].first + a[i] &gt; f[x][3].first)
+                        f[x][3].first = f[i][0].first + a[i], f[x][3].second = i;
+                    std::sort(f[x].begin(), f[x].end(), std::greater&amp;lt;std::pair&amp;lt;long long, int&gt; &gt; ());
+                &amp;#125;
+                w[x] = std::max(w[x], w[i] + a[x]);
+            &amp;#125;
+        auto mx(0ll);
+        for (auto i : g[x])
+            if (i != fa) &amp;#123;
+                s[x] = std::max(&amp;#123; s[x], s[i], f[x][0].first + f[x][1].first + a[x] &amp;#125;);
+                w[x] = std::max(w[x], (f[x][0].second != i ? f[x][0] : f[x][1]).first + s[i] + a[x]);
+                res = std::max(&amp;#123; res,
+                    mx + s[i], // 情况 1
+                    (f[x][0].second == i ? f[x][1].first + f[x][2].first : (f[x][1].second == i ? f[x][0].first + f[x][2].first : f[x][0].first + f[x][1].first)) + s[i] + a[x], // 情况 2.1
+                    (f[x][0].second == i ? f[x][1].first : f[x][0].first) + w[i] + a[x], // 情况 2.2
+                &amp;#125;);
+                mx = std::max(mx, s[i]);
+            &amp;#125;
+    //     printf(&#34;%d: res = %lld\n  f: \n&#34;, a[x], res);
+    //     for (int i = 0; i &lt; 4; ++i)
+    //         printf(&#34;    [%d] %lld\n&#34;, f[x][i].second, f[x][i].first);
+    //     printf(&#34;  s: %lld\n  w: %lld\n&#34;, s[x], w[x]);
+    &amp;#125;;
+    DFS(1, -1);
+    std::cout &lt;&lt; res &lt;&lt; &#39;\n&#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;c---巡逻&#34;&gt;C - 巡逻&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P3629&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P3629&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;你可能需要注意：目的是遍历所有边而非所有点。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(K=1\)&lt;/span&gt; 的时候，环上除了关键边的所有边经过次数会减 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;。所以选树的直径就可以最优。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(K=2\)&lt;/span&gt; 的时候，答案是 &lt;span class=&#34;math inline&#34;&gt;\(2\times (m + 2)\)&lt;/span&gt; 减去两个边构成的环的 &lt;em&gt;并集减交集&lt;/em&gt; 大小 &lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt;。环实际上是不存在的，&lt;span class=&#34;math inline&#34;&gt;\(L\)&lt;/span&gt; 其实是两条路径 &lt;em&gt;并集减交集&lt;/em&gt; 再加上两条新边的值。&lt;/p&gt;
+&lt;p&gt;两条路径有交的时候，可以等效成无交的情况：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;1.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;就化归成上一个问题了。注意此时情况 3 可能发生；同时情况 2.2 可以选取经过 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 的路径。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp language-cpp&#34; data-line=&#34;55-56,64-67&#34;&gt;&lt;code class=&#34;cpp langauage-cpp&#34;&gt;#include &amp;lt;bits/stdc++.h&gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&#34;.in&#34;, &#34;r&#34;, stdin);
+    std::freopen(&#34;.out&#34;, &#34;w&#34;, stdout);
+#endif
+    int n, k;
+    std::cin &gt;&gt; n &gt;&gt; k;
+    std::vector&amp;lt;std::vector&amp;lt;int&gt; &gt; g(n + 1);
+    for (int i = 1, x, y; i &lt; n; ++i) &amp;#123;
+        std::cin &gt;&gt; x &gt;&gt; y;
+        g[x].push_back(y), g[y].push_back(x);
+    &amp;#125;
+    int res = 0;
+    if (k == 1) &amp;#123;
+        std::vector&amp;lt;std::vector&amp;lt;std::pair&amp;lt;int, int&gt; &gt; &gt; f(n + 1, std::vector&amp;lt;std::pair&amp;lt;int, int&gt; &gt; (2));
+        std::function&amp;lt;void(int, int)&gt; DFS = [&amp;](int x, int fa) &amp;#123;
+            f[x][0] = &amp;#123; 0, x &amp;#125;;
+            for (auto i : g[x])
+                if (i != fa) &amp;#123;
+                    DFS(i, x);
+                    &amp;#123;
+                        if (f[i][0].first + 1 &gt; f[x][1].first)
+                            f[x][1].first = f[i][0].first + 1, f[x][1].second = i;
+                        std::sort(f[x].begin(), f[x].end(), std::greater&amp;lt;std::pair&amp;lt;int, int&gt; &gt; ());
+                    &amp;#125;
+                &amp;#125;
+            res = std::max(res, f[x][0].first + f[x][1].first);
+        &amp;#125;;
+        DFS(1, -1);
+        std::cout &lt;&lt; 2 * n - res - 1 &lt;&lt; &#39;\n&#39;;
+    &amp;#125;
+    else &amp;#123;
+        std::vector&amp;lt;int&gt; s(n + 1), w(n + 1);
+        std::vector&amp;lt;std::vector&amp;lt;std::pair&amp;lt;int, int&gt; &gt; &gt; f(n + 1, std::vector&amp;lt;std::pair&amp;lt;int, int&gt; &gt; (4));
+        std::function&amp;lt;void(int, int)&gt; DFS = [&amp;](int x, int fa) &amp;#123;
+            f[x][0] = &amp;#123; 0, x &amp;#125;;
+            for (auto i : g[x])
+                if (i != fa) &amp;#123;
+                    DFS(i, x);
+                    &amp;#123;
+                        if (f[i][0].first + 1 &gt; f[x][3].first)
+                            f[x][3].first = f[i][0].first + 1, f[x][3].second = i;
+                        std::sort(f[x].begin(), f[x].end(), std::greater&amp;lt;std::pair&amp;lt;int, int&gt; &gt; ());
+                    &amp;#125;
+                    w[x] = std::max(w[x], w[i] + 1);
+                &amp;#125;
+            &amp;#123;
+                int t = 0;
+                for (auto [v, id] : f[x])
+                    t += v;
+                res = std::max(res, t); // 情况 3
+                w[x] = std::max(w[x], t - f[x][3].first); // 路径可经过 u
+            &amp;#125;
+            int mx = 0;
+            for (auto i : g[x])
+                if (i != fa) &amp;#123;
+                    s[x] = std::max(&amp;#123; s[x], s[i], f[x][0].first + f[x][1].first &amp;#125;);
+                    w[x] = std::max(w[x], (f[x][0].second != i ? f[x][0] : f[x][1]).first + std::max(s[i], f[i][0].first + 1));
+                    res = std::max(&amp;#123; res,
+                        mx + s[i], // 情况 1
+                        (f[x][0].second == i ? f[x][1].first + f[x][2].first : (f[x][1].second == i ? f[x][0].first + f[x][2].first : f[x][0].first + f[x][1].first)) + s[i], // 情况 2.1
+                        (f[x][0].second == i ? f[x][1].first : f[x][0].first) + w[i] + 1, // 情况 2.2
+                    &amp;#125;);
+                    mx = std::max(mx, s[i]);
+                &amp;#125;
+        &amp;#125;;
+        DFS(1, -1);
+        std::cout &lt;&lt; 2 * (n + 1) - res - 2 &lt;&lt; &#39;\n&#39;;
+    &amp;#125;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;d---瞬间传送-teleport&#34;&gt;D - 瞬间传送 / Teleport&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P11915&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P11915&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;需要观察到一个很厉害的贪心策略：如果钦定所有点的距离不大于 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;，且存在 &lt;span class=&#34;math inline&#34;&gt;\(d(i,j)&amp;gt;r\)&lt;/span&gt;。&lt;strong&gt;假设&lt;/strong&gt; 一种满足条件的新边是 &lt;span class=&#34;math inline&#34;&gt;\((u,v)\)&lt;/span&gt;（由于两者无序，不妨钦定 &lt;span class=&#34;math inline&#34;&gt;\(d(i,u)&amp;lt;d(i,v)\)&lt;/span&gt;），可以进行讨论：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(d(j,v)&amp;lt;d(j,u)\)&lt;/span&gt;：&lt;/p&gt;
+此时最优路径为 &lt;span class=&#34;math inline&#34;&gt;\(i\to u\to v\to j\)&lt;/span&gt;，判断一下这种方案是否不大于 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt; 就可以了。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(d(j,v)\ge d(j, u)\)&lt;/span&gt;：&lt;/p&gt;
+&lt;p&gt;此时不管是走 &lt;span class=&#34;math inline&#34;&gt;\(i\to u\to v\to j\)&lt;/span&gt; 还是 &lt;span class=&#34;math inline&#34;&gt;\(i\to v\to u\to j\)&lt;/span&gt; 都不如走已经存在的 &lt;span class=&#34;math inline&#34;&gt;\(i\to u\to j\)&lt;/span&gt; 这条路径，也就是说如果要走新边，代价是一定比原距离大，更是比 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt; 大的；也就是说，&lt;span class=&#34;math inline&#34;&gt;\((u,v)\)&lt;/span&gt; 不能解决 &lt;span class=&#34;math inline&#34;&gt;\((i,j)\)&lt;/span&gt; 之间的问题，假设就不成立了。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;综上，只需要判断 &lt;span class=&#34;math inline&#34;&gt;\(i\to u\to v\to j\le r\)&lt;/span&gt; 是否成立，就可以判断 &lt;span class=&#34;math inline&#34;&gt;\((u,v)\)&lt;/span&gt; 是否合法。从大到小枚举 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;，同时维护当前依然合法的 &lt;span class=&#34;math inline&#34;&gt;\((u,v)\)&lt;/span&gt;（显然是有单调性的），对于不合法的 &lt;span class=&#34;math inline&#34;&gt;\((i,j)\)&lt;/span&gt;，枚举每个 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;，维护 &lt;span class=&#34;math inline&#34;&gt;\(\max\{d(v,j)\}\)&lt;/span&gt;，精细实现（主要是利用各种均摊）一下就能 &lt;span class=&#34;math inline&#34;&gt;\(O(n^3)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;这里具体提一下需要摊的几个点：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;枚举到 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt; 的时候用所有 &lt;span class=&#34;math inline&#34;&gt;\(d(i,j)=r+1\)&lt;/span&gt; 把 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 在 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 处的最大 &lt;span class=&#34;math inline&#34;&gt;\(d(v,j)\)&lt;/span&gt; 更新，方便后面 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt; 地 check。摊出来是 &lt;span class=&#34;math inline&#34;&gt;\(O(n^3)\)&lt;/span&gt; 的。&lt;/li&gt;
+&lt;li&gt;枚举仍然处在合法队列里的 &lt;span class=&#34;math inline&#34;&gt;\((u,v)\)&lt;/span&gt;，如果 check 合法，就说明对于当前 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt; 至少存在一个合法解，就可以 &lt;code&gt;break&lt;/code&gt; 了；否则，把 &lt;span class=&#34;math inline&#34;&gt;\((u,v)\)&lt;/span&gt; 弹出，继续 check 下一条边。这样每条边只会被弹出一次，而未弹出边的 check 次数最多是 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt;；加上 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt; 的 check，摊出来是 &lt;span class=&#34;math inline&#34;&gt;\(O(n^3)\)&lt;/span&gt; 的。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int inf = 0x3f3f3f3f;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int T;
+    for (std::cin &amp;gt;&amp;gt; T; T--; ) &amp;#123;
+        int n;
+        std::cin &amp;gt;&amp;gt; n;
+        std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g(n + 1, std::vector&amp;lt;int&amp;gt; (n + 1, inf));
+        for (int i = 1; i &amp;lt;= n; ++i)
+            for (int j = 1; j &amp;lt;= n; ++j) &amp;#123;
+                char t;
+                std::cin &amp;gt;&amp;gt; t;
+                if (t == &amp;#39;1&amp;#39; || i == j)
+                    g[i][j] = t - &amp;#39;0&amp;#39;;
+            &amp;#125;
+        for (int k = 1; k &amp;lt;= n; ++k)
+            for (int i = 1; i &amp;lt;= n; ++i)
+                if (i != k)
+                    for (int j = 1; j &amp;lt;= n; ++j)
+                        if (j != i &amp;amp;&amp;amp; j != k)
+                            g[i][j] = std::min(g[i][j], g[i][k] + g[k][j]);
+        std::queue&amp;lt;std::pair&amp;lt;int, int&amp;gt; &amp;gt; q;
+        std::vector&amp;lt;std::vector&amp;lt;std::pair&amp;lt;int, int&amp;gt; &amp;gt; &amp;gt; p(n + 1);
+        std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; mx(n + 1, std::vector&amp;lt;int&amp;gt; (n + 1));
+        for (int i = 1; i &amp;lt; n; ++i)
+            for (int j = i + 1; j &amp;lt;= n; ++j) &amp;#123;
+                q.emplace(i, j);
+                p[g[i][j] - 1].emplace_back(i, j);
+            &amp;#125;
+        auto check = [&amp;amp;](int u, int v, int r) &amp;#123;
+            for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+                if (g[u][i] &amp;gt; g[v][i])
+                    std::swap(u, v);
+                if (g[u][i] + mx[v][i] &amp;gt; r)
+                    return false;
+            &amp;#125;
+            return true;
+        &amp;#125;;
+        for (int r = n; r &amp;gt;= -1; --r) &amp;#123;
+            for (auto [i, j] : p[r])
+                for (int v = 1; v &amp;lt;= n; ++v) &amp;#123;
+                    mx[v][i] = std::max(mx[v][i], g[v][j]);
+                    mx[v][j] = std::max(mx[v][j], g[v][i]);
+                &amp;#125;
+            for (; !q.empty(); ) &amp;#123;
+                auto [u, v] = q.front();
+                if (!check(u, v, r))
+                    q.pop();
+                else
+                    break;
+            &amp;#125;
+            if (q.empty()) &amp;#123;
+                std::cout &amp;lt;&amp;lt; r + 1 &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+                break;
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;e.-two-tanks&#34;&gt;E. Two Tanks&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/problemset/problem/1809/E&#34; class=&#34;uri&#34;&gt;https://codeforces.com/problemset/problem/1809/E&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;果然还是不会简单 DP &lt;img src=&#34;/em/ll.gif&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;可以观察到如果总水量相同，且某个时刻两种初始状态当前是相同状态，那么以后它们也会是相同状态。但光凭这个好像还是不太能做出来的样子 &lt;img src=&#34;/em/kt.gif&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;这里大概算一个定式，对于类似这种两个元素总和不变的问题，可以把两个元素的容量画到数轴上，原点表示分界，当前水为一条定长线段，倒水就相当于左右平移这条线段：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;3.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;需要意识到，&lt;mark&gt;&lt;/mark&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

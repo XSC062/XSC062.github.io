@@ -28,9 +28,7 @@ const searchPath = "/search.xml"
 <script src="/js/jQuery.js"></script>
 
 <!-- 载入 Valine -->
-
-<script src="/js/Valine.min.js"></script>
-
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
 <!-- css 引入 -->
 
 <link rel="stylesheet" href="/css/layout.css">
@@ -39,6 +37,11 @@ const searchPath = "/search.xml"
 <link rel="stylesheet" href="/css/prcss/prism.css">
 
 
+
+<!-- rss -->
+<link rel="alternate" type="application/rss+xml" title="" href="https://xsc062.netlify.app/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="" href="https://xsc062.netlify.app/atom.xml" />
+<link rel="alternate" type="application/json" title="" href="https://xsc062.netlify.app/feed.json" />
 
 <meta charset="utf-8"> 
 <meta name="generator" content="Hexo 7.2.0"></head>
@@ -73,15 +76,7 @@ const searchPath = "/search.xml"
 <div id="search-bg">
 	<div id="search-box">
 		<input type="text" id="search-input" placeholder="Type to search...">
-		<div id="search-results"></div>
-		<p>恭喜你触发了这个 box，由于我还没有写关闭键，你只能通过刷新页面来关闭它。非常抱歉 ;-)</p>
-		<p>为了证明我没有摆烂，在这里放一个进度：</p>
-		<p>- 250715：尝试实现搜索功能，初步成功，能够搜索到包含关键词的文章了（<strong>也能关掉了</strong>）。不知道为啥输入 123 可以匹配所有文章，但是输入 1234 就一篇都匹配不上。（250814 upd：搜索的是 html 源码，<code>{</code> 的 ASCII 码为 123 / <code>&</code><code>#123;</code>）</p>
-		<p>- 250716：尝试加入关键词上下文来 de 上面的 bug，然后把 js 写成史了，现在这个框框并不具备搜索功能（也不具备关闭功能） :-(</p>
-		<p>- 250814：<strong>能关了</strong>，我很勤勉</p>
-		<p>什么？居然还能搜索！还能高亮关键词？谢谢你，hexo-generator-searchdb！但是你为什么没有注释，让我阅读理解了半天 :-(</p>
-		<p>css 等有空了再写吧，能用就行</p>
-		<p>**为什么有 bug？试着找一个关键词发现有的文章没有匹配上**/p>
+		<div id="search-results">键入以搜索</div>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
@@ -168,6 +163,18 @@ const searchPath = "/search.xml"
 <hr />
 <h2 id="ds">DS</h2>
 <details>
+<p><summary><strong>容易记错的操作复杂度：</strong></summary></p>
+<ul>
+<li><strong>线段树合并、线段树建树</strong>：<span class="math inline">\(O(n)\)</span>。</li>
+<li>FHQ Treap 建树：视作笛卡尔树，<span class="math inline">\(O(n)\)</span>。</li>
+<li>动态开店线段树单次访问至多增加 <span class="math inline">\(4\log\)</span> 个点，e.g. <span class="math inline">\([2,n-1]\)</span>。</li>
+</ul>
+</details>
+<details>
+<p><summary><strong>随机序列的笛卡尔树：</strong></summary></p>
+<p>是 Treap。</p>
+</details>
+<details>
 <p><summary><strong>有『合并』功能的 DS：</strong></summary></p>
 <p>并查集，线段树，<strong>字典树</strong>，笛卡尔树，BST。</p>
 </details>
@@ -200,6 +207,7 @@ const searchPath = "/search.xml"
 </details>
 <hr />
 <h2 id="数学">数学</h2>
+<!-- <details><summary> -->
 <details>
 <p><summary><strong>常见数据对应的数列：</strong></summary></p>
 <ul>
@@ -225,6 +233,11 @@ const searchPath = "/search.xml"
 </details>
 <hr />
 <h2 id="图论">图论</h2>
+<details>
+<p><summary><span class="math inline">\(m-n\)</span> 很小带来的隐含条件</summary></p>
+<p>DFS 树的反祖边很少，可以基于这一点想一些比较暴力的做法。</p>
+<p>goto <a target="_blank" rel="noopener" href="http://localhost:4000/20250816/#g---count-simple-paths-2">solu to <em>Count Simple Paths 2</em></a>。</p>
+</details>
 <h3 id="经典建模">经典建模</h3>
 <details>
 <p><summary><strong>左部点度数为 <span class="math inline">\(2\)</span> 的二分图匹配：</strong></summary></p>
@@ -378,6 +391,7 @@ goto <a href="/20230716-1/">solu to <em>匹配数</em></a></li>
 <p><summary><strong>子序列问题转化为背包问题：</strong></summary></p>
 <p>子序列问题（不仅是 + &amp; min，也可以是 xor、加 &amp; 模等）可以转化为背包问题；对一个区间做背包，可以把区间划分成若干段，每段做背包，再依次 <span class="math inline">\(O(v^2)\)</span> 地合并。</p>
 <p>『划分』的一个典型场景是找『分割线』，然后向左向右分别做背包——这么做的优点是，对于任意穿这条分割线的区间，你都能 <span class="math inline">\(O(v^2)\)</span> 得到所有的背包信息。甚至，如果你只需要求某个特定体积下的答案，只需要 <span class="math inline">\(O(v)\)</span> 枚举。</p>
+<p>upd：可以猫树</p>
 <p>goto <a target="_blank" rel="noopener" href="https://loj.ac/p/6515">贪玩蓝月</a>。</p>
 </details>
 <details>
@@ -542,7 +556,8 @@ goto <a href="/20250510/#c---1-loop-bubble-sort">1 Loop Bubble Sort</a>。</li>
 		appKey: 'TW6t8mFeGLmhPjWisvmllvvo',
 		recordIP: true,
 		enableQQ: true, 
-		// 目前 Valine 的 QQ 自动获取昵称似乎不可用 故不建议开启
+		// [EDITED] 目前 Valine 的 QQ 自动获取昵称似乎不可用
+		// 该问题在 v1.5.3 中已修复
 		pageSize: 10,
 		requiredFields:
 			

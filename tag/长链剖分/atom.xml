@@ -1,0 +1,1061 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://xsc062.netlify.app</id>
+    <title> • Posts by &#34;长链剖分&#34; tag</title>
+    <link href="https://xsc062.netlify.app" />
+    <updated>2025-08-03T03:44:54.000Z</updated>
+    <category term="并查集" />
+    <category term="斜率优化" />
+    <category term="悬线法" />
+    <category term="哈希" />
+    <category term="字典树" />
+    <category term="DP" />
+    <category term="单调队列" />
+    <category term="分治" />
+    <category term="二分图" />
+    <category term="CRT / exCRT" />
+    <category term="排列组合" />
+    <category term="网络流" />
+    <category term="费用流" />
+    <category term="二分" />
+    <category term="上下界网络流" />
+    <category term="容斥原理" />
+    <category term="线段树" />
+    <category term="树状数组" />
+    <category term="区间 DP" />
+    <category term="构造" />
+    <category term="Tarjan" />
+    <category term="数据结构" />
+    <category term="下饭" />
+    <category term="LCA" />
+    <category term="倍增" />
+    <category term="鸽巢原理" />
+    <category term="概率期望" />
+    <category term="调和级数" />
+    <category term="差分" />
+    <category term="思维" />
+    <category term="树形 DP" />
+    <category term="最小生成树" />
+    <category term="SAM" />
+    <category term="状压" />
+    <category term="分块" />
+    <category term="可持久化" />
+    <category term="笛卡尔树" />
+    <category term="高维前缀和" />
+    <category term="闲话" />
+    <category term="欧拉回路" />
+    <category term="树链剖分" />
+    <category term="长链剖分" />
+    <category term="KMP" />
+    <category term="border" />
+    <category term="字符串" />
+    <category term="AC 自动机" />
+    <category term="SA" />
+    <category term="数学" />
+    <category term="树上差分" />
+    <category term="FWT" />
+    <category term="堆" />
+    <category term="树的重心" />
+    <category term="二项式定理" />
+    <category term="二项式反演" />
+    <category term="贪心" />
+    <category term="均摊" />
+    <category term="计数" />
+    <category term="优化建图" />
+    <category term="反悔贪心" />
+    <category term="调整法" />
+    <category term="背包" />
+    <category term="博弈论" />
+    <category term="DP 优化" />
+    <category term="虚树" />
+    <category term="点分治" />
+    <category term="WQS 二分" />
+    <category term="闵可夫斯基和" />
+    <category term="slope trick" />
+    <category term="四边形不等式" />
+    <category term="暴力" />
+    <category term="状压 DP" />
+    <category term="组合数学" />
+    <category term="支配对" />
+    <category term="DDP" />
+    <category term="平衡树" />
+    <category term="容斥" />
+    <category term="猫树" />
+    <category term="Kruskal 重构树" />
+    <category term="李超线段树" />
+    <entry>
+        <id>https://xsc062.netlify.app/20250803/</id>
+        <title>树 DP</title>
+        <link rel="alternate" href="https://xsc062.netlify.app/20250803/"/>
+        <content type="html">&lt;p&gt;树上的 DP 以及 和树有关的 DP&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;a---svjetlo&#34;&gt;A - Svjetlo&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P7163&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P7163&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;很容易想到一种状态设计，即令 &lt;span class=&#34;math inline&#34;&gt;\(f_{x,0/1/2}\)&lt;/span&gt; 分别表示有 &lt;span class=&#34;math inline&#34;&gt;\(0/1/2\)&lt;/span&gt; 个端点在子树内部的情况；然后就开始思考，如何满足对于开关状态的要求？&lt;/p&gt;
+&lt;p&gt;还是想少了。如果再加一维，从『状态为开或关』思考就会轻松很多，令 &lt;span class=&#34;math inline&#34;&gt;\(f_{x,0/1/2,0/1}\)&lt;/span&gt; 表示有 &lt;span class=&#34;math inline&#34;&gt;\(0/1/2\)&lt;/span&gt; 个端点再子树外部，且子树内操作完后 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 为关 / 开的最少步数。然后分类讨论转移方式即可。&lt;/p&gt;
+&lt;p&gt;一个比较方便的讨论方式是，先确定某种情况下，访问 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 与 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 的次数，然后就可以得到它们原本的状态。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, rt = -1;
+    std::cin &amp;gt;&amp;gt; n;
+    std::vector&amp;lt;int&amp;gt; a(n + 1);
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        char t;
+        std::cin &amp;gt;&amp;gt; t;
+        a[i] = t - &amp;#39;0&amp;#39;;
+        if (!a[i])
+            rt = i;
+    &amp;#125;
+    if (rt == -1) &amp;#123;
+        std::cout &amp;lt;&amp;lt; 0 &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+        return 0;
+    &amp;#125;
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g(n + 1);
+    for (int i = 1, x, y; i &amp;lt; n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y;
+        g[x].push_back(y), g[y].push_back(x);
+    &amp;#125;
+    std::vector&amp;lt;int&amp;gt; tag(n + 1);
+    std::function&amp;lt;void(int, int)&amp;gt; DFS = [&amp;amp;](int x, int fa) &amp;#123;
+        tag[x] = a[x];
+        for (auto i : g[x])
+            if (i != fa)
+                DFS(i, x), tag[x] &amp;amp;= tag[i];
+        return;
+    &amp;#125;;
+    DFS(rt, -1);
+    std::vector&amp;lt;std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; &amp;gt; f(n + 1, std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; (3, std::vector&amp;lt;int&amp;gt; (2, 0x3f3f3f3f)));
+    DFS = [&amp;amp;](int x, int fa) &amp;#123;
+        f[x][0][a[x]] = 0;
+        for (auto i : g[x])
+            if (i != fa &amp;amp;&amp;amp; !tag[i]) &amp;#123;
+                DFS(i, x);
+                auto g = f[x];
+                f[x][0][0] = std::min(g[0][0] + f[i][0][1] + 4, g[0][1] + f[i][0][0] + 2);
+                f[x][0][1] = std::min(g[0][1] + f[i][0][1] + 4, g[0][0] + f[i][0][0] + 2);
+                f[x][1][0] = std::min(&amp;#123; g[1][0] + f[i][0][1] + 4, g[1][1] + f[i][0][0] + 2, g[0][0] + f[i][1][0] + 3, g[0][1] + f[i][1][1] + 1 &amp;#125;);
+                f[x][1][1] = std::min(&amp;#123; g[1][1] + f[i][0][1] + 4, g[1][0] + f[i][0][0] + 2, g[0][1] + f[i][1][0] + 3, g[0][0] + f[i][1][1] + 1 &amp;#125;);
+                f[x][2][0] = std::min(&amp;#123; g[2][0] + f[i][0][1] + 4, g[2][1] + f[i][0][0] + 2, g[1][0] + f[i][1][1], g[1][1] + f[i][1][0] + 2, g[0][0] + f[i][2][1] + 4, g[0][1] + f[i][2][0] + 2 &amp;#125;);
+                f[x][2][1] = std::min(&amp;#123; g[2][1] + f[i][0][1] + 4, g[2][0] + f[i][0][0] + 2, g[1][1] + f[i][1][1], g[1][0] + f[i][1][0] + 2, g[0][1] + f[i][2][1] + 4, g[0][0] + f[i][2][0] + 2 &amp;#125;);
+            &amp;#125;
+        f[x][1][0] = std::min(f[x][1][0], f[x][0][1] + 1);
+        f[x][1][1] = std::min(f[x][1][1], f[x][0][0] + 1);
+        f[x][2][0] = std::min(f[x][2][0], f[x][1][0]);
+        f[x][2][1] = std::min(f[x][2][1], f[x][1][1]);
+        // for (int i = 0; i &amp;lt; 3; ++i)
+        //     for (int j = 0; j &amp;lt; 2; ++j)
+        //         printf(&amp;quot;f[%d][%d][%d] = %d\n&amp;quot;, x, i, j, f[x][i][j]);
+        return;
+    &amp;#125;;
+    DFS(rt, -1);
+    std::cout &amp;lt;&amp;lt; f[rt][2][1] &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;b---one-to-one&#34;&gt;B - One to One&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/arc140/tasks/arc140_d&#34; class=&#34;uri&#34;&gt;https://atcoder.jp/contests/arc140/tasks/arc140_d&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;观察原图上连通块，发现要么是没有未确定边的基环树，要么是有恰好一条未确定边的树。缩点，任意为未确定边赋值，考察最后得到的连通块，发现要么是以『基环树点』为根的树，要么是不包含『基环树点』的（内向）基环树。&lt;/p&gt;
+&lt;p&gt;这里要用到贡献的思想。考虑将全局划分为若干个部分，保证每部分的单步价值是可确定的。将第一步，即对树和基环树的讨论拆开，对于树，其数量确定；对于基环树，发现环的数量即为基环树的数量，进一步将所有步中的『环』这一类分开，统计成环的方案数就可以得到基环树的贡献。具体地，令 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,j}\)&lt;/span&gt; 为在前 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 个点中选择 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 个成一个环的方案数，则有：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_{i,j}=f_{i-1,j}+f_{i-1,j-1}\times siz_i
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;最后计算每个环的贡献即可。注意还要算上环内部的排列（注意循环位移）。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 998244353;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    std::vector&amp;lt;int&amp;gt; a(n + 1), tag(n + 1), s(n + 1, 1), fa(n + 1), siz(n + 1);
+    std::iota(fa.begin() + 1, fa.end(), 1);
+    std::function&amp;lt;int(int)&amp;gt; find = [&amp;amp;](int x) &amp;#123;
+        return x == fa[x] ? x : fa[x] = find(fa[x]);
+    &amp;#125;;
+    auto merge = [&amp;amp;](int x, int y) &amp;#123;
+        x = find(x), y = find(y);
+        if (x != y) &amp;#123;
+            tag[y] += tag[x];
+            s[y] += s[x];
+            fa[x] = y;
+        &amp;#125;
+        return;
+    &amp;#125;;
+    for (int i = 1; i &amp;lt;= n; ++i)  &amp;#123;
+        std::cin &amp;gt;&amp;gt; a[i], fa[i] = i;
+        if (a[i] == -1)
+            tag[i] = 1;
+        else
+            merge(i, a[i]);
+    &amp;#125;
+    int cnt1 = 0, cnt2 = 0;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        cnt1 += (fa[i] == i &amp;amp;&amp;amp; !tag[i]);
+        if (fa[i] == i &amp;amp;&amp;amp; tag[i])
+            siz[++cnt2] = s[i];
+    &amp;#125;
+    auto qkp = [&amp;amp;](long long x, int y) &amp;#123;
+        auto res(1ll);
+        for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    auto res(cnt1 * qkp(n, cnt2) % mod);
+    std::vector&amp;lt;std::vector&amp;lt;long long&amp;gt; &amp;gt; f(cnt2 + 1, std::vector&amp;lt;long long&amp;gt; (cnt2 + 1));
+    f[0][0] = 1ll;
+    for (int i = 1; i &amp;lt;= cnt2; ++i) &amp;#123;
+        // printf(&amp;quot;i = %d, siz = %d: \n&amp;quot;, i, siz[i]);
+        for (int j = 0; j &amp;lt;= i; ++j) &amp;#123;
+            f[i][j] = f[i - 1][j];
+            if (j != 0)
+                (f[i][j] += f[i - 1][j - 1] * siz[i]) %= mod;
+            // printf(&amp;quot;  f[%d][%d] = %lld\n&amp;quot;, i, j, f[i][j]);
+        &amp;#125;
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= cnt2; ++i) &amp;#123;
+        static auto fac(1ll);
+        (res += f[cnt2][i] * fac % mod * qkp(n, cnt2 - i) % mod) %= mod;
+        (fac *= i) %= mod;
+    &amp;#125;
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;c---diameter-cuts&#34;&gt;C - Diameter Cuts&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/problemset/problem/1499/F&#34; class=&#34;uri&#34;&gt;https://codeforces.com/problemset/problem/1499/F&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;令 &lt;span class=&#34;math inline&#34;&gt;\(f_{x,i}\)&lt;/span&gt; 表示 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 上的最长链长为 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 的方案数，就可以用一个类似背包的过程求答案了。发现这个背包满足可以被优化的形式，故能在 &lt;span class=&#34;math inline&#34;&gt;\(O(nk)\)&lt;/span&gt; 内解决问题。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 998244353;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, k;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; k, ++k;
+    if (k == 0) &amp;#123;
+        std::cout &amp;lt;&amp;lt; 1 &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+        return 0;
+    &amp;#125;
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g(n + 1);
+    for (int i = 1, x, y; i &amp;lt; n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y;
+        g[x].push_back(y), g[y].push_back(x);
+    &amp;#125;
+    std::vector&amp;lt;int&amp;gt; h(n + 1);
+    std::vector&amp;lt;std::vector&amp;lt;long long&amp;gt; &amp;gt; f(n + 1, std::vector&amp;lt;long long&amp;gt; (k + 1));
+    std::function&amp;lt;void(int, int)&amp;gt; DFS = [&amp;amp;](int x, int fa) &amp;#123;
+        f[x][1] = 1ll, h[x] = 1;
+        for (auto i : g[x])
+            if (i != fa) &amp;#123;
+                DFS(i, x);
+                std::vector&amp;lt;long long&amp;gt; g(k + 1);
+                g.swap(f[x]);
+                for (int j = std::min(h[x], k); j; --j)
+                    for (int l = std::min(h[i], k - j); ~l; --l)
+                        (f[x][std::max(j, l + 1)] += g[j] * f[i][l] % mod) %= mod;
+                h[x] = std::max(h[x], h[i] + 1);
+            &amp;#125;
+        for (int i = 1; i &amp;lt;= h[x] &amp;amp;&amp;amp; i &amp;lt;= k; ++i)
+            (f[x][0] += f[x][i]) %= mod;
+        // for (int i = 0; i &amp;lt;= h[x] &amp;amp;&amp;amp; i &amp;lt;= k; ++i)
+        //     printf(&amp;quot;f[%d][%d] = %lld\n&amp;quot;, x, i, f[x][i]);
+        return;
+    &amp;#125;;
+    DFS(1, -1);
+    auto res(0ll);
+    for (int i = 1; i &amp;lt;= k; ++i)
+        (res += f[1][i]) %= mod;
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;d---leaf-partition&#34;&gt;D - Leaf Partition&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/problemset/problem/1146/F&#34; class=&#34;uri&#34;&gt;https://codeforces.com/problemset/problem/1146/F&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;假设已经完成分组，欲判定这种方式是否合法，容易想到对每一组叶子建立虚树，则该分组方式合法，当且仅当没有一个点被多个虚树占用。也即，我们需要在总的虚树上选出一些点，让它们可以覆盖所有叶子。&lt;/p&gt;
+&lt;p&gt;虚树上 DP，容易发现当且仅当存在 &lt;span class=&#34;math inline&#34;&gt;\(\ge 2\)&lt;/span&gt; 个儿子想要分进同一个虚树时，&lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 会被选到。故令 &lt;span class=&#34;math inline&#34;&gt;\(f_{i, 0/1/2}\)&lt;/span&gt; 表示当前有 &lt;span class=&#34;math inline&#34;&gt;\(0/1/\ge 2\)&lt;/span&gt; 个儿子想要选择 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 时的方案数，DP 即可。&lt;/p&gt;
+&lt;p&gt;在实现的过程中就会发现根本不需要求虚树，原树上 DP 就可以了。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 998244353;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    std::vector&amp;lt;int&amp;gt; fa(n + 1);
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g(n + 1);
+    for (int i = 2; i &amp;lt;= n; ++i)
+        std::cin &amp;gt;&amp;gt; fa[i], g[fa[i]].push_back(i);
+    std::vector&amp;lt;std::array&amp;lt;long long, 3&amp;gt; &amp;gt; f(n + 1);
+    std::function&amp;lt;void(int)&amp;gt; DFS = [&amp;amp;](int x) &amp;#123;
+        if (g[x].empty())
+            f[x][2] = 1ll;
+        else
+            f[x][0] = 1ll;
+        for (auto i : g[x]) &amp;#123;
+            DFS(i);
+            auto F0 = (f[i][0] + f[i][2]) % mod, F1 = (f[i][1] + f[i][2]) % mod;
+            f[x][2] = (f[x][2] * F0 % mod + f[x][2] * F1 % mod + f[x][1] * F1 % mod) % mod;
+            f[x][1] = (f[x][1] * F0 % mod + f[x][0] * F1 % mod) % mod;
+            (f[x][0] *= F0) %= mod;
+        &amp;#125;
+        // printf(&amp;quot;%d: %lld / %lld / %lld\n&amp;quot;, x, f[x][0], f[x][1], f[x][2]);
+        return;
+    &amp;#125;;
+    DFS(1);
+    std::cout &amp;lt;&amp;lt; (f[1][0] + f[1][2]) % mod &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;e---uniformly-branched-trees&#34;&gt;E - Uniformly Branched Trees&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/problemset/problem/724/F&#34; class=&#34;uri&#34;&gt;https://codeforces.com/problemset/problem/724/F&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;感觉是很常见的套路，但是我不会 😱&lt;/p&gt;
+&lt;p&gt;在手玩样例的时候可以感性认知到，每个树会被每种点作为根的情况统计一次。且如果固定以某种（化学环境）的点为根，可以通过按 siz 从小到大排列唯一求解出该树。&lt;/p&gt;
+&lt;p&gt;发现以重心为根（即钦定根为重心）可以带来很多优美的性质。因为 siz 是好确定的，且是儿子的排序依据，所以选重心便于统计，同时满足每种树最多被统计两次（当且仅当有两个重心）。&lt;/p&gt;
+&lt;p&gt;发现这就变成了多重集的组合数，设 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,j,k}\)&lt;/span&gt; 表示已经花费 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 个点组成一个子树，子树的根节点当前已经确认了 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 个儿子，最靠右的一个 siz &lt;span class=&#34;math inline&#34;&gt;\(\le k\)&lt;/span&gt; 的方案数。得到 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,j,k}=\sum_{x=0} f_{i-x\cdot k,j-x,k-1}\cdot \binom{f_{k,d-1,k}+x-1}{x}\)&lt;/span&gt;（相当于将 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 个无标号的位置 / 球分配给 &lt;span class=&#34;math inline&#34;&gt;\(f_{k,d-1,k}\)&lt;/span&gt; 个有标号的选项 / 盒子，插板即可）。&lt;/p&gt;
+&lt;p&gt;若 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 为奇数，则可直接输出 &lt;span class=&#34;math inline&#34;&gt;\(f_{n,d,\lfloor\frac n2\rfloor}\)&lt;/span&gt;；若 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 为偶数，则可能存在两个重心，即需要统计拥有两个重心，且以两个重心分别为根时长相不同的树种类。这种情况下显然存在一条边，左右两边 siz 相同且长相不同。故数量为 &lt;span class=&#34;math inline&#34;&gt;\(\binom{f_{\lfloor \frac n2\rfloor, d-1,\lfloor \frac n2\rfloor}}{2}\)&lt;/span&gt;，容斥掉即可。&lt;/p&gt;
+&lt;p&gt;需要特判 &lt;span class=&#34;math inline&#34;&gt;\(n\le2\)&lt;/span&gt; 的情况。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, d, mod;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; d &amp;gt;&amp;gt; mod;
+    if (n &amp;lt;= 2) &amp;#123;
+        std::cout &amp;lt;&amp;lt; 1 &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+        return 0;
+    &amp;#125;
+    using arr = std::vector&amp;lt;long long&amp;gt;;
+    using brr = std::vector&amp;lt;arr&amp;gt;;
+    using crr = std::vector&amp;lt;brr&amp;gt;;
+    auto qkp = [&amp;amp;](long long x, int y) &amp;#123;
+        auto res(1ll);
+        for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    arr inv(d + 1);
+    inv[0] = inv[1] = 1ll;
+    auto fac = 1ll;
+    for (int i = 2; i &amp;lt;= d; ++i) &amp;#123;
+        (fac *= i) %= mod;
+        inv[i] = qkp(fac, mod - 2);
+    &amp;#125;
+    auto C = [&amp;amp;](long long n, int m) &amp;#123;
+        if (m == 0)
+            return 1ll;
+        if (m &amp;gt; n)
+            return 0ll;
+        auto res(1ll);
+        for (auto i = 0; i &amp;lt; m; ++i)
+            (res *= n - i) %= mod;
+        return res * inv[m] % mod;
+    &amp;#125;;
+    crr f(n + 1, brr(d + 1, arr(n / 2 + 1)));
+    f[1][0][0] = 1ll;
+    for (int i = 1; i &amp;lt;= n; ++i)
+        for (int j = 0; j &amp;lt;= d &amp;amp;&amp;amp; 1 + j &amp;lt;= i; ++j) &amp;#123;
+            for (int x = 0; x &amp;lt;= j &amp;amp;&amp;amp; x &amp;lt;= i; ++x)
+                f[i][j][1] += f[i - x][j - x][0];
+            f[i][j][1] %= mod;
+            for (int k = 2; k &amp;lt;= n / 2; ++k) &amp;#123;
+                // bool flag = (i == 10 &amp;amp;&amp;amp; j == 3 &amp;amp;&amp;amp; k == 3);
+                for (int x = 0; x &amp;lt;= j &amp;amp;&amp;amp; x * k &amp;lt;= i; ++x) &amp;#123;
+                    f[i][j][k] += f[i - x * k][j - x][k - 1] * C(f[k][d - 1][k - 1] + x - 1, x);
+                    // if (flag)
+                    //     printf(&amp;quot;x = %d, f[%d][%d][%d](%lld) * C(%lld, %d)(%lld)\n&amp;quot;, x, i - x * k, j - x, k - 1, f[i - x * k][j - x][k - 1], f[k][d - 1][k - 1] + x - 1, x, C(f[k][d - 1][k - 1] + x - 1, x));
+                &amp;#125;
+                f[i][j][k] %= mod;
+            &amp;#125;
+        &amp;#125;
+    // for (int i = 1; i &amp;lt;= n; ++i)
+    //     for (int j = 0; j &amp;lt;= d &amp;amp;&amp;amp; j &amp;lt;= i - 1; ++j, puts(&amp;quot;&amp;quot;))
+    //         for (int k = 0; k &amp;lt;= n / 2; ++k) &amp;#123;
+    //             printf(&amp;quot;f[%d][%d][%d] = %lld\n&amp;quot;, i, j, k, f[i][j][k]);
+    //         &amp;#125;
+    if (n &amp;amp; 1)
+        std::cout &amp;lt;&amp;lt; f[n][d][n / 2] &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    else &amp;#123;
+        auto res(f[n][d][n / 2]);
+        res = (res + mod - C(f[n / 2][d - 1][n / 2 - 1], 2)) % mod;
+        std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    &amp;#125;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;a---dominant-indices&#34;&gt;A - Dominant Indices&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/problemset/problem/1009/F&#34; class=&#34;uri&#34;&gt;https://codeforces.com/problemset/problem/1009/F&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;长剖板子；难点在于可能要复习一下长剖怎么写。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g(n + 1);
+    for (int i = 1, x, y; i &amp;lt; n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y;
+        g[x].push_back(y), g[y].push_back(x);
+    &amp;#125;
+    std::vector&amp;lt;int&amp;gt; h(n + 1), son(n + 1);
+    std::function&amp;lt;void(int, int)&amp;gt; DFS = [&amp;amp;](int x, int fa) &amp;#123;
+        h[x] = 1;
+        for (auto i : g[x])
+            if (i != fa) &amp;#123;
+                DFS(i, x);
+                h[x] = std::max(h[x], h[i] + 1);
+                if (h[i] &amp;gt; h[son[x]])
+                    son[x] = i;
+            &amp;#125;
+        return;
+    &amp;#125;;
+    DFS(1, -1);
+    std::vector&amp;lt;int&amp;gt; _f(2 * n + 1), res(n + 1);
+    auto pos(_f.begin());
+    std::vector&amp;lt;decltype(pos)&amp;gt; f(n + 1);
+    DFS = [&amp;amp;](int x, int fa) &amp;#123;
+        ++f[x][0];
+        if (!son[x]) &amp;#123;
+            res[x] = 0;
+            return;
+        &amp;#125;
+        f[son[x]] = std::next(f[x]);
+        DFS(son[x], x);
+        int mx = -std::max(std::make_pair(f[x][res[son[x]] + 1], -(res[son[x]] + 1)), std::make_pair(1, 0)).second;
+        for (auto i : g[x])
+            if (i != fa &amp;amp;&amp;amp; i != son[x]) &amp;#123;
+                f[i] = pos, pos = std::next(pos, h[i] + 1);
+                DFS(i, x);
+                for (int j = 0; j &amp;lt;= h[i]; ++j) &amp;#123;
+                    f[x][j + 1] += f[i][j];
+                    if (j + 1 != mx &amp;amp;&amp;amp; std::make_pair(f[x][j + 1], -(j + 1)) &amp;gt; std::make_pair(f[x][mx], -mx))
+                        mx = j + 1;
+                &amp;#125;
+            &amp;#125;
+        // printf(&amp;quot;%d: &amp;quot;, x);
+        // for (int i = 0; i &amp;lt;= h[x]; ++i)
+        //     printf(&amp;quot;%d &amp;quot;, f[x][i]);
+        // puts(&amp;quot;&amp;quot;);
+        res[x] = mx;
+        return;
+    &amp;#125;;
+    f[1] = pos, pos = std::next(pos, h[1]);
+    DFS(1, -1);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        std::cout &amp;lt;&amp;lt; res[i] &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;b---树上异或&#34;&gt;B - 树上异或&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P9745&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P9745&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;和 &lt;a href=&#34;#a---svjetlo&#34;&gt;Svjetlo&lt;/a&gt; 很像，把连通块的异或和放到状态里，拆位后令 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,j,0/1}\)&lt;/span&gt; 表示点 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 所在的连通块在第 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 位异或和为 &lt;span class=&#34;math inline&#34;&gt;\(0/1\)&lt;/span&gt; 的权值（&lt;strong&gt;不计 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 所在连通块&lt;/strong&gt;），转移即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 998244353;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    std::vector&amp;lt;long long&amp;gt; a(n + 1);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        std::cin &amp;gt;&amp;gt; a[i];
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g(n + 1);
+    for (int i = 2, x; i &amp;lt;= n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x;
+        g[x].push_back(i), g[i].push_back(x);
+    &amp;#125;
+    std::vector&amp;lt;long long&amp;gt; dp(n + 1);
+    std::vector&amp;lt;std::array&amp;lt;std::array&amp;lt;long long, 2&amp;gt;, 60&amp;gt; &amp;gt; f(n + 1);
+    std::function&amp;lt;void(int, int)&amp;gt; DFS = [&amp;amp;](int x, int fa) &amp;#123;
+        for (int i = 0; i &amp;lt; 60; ++i)
+            f[x][i][(a[x] &amp;gt;&amp;gt; i) &amp;amp; 1] = 1ll;
+        for (auto i : g[x])
+            if (i != fa) &amp;#123;
+                DFS(i, x);
+                for (int j = 0; j &amp;lt; 60; ++j) &amp;#123;
+                    auto f1 = f[x][j];
+                    f[x][j][0] = (f1[0] * dp[i] % mod + f1[0] * f[i][j][0] % mod + f1[1] * f[i][j][1] % mod) % mod;
+                    f[x][j][1] = (f1[1] * dp[i] % mod + f1[0] * f[i][j][1] % mod + f1[1] * f[i][j][0] % mod) % mod;
+                &amp;#125;
+            &amp;#125;
+        for (int i = 0; i &amp;lt; 60; ++i)
+            dp[x] += (1ll &amp;lt;&amp;lt; i) % mod * f[x][i][1] % mod;
+        dp[x] %= mod;
+        return;
+    &amp;#125;;
+    DFS(1, -1);
+    std::cout &amp;lt;&amp;lt; dp[1] &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;c---一个网的路&#34;&gt;C - 一个网的路&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P8595&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P8595&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;首先需要意识到，树和链的边数是一样的，炸掉了多少条边，在之后就会花多少代价补回来。故炸一个点的代价为度数 +1。对于一个点 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;，分为四种可能性：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;被炸了，单独作为一个连通块。&lt;/li&gt;
+&lt;li&gt;没被炸，儿子全部被炸了。&lt;/li&gt;
+&lt;li&gt;没被炸，有 1 个儿子没被炸。&lt;/li&gt;
+&lt;li&gt;没被炸，有 2 个儿子没被炸。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;分别用 &lt;span class=&#34;math inline&#34;&gt;\(f_{u,0/1/2/3}\)&lt;/span&gt; 代表上面四种可能性，转移即可。&lt;/p&gt;
+&lt;p&gt;贺了个 fread，擦边跑过了。这个不是 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt; 的吗？&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int LEN = (1 &amp;lt;&amp;lt; 20);
+#ifdef ONLINE_JUDGE
+int nec(void) &amp;#123;
+    static char buf[LEN], *p = buf, *e = buf;
+    if (p == e) &amp;#123;
+        e = buf + fread(buf, 1, LEN, stdin);
+        if (e == buf) return EOF;
+        p = buf;
+    &amp;#125;
+    return *p++;
+&amp;#125;
+#else
+#define nec getchar
+
+#endif
+bool read(int &amp;amp;x) &amp;#123;
+    x = 0;
+    bool f = 0;
+    char ch = nec();
+    while (ch &amp;lt; &amp;#39;0&amp;#39; || ch &amp;gt; &amp;#39;9&amp;#39;) &amp;#123;
+        if (ch == EOF) return 0;
+        if (ch == &amp;#39;-&amp;#39;) f = 1;
+        ch = nec();
+    &amp;#125;
+    while (ch &amp;gt;= &amp;#39;0&amp;#39; &amp;amp;&amp;amp; ch &amp;lt;= &amp;#39;9&amp;#39;) &amp;#123;
+        x = x * 10 + ch - &amp;#39;0&amp;#39;;
+        ch = nec();
+    &amp;#125;
+    if (f) x = -x;
+    return 1;
+&amp;#125;
+void print(int x) &amp;#123;
+    if (x &amp;lt; 0)
+        putchar(&amp;#39;-&amp;#39;), x = -x;
+    if (x &amp;gt;= 10) print(x / 10);
+    putchar(x % 10 + &amp;#39;0&amp;#39;);
+    return;
+&amp;#125;
+void print(int x, char ch) &amp;#123;
+    print(x), putchar(ch);
+    return;
+&amp;#125;
+int main() &amp;#123;
+    int n, m;
+    read(n), read(m);
+    int res = (n - 1) - m;
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g(n + 1);
+    for (int x, y; m--; ) &amp;#123;
+        read(x), read(y);
+        g[x].push_back(y), g[y].push_back(x);
+    &amp;#125;
+    std::vector&amp;lt;int&amp;gt; tag(n + 1);
+    std::vector&amp;lt;std::array&amp;lt;int, 4&amp;gt; &amp;gt; f(n + 1);
+    std::function&amp;lt;void(int, int)&amp;gt; DFS = [&amp;amp;](int x, int fa) &amp;#123;
+        tag[x] = 1;
+        f[x][0] = (fa != -1) + 1;
+        f[x][2] = f[x][3] = 0x3f3f3f3f;
+        for (auto i : g[x])
+            if (i != fa) &amp;#123;
+                DFS(i, x);
+                f[x][3] = std::min(f[x][3] + f[i][0], f[x][2] + std::min(f[i][1], f[i][2]));
+                f[x][2] = std::min(f[x][2] + f[i][0], f[x][1] + std::min(f[i][1], f[i][2]));
+                f[x][1] += f[i][0];
+                f[x][0] += std::min(&amp;#123; f[i][0] - 1, f[i][1], f[i][2], f[i][3] &amp;#125;) + 1;
+            &amp;#125;
+        return;
+    &amp;#125;;
+    for (int i = 1; i &amp;lt;= n; ++i)
+        if (!tag[i]) &amp;#123;
+            DFS(i, -1);
+            res += *std::min_element(f[i].begin(), f[i].end());
+        &amp;#125;
+    print(res, &amp;#39;\n&amp;#39;);
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;d---随机树&#34;&gt;D - 随机树&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P3830&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P3830&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;对于第一问，令 &lt;span class=&#34;math inline&#34;&gt;\(f_x\)&lt;/span&gt; 表示共有 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 个叶子时的期望深度，两个新叶子的期望深度为 &lt;span class=&#34;math inline&#34;&gt;\(f_{x-1}+1\)&lt;/span&gt;，delta 为 &lt;span class=&#34;math inline&#34;&gt;\(f_{x-1}+2\)&lt;/span&gt;，故有 &lt;span class=&#34;math inline&#34;&gt;\(f_x=\dfrac {(x-1)f_{x-1}+f_{x-1}+2}x\)&lt;/span&gt;，递推即可。&lt;/p&gt;
+&lt;p&gt;对于第二问，令 &lt;span class=&#34;math inline&#34;&gt;\(f_{x,k}\)&lt;/span&gt; 表示有 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 个叶子，深度 &lt;span class=&#34;math inline&#34;&gt;\(\ge k\)&lt;/span&gt; 的概率（一种理解是从整数概率公式的角度出发）。则考虑枚举左、右叶子数，对于左侧叶子数为 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 的情况，&lt;strong&gt;为了去重，只选择深度为 &lt;span class=&#34;math inline&#34;&gt;\(k-1\)&lt;/span&gt; 的叶子展开&lt;/strong&gt;。只考虑某种组合的出现概率，为 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,k-1}+f_{x-i,k-1}-f_{i,k-1}\cdot f_{x-i,k-1}\)&lt;/span&gt;。数归可以证明，对于任意 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;，深度为 &lt;span class=&#34;math inline&#34;&gt;\(k-1\)&lt;/span&gt; 的叶子被选中的概率均为 &lt;span class=&#34;math inline&#34;&gt;\(\dfrac 1{x-1}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int q, n;
+    std::cin &amp;gt;&amp;gt; q &amp;gt;&amp;gt; n;
+    std::cout &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6);
+    if (q == 1) &amp;#123;
+        std::vector&amp;lt;double&amp;gt; f(n + 1);
+        for (int i = 2; i &amp;lt;= n; ++i)
+            f[i] = (f[i - 1] * (i - 1) + f[i - 1] + 2.) / i;
+        std::cout &amp;lt;&amp;lt; f[n] &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    &amp;#125;
+    else &amp;#123;
+        std::vector&amp;lt;std::vector&amp;lt;double&amp;gt; &amp;gt; f(n + 1, std::vector&amp;lt;double&amp;gt; (n + 1));
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            f[i][0] = 1.;
+            for (int j = 1; j &amp;lt; i; ++j) &amp;#123;
+                auto s(0.);
+                for (int k = 1; k &amp;lt; i; ++k)
+                    s += f[k][j - 1] + f[i - k][j - 1] - f[k][j - 1] * f[i - k][j - 1];
+                f[i][j] = s / (i - 1);
+            &amp;#125;
+        &amp;#125;
+        auto res(0.);
+        for (int i = 1; i &amp;lt; n; ++i)
+            res += f[n][i];
+        std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    &amp;#125;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;e---complete-compress&#34;&gt;E - Complete Compress&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/agc034/tasks/agc034_e&#34; class=&#34;uri&#34;&gt;https://atcoder.jp/contests/agc034/tasks/agc034_e&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;对于链，发现可以枚举最后聚集的点，答案与配对方式无关，check 是否能配对即可。&lt;/p&gt;
+&lt;p&gt;如果不是链，则相比链，还可以选择同一子树中不存在祖孙关系的两个点，将它们都向 LCA 移一步。&lt;/p&gt;
+&lt;p&gt;故而，可以在链的做法上打一个补丁，观察到先『内部消化』，再在子树间配对一定不劣，且答案仍然和配对方式无关。故令 &lt;span class=&#34;math inline&#34;&gt;\(f_x\)&lt;/span&gt; 表示点 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 内最多消掉多少对，就可以 check 了。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const long long inf = 1e18;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;line_02.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    std::vector&amp;lt;int&amp;gt; a(n + 1);
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        char t;
+        std::cin &amp;gt;&amp;gt; t;
+        a[i] = t - &amp;#39;0&amp;#39;;
+    &amp;#125;
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g(n + 1);
+    for (int i = 1, x, y; i &amp;lt; n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y;
+        g[x].push_back(y), g[y].push_back(x);
+    &amp;#125;
+    auto res(inf);
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        std::vector&amp;lt;int&amp;gt; s(n + 1);
+        std::vector&amp;lt;long long&amp;gt; f(n + 1), cnt(n + 1);
+        std::function&amp;lt;void(int, int)&amp;gt; DFS = [&amp;amp;](int x, int fa) &amp;#123;
+            s[x] = a[x];
+            int son = 0;
+            auto sum(0ll);
+            for (auto i : g[x])
+                if (i != fa) &amp;#123;
+                    DFS(i, x), s[x] += s[i];
+                    sum += cnt[i];
+                    if (cnt[i] &amp;gt; cnt[son])
+                        son = i;
+                &amp;#125;
+            if (son) &amp;#123;
+                if (cnt[son] * 2 &amp;lt;= sum)
+                    f[x] = sum / 2;
+                else
+                    f[x] = sum - cnt[son] + std::min(f[son], (cnt[son] - (sum - cnt[son])) / 2);
+            &amp;#125;
+            cnt[x] = sum;
+            if (x != i)
+                cnt[x] += s[x];
+            return;
+        &amp;#125;;
+        DFS(i, -1);
+        if (cnt[i] % 2 == 0 &amp;amp;&amp;amp; f[i] == cnt[i] / 2)
+            res = std::min(res, cnt[i] / 2);
+    &amp;#125;
+    if (res == inf)
+        std::cout &amp;lt;&amp;lt; -1 &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    else
+        std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+</content>
+        <category term="DP" />
+        <category term="树形 DP" />
+        <category term="长链剖分" />
+        <updated>2025-08-03T03:44:54.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://xsc062.netlify.app/20241021-1/</id>
+        <title>长链剖分 学习笔记</title>
+        <link rel="alternate" href="https://xsc062.netlify.app/20241021-1/"/>
+        <content type="html">&lt;p&gt;&lt;em&gt;半端な生命の関数を / 少々ここらでオーバーライド&lt;/em&gt;&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;内容-性质&#34;&gt;内容 &amp;amp; 性质&lt;/h2&gt;
+&lt;p&gt;把重链剖分选的 siz 最大的儿子换成高度最大的儿子就是长剖了。同样具有一些美妙的性质。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;任意点到根节点经过的链数最劣为 &lt;span class=&#34;math inline&#34;&gt;\(\sqrt n\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;考虑构造一条经过了 &lt;span class=&#34;math inline&#34;&gt;\(\sqrt n+1\)&lt;/span&gt; 条链的路径，发现构造不出来。得证。（？）&lt;/p&gt;
+这点也决定了长剖和重剖走的不是一条赛道，更多的是处理一些和深度有关的场景下的问题。用法有点像 dsu on tree。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;任意点 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 的 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 级祖先 &lt;span class=&#34;math inline&#34;&gt;\(fa\)&lt;/span&gt; 所在链长 &lt;span class=&#34;math inline&#34;&gt;\(\ge k\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;考虑反证。若 &lt;span class=&#34;math inline&#34;&gt;\(fa\)&lt;/span&gt; 所在链长度 &lt;span class=&#34;math inline&#34;&gt;\(&amp;lt;k\)&lt;/span&gt;，则 &lt;span class=&#34;math inline&#34;&gt;\(fa\to x\)&lt;/span&gt; 更优，矛盾。故原命题成立。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;求-k-级祖先&#34;&gt;求 k 级祖先&lt;/h2&gt;
+&lt;p&gt;长剖的一个典型应用是 &lt;span class=&#34;math inline&#34;&gt;\(O(n\log n)-O(1)\)&lt;/span&gt; 求 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 级祖先。先考虑相对暴力的做法，可以 &lt;span class=&#34;math inline&#34;&gt;\(O(n\sqrt n)\)&lt;/span&gt; 预处理每个点的 &lt;span class=&#34;math inline&#34;&gt;\(1\sim \sqrt n\)&lt;/span&gt; 级祖先然后块间块内随便跳一跳就是 &lt;span class=&#34;math inline&#34;&gt;\(O(\sqrt n)\)&lt;/span&gt; 的单次查询了。&lt;/p&gt;
+&lt;p&gt;把这个暴力结合「任意点 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 级祖先所在链长 &lt;span class=&#34;math inline&#34;&gt;\(\ge k\)&lt;/span&gt;」的性质，令 &lt;span class=&#34;math inline&#34;&gt;\(r=\dfrac k2\)&lt;/span&gt;，那么 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 的 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt; 级祖先所在链长 &lt;span class=&#34;math inline&#34;&gt;\(\ge r\)&lt;/span&gt;。假设我们现在已经知道 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt; 级祖先 &lt;span class=&#34;math inline&#34;&gt;\(fa_r\)&lt;/span&gt;，预处理出链内点序列、链顶向上的链长个祖先（均摊 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt;），就可以 &lt;span class=&#34;math inline&#34;&gt;\(O(1)\)&lt;/span&gt; 访问 &lt;span class=&#34;math inline&#34;&gt;\(fa_k\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;怎么找到 &lt;span class=&#34;math inline&#34;&gt;\(fa_r\)&lt;/span&gt; 呢？这看似是递归的问题，实际上发现 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt; 的取值只需 &lt;span class=&#34;math inline&#34;&gt;\(\ge \dfrac k2\)&lt;/span&gt;，对于 &lt;span class=&#34;math inline&#34;&gt;\(1\sim n\)&lt;/span&gt; 的每一个 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;，找到其最高二进制位 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt;（显然 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt; 的可能取值有 &lt;span class=&#34;math inline&#34;&gt;\(\log n\)&lt;/span&gt; 种），对于每个点，预处理出其 &lt;span class=&#34;math inline&#34;&gt;\(\log n\)&lt;/span&gt; 个不同的 &lt;span class=&#34;math inline&#34;&gt;\(r\)&lt;/span&gt; 级祖先。这个就是倍增了。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;for (int i = 1, mx = 0; i &amp;lt;= n; ++i) &amp;#123;
+    if (i &amp;gt;= (1 &amp;lt;&amp;lt; mx) * 2)
+        ++mx;
+    to[i] = mx;
+&amp;#125;
+std::vector&amp;lt;std::array&amp;lt;int, 21&amp;gt; &amp;gt; fa(n + 1);
+std::vector&amp;lt;int&amp;gt; h(n + 1, 1), son(n + 1), dep(n + 1);
+h[0] = 0;
+std::function&amp;lt;void(int)&amp;gt; DFS = [&amp;amp;](int x) &amp;#123;
+    for (auto i : g[x])
+        if (i != fa[x][0]) &amp;#123;
+            fa[i][0] = x;
+            for (int j = 1; j &amp;lt;= 20; ++j)
+                fa[i][j] = fa[fa[i][j - 1]][j - 1];
+            dep[i] = dep[x] + 1;
+            DFS(i);
+            if (h[i] &amp;gt;= h[son[x]])
+                son[x] = i, h[x] = h[i] + 1;
+        &amp;#125;
+    return;
+&amp;#125;;
+dep[1] = 1, DFS(1);
+std::vector&amp;lt;int&amp;gt; top(n + 1), id(n + 1);
+std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; anc(n + 1), des(n + 1, std::vector&amp;lt;int&amp;gt; (1));
+std::function&amp;lt;void(int, int)&amp;gt; DFS1 = [&amp;amp;](int x, int toq) &amp;#123;
+    top[x] = toq;
+    if (son[x])
+        DFS1(son[x], toq);
+    for (auto i : g[x])
+        if (i != fa[x][0] &amp;amp;&amp;amp; i != son[x])
+            DFS1(i, i);
+    des[toq].push_back(x);
+    id[x] = (int)des[toq].size() - 1;
+    if (x == toq) &amp;#123;
+        anc[x].push_back(x);
+        for (int j = 1, now = x; j &amp;lt;= id[x]; ++j, now = fa[now][0])
+            anc[x].push_back(fa[now][0]);
+    &amp;#125;
+    return;
+&amp;#125;;
+DFS1(1, 1);
+auto ask = [&amp;amp;](int x, int k) &amp;#123;
+    int x1 = x;
+    if (!k)
+        return x;
+    x = fa[x][to[k]];
+    if (dep[x] - dep[top[x]] &amp;gt;= k - (1 &amp;lt;&amp;lt; to[k]))
+        return des[top[x]][id[x] + k - (1 &amp;lt;&amp;lt; to[k])];
+    return anc[top[x]][k - (1 &amp;lt;&amp;lt; to[k]) - (dep[x] - dep[top[x]])];
+&amp;#125;;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;优化-dp&#34;&gt;优化 DP&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;yly：管它这那的，只要是有关深度直接上长剖就是了。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;和 DSU on tree 类似，主要利用每条链只会被算一次实现 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt; DP。具体地，尽可能地『继承』长链的信息，『短链』则暴力合并。&lt;/p&gt;
+&lt;p&gt;值得注意的是，一般『深度』这一维信息会以『与 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 的距离』的形式，结合指针来维护（因为直接记录深度会更史）。&lt;/p&gt;
+&lt;p&gt;具体地，用一个全局大数组容纳所有信息，为每个点分配相应的数组头指针。正常情况下需要用到的元素最多为 &lt;span class=&#34;math inline&#34;&gt;\(2n\)&lt;/span&gt;，但如果存在一些诡异的前移后移操作就另当别论了。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;p5904-poi-2014-hot-hotels-加强版&#34;&gt;P5904 [POI 2014] HOT-Hotels 加强版&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P5904&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P5904&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;首先 &lt;del&gt;不难&lt;/del&gt; 得到 &lt;span class=&#34;math inline&#34;&gt;\(O(n^2)\)&lt;/span&gt; 做法：显然存在一个点到三个点距离相等。这个点既可能是它们的 LCA，也可能是其中一个点的子孙，另外两个点的 LCA。综上，&lt;strong&gt;在 LCA 处统计答案是可行的&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;令 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,j}\)&lt;/span&gt; 表示 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 子树中距离 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 为 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 的点数；&lt;span class=&#34;math inline&#34;&gt;\(g_{i,j}\)&lt;/span&gt; 表示 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 子树中距离 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 为 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt;、或者距 LCA 为 &lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt; 且 LCA 距离 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 为 &lt;span class=&#34;math inline&#34;&gt;\(d-j\)&lt;/span&gt; 的点对数；随便做就可以了。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g1(n + 1);
+    for (int i = 1, x, y; i &amp;lt; n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y;
+        g1[x].push_back(y), g1[y].push_back(x);
+    &amp;#125;
+    auto res(0ll);
+    std::vector&amp;lt;int&amp;gt; h(n + 1);
+    std::vector&amp;lt;std::vector&amp;lt;long long&amp;gt; &amp;gt; f(n + 1), g(n + 1);
+    std::function&amp;lt;void(int, int)&amp;gt; DFS = [&amp;amp;](int x, int fa) &amp;#123;
+        h[x] = 1;
+        for (auto i : g1[x])
+            if (i != fa) &amp;#123;
+                DFS(i, x);
+                h[x] = std::max(h[x], h[i] + 1);
+            &amp;#125;
+        f[x].resize(h[x] + 1), g[x].resize(h[x] + 1);
+        f[x][0] = 1ll;
+        for (auto i : g1[x])
+            if (i != fa) &amp;#123;
+                for (int j = 0; j &amp;lt;= h[i]; ++j) &amp;#123;
+                    if (j &amp;gt;= 1)
+                        res += g[x][j] * f[i][j - 1];
+                    if (j &amp;gt;= 1 &amp;amp;&amp;amp; j + 1 &amp;lt;= h[i])
+                        res += f[x][j] * g[i][j + 1];
+                    if (j &amp;gt;= 1) &amp;#123;
+                        g[x][j] += f[x][j] * f[i][j - 1];
+                        f[x][j] += f[i][j - 1];
+                    &amp;#125;
+                    if (j + 1 &amp;lt;= h[i])
+                        g[x][j] += g[i][j + 1];
+                &amp;#125;
+                std::vector&amp;lt;long long&amp;gt;().swap(f[i]);
+                std::vector&amp;lt;long long&amp;gt;().swap(g[i]);
+            &amp;#125;
+        res += g[x][0];
+        return;
+    &amp;#125;;
+    DFS(1, -1);
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;p&gt;然后对于每个 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;，类似 DSU on tree，继承其长儿子的数据（整体前移 / 后移一位，使用指针实现），再把短儿子暴力合并上来。&lt;/p&gt;
+&lt;p&gt;每次合并短儿子，数组长为短儿子链长；&lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 向上合并时，数组长为长儿子链长。故所有链被合并恰好一次，复杂度 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g1(n + 1);
+    for (int i = 1, x, y; i &amp;lt; n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y;
+        g1[x].push_back(y), g1[y].push_back(x);
+    &amp;#125;
+    std::vector&amp;lt;int&amp;gt; h(n + 1), son(n + 1);
+    std::vector&amp;lt;long long&amp;gt; df(5 * n + 1), dg(5 * n + 1);
+    std::function&amp;lt;void(int, int)&amp;gt; DFS = [&amp;amp;](int x, int fa) &amp;#123;
+        h[x] = 1;
+        for (auto i : g1[x])
+            if (i != fa) &amp;#123;
+                DFS(i, x);
+                h[x] = std::max(h[x], h[i] + 1);
+                if (h[i] &amp;gt; h[son[x]])
+                    son[x] = i;
+            &amp;#125;
+        return;
+    &amp;#125;;
+    DFS(1, -1);
+    auto pos(dg.begin() + 3 * n);
+    std::vector&amp;lt;decltype(df.begin())&amp;gt; f(n + 1), g(n + 1);
+    auto res(0ll);
+    DFS = [&amp;amp;](int x, int fa) &amp;#123;
+        f[x][0] = 1ll;
+        if (son[x]) &amp;#123;
+            f[son[x]] = std::next(f[x]), g[son[x]] = std::prev(g[x]);
+            DFS(son[x], x);
+        &amp;#125;
+        for (auto i : g1[x])
+            if (i != fa &amp;amp;&amp;amp; i != son[x]) &amp;#123;
+                f[i] = std::next(f[x], h[x] + 1);
+                std::fill(f[i], f[i] + h[i] + 2, 0ll);
+                g[i] = std::next(pos, h[i]), pos = std::next(g[i], h[i]);
+                std::fill(std::prev(g[i]), g[i] + h[i] + 2, 0ll);
+                DFS(i, x);
+                for (int j = 0; j &amp;lt;= h[i]; ++j) &amp;#123;
+                    if (j &amp;gt;= 1)
+                        res += g[x][j] * f[i][j - 1];
+                    if (j &amp;gt;= 1 &amp;amp;&amp;amp; j + 1 &amp;lt;= h[i])
+                        res += f[x][j] * g[i][j + 1];
+                    if (j &amp;gt;= 1) &amp;#123;
+                        g[x][j] += f[x][j] * f[i][j - 1];
+                        f[x][j] += f[i][j - 1];
+                    &amp;#125;
+                    if (j + 1 &amp;lt;= h[i])
+                        g[x][j] += g[i][j + 1];
+                &amp;#125;
+            &amp;#125;
+        res += g[x][0];
+        return;
+    &amp;#125;;
+    f[1] = df.begin(), g[1] = dg.begin() + 2 * n;
+    DFS(1, -1);
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;cf1585g-poachers&#34;&gt;CF1585G Poachers&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/problemset/problem/1585/G&#34; class=&#34;uri&#34;&gt;https://codeforces.com/problemset/problem/1585/G&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;公平博弈。我们现在要算每个根的 SG 值。设 &lt;span class=&#34;math inline&#34;&gt;\(f_{u,j}\)&lt;/span&gt; 表示在点 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;，删了距离它为 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 这一层的 SG 值，那么有：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_{u,j}=
+\begin{cases}
+\text{mex}\{f_{v,0}\}&amp;amp;j=0\\
+\bigoplus f_{v,j-1}&amp;amp;\text{otherwise}
+\end{cases}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;然后发现有深度维。大力长剖。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int inf = 0x3f3f3f3f;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int T;
+    for (std::cin &amp;gt;&amp;gt; T; T--; ) &amp;#123;
+        int n;
+        std::cin &amp;gt;&amp;gt; n;
+        std::vector&amp;lt;int&amp;gt; rt;
+        std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g(n + 1);
+        for (int i = 1, x; i &amp;lt;= n; ++i) &amp;#123;
+            std::cin &amp;gt;&amp;gt; x;
+            if (x)
+                g[x].push_back(i);
+            else
+                rt.push_back(i);
+        &amp;#125;
+        std::vector&amp;lt;int&amp;gt; h(n + 1), son(n + 1), to(n + 1, inf);
+        std::function&amp;lt;void(int)&amp;gt; DFS = [&amp;amp;](int x) &amp;#123;
+            h[x] = 1;
+            for (auto i : g[x]) &amp;#123;
+                DFS(i);
+                h[x] = std::max(h[x], h[i] + 1);
+                to[x] = std::min(to[x], to[i] + 1);
+                if (h[i] &amp;gt; h[son[x]])
+                    son[x] = i;
+            &amp;#125;
+            to[x] = std::min(to[x], h[x]);
+            return;
+        &amp;#125;;
+        for (auto i : rt)
+            DFS(i);
+        std::vector&amp;lt;int&amp;gt; _f(5 * n + 1), top(n + 1);
+        std::vector&amp;lt;decltype(_f.begin())&amp;gt; f(n + 1);
+        std::vector&amp;lt;std::unordered_set&amp;lt;int&amp;gt; &amp;gt; s(n + 1);
+        auto p(_f.begin());
+        DFS = [&amp;amp;](int x) &amp;#123;
+            if (son[x]) &amp;#123;
+                f[son[x]] = std::next(f[x]);
+                top[son[x]] = top[x], DFS(son[x]);
+            &amp;#125;
+            if ((int)g[x].size() == 1) &amp;#123;
+                s[top[x]].insert(f[son[x]][0]);
+                for (int now = f[son[x]][0] + 1; ; ++now)
+                    if (!s[top[x]].count(now)) &amp;#123;
+                        f[x][0] = now;
+                        break;
+                    &amp;#125;
+                return;
+            &amp;#125;
+            for (auto i : g[x])
+                if (i != son[x]) &amp;#123;
+                    f[i] = p, p = std::next(p, h[i] + 1);
+                    top[i] = i, DFS(i);
+                    for (int j = 1; j &amp;lt;= to[i] + 1; ++j)
+                        f[x][j] ^= f[i][j - 1];
+                &amp;#125;
+            std::unordered_set&amp;lt;int&amp;gt;().swap(s[top[x]]);
+            for (int j = 1; j &amp;lt;= to[x]; ++j)
+                s[top[x]].insert(f[x][j]);
+            for (int now = 0; ; ++now)
+                if (!s[top[x]].count(now)) &amp;#123;
+                    f[x][0] = now;
+                    break;
+                &amp;#125;
+            return;
+        &amp;#125;;
+        int res = 0;
+        for (auto i : rt) &amp;#123;
+            f[i] = p, p = std::next(p, h[i] + 1);
+            DFS(i), res ^= f[i][0];
+        &amp;#125;
+        std::cout &amp;lt;&amp;lt; (res ? &amp;quot;YES&amp;quot; : &amp;quot;NO&amp;quot;) &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    &amp;#125;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+</content>
+        <category term="树链剖分" />
+        <category term="长链剖分" />
+        <updated>2024-10-21T08:33:47.000Z</updated>
+    </entry>
+</feed>

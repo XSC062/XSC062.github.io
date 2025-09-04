@@ -28,9 +28,7 @@ const searchPath = "/search.xml"
 <script src="/js/jQuery.js"></script>
 
 <!-- 载入 Valine -->
-
-<script src="/js/Valine.min.js"></script>
-
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
 <!-- css 引入 -->
 
 <link rel="stylesheet" href="/css/layout.css">
@@ -39,6 +37,11 @@ const searchPath = "/search.xml"
 <link rel="stylesheet" href="/css/prcss/prism.css">
 
 
+
+<!-- rss -->
+<link rel="alternate" type="application/rss+xml" title="" href="https://xsc062.netlify.app/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="" href="https://xsc062.netlify.app/atom.xml" />
+<link rel="alternate" type="application/json" title="" href="https://xsc062.netlify.app/feed.json" />
 
 <meta charset="utf-8"> 
 <meta name="generator" content="Hexo 7.2.0"></head>
@@ -73,15 +76,7 @@ const searchPath = "/search.xml"
 <div id="search-bg">
 	<div id="search-box">
 		<input type="text" id="search-input" placeholder="Type to search...">
-		<div id="search-results"></div>
-		<p>恭喜你触发了这个 box，由于我还没有写关闭键，你只能通过刷新页面来关闭它。非常抱歉 ;-)</p>
-		<p>为了证明我没有摆烂，在这里放一个进度：</p>
-		<p>- 250715：尝试实现搜索功能，初步成功，能够搜索到包含关键词的文章了（<strong>也能关掉了</strong>）。不知道为啥输入 123 可以匹配所有文章，但是输入 1234 就一篇都匹配不上。（250814 upd：搜索的是 html 源码，<code>{</code> 的 ASCII 码为 123 / <code>&</code><code>#123;</code>）</p>
-		<p>- 250716：尝试加入关键词上下文来 de 上面的 bug，然后把 js 写成史了，现在这个框框并不具备搜索功能（也不具备关闭功能） :-(</p>
-		<p>- 250814：<strong>能关了</strong>，我很勤勉</p>
-		<p>什么？居然还能搜索！还能高亮关键词？谢谢你，hexo-generator-searchdb！但是你为什么没有注释，让我阅读理解了半天 :-(</p>
-		<p>css 等有空了再写吧，能用就行</p>
-		<p>**为什么有 bug？试着找一个关键词发现有的文章没有匹配上**/p>
+		<div id="search-results">键入以搜索</div>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
@@ -274,122 +269,7 @@ int main() &#123;
 <p>那么可以从四个方向分别用扫描线求解。鉴于和实际坐标数值没有什么直接关系，可以离散化后树状数组以避免被卡常。</p>
 <hr />
 <h2 id="金鱼草">金鱼草</h2>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/6051/problem/4" class="uri">http://222.180.160.110:61235/contest/6051/problem/4</a></p>
-<blockquote>
-<p>给定 <span class="math inline">\(n\)</span> 个区间 <span class="math inline">\([l,r]\)</span> 满足 <span class="math inline">\(r\le m\)</span>，给出 <span class="math inline">\(q\)</span> 个询问，每次询问 <span class="math inline">\([L,R]\)</span> 是否能被表示为若干 <span class="math inline">\([l,r]\)</span> 的 OR（并）。</p>
-<p><span class="math inline">\(n,m,q\le 5\times 10^5\)</span>。</p>
-</blockquote>
-<p>关键词：<mark>扫描线</mark> <mark>线段树维护特殊数据</mark></p>
-<p>小清新数据结构题。题目所求等价于 check 满足 <span class="math inline">\(l\ge L\land r\le R\)</span> 的所有区间是否能够覆盖 <span class="math inline">\([L,R]\)</span>。</p>
-<p>在考虑是不是能够用数据结构直接完成任务时，发现线段树可以维护「一段连续左端点中是否能够完整覆盖一段数」，具体地，维护每一段区间能够最远到达的右端点 <span class="math inline">\(rv\)</span>（那么显然从区间左端点到 <span class="math inline">\(rv\)</span> 都能被连续覆盖），区间内最靠右的没有被覆盖到的点 <span class="math inline">\(p\)</span>，和表示区间是否能被完整覆盖的标记 <span class="math inline">\(flag\)</span>。<span class="math inline">\(rv\)</span> 是易维护的；而 <span class="math inline">\(flag=0\)</span> 当且仅当：</p>
-<ul>
-<li><p>左儿子的 <span class="math inline">\(flag=0\)</span>。</p>
-<p>此时若右儿子 <span class="math inline">\(flag=0\)</span>，那么当前结点 <span class="math inline">\(p\)</span> 可赋为右儿子的 <span class="math inline">\(p\)</span>；否则，<span class="math inline">\(p\)</span> 赋为左儿子的 <span class="math inline">\(p\)</span>。</p></li>
-<li><p>左儿子的 <span class="math inline">\(flag=1\)</span>，但右儿子 <span class="math inline">\(flag = 0\)</span>，且左儿子的 <span class="math inline">\(rv\)</span>够不到右儿子的 <span class="math inline">\(p\)</span>。</p>
-<p>此时当前结点的 <span class="math inline">\(p\)</span> 仍为右儿子的 <span class="math inline">\(p\)</span>，因为我们只在意最远的没有被覆盖到的点。</p></li>
-</ul>
-<p>容易发现如果我们在树上询问 <span class="math inline">\([L,R]\)</span> 中所有左端点的 <span class="math inline">\(flag\)</span>（询问方法和 pushup 是类似的），无法保证参与覆盖的 <span class="math inline">\(r\le R\)</span>。故离线下来扫描线，从左到右枚举每个 <span class="math inline">\(i\)</span> 作为 <span class="math inline">\(R\)</span> 的情况，把所有 <span class="math inline">\([l,i]\)</span> 插入线段树，对于每个询问 <span class="math inline">\([L,i]\)</span> 即可在树上直接查询答案。</p>
-<p><em>bb：据说是 d1t2 水平，但我居然 1min 不到把解法大概胡出来了？希望 CQOI2025 也这么胡（双关</em></p>
-<p><em>bb：似乎是一个全新的不需要区间修改的做法 <img src="/em/kt.gif" alt="磕头" /></em></p>
-<details>
-<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
-const int maxn = 5e5 + 5;
-struct _ &#123;
-    bool flag;
-    int l, r, rv, p;
-&#125; t[maxn &lt;&lt; 2];
-#define lt (p &lt;&lt; 1)
-#define rt (lt | 1)
-void pushup(int p) &#123;
-    t[p].rv = std::max(t[lt].rv, t[rt].rv);
-    if (!t[lt].flag) &#123;
-        t[p].flag = 0;
-        if (!t[rt].flag &amp;&amp; t[lt].rv &lt; t[rt].p)
-            t[p].p = t[rt].p;
-        else
-            t[p].p = t[lt].p;
-    &#125;
-    else if (!t[rt].flag &amp;&amp; t[lt].rv &lt; t[rt].p)
-        t[p].flag = 0, t[p].p = t[rt].p;
-    else
-        t[p].flag = 1, t[p].p = 0;
-    return;
-&#125;
-void bld(int p, int l, int r) &#123;
-    t[p].l = l, t[p].r = t[p].p = r;
-    if (l == r)
-        return;
-    int mid = (l + r) &gt;&gt; 1;
-    bld(lt, l, mid), bld(rt, mid + 1, r);
-    return;
-&#125;
-void add(int p, int x, int v) &#123;
-    if(t[p].l == t[p].r) &#123;
-        t[p].flag = 1, t[p].p = 0;
-        t[p].rv = std::max(t[p].rv, v);
-        return;
-    &#125;
-    int mid = (t[p].l + t[p].r) &gt;&gt; 1;
-    if (x &lt;= mid)
-        add(lt, x, v);
-    else
-        add(rt, x, v);
-    pushup(p);
-    return;
-&#125;
-_ ask(int p, int l, int r) &#123;
-    if (l &lt;= t[p].l &amp;&amp; t[p].r &lt;= r)
-        return t[p];
-    int mid = (t[p].l + t[p].r) &gt;&gt; 1;
-    if (r &lt;= mid)
-        return ask(lt, l, r);
-    if (l &gt; mid)
-        return ask(rt, l, r);
-    auto ls(ask(lt, l, r)), rs(ask(rt, l, r));
-    if (!ls.flag) &#123;
-        if (!rs.flag &amp;&amp; ls.rv &lt; rs.p)
-            ls.p = rs.p;
-    &#125;
-    else if (!rs.flag &amp;&amp; ls.rv &lt; rs.p)
-        ls.flag = 0, ls.p = rs.p;
-    ls.rv = std::max(ls.rv, rs.rv);
-    return ls;
-&#125;
-int main() &#123;
-#ifdef ONLINE_JUDGE
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr), std::cout.tie(nullptr);
-    std::freopen(&quot;snapdragon.in&quot;, &quot;r&quot;, stdin);
-    std::freopen(&quot;snapdragon.out&quot;, &quot;w&quot;, stdout);
-#else
-    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
-    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
-#endif
-    int n, m, q;
-    std::cin &gt;&gt; m &gt;&gt; n &gt;&gt; q;
-    bld(1, 1, m);
-    std::vector&lt;std::vector&lt;int&gt; &gt; t(m + 1);
-    for (int i = 1, l, r; i &lt;= n; ++i) &#123;
-        std::cin &gt;&gt; l &gt;&gt; r;
-        t[r].push_back(l);
-    &#125;
-    std::vector&lt;int&gt; res(q + 1);
-    std::vector&lt;std::vector&lt;std::pair&lt;int, int&gt; &gt; &gt; tq(m + 1);
-    for (int i = 1, l, r; i &lt;= q; ++i) &#123;
-        std::cin &gt;&gt; l &gt;&gt; r;
-        tq[r].emplace_back(l, i);
-    &#125;
-    for (int i = 1; i &lt;= m; ++i) &#123;
-        for (auto l : t[i])
-            add(1, l, i);
-        for (auto [l, id] : tq[i])
-            res[id] = ask(1, l, i).flag;
-    &#125;
-    for (int i = 1; i &lt;= q; ++i)
-        std::cout &lt;&lt; (res[i] ? &quot;YES&quot; : &quot;NO&quot;) &lt;&lt; &#39;\n&#39;;
-    return 0;
-&#125;</code></pre>
-</details>
+<p><a href="/20250819/#金鱼草区间覆盖信息">link</a></p>
 
 			</div>
 			<hr class="dotted">
@@ -407,9 +287,9 @@ int main() &#123;
 					<div id="prev">
 						
 							<!-- 吐槽，为啥还需要加 / -->
-							<a href="/20250329/">
+							<a href="/20250222/">
 								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
-								学习笔记：FWT
+								中等题目 Practice
 							</a>
 						
 					</div>
@@ -430,7 +310,8 @@ int main() &#123;
 		appKey: 'TW6t8mFeGLmhPjWisvmllvvo',
 		recordIP: true,
 		enableQQ: true, 
-		// 目前 Valine 的 QQ 自动获取昵称似乎不可用 故不建议开启
+		// [EDITED] 目前 Valine 的 QQ 自动获取昵称似乎不可用
+		// 该问题在 v1.5.3 中已修复
 		pageSize: 10,
 		requiredFields:
 			

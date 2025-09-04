@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 网站图标 -->
+<link rel="icon" type="image/png" sizes="32x32" href="/images/icon.svg">
+<!-- 其他图标支持 -->
+<link rel="stylesheet" href="/css/facss/fa-brands.min.css">
+<link rel="stylesheet" href="/css/facss/fa-regular.min.css">
+<link rel="stylesheet" href="/css/facss/fa-solid.min.css">
+<link rel="stylesheet" href="/css/facss/fontawesome.min.css">
+<link rel="stylesheet" href="/css/facss/fontawesome-all.css">
+<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+<!-- 网站标题 -->
+<title>
+	
+		学习笔记 平衡树 -
+	
+	XSC062 的博客
+</title>
+<!-- js 引入 -->
+<script>
+const searchPath = "/search.xml"
+</script>
+
+<script src="/js/afterloaded.js"></script>
+
+
+<script src="/js/jQuery.js"></script>
+
+<!-- 载入 Valine -->
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<!-- css 引入 -->
+
+<link rel="stylesheet" href="/css/layout.css">
+
+
+<link rel="stylesheet" href="/css/prcss/prism.css">
+
+
+
+<!-- rss -->
+<link rel="alternate" type="application/rss+xml" title="" href="https://xsc062.netlify.app/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="" href="https://xsc062.netlify.app/atom.xml" />
+<link rel="alternate" type="application/json" title="" href="https://xsc062.netlify.app/feed.json" />
+
+<meta charset="utf-8"> 
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body class="line-numbers match-braces no-brace-select rainbow-braces">
+	
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            processEscapes: true
+          }
+        });
+      </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+            tex2jax: {
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+          });
+      </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+              var all = MathJax.Hub.getAllJax(), i;
+              for(i=0; i < all.length; i += 1) {
+                  all[i].SourceElement().parentNode.className += ' has-jax';
+              }
+          });
+      </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+	<!-- 搜索 -->
+<div id="search-bg">
+	<div id="search-box">
+		<input type="text" id="search-input" placeholder="Type to search...">
+		<div id="search-results">键入以搜索</div>
+	</div>
+</div>
+<!-- 顶栏整体导航菜单 -->
+<div class="ui top menu">
+	<!-- 左对齐 logo -->
+	<a class="logo" href="/">
+		<img src="/images/icon.png"></img>
+		<div id="bartitle">
+			XSC062 的博客
+		</div>
+	</a>
+	<!-- 右对齐部分导航 -->
+	<div id="rightali">
+		<a class="item" id="Search" type="button">
+			<i class="btn text-muted fa fa-search" id="search-icon" disabled></i>
+		</a>
+		<a class="item" id="Home" href="/">
+			Home
+		</a>
+		<a class="item" id="Arch" href="/archives">
+			Archives
+		</a>
+		<!-- <a class="item" id="Cate" href="/categories">
+			Categories
+		</a> -->
+		<a class="item" id="Tags" href="/tags">
+			Tags
+		</a>
+		<a class="item" id="Frie" href="/friends">
+			Friends
+		</a>
+		<a class="item" id="Abou" href="/about">
+			About
+		</a>
+	</div>
+</div>
+    
+<link rel="stylesheet" href="/css/post.css">
+
+
+<script src="/js/post.js"></script>
+
+
+<div class="main">
+	<div id="sidebar">
+		<aside id="toc">
+			<span id="toctitle">
+				<i class="fas fa-list"></i>
+				目录
+			</span>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%A7%88"><span class="toc-text">概览</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E6%99%AE%E9%80%9A%E5%B9%B3%E8%A1%A1%E6%A0%91"><span class="toc-text">例：普通平衡树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fhq-treap"><span class="toc-text">FHQ Treap</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E6%96%87%E8%89%BA%E5%B9%B3%E8%A1%A1%E6%A0%91"><span class="toc-text">例：文艺平衡树</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%A0%E9%A2%98"><span class="toc-text">习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#c---%E5%AF%86%E7%A0%81%E7%AE%B1"><span class="toc-text">C - 密码箱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#a---bridge"><span class="toc-text">A - Bridge</span></a></li></ol></li></ol>
+		</aside>
+	</div>
+	<div class="ui post container">
+		<div class="ui text container">
+			<span id="postcon">
+				<span id="postinfo">
+					<div class="ui post title">
+						<div id="fortitle" data-content="学习笔记 平衡树">
+							学习笔记 平衡树
+						</div>
+						<div class="ui title background">
+						</div>
+					</div>
+					<span id="date">
+						<i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
+						2025-08-18
+					</span>
+				</span>
+			</span>
+			<div id="posttags" class="dotted border">
+				
+					
+						<a href="/tags/平衡树/" class="citem">平衡树</a>
+					
+				
+			</div>
+			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
+			
+			<div id="content">
+				<p>线段树 plus</p>
+<span id="more"></span>
+<hr />
+<h2 id="概览">概览</h2>
+<p>定义：BST，且对于任意点，其左右子树树高差不超过 <span class="math inline">\(1\)</span>，这样所有 <span class="math inline">\(O(h)\)</span> 复杂度的 BST 操作都能在 <span class="math inline">\(O(\log n)\)</span> 内解决。</p>
+<ul>
+<li><p>维护值：<code>__gnu_pbds::tree&lt;&gt;</code> / 权值线段树</p>
+<p>需要意识到线段树就是 leafy 的平衡树，且是静态的，不支持对树结构的操作；</p>
+这也是为什么树上的 GBT 总是可以用线段树代替 BST 做 DDP，因为树是静态的，重链也是静态的，不可能有结构变化的需求。但序列上的 DDP 不一定是静态的，比如 <a href="">密码箱</a> 就只能用平衡树做。</li>
+<li><p>维护序列：fhq treap</p></li>
+</ul>
+<hr />
+<h3 id="例普通平衡树">例：普通平衡树</h3>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3369" class="uri">https://www.luogu.com.cn/problem/P3369</a></p>
+<p>pbds / 权值线段树。</p>
+<hr />
+<h2 id="fhq-treap">FHQ Treap</h2>
+<p>把 Treap 的旋转操作改成了好想好写的 split 和 merge，其余不变；额外带来了维护序列结构的功能。</p>
+<p>这里就只探讨维护序列了，维护的是对于序列结构上的操作（也可以维护值的操作，方式和线段树类似），这里的点值就和线段树维护的值一样，对于操作是没有影响的；点的 id 和对应的下标并没有关系；点的 rank（可以 <span class="math inline">\(O(1)\)</span> 维护）才对应下标。</p>
+<ul>
+<li><p><code>split</code>：把树在某个值下标处分为两个 Treap。考虑怎么解决这种情况：</p>
+<p><img src="image.png" /></p>
+自底向上递归处理，考虑到处理 <span class="math inline">\(4\)</span> 的时候 <span class="math inline">\(4\)</span> 接了完整的一个 BST，直接把 <span class="math inline">\(4\)</span> 接到 <span class="math inline">\(3\)</span> 的右儿子即可。显然是不会影响 priority 的。</li>
+<li><p><code>merge</code>：是为了配合 split 而产生的操作，将树 split 出去并操作后需要 merge 回来。难点在于需要考虑 priority。相似地，考虑这种情况：</p>
+<figure>
+<img src="image-2.png" alt="蓝色数字是 priority" /><figcaption>蓝色数字是 priority</figcaption>
+</figure>
+从最右边一条链向下走到可以插入的位置（显然是唯一的），将点插入，该处原本的子树和新点的左子树递归合并。</li>
+<li><p>结构操作（以区间 reverse 为例）：两次 split 得到操作区间的 Treap，打一个懒标记，再合并回去。</p>
+类似线段树，递归经过一个点时，如果存在 lazy，就可以交换左右儿子然后下传标记。</li>
+<li><p><span class="math inline">\(O(n)\)</span> 建树：Treap 是笛卡尔树，然后就可以用悬线或者单调栈建树了。</p>
+<p>反过来可以得到在随机数据下笛卡尔树是平衡的，参考 <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2611">ZJOI2011 小蓝的好友</a>，利用了这个性质。</p></li>
+</ul>
+<hr />
+<h3 id="例文艺平衡树">例：文艺平衡树</h3>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3391" class="uri">https://www.luogu.com.cn/problem/P3391</a></p>
+<p>区间 reverse 乍看会带来可以用线段树做的错觉</p>
+<p>实际上考虑一下 reverse 区间有交的情况，就会发现线段树确实做不了，只能真正地去实现 reverse 这个过程，就只有平衡树了能做了。</p>
+<details>
+<pre data-line="37" class="cpp language-cpp"><code data-line="37" class="cpp language-cpp">#include &lt;bits/stdc++.h>
+const int maxn = 1e5 + 5;
+unsigned pr[maxn];
+int lc[maxn], rc[maxn], d[maxn], siz[maxn];
+void pushup(int p) &#123;
+    if (p)
+        siz[p] = siz[lc[p]] + 1 + siz[rc[p]];
+    return;
+&#125;
+void pushdown(int p) &#123;
+    if (p && d[p]) &#123;
+        std::swap(lc[p], rc[p]);
+        d[lc[p]] ^= 1, d[rc[p]] ^= 1;
+        d[p] = 0;
+    &#125;
+    return;
+&#125;
+void init(int p) &#123;
+    if (lc[p])
+        init(lc[p]);
+    if (rc[p])
+        init(rc[p]);
+    pushup(p);
+    return;
+&#125;
+int split(int &p, int rk) &#123;
+    if (!p)
+        return 0;
+    pushdown(p);
+    int q = 0;
+    if (siz[lc[p]] + 1 == rk)
+        q = rc[p], rc[p] = 0;
+    else if (rk <= siz[lc[p]])
+        q = p, p = lc[p], lc[q] = split(p, rk);
+    else
+        q = split(rc[p], rk - siz[lc[p]] - 1);
+    pushdown(q);  // 易错：这里要 pushdown
+    pushup(p), pushup(q);
+    return q;
+&#125;
+void merge(int &p, int q) &#123;
+    pushdown(p), pushdown(q);
+    if (!p || !q) &#123;
+        p += q;
+        return;
+    &#125;
+    if (pr[p] > pr[q])
+        merge(p, lc[q]), lc[q] = p, p = q;
+    else
+        merge(rc[p], q);
+    pushup(p);
+    return;
+&#125;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(".in", "r", stdin);
+    std::freopen(".out", "w", stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n, m;
+    std::cin >> n >> m;
+    std::vector&lt;int> l(n + 1), r(n + 1);
+    std::mt19937 rand(time(nullptr));
+    for (int i = 1; i <= n; ++i) &#123;
+        pr[i] = rand();
+        for (l[i] = i; l[i] != 1 && pr[l[i] - 1] > pr[i]; l[i] = l[l[i] - 1]);
+        if (l[i] != 1)
+            rc[l[i] - 1] = i;
+    &#125;
+    for (int i = n; i; --i) &#123;
+        for (r[i] = i; r[i] != n && pr[r[i] + 1] > pr[i]; r[i] = r[r[i] + 1]);
+        if (r[i] != n)
+            lc[r[i] + 1] = i;
+    &#125;
+    std::function&lt;void(int)> print = [&](int p) &#123;
+        pushdown(p);
+        if (lc[p])
+            print(lc[p]);
+        std::cout << p << ' ';
+        if (rc[p])
+            print(rc[p]);
+        return;
+    &#125;;
+    int rt = std::min_element(pr + 1, pr + n + 1) - pr;
+    init(rt);
+    for (int l, r, i = 1; i <= m; ++i) &#123;
+        std::cin >> l >> r;
+        int rt1 = split(rt, l - 1), rt2 = split(rt1, r - l + 1);
+        d[rt1] ^= 1;
+        merge(rt1, rt2), merge(rt, rt1);
+    &#125;
+    print(rt), std::cout << '\n';
+#ifndef ONLINE_JUDGE
+    std::cerr << std::fixed << std::setprecision(6) << std::chrono::duration&lt;double> (std::chrono::steady_clock::now() - stime).count() << "s\n";
+#endif
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="习题">习题</h2>
+<p>有点难，难点不在平衡树</p>
+<p>平衡树反而是简单的，只需要发现序列和序列操作就可以了。</p>
+<hr />
+<h3 id="c---密码箱">C - 密码箱</h3>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P7739" class="uri">https://www.luogu.com.cn/problem/P7739</a></p>
+<p>经过思考后，发现比较合理的转化方式是<strong>跳过具体数值，直接用对应操作表示函数值</strong>。</p>
+<p>将数列转化为最终函数值，用矩阵很好操作（右乘）；考虑将操作转化为数值，利用结合律，容易发现只需要把操作对应的矩阵加在末端（前端）即可，这样就可以只用操作来表示函数值。</p>
+<p>要做的话最好只让矩阵维护最后一项，<code>W</code> 显然，<code>E</code> 的第二种亦显然（加两个矩阵），考虑乘起来方便维护，乘起来之后发现和 <code>E</code> 的第一种是等价的，平衡树维护四个矩阵即可。</p>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int maxn = 2e5 + 5;
+const int mod = 998244353;
+using ll = long long;
+struct mat &#123;
+    ll a[2][2];
+    ll* operator[] (const int q) &#123;
+        return a[q];
+    &#125;
+    bool operator== (mat &amp;q) const &#123;
+        return a[0][0] == q[0][0] &amp;&amp; a[0][1] == q[0][1] &amp;&amp; a[1][0] == q[1][0] &amp;&amp; a[1][1] == q[1][1];
+    &#125;
+    mat operator* (mat &amp;q) const &#123;
+        mat res;
+        res[0][0] = (a[0][0] * q[0][0] + a[0][1] * q[1][0]) % mod;
+        res[0][1] = (a[0][0] * q[0][1] + a[0][1] * q[1][1]) % mod;
+        res[1][0] = (a[1][0] * q[0][0] + a[1][1] * q[1][0]) % mod;
+        res[1][1] = (a[1][0] * q[0][1] + a[1][1] * q[1][1]) % mod;
+        return res;
+    &#125;
+&#125; u[maxn][2], s[maxn][4], W, E, A, B, C;
+unsigned pr[maxn];
+int siz[maxn], d1[maxn], d2[maxn], lc[maxn], rc[maxn];
+#define lt lc[p]
+#define rt rc[p]
+void pushup(int p) &#123;
+    if (p) &#123;
+        siz[p] = siz[lc[p]] + 1 + siz[rc[p]];
+        s[p][0b00] = s[lc[p]][0b00] * u[p][0] * s[rc[p]][0b00];
+        s[p][0b01] = s[lc[p]][0b01] * u[p][1] * s[rc[p]][0b01];
+        s[p][0b10] = s[rc[p]][0b10] * u[p][0] * s[lc[p]][0b10];
+        s[p][0b11] = s[rc[p]][0b11] * u[p][1] * s[lc[p]][0b11];
+    &#125;
+    return;
+&#125;
+void pushdown(int p) &#123;
+    if (p &amp;&amp; d1[p]) &#123;
+        d1[lt] ^= 1, d1[rt] ^= 1;
+        std::swap(u[lt][0], u[lt][1]);
+        std::swap(s[lt][0b00], s[lt][0b01]);
+        std::swap(s[lt][0b10], s[lt][0b11]);
+        std::swap(u[rt][0], u[rt][1]);
+        std::swap(s[rt][0b00], s[rt][0b01]);
+        std::swap(s[rt][0b10], s[rt][0b11]);
+        d1[p] = 0;
+    &#125;
+    if (p &amp;&amp; d2[p]) &#123;
+        d2[lt] ^= 1, d2[rt] ^= 1;
+        std::swap(lc[lt], rc[lt]);
+        std::swap(s[lt][0b00], s[lt][0b10]);
+        std::swap(s[lt][0b01], s[lt][0b11]);
+        std::swap(lc[rt], rc[rt]);
+        std::swap(s[rt][0b00], s[rt][0b10]);
+        std::swap(s[rt][0b01], s[rt][0b11]);
+        d2[p] = 0;
+    &#125;
+    return;
+&#125;
+int split(int &amp;p, int rk) &#123;
+    if (!p)
+        return 0;
+    pushdown(p);
+    int q = 0;
+    if (siz[lc[p]] + 1 == rk)
+        q = rc[p], rc[p] = 0;
+    else if (rk &lt;= siz[lc[p]])
+        q = p, p = lc[p], lc[q] = split(p, rk);
+    else
+        q = split(rc[p], rk - siz[lc[p]] - 1);
+    pushdown(q);
+    pushup(p), pushup(q);
+    return q;
+&#125;
+void merge(int &amp;p, int q) &#123;
+    if (!p || !q) &#123;
+        p += q;
+        return;
+    &#125;
+    pushdown(p), pushdown(q);
+    if (pr[p] &gt; pr[q])
+        merge(p, lc[q]), lc[q] = p, p = q;
+    else
+        merge(rc[p], q);
+    pushup(p);
+    return;
+&#125;
+void init(int p) &#123;
+    if (lc[p])
+        init(lc[p]);
+    if (rc[p])
+        init(rc[p]);
+    pushup(p);
+    return;
+&#125;
+#undef lt
+#undef rt
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;code3.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    s[0][0][0][0] = s[0][0][1][1] = s[0][1][0][0] = s[0][1][1][1] = s[0][2][0][0] = s[0][2][1][1] = s[0][3][0][0] = s[0][3][1][1] = 1ll;
+    W[0][0] = W[0][1] = W[1][1] = 1ll;
+    E[0][1] = mod - 1ll, E[1][0] = 1ll, E[1][1] = 2ll;
+    A[0][1] = A[1][0] = 1ll, B[0][1] = B[1][0] = B[1][1] = 1ll;
+    int n, q, rt;
+    std::cin &gt;&gt; n &gt;&gt; q;
+    std::mt19937 rand(time(nullptr));
+    for (int i = 1; i &lt;= n + q; ++i)
+        pr[i] = rand();
+    std::vector&lt;char&gt; a(n + 1);
+    for (int i = 1; i &lt;= n; ++i) &#123;
+        std::cin &gt;&gt; a[i];
+        if (a[i] == &#39;W&#39;)
+            u[i][0] = W, u[i][1] = E;
+        else
+            u[i][0] = E, u[i][1] = W;
+    &#125;
+    &#123;
+        std::vector&lt;int&gt; l(n + 1), r(n + 1);
+        for (int i = 1; i &lt;= n; ++i) &#123;
+            for (l[i] = i; l[i] != 1 &amp;&amp; pr[l[i] - 1] &gt; pr[i]; l[i] = l[l[i] - 1]);
+            if (l[i] != 1)
+                rc[l[i] - 1] = i;
+        &#125;
+        for (int i = n; i; --i) &#123;
+            for (r[i] = i; r[i] != n &amp;&amp; pr[r[i] + 1] &gt; pr[i]; r[i] = r[r[i] + 1]);
+            if (r[i] != n)
+                lc[r[i] + 1] = i;
+        &#125;
+        rt = std::min_element(pr + 1, pr + n + 1) - pr;
+        init(rt);
+    &#125;
+    auto print = [&amp;](int rt) &#123;
+        auto res = A * B * s[rt][0];
+        ll p = res[0][1], q = res[1][1];
+        std::cout &lt;&lt; q &lt;&lt; &#39; &#39;  &lt;&lt; p &lt;&lt; &#39;\n&#39;;
+        return;
+    &#125;;
+    print(rt);
+    for (std::string op; q--; ) &#123;
+        std::cin &gt;&gt; op;
+        if (op == &quot;APPEND&quot;) &#123;
+            char t;
+            std::cin &gt;&gt; t, ++n;
+            if (t == &#39;W&#39;)
+                u[n][0] = W, u[n][1] = E;
+            else
+                u[n][0] = E, u[n][1] = W;
+            pushup(n), merge(rt, n);
+        &#125;
+        else if (op == &quot;FLIP&quot;) &#123;
+            int l, r;
+            std::cin &gt;&gt; l &gt;&gt; r;
+            int rt1 = split(rt, l - 1), rt2 = split(rt1, r - l + 1);
+            d1[rt1] ^= 1;
+            std::swap(u[rt1][0], u[rt1][1]);
+            std::swap(s[rt1][0b00], s[rt1][0b01]);
+            std::swap(s[rt1][0b10], s[rt1][0b11]);
+            merge(rt1, rt2), merge(rt, rt1);
+        &#125;
+        else &#123;
+            int l, r;
+            std::cin &gt;&gt; l &gt;&gt; r;
+            int rt1 = split(rt, l - 1), rt2 = split(rt1, r - l + 1);
+            d2[rt1] ^= 1;
+            std::swap(lc[rt1], rc[rt1]);
+            std::swap(s[rt1][0b00], s[rt1][0b10]);
+            std::swap(s[rt1][0b01], s[rt1][0b11]);
+            merge(rt1, rt2), merge(rt, rt1);
+        &#125;
+        print(rt);
+    &#125;
+#ifndef ONLINE_JUDGE
+    std::cerr &lt;&lt; std::fixed &lt;&lt; std::setprecision(6) &lt;&lt; std::chrono::duration&lt;double&gt; (std::chrono::steady_clock::now() - stime).count() &lt;&lt; &quot;s\n&quot;;
+#endif
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h3 id="a---bridge">A - Bridge</h3>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P9358" class="uri">https://www.luogu.com.cn/problem/P9358</a></p>
+<p>如果把桥视作元素，假设对于下面的情形：</p>
+<p><img src="image-1.png" /></p>
+<p>容易发现如果 <span class="math inline">\(b\)</span> 不存在，那么 <span class="math inline">\(y\)</span> 和 <span class="math inline">\(x\)</span> 的后继都是 <span class="math inline">\(a\)</span>，但只保留 <span class="math inline">\(y\to a\)</span> 的路径是不劣的</p>
+<p>如果 <span class="math inline">\(b\)</span> 存在，就要连 <span class="math inline">\(b\)</span> 和 <span class="math inline">\(x\)</span>，也就说每个点连到当前行和下一行中最近的后继点就可以了，每个点只对应两条边，最后会形成若干个链，看成序列就可以用平衡树维护。查询<strong>跳到树顶再跳到最右的儿子就可以了，复杂度 <span class="math inline">\(O(\log n)\)</span></strong>。连边则可以直接用 set 维护。</p>
+
+			</div>
+			<hr class="dotted">
+			<div class="post footer">
+				<div id="hitokoto">
+					<h3 id="hitokoto-title">
+						言论
+					</h3>
+					<div id="hitokoto-content">
+					</div>
+					<div id="hitokoto-from">
+					</div>
+				</div>
+				<div class="button flex">
+					<div id="prev">
+						
+							<!-- 吐槽，为啥还需要加 / -->
+							<a href="/20250819/">
+								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
+								log 数据结构的一些题
+							</a>
+						
+					</div>
+					<div id="next">
+						
+							<a href="/20250816/">
+								近期杂题 II
+								<i class="fas fa-angle-double-right" style="margin-left: 10px;"></i>
+							</a>
+						
+					</div>
+				</div>
+				<div id="vcomments" class="yahei"></div>
+<script>
+	new Valine({
+		el: '#vcomments',
+		appId: 'OlmvQ0a2Zw7xo3no2bwabOzx-gzGzoHsz',
+		appKey: 'TW6t8mFeGLmhPjWisvmllvvo',
+		recordIP: true,
+		enableQQ: true, 
+		// [EDITED] 目前 Valine 的 QQ 自动获取昵称似乎不可用
+		// 该问题在 v1.5.3 中已修复
+		pageSize: 10,
+		requiredFields:
+			
+				['nick']
+			,
+		placeholder: "The world is but a little place after all...\n能够根据邮箱获取你的 Gravatar 头像。昵称是必填项，长度需不低于 3。",
+		avatar: 'mp',
+		avatar_cdn: 'https://cravatar.cn/avatar/',
+		emojiCDN: 'https://xsc062.netlify.app/em/', 
+		emojiMaps: {
+			
+				"微笑": "wx.gif",
+			
+				"龇牙": "cy.gif",
+			
+				"流泪": "ll.gif",
+			
+				"笑哭": "xk.gif",
+			
+				"流汗": "lh.gif",
+			
+				"擦汗": "ch.gif",
+			
+				"亲亲": "qq.gif",
+			
+				"色": "se.gif",
+			
+				"疑问": "yiw.gif",
+			
+				"发呆": "fd.gif",
+			
+				"晕": "yun.gif",
+			
+				"鼓掌": "gz.gif",
+			
+				"憨笑": "hanx.gif",
+			
+				"快哭了": "kk.gif",
+			
+				"得意": "dy.gif",
+			
+				"狂笑": "kx.gif",
+			
+				"害羞": "hx.gif",
+			
+				"妈妈生的": "dz.gif",
+			
+				"糗大了": "qd.gif",
+			
+				"吃瓜": "cg.gif",
+			
+				"睁眼": "zy.webp",
+			
+				"辣眼睛": "lyj.gif",
+			
+				"酸了": "nm.gif",
+			
+				"滚": "gun.webp",
+			
+				"惊恐": "jk.gif",
+			
+				"幽灵": "youl.gif",
+			
+				"无聊": "wul.gif",
+			
+				"吃": "eat.gif",
+			
+				"你很棒棒": "bb.gif",
+			
+				"赞": "qiang.gif",
+			
+				"踩": "ruo.gif",
+			
+				"握手": "wsh.gif",
+			
+				"发抖": "fad.gif",
+			
+				"挥手": "hsh.gif",
+			
+				"磕头": "kt.gif",
+			
+				"怄火": "oh.gif",
+			
+		},
+	})
+</script>
+			</div>
+			<script>setHitokoto();</script>
+		</div> 
+	</div>
+</div>
+    <!-- 页脚开始 -->
+<div id="footer" class="yahei">
+    Powered by
+    <a target="_blank" rel="noopener" href="https://hexo.io">
+        Hexo
+    </a>
+    &
+    <a href="/about-this-theme">
+        iwll
+    </a>
+    <p style="margin-top: 5px;">
+        2021 - 2025
+    </p>
+</div>
+<!-- Valine 相关配置 -->
+<script>
+    const getValineDomTimer = setInterval(() => {
+        // 不知道为什么 我从原博客 js 文件粘过来的参数是
+        // "#valine .vcards .vcard"
+        // DEBUG 了半天才定位到这个问题。。。
+        const vcards =
+            document.querySelectorAll('#valine, .vcards, .vcard');
+        if (vcards.length > 0) {
+            let author = 'XSC062';
+            for (let vcard of vcards) {
+                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                if (vnick_dom != null) {
+                    const vnick = vnick_dom.innerHTML;
+                    if (vnick === author) {
+                        vnick_dom.innerHTML =
+                        `${vnick} <span id="rootitem" class="fira">root</span>`
+                    }
+                }
+            }
+        }
+        else {
+            clearInterval(getValineDomTimer);
+        }
+    }, 2000);
+    SetActiveItem();
+    setDetailsSummary();
+    setTitleAnchor();
+    setEmptyToc();
+    setCodeClassName();
+</script>
+
+
+<!-- js -->
+<!-- 搜索功能相关配置 -->
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/local-search.js"></script>
+
+</script>
+<!-- prism 相关配置 -->
+<script type="text/javascript" src="/js/prism.js" defer></script>
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/clipboard-use.js"></script>
+<!-- 页脚结束 -->
+</body>
+</html>

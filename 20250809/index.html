@@ -28,9 +28,7 @@ const searchPath = "/search.xml"
 <script src="/js/jQuery.js"></script>
 
 <!-- 载入 Valine -->
-
-<script src="/js/Valine.min.js"></script>
-
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
 <!-- css 引入 -->
 
 <link rel="stylesheet" href="/css/layout.css">
@@ -39,6 +37,11 @@ const searchPath = "/search.xml"
 <link rel="stylesheet" href="/css/prcss/prism.css">
 
 
+
+<!-- rss -->
+<link rel="alternate" type="application/rss+xml" title="" href="https://xsc062.netlify.app/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="" href="https://xsc062.netlify.app/atom.xml" />
+<link rel="alternate" type="application/json" title="" href="https://xsc062.netlify.app/feed.json" />
 
 <meta charset="utf-8"> 
 <meta name="generator" content="Hexo 7.2.0"></head>
@@ -73,15 +76,7 @@ const searchPath = "/search.xml"
 <div id="search-bg">
 	<div id="search-box">
 		<input type="text" id="search-input" placeholder="Type to search...">
-		<div id="search-results"></div>
-		<p>恭喜你触发了这个 box，由于我还没有写关闭键，你只能通过刷新页面来关闭它。非常抱歉 ;-)</p>
-		<p>为了证明我没有摆烂，在这里放一个进度：</p>
-		<p>- 250715：尝试实现搜索功能，初步成功，能够搜索到包含关键词的文章了（<strong>也能关掉了</strong>）。不知道为啥输入 123 可以匹配所有文章，但是输入 1234 就一篇都匹配不上。（250814 upd：搜索的是 html 源码，<code>{</code> 的 ASCII 码为 123 / <code>&</code><code>#123;</code>）</p>
-		<p>- 250716：尝试加入关键词上下文来 de 上面的 bug，然后把 js 写成史了，现在这个框框并不具备搜索功能（也不具备关闭功能） :-(</p>
-		<p>- 250814：<strong>能关了</strong>，我很勤勉</p>
-		<p>什么？居然还能搜索！还能高亮关键词？谢谢你，hexo-generator-searchdb！但是你为什么没有注释，让我阅读理解了半天 :-(</p>
-		<p>css 等有空了再写吧，能用就行</p>
-		<p>**为什么有 bug？试着找一个关键词发现有的文章没有匹配上**/p>
+		<div id="search-results">键入以搜索</div>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
@@ -132,7 +127,7 @@ const searchPath = "/search.xml"
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#a.-%E5%87%BA%E5%85%B3"><span class="toc-text">A. 出关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#d.-%E9%9D%9E%E6%94%BB"><span class="toc-text">D. 非攻</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c---destruction-of-walls"><span class="toc-text">C - Destruction of Walls</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#d---insert-xor"><span class="toc-text">D - Insert XOR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#a---%E8%AE%B0%E5%BF%86"><span class="toc-text">A - 记忆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b---%E3%83%93%E3%83%BC%E3%83%90%E3%83%BC%E3%81%AE%E4%BC%9A%E5%90%88-2-meetings-2"><span class="toc-text">B - ビーバーの会合 2 (Meetings 2)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c---the-closest-pair"><span class="toc-text">C - The Closest Pair</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#d---%E4%BB%99%E4%BA%BA%E6%8E%8C"><span class="toc-text">D - 仙人掌</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#f---%E5%AF%B9%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E7%88%B1"><span class="toc-text">F - 对数据结构的爱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E5%90%8D%E9%A2%98"><span class="toc-text">无名题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#maimai"><span class="toc-text">maimai</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#a.-%E5%87%BA%E5%85%B3"><span class="toc-text">A. 出关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#d.-%E9%9D%9E%E6%94%BB"><span class="toc-text">D. 非攻</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c---destruction-of-walls"><span class="toc-text">C - Destruction of Walls</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#d---insert-xor"><span class="toc-text">D - Insert XOR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#a---%E8%AE%B0%E5%BF%86"><span class="toc-text">A - 记忆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b---%E3%83%93%E3%83%BC%E3%83%90%E3%83%BC%E3%81%AE%E4%BC%9A%E5%90%88-2-meetings-2"><span class="toc-text">B - ビーバーの会合 2 (Meetings 2)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c---the-closest-pair"><span class="toc-text">C - The Closest Pair</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#d---%E4%BB%99%E4%BA%BA%E6%8E%8C"><span class="toc-text">D - 仙人掌</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E5%90%8D%E9%A2%98"><span class="toc-text">无名题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#maimai"><span class="toc-text">maimai</span></a></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -160,6 +155,8 @@ const searchPath = "/search.xml"
 						<a href="/tags/字符串/" class="citem">字符串</a>
 					
 						<a href="/tags/组合数学/" class="citem">组合数学</a>
+					
+						<a href="/tags/支配对/" class="citem">支配对</a>
 					
 				
 			</div>
@@ -857,12 +854,6 @@ int main() &#123;
 <hr />
 <p>E. Many Minimizations 是数学题，跳了。</p>
 <hr />
-<h2 id="f---对数据结构的爱">F - 对数据结构的爱</h2>
-<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5609" class="uri">https://www.luogu.com.cn/problem/P5609</a></p>
-<p><strong>线段树做法</strong>：考虑线段树维护函数。定义 <span class="math inline">\(f(x)\)</span> 表示区间上想要减去 <span class="math inline">\(x\)</span> 次 <span class="math inline">\(p\)</span> 需要的最小初始值（这样才能让定义域和区间长有关），查询时直接二分即可；考虑初始化时如何合并。</p>
-<p>首先思考较为暴力的做法，对于左侧点 <span class="math inline">\(a\)</span> 和右侧点 <span class="math inline">\(b\)</span>，若 <span class="math inline">\(f(a+1)-1+s_l-a\cdot p\ge f(b)\)</span>，也即可以减去 <span class="math inline">\(a+b\)</span> 次，就可以用 <span class="math inline">\(\max(f(a),f(b)-s_l+a\cdot p)\)</span> 来更新 <span class="math inline">\(f(a+b)\)</span>。</p>
-<p>发现 <span class="math inline">\((a,b)\)</span> 的贡献一定小于 <span class="math inline">\((a+1,b-1)\)</span> 的贡献；具体地，发现 <span class="math inline">\(f(x+1)-f(x)\ge p\)</span> 后就很显然了。采用双指针，优先移动 <span class="math inline">\(b\)</span>，就能把最短区间扫一遍。</p>
-<p><strong>分治做法</strong>：Ast 自己还没切，蹲一个 sol。</p>
 <hr />
 <h2 id="无名题">无名题</h2>
 <blockquote>
@@ -911,7 +902,8 @@ int main() &#123;
 		appKey: 'TW6t8mFeGLmhPjWisvmllvvo',
 		recordIP: true,
 		enableQQ: true, 
-		// 目前 Valine 的 QQ 自动获取昵称似乎不可用 故不建议开启
+		// [EDITED] 目前 Valine 的 QQ 自动获取昵称似乎不可用
+		// 该问题在 v1.5.3 中已修复
 		pageSize: 10,
 		requiredFields:
 			

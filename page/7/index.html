@@ -26,9 +26,7 @@ const searchPath = "/search.xml"
 <script src="/js/jQuery.js"></script>
 
 <!-- 载入 Valine -->
-
-<script src="/js/Valine.min.js"></script>
-
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
 <!-- css 引入 -->
 
 <link rel="stylesheet" href="/css/layout.css">
@@ -37,6 +35,11 @@ const searchPath = "/search.xml"
 <link rel="stylesheet" href="/css/prcss/prism.css">
 
 
+
+<!-- rss -->
+<link rel="alternate" type="application/rss+xml" title="" href="https://xsc062.netlify.app/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="" href="https://xsc062.netlify.app/atom.xml" />
+<link rel="alternate" type="application/json" title="" href="https://xsc062.netlify.app/feed.json" />
 
 <meta charset="utf-8"> 
 <meta name="generator" content="Hexo 7.2.0"></head>
@@ -71,15 +74,7 @@ const searchPath = "/search.xml"
 <div id="search-bg">
 	<div id="search-box">
 		<input type="text" id="search-input" placeholder="Type to search...">
-		<div id="search-results"></div>
-		<p>恭喜你触发了这个 box，由于我还没有写关闭键，你只能通过刷新页面来关闭它。非常抱歉 ;-)</p>
-		<p>为了证明我没有摆烂，在这里放一个进度：</p>
-		<p>- 250715：尝试实现搜索功能，初步成功，能够搜索到包含关键词的文章了（<strong>也能关掉了</strong>）。不知道为啥输入 123 可以匹配所有文章，但是输入 1234 就一篇都匹配不上。（250814 upd：搜索的是 html 源码，<code>{</code> 的 ASCII 码为 123 / <code>&</code><code>#123;</code>）</p>
-		<p>- 250716：尝试加入关键词上下文来 de 上面的 bug，然后把 js 写成史了，现在这个框框并不具备搜索功能（也不具备关闭功能） :-(</p>
-		<p>- 250814：<strong>能关了</strong>，我很勤勉</p>
-		<p>什么？居然还能搜索！还能高亮关键词？谢谢你，hexo-generator-searchdb！但是你为什么没有注释，让我阅读理解了半天 :-(</p>
-		<p>css 等有空了再写吧，能用就行</p>
-		<p>**为什么有 bug？试着找一个关键词发现有的文章没有匹配上**/p>
+		<div id="search-results">键入以搜索</div>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
@@ -172,26 +167,32 @@ const searchPath = "/search.xml"
     <!-- 主页文章列表 -->
     <div class="ui post list flex">
 		<span class="paginator" style="margin: auto auto auto 0; padding-bottom: 10px;">
-	<a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right"></i></a>
+	<a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right"></i></a>
 </span>
 		
 			<div class="ui post list block">
                 <div class="ui post list description">
                     <div class="ui post list title dotted border">
-                        <a href="/20241027/">
-							CSP-S
+                        <a href="/20250329/">
+							学习笔记：FWT
                         </a>
+						<span class="wordcount">
+							<i class="far fa-keyboard"></i>
+							4k words
+							<i class="fas fa-stopwatch"></i>
+							15 minutes
+						</span>
                     </div>
 					<div class="ui post list excerpt yahei">
 						
-							<p>弟娃年方十一。方出考场之时，余问弟娃曰：「T1 用时几何？」。弟娃对曰：「及过大样例，已半炷香矣。」余大恸，为余 T1 大样例既过，已两柱香有余。古谚有云：「若有一人年少于吾亦强于吾，吾为之单调队列也。」吾弟娃年少于吾，殊难易之；今吾弟娃已四倍而强于吾，吾盍为单调队列哉！</p>
+							<p>活了哥们，复活了。</p>
 						
 					</div>
                 </div>
 				<div class="ui post list details yahei">
 					<!-- 时间 -->
                     <i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
-                    2024-10-27
+                    2025-03-29
 					<!-- 分类 -->
 					<!-- 我改主意了，我现在认为分类就是个构式，所以我要把它注释掉 😀 -->
                     <!-- <i class="fas fa-th-list" style="margin-left: 10px;"></i> -->
@@ -200,7 +201,9 @@ const searchPath = "/search.xml"
 					<i class="fas fa-tags" style="margin-left: 10px;"></i>
 					
 						
-							<a href="/tags/下饭/" class="citem">下饭</a>
+							<a href="/tags/高维前缀和/" class="citem">高维前缀和</a>
+						
+							<a href="/tags/FWT/" class="citem">FWT</a>
 						
 					
 				</div>
@@ -209,20 +212,26 @@ const searchPath = "/search.xml"
 			<div class="ui post list block">
                 <div class="ui post list description">
                     <div class="ui post list title dotted border">
-                        <a href="/20241021-1/">
-							长链剖分 学习笔记
+                        <a href="/20250222/">
+							中等题目 Practice
                         </a>
+						<span class="wordcount">
+							<i class="far fa-keyboard"></i>
+							0 words
+							<i class="fas fa-stopwatch"></i>
+							1 minutes
+						</span>
                     </div>
 					<div class="ui post list excerpt yahei">
 						
-							<p><em>半端な生命の関数を / 少々ここらでオーバーライド</em></p>
+							
 						
 					</div>
                 </div>
 				<div class="ui post list details yahei">
 					<!-- 时间 -->
                     <i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
-                    2024-10-21
+                    2025-02-22
 					<!-- 分类 -->
 					<!-- 我改主意了，我现在认为分类就是个构式，所以我要把它注释掉 😀 -->
                     <!-- <i class="fas fa-th-list" style="margin-left: 10px;"></i> -->
@@ -230,11 +239,7 @@ const searchPath = "/search.xml"
 					<!-- 标签 -->
 					<i class="fas fa-tags" style="margin-left: 10px;"></i>
 					
-						
-							<a href="/tags/树链剖分/" class="citem">树链剖分</a>
-						
-							<a href="/tags/长链剖分/" class="citem">长链剖分</a>
-						
+						<span>暂无标签</span>
 					
 				</div>
 			</div>
@@ -242,20 +247,26 @@ const searchPath = "/search.xml"
 			<div class="ui post list block">
                 <div class="ui post list description">
                     <div class="ui post list title dotted border">
-                        <a href="/20241021/">
-							字符串
+                        <a href="/20250219/">
+							杂题集
                         </a>
+						<span class="wordcount">
+							<i class="far fa-keyboard"></i>
+							1.2k words
+							<i class="fas fa-stopwatch"></i>
+							4 minutes
+						</span>
                     </div>
 					<div class="ui post list excerpt yahei">
 						
-							<p>标题本来叫「哈希」，后来发现第二天的很多题虽然打了哈希的 tag 但是只有 KMP 做法，故忍痛改成「字符串」。</p>
+							<p>不在沉默中躺平，就在喧嚣中躺平。</p>
 						
 					</div>
                 </div>
 				<div class="ui post list details yahei">
 					<!-- 时间 -->
                     <i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
-                    2024-10-21
+                    2025-02-19
 					<!-- 分类 -->
 					<!-- 我改主意了，我现在认为分类就是个构式，所以我要把它注释掉 😀 -->
                     <!-- <i class="fas fa-th-list" style="margin-left: 10px;"></i> -->
@@ -263,15 +274,44 @@ const searchPath = "/search.xml"
 					<!-- 标签 -->
 					<i class="fas fa-tags" style="margin-left: 10px;"></i>
 					
+						<span>暂无标签</span>
+					
+				</div>
+			</div>
+		
+			<div class="ui post list block">
+                <div class="ui post list description">
+                    <div class="ui post list title dotted border">
+                        <a href="/20250217/">
+							线段树维护前缀最值序列信息
+                        </a>
+						<span class="wordcount">
+							<i class="far fa-keyboard"></i>
+							769 words
+							<i class="fas fa-stopwatch"></i>
+							3 minutes
+						</span>
+                    </div>
+					<div class="ui post list excerpt yahei">
 						
-							<a href="/tags/哈希/" class="citem">哈希</a>
+							<p>人类不应该使用 <code>std::vector</code> 实现线段树的 2 个原因：</p>
+						
+					</div>
+                </div>
+				<div class="ui post list details yahei">
+					<!-- 时间 -->
+                    <i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
+                    2025-02-17
+					<!-- 分类 -->
+					<!-- 我改主意了，我现在认为分类就是个构式，所以我要把它注释掉 😀 -->
+                    <!-- <i class="fas fa-th-list" style="margin-left: 10px;"></i> -->
+					
+					<!-- 标签 -->
+					<i class="fas fa-tags" style="margin-left: 10px;"></i>
+					
 						
 							<a href="/tags/线段树/" class="citem">线段树</a>
 						
-							<a href="/tags/KMP/" class="citem">KMP</a>
-						
-							<a href="/tags/border/" class="citem">border</a>
-						
 					
 				</div>
 			</div>
@@ -279,21 +319,26 @@ const searchPath = "/search.xml"
 			<div class="ui post list block">
                 <div class="ui post list description">
                     <div class="ui post list title dotted border">
-                        <a href="/20241017/">
-							模拟赛
+                        <a href="/20250216/">
+							Public Round 15 前两题
                         </a>
+						<span class="wordcount">
+							<i class="far fa-keyboard"></i>
+							2.2k words
+							<i class="fas fa-stopwatch"></i>
+							8 minutes
+						</span>
                     </div>
 					<div class="ui post list excerpt yahei">
 						
-							<p>好消息：会简单数学题 <img src="/em/dy.gif" /></p>
-<p>更好的消息：忘取模了 <img src="/em/dy.gif" /></p>
+							<p><a target="_blank" rel="noopener" href="https://pjudge.ac/contest/1914">PR #15</a> 前两题题解。</p>
 						
 					</div>
                 </div>
 				<div class="ui post list details yahei">
 					<!-- 时间 -->
                     <i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
-                    2024-10-16
+                    2025-02-16
 					<!-- 分类 -->
 					<!-- 我改主意了，我现在认为分类就是个构式，所以我要把它注释掉 😀 -->
                     <!-- <i class="fas fa-th-list" style="margin-left: 10px;"></i> -->
@@ -302,41 +347,11 @@ const searchPath = "/search.xml"
 					<i class="fas fa-tags" style="margin-left: 10px;"></i>
 					
 						
-							<a href="/tags/分治/" class="citem">分治</a>
+							<a href="/tags/线段树/" class="citem">线段树</a>
 						
-							<a href="/tags/欧拉回路/" class="citem">欧拉回路</a>
+							<a href="/tags/数学/" class="citem">数学</a>
 						
-					
-				</div>
-			</div>
-		
-			<div class="ui post list block">
-                <div class="ui post list description">
-                    <div class="ui post list title dotted border">
-                        <a href="/20240906/">
-							动态规划 10 题 - I
-                        </a>
-                    </div>
-					<div class="ui post list excerpt yahei">
-						
-							<p>现在是 10 题。虽然看着很掉价，但是写够了 10 就改成 20 题。以此类推，免得我摆烂（）</p>
-<p>自用向，不写太详细，把破题点写出来就差不多了。哦哦这里的破题是动词不是名词。</p>
-						
-					</div>
-                </div>
-				<div class="ui post list details yahei">
-					<!-- 时间 -->
-                    <i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
-                    2024-09-06
-					<!-- 分类 -->
-					<!-- 我改主意了，我现在认为分类就是个构式，所以我要把它注释掉 😀 -->
-                    <!-- <i class="fas fa-th-list" style="margin-left: 10px;"></i> -->
-					
-					<!-- 标签 -->
-					<i class="fas fa-tags" style="margin-left: 10px;"></i>
-					
-						
-							<a href="/tags/DP/" class="citem">DP</a>
+							<a href="/tags/树上差分/" class="citem">树上差分</a>
 						
 					
 				</div>
@@ -345,20 +360,26 @@ const searchPath = "/search.xml"
 			<div class="ui post list block">
                 <div class="ui post list description">
                     <div class="ui post list title dotted border">
-                        <a href="/20240625/">
-							媒介素养
+                        <a href="/20250202/">
+							学习笔记：后缀数组
                         </a>
+						<span class="wordcount">
+							<i class="far fa-keyboard"></i>
+							5.8k words
+							<i class="fas fa-stopwatch"></i>
+							21 minutes
+						</span>
                     </div>
 					<div class="ui post list excerpt yahei">
 						
-							<p>Adapted from 之前的一片发电文。现在更癫了。</p>
+							<p>非常后知后觉地意识到 SA(Suffix Array) 和 SAM(Suffix Automaton) 的 A 不是同一个 A <img src="/em/fad.gif" /></p>
 						
 					</div>
                 </div>
 				<div class="ui post list details yahei">
 					<!-- 时间 -->
                     <i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
-                    2024-06-25
+                    2025-02-02
 					<!-- 分类 -->
 					<!-- 我改主意了，我现在认为分类就是个构式，所以我要把它注释掉 😀 -->
                     <!-- <i class="fas fa-th-list" style="margin-left: 10px;"></i> -->
@@ -367,7 +388,9 @@ const searchPath = "/search.xml"
 					<i class="fas fa-tags" style="margin-left: 10px;"></i>
 					
 						
-							<a href="/tags/闲话/" class="citem">闲话</a>
+							<a href="/tags/字符串/" class="citem">字符串</a>
+						
+							<a href="/tags/SA/" class="citem">SA</a>
 						
 					
 				</div>
@@ -376,20 +399,26 @@ const searchPath = "/search.xml"
 			<div class="ui post list block">
                 <div class="ui post list description">
                     <div class="ui post list title dotted border">
-                        <a href="/20240517/">
-							状压枚举子集 + 高维前缀和
+                        <a href="/20250124/">
+							网络流
                         </a>
+						<span class="wordcount">
+							<i class="far fa-keyboard"></i>
+							377 words
+							<i class="fas fa-stopwatch"></i>
+							1 minutes
+						</span>
                     </div>
 					<div class="ui post list excerpt yahei">
 						
-							<p>出现了，但发现没写过，故记之。</p>
+							<p>想当年叱诧风云左牵字符串右擎网络流，而今飘零憔悴沦落到需要学而时习之的地步 <img src="/em/kx.gif" /></p>
 						
 					</div>
                 </div>
 				<div class="ui post list details yahei">
 					<!-- 时间 -->
                     <i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
-                    2024-05-17
+                    2025-01-24
 					<!-- 分类 -->
 					<!-- 我改主意了，我现在认为分类就是个构式，所以我要把它注释掉 😀 -->
                     <!-- <i class="fas fa-th-list" style="margin-left: 10px;"></i> -->
@@ -398,16 +427,14 @@ const searchPath = "/search.xml"
 					<i class="fas fa-tags" style="margin-left: 10px;"></i>
 					
 						
-							<a href="/tags/状压/" class="citem">状压</a>
-						
-							<a href="/tags/高维前缀和/" class="citem">高维前缀和</a>
+							<a href="/tags/网络流/" class="citem">网络流</a>
 						
 					
 				</div>
 			</div>
 		
 		<span class="paginator" style="margin: -1.5rem 0 auto auto; padding-top: 10px;">
-	<a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right"></i></a>
+	<a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right"></i></a>
 </span>
 	</div>
 </div>

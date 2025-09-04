@@ -1,0 +1,342 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title> • Posts by &#34;悬线法&#34; tag</title>
+        <link>https://xsc062.netlify.app</link>
+        <description></description>
+        <language>zh-CN</language>
+        <pubDate>Wed, 04 Oct 2023 16:42:00 +0800</pubDate>
+        <lastBuildDate>Wed, 04 Oct 2023 16:42:00 +0800</lastBuildDate>
+        <category>并查集</category>
+        <category>斜率优化</category>
+        <category>悬线法</category>
+        <category>哈希</category>
+        <category>字典树</category>
+        <category>DP</category>
+        <category>单调队列</category>
+        <category>分治</category>
+        <category>二分图</category>
+        <category>CRT / exCRT</category>
+        <category>排列组合</category>
+        <category>网络流</category>
+        <category>费用流</category>
+        <category>二分</category>
+        <category>上下界网络流</category>
+        <category>容斥原理</category>
+        <category>线段树</category>
+        <category>树状数组</category>
+        <category>区间 DP</category>
+        <category>构造</category>
+        <category>Tarjan</category>
+        <category>数据结构</category>
+        <category>下饭</category>
+        <category>LCA</category>
+        <category>倍增</category>
+        <category>鸽巢原理</category>
+        <category>概率期望</category>
+        <category>调和级数</category>
+        <category>差分</category>
+        <category>思维</category>
+        <category>树形 DP</category>
+        <category>最小生成树</category>
+        <category>SAM</category>
+        <category>状压</category>
+        <category>分块</category>
+        <category>可持久化</category>
+        <category>笛卡尔树</category>
+        <category>高维前缀和</category>
+        <category>闲话</category>
+        <category>欧拉回路</category>
+        <category>树链剖分</category>
+        <category>长链剖分</category>
+        <category>KMP</category>
+        <category>border</category>
+        <category>字符串</category>
+        <category>AC 自动机</category>
+        <category>SA</category>
+        <category>数学</category>
+        <category>树上差分</category>
+        <category>FWT</category>
+        <category>堆</category>
+        <category>树的重心</category>
+        <category>二项式定理</category>
+        <category>二项式反演</category>
+        <category>贪心</category>
+        <category>均摊</category>
+        <category>计数</category>
+        <category>优化建图</category>
+        <category>反悔贪心</category>
+        <category>调整法</category>
+        <category>背包</category>
+        <category>博弈论</category>
+        <category>DP 优化</category>
+        <category>虚树</category>
+        <category>点分治</category>
+        <category>WQS 二分</category>
+        <category>闵可夫斯基和</category>
+        <category>slope trick</category>
+        <category>四边形不等式</category>
+        <category>暴力</category>
+        <category>状压 DP</category>
+        <category>组合数学</category>
+        <category>支配对</category>
+        <category>DDP</category>
+        <category>平衡树</category>
+        <category>容斥</category>
+        <category>猫树</category>
+        <category>Kruskal 重构树</category>
+        <category>李超线段树</category>
+        <item>
+            <guid isPermalink="true">https://xsc062.netlify.app/20231004/</guid>
+            <title>情景剧</title>
+            <link>https://xsc062.netlify.app/20231004/</link>
+            <category>悬线法</category>
+            <pubDate>Wed, 04 Oct 2023 16:42:00 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;Solution to &lt;a href=&#34;http://222.180.160.110:61235/contest/4273/problem/1&#34;&gt;情景剧&lt;/a&gt;。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;a.-情景剧&#34;&gt;A. 情景剧&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/4273/problem/1&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/4273/problem/1&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;给定序列，求任取一段区间，区间最大值、区间最小值、区间长度之积的最大值。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(N\le 2\times 10^6\)&lt;/span&gt;，值域为 &lt;span class=&#34;math inline&#34;&gt;\(10^9\)&lt;/span&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;对于 &lt;span class=&#34;math inline&#34;&gt;\(a_i\)&lt;/span&gt;，假设它是 &lt;span class=&#34;math inline&#34;&gt;\([X_i, Y_i]\)&lt;/span&gt; 内的最大值，且 &lt;span class=&#34;math inline&#34;&gt;\([X_i, Y_i]\)&lt;/span&gt; 是该条件下的极大区间；&lt;/p&gt;
+&lt;p&gt;相似地，对于 &lt;span class=&#34;math inline&#34;&gt;\(a_j\)&lt;/span&gt;，假设它是 &lt;span class=&#34;math inline&#34;&gt;\([P_j, Q_j]\)&lt;/span&gt; 内的最小值，且 &lt;span class=&#34;math inline&#34;&gt;\([P_j, Q_j]\)&lt;/span&gt; 是该条件下的极大区间；&lt;/p&gt;
+&lt;p&gt;则对于 &lt;span class=&#34;math inline&#34;&gt;\(a_i\)&lt;/span&gt; 作为区间内最大值，&lt;span class=&#34;math inline&#34;&gt;\(a_j\)&lt;/span&gt; 作为区间内最小值的情况，满足该条件的区间为 &lt;span class=&#34;math inline&#34;&gt;\([\max(X_i, P_j), \min(Y_i, Q_j)]\)&lt;/span&gt;，答案为 &lt;span class=&#34;math inline&#34;&gt;\(k=a_i \times a_j \times [\min(Y_i, Q_j) - \max(X_i, P_j) + 1]\)&lt;/span&gt;。我们的目标就是最大化 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;两个不固定的值，并且不能拆给斜优做，所以考虑将其中一个变得「固定」。&lt;/p&gt;
+&lt;p&gt;观察数组，我们发现，对于数组中的最大值 &lt;span class=&#34;math inline&#34;&gt;\(a_m\)&lt;/span&gt;，有 &lt;span class=&#34;math inline&#34;&gt;\(X_m = 1,Y_m=n\)&lt;/span&gt;。那么此时选取 &lt;span class=&#34;math inline&#34;&gt;\(a_m\)&lt;/span&gt; 作为区间最大值，选取任意数 &lt;span class=&#34;math inline&#34;&gt;\(a_j\)&lt;/span&gt; 作为最小值。这样做可以保证由 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 带来的影响都是最优的，只用枚举 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 并求解即可。此时的答案就是 &lt;span class=&#34;math inline&#34;&gt;\(a_m\times a_j\times (Q_j-P_j + 1)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;我们上述条件成立的前提是 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 在 &lt;span class=&#34;math inline&#34;&gt;\([P_j, Q_j]\)&lt;/span&gt; 内且 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 在 &lt;span class=&#34;math inline&#34;&gt;\([X_i, Y_i]\)&lt;/span&gt; 内。当 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 取 &lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt; 时后者显然成立，但很容易构造出来情况让前者不成立。比如说 &lt;code&gt;15 1 5&lt;/code&gt;，当 &lt;span class=&#34;math inline&#34;&gt;\(j=3\)&lt;/span&gt; 时就会得到错误的答案。&lt;/p&gt;
+&lt;p&gt;受刚才的思考启发，取 &lt;span class=&#34;math inline&#34;&gt;\([P_j, Q_j]\)&lt;/span&gt; 内的最大值作为 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;。此时有 &lt;span class=&#34;math inline&#34;&gt;\(X_i\le P_j\le Q_j \le Y_j\)&lt;/span&gt;，答案为区间内最优。&lt;/p&gt;
+&lt;p&gt;接下来需要求解 &lt;span class=&#34;math inline&#34;&gt;\(P_j\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(Q_j\)&lt;/span&gt;。观察数据范围，应该是 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt; 做法。不难想到单调栈，可惜我不会，所以采用同样是 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt; 的悬线法（&lt;a href=&#34;/20220927&#34;&gt;我的博客：有关悬线法的介绍&lt;/a&gt;）。&lt;/p&gt;
+&lt;p&gt;那么怎么求 &lt;span class=&#34;math inline&#34;&gt;\([P_j,Q_j]\)&lt;/span&gt; 内的最大值呢？当遇到这种求解区间与左右端点一致，并且待求满足可加性的情况时，我们可以在悬线的时候一起求解。当悬线跨越一个区间时，我们直接用这个已求解区间的最大值更新当前求的最大值。&lt;/p&gt;
+&lt;p&gt;左右分别求最大值（注意要用两个数组分别记录，防止错误更新），最后取两者较大作为最终区间内最大值即可。&lt;/p&gt;
+&lt;p&gt;最终时间复杂度 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;p&gt;&lt;summary&gt;🌼 鲜花&lt;/summary&gt;&lt;/p&gt;
+&lt;p&gt;不知道为什么听别人说很卡，不卡啊，我一个点 250ms。&lt;/p&gt;
+&lt;p&gt;啊什么你们打的 &lt;span class=&#34;math inline&#34;&gt;\(O(n\log n)\)&lt;/span&gt;？因为单调栈信息断层不能维护区间内最大值？菜。那我必须把这篇发出来嘲讽你们了。兔子说要是不打 &lt;code&gt;fread&lt;/code&gt; Lemon 上就会起飞，我说我打了，我还疑惑 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt; 跑 &lt;code&gt;2e6&lt;/code&gt; 普通快读怎么会寄呢。一问，啊，带 &lt;span class=&#34;math inline&#34;&gt;\(\log\)&lt;/span&gt;，菜。&lt;/p&gt;
+&lt;p&gt;啊什么谭委员带 &lt;span class=&#34;math inline&#34;&gt;\(\log\)&lt;/span&gt; 一个点只要 500ms？那也比我慢，菜。&lt;/p&gt;
+&lt;/details&gt;
+&lt;p&gt;说起来这是我头一次用悬线解决不在矩阵上，还要维护信息的题，之前并没有细想过单调栈和悬线可维护的信息差异，这次算是误打误撞做对了。&lt;/p&gt;
+&lt;p&gt;注意到数据范围，应该要开 &lt;code&gt;__int128&lt;/code&gt; 吧。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#define int __int128
+namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 2e6 + 5;
+int a[maxn];
+int n, mx, res;
+int l[maxn], r[maxn];
+int mxl[maxn], mxr[maxn];
+int max(int x, int y) &amp;#123; return x &amp;gt; y ? x : y; &amp;#125;
+int main() &amp;#123;
+    read(n), l[0] = 1;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        read(a[i]), l[i] = i;
+        mxl[i] = mxr[i] = a[i];
+        while (l[i] &amp;gt; 1 &amp;amp;&amp;amp; a[l[i] - 1] &amp;gt;= a[i]) &amp;#123;
+            mxl[i] = max(mxl[i], mxl[l[i] - 1]);
+            l[i] = l[l[i] - 1];
+        &amp;#125;
+    &amp;#125;
+    r[n + 1] = n;
+    for (int i = n; i; --i) &amp;#123;
+        r[i] = i;
+        while (r[i] &amp;lt; n &amp;amp;&amp;amp; a[r[i] + 1] &amp;gt;= a[i]) &amp;#123;
+            mxr[i] = max(mxr[i], mxr[r[i] + 1]);
+            r[i] = r[r[i] + 1];
+        &amp;#125;
+        res = max(res, max(mxl[i], mxr[i]) * a[i] * (r[i] - l[i] + 1));
+    &amp;#125;
+    print(res, &amp;#39;\n&amp;#39;);
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062
+#undef int&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;em&gt;upd on 240704&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;我们在 &lt;a href=&#34;/20220927&#34;&gt;这篇博客&lt;/a&gt; 中提到了悬线的本质是笛卡尔树，而本题就是其链上爬山维护数据的一个优秀体现，也是因为这一点，应该更加深切地认识到悬线包含式的访问顺序使之维护的数据类型应和倍增 / 树状数组等类似。&lt;/p&gt;
+&lt;p&gt;所以说到可维护数据的复杂程度，笛卡尔树严格大于悬线严格大于单调栈好吧 &lt;img src=&#34;/em/dy.gif&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;虽然现在全世界都知道我是悬线魔怔人了 &lt;img src=&#34;/em/dy.gif&#34; /&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">https://xsc062.netlify.app/20220927/</guid>
+            <title>悬线法</title>
+            <link>https://xsc062.netlify.app/20220927/</link>
+            <category>悬线法</category>
+            <pubDate>Tue, 27 Sep 2022 10:53:00 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;有一段时间看见单调栈就抑郁，所以做题的时候就东贺贺，西贺贺，最终了解到了世界上还有一种很神奇的方法叫悬线法。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;p&gt;本文中的「单调栈」均指依赖于顺序维护信息的工具，单纯利用单调性质作为数据结构独立存在的单调栈不在本篇文章 &lt;strong&gt;批判&lt;/strong&gt; 范围之内。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;引入土豪聪要请客&#34;&gt;引入：土豪聪要请客&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/2870/problem/4&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/2870/problem/4&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;题意简述：给定一个 &lt;span class=&#34;math inline&#34;&gt;\(n\times m\)&lt;/span&gt; 的矩阵，其中有一部分地方有障碍。在整个地图上找到周长最大的、不包含障碍的矩形。&lt;/p&gt;
+&lt;p&gt;输入一个由 &lt;code&gt;.&lt;/code&gt;（空地）和 &lt;code&gt;X&lt;/code&gt;（障碍）组成的矩阵，输出最大矩形周长减 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;p&gt;&lt;summary&gt;一些鲜花&lt;/summary&gt;&lt;/p&gt;
+&lt;p&gt;看到题后即可想到悬线法，但是中午太困了处于游离状态一直掉线，所以干瞪着电脑屏幕打瞌睡。&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;于是这篇文章从 220927 被拖到了 230916，哈哈真神奇&lt;/del&gt; 现在是 231004 了，我才动笔。&lt;/p&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;p&gt;首先预处理出 &lt;span class=&#34;math inline&#34;&gt;\(s_{i, j}\)&lt;/span&gt;，表示从 &lt;span class=&#34;math inline&#34;&gt;\((i,\,j)\)&lt;/span&gt; 向上，共有多少个连续的 &lt;code&gt;.&lt;/code&gt;。&lt;/p&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+    for (int j = 1; j &amp;lt;= m; ++j)
+        s[i][j] = (a[i][j] == &amp;#39;.&amp;#39; ? s[i - 1][j] + 1 : 0);
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;悬线法的名字很形象，拎着一根细线的头，让它自然下垂。&lt;/p&gt;
+&lt;p&gt;为了方便思考和实现，我们这样想象：一个地图，我们手里拿着一根硬棒朝上举，然后固定我们手只能在一行上运动，用它左右「刷」沿途的矩形。&lt;/p&gt;
+&lt;p&gt;具象地说，选定一行 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;，枚举每一个 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt;，寻找以第 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 行为底，包含 &lt;span class=&#34;math inline&#34;&gt;\((i,\,j)\)&lt;/span&gt;，高为 &lt;span class=&#34;math inline&#34;&gt;\(s_{i,\,j}\)&lt;/span&gt; 的最宽矩形。&lt;/p&gt;
+&lt;p&gt;也就是从 &lt;span class=&#34;math inline&#34;&gt;\((i, j)\)&lt;/span&gt; 出发，往左右分别找到最远的一个位置 &lt;span class=&#34;math inline&#34;&gt;\(L_j, R_j\)&lt;/span&gt;，满足 &lt;span class=&#34;math inline&#34;&gt;\(s_{i, L_j \sim R_j} \ge s_{i, j}\)&lt;/span&gt;。那么悬线法最抽象的部分就讲完了，接下来是最神奇的部分。&lt;/p&gt;
+&lt;p&gt;在第 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 行内，从每个 &lt;span class=&#34;math inline&#34;&gt;\((i, j)\)&lt;/span&gt; 开始找到 &lt;span class=&#34;math inline&#34;&gt;\(L_j, R_j\)&lt;/span&gt;，如果暴力那么明显是个 &lt;span class=&#34;math inline&#34;&gt;\(O(m^2)\)&lt;/span&gt; 的时间。&lt;/p&gt;
+&lt;p&gt;但是我们考虑这么一件事情。假设 &lt;span class=&#34;math inline&#34;&gt;\(L_{i-1}\)&lt;/span&gt; 已经求出。&lt;/p&gt;
+&lt;p&gt;令 &lt;span class=&#34;math inline&#34;&gt;\(k = j-1\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(L_j\)&lt;/span&gt; 初值赋为 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt;（左端点至少是自己）。&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;当 &lt;span class=&#34;math inline&#34;&gt;\(L_j=1\)&lt;/span&gt; 时 即刻停止算法，因为 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 是可达的最左位置，不能再往左了。&lt;/li&gt;
+&lt;li&gt;当 &lt;span class=&#34;math inline&#34;&gt;\(a_k &amp;gt; a_j\)&lt;/span&gt; 时 &lt;span class=&#34;math inline&#34;&gt;\(a_k\)&lt;/span&gt; 就像一堵墙，堵住了我们要继续往左刷的硬棒，故不改变 &lt;span class=&#34;math inline&#34;&gt;\(L_j\)&lt;/span&gt; 并停止算法。&lt;/li&gt;
+&lt;li&gt;否则，由于 &lt;span class=&#34;math inline&#34;&gt;\(a_{L_k\sim k}\ge a_k\ge a_j\)&lt;/span&gt;，从 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 开始往左刷至少都能够到 &lt;span class=&#34;math inline&#34;&gt;\(L_k\)&lt;/span&gt;。此时我们令 &lt;span class=&#34;math inline&#34;&gt;\(k=L_k-1\)&lt;/span&gt;，回到第一步。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;我们就可以求解到正确的 &lt;span class=&#34;math inline&#34;&gt;\(L_j\)&lt;/span&gt; 的。求解 &lt;span class=&#34;math inline&#34;&gt;\(R_j\)&lt;/span&gt; 的流程和上述大致相同，不再赘述。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;那么是一个非常神奇的事情。悬线法的时间复杂度怎么证明呢？&lt;/p&gt;
+&lt;p&gt;我们思考。假设 &lt;span class=&#34;math inline&#34;&gt;\(a_{j-1}&amp;gt;a_j\)&lt;/span&gt;，算法会即刻停止；否则，当前定位直接跳到 &lt;span class=&#34;math inline&#34;&gt;\(L_{j-1}\)&lt;/span&gt; 之前，也就是说，为了求解 &lt;span class=&#34;math inline&#34;&gt;\(L_{j-1}\)&lt;/span&gt; 而遍历过的位置，求解 &lt;span class=&#34;math inline&#34;&gt;\(L_j\)&lt;/span&gt; 时都不会再遍历第二遍。&lt;/p&gt;
+&lt;p&gt;没有值会被遍历第二遍，所以是 &lt;span class=&#34;math inline&#34;&gt;\(O(m)\)&lt;/span&gt; 的。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;按照上述流程，算法总体时间复杂度 &lt;span class=&#34;math inline&#34;&gt;\(O(n\times m)\)&lt;/span&gt;，和单调栈完全一致。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 2e3 + 5;
+int n, m, ans;
+char a[maxn][maxn];
+int s[maxn][maxn], l[maxn][maxn], r[maxn][maxn];
+int max(int x, int y) &amp;#123;
+    return x &amp;gt; y ? x : y;
+&amp;#125;
+int main() &amp;#123;
+    read(n);
+    read(m);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        scanf(&amp;quot;%s&amp;quot;, a[i] + 1);
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        for (int j = 1; j &amp;lt;= m; ++j)
+            s[i][j] = (a[i][j] == &amp;#39;.&amp;#39; ? s[i - 1][j] + 1 : 0);
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        for (int j = 1; j &amp;lt;= m; ++j) &amp;#123;
+            l[i][j] = j;
+            while (l[i][j] &amp;gt; 1 &amp;amp;&amp;amp; s[i][j] &amp;lt;= s[i][l[i][j] - 1])
+                l[i][j] = l[i][l[i][j] - 1];
+        &amp;#125;
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        for (int j = m; j; --j) &amp;#123;
+            r[i][j] = j;
+            while (r[i][j] &amp;lt; m &amp;amp;&amp;amp; s[i][j] &amp;lt;= s[i][r[i][j] + 1])
+                r[i][j] = r[i][r[i][j] + 1];
+        &amp;#125;
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        for (int j = 1; j &amp;lt;= m; ++j) &amp;#123;
+            if (!s[i][j])
+                continue;
+            ans = max(ans, (s[i][j] +
+                      (r[i][j] - l[i][j] + 1)) * 2);
+        &amp;#125;
+    &amp;#125;
+    printf(&amp;quot;%d&amp;quot;, ans - 1);
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;p&gt;上述处理 &lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt; 数组的「竖向压缩」技巧是处理矩阵类悬线法题目的常用技巧，这里使用另一道题来举例子。&lt;/p&gt;
+&lt;h3 id=&#34;例玉蟾宫-city-game-城市游戏&#34;&gt;例：玉蟾宫 / City Game / 城市游戏&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/1655/problem/2&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/1655/problem/2&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这道题和上一道非常相似，只需改变求答案的式子即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 1e3 + 5; 
+char t;
+int n, m, ans;
+int s[maxn][maxn];
+int l[maxn][maxn], r[maxn][maxn];
+int max(int x, int y) &amp;#123;
+    return x &amp;gt; y ? x : y;
+&amp;#125;
+int main() &amp;#123;
+    scanf(&amp;quot;%d %d&amp;quot;, &amp;amp;n, &amp;amp;m);
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        for (int j = 1; j &amp;lt;= m; ++j) &amp;#123;
+            scanf(&amp;quot;%1s&amp;quot;, &amp;amp;t);
+            if (t == &amp;#39;F&amp;#39;)
+                s[i][j] = s[i - 1][j] + 1;
+            l[i][j] = j;
+            while (l[i][j] &amp;gt; 1 &amp;amp;&amp;amp; s[i][j]
+                        &amp;lt;= s[i][l[i][j] - 1])
+                l[i][j] = l[i][l[i][j] - 1];
+        &amp;#125;
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        r[i][m + 1] = m + 1;
+        for (int j = m; j; --j) &amp;#123;
+            r[i][j] = j;
+            while (r[i][j] &amp;lt; m &amp;amp;&amp;amp; s[i][j]
+                         &amp;lt;= s[i][r[i][j] + 1])
+                r[i][j] = r[i][r[i][j] + 1];
+            ans = max(ans, s[i][j] *
+                        (r[i][j] - l[i][j] + 1));
+        &amp;#125;
+    &amp;#125;
+    print(ans * 3, &amp;#39;\n&amp;#39;);
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;悬线法能维护的数据特点&#34;&gt;悬线法能维护的数据特点&lt;/h2&gt;
+&lt;p&gt;值得注意的是，悬线法仅指求解最远左右端点的技巧。&lt;/p&gt;
+&lt;p&gt;同时可以维护过程中的其它信息，例如 &lt;a href=&#34;/20231004&#34;&gt;情景剧&lt;/a&gt; 一题。链接中有详细叙述，此处略。&lt;/p&gt;
+&lt;p&gt;根据本题带来的启发，我们认识到悬线可在求解过程中维护的内容更多。&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;不像你单调栈随随便便删这删那信息全部断层什么都维护不了&lt;/del&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;进一步地悬线法与单调栈&#34;&gt;进一步地，悬线法与单调栈？&lt;/h2&gt;
+&lt;p&gt;和 &lt;span class=&#34;citation&#34; data-cites=&#34;Rosmist&#34;&gt;@Rosmist&lt;/span&gt; 辩经的时候，Rosmist 激情爆典：「悬线不就是可持久化单调栈吗？」&lt;/p&gt;
+&lt;p&gt;很有道理。容易发现单调栈在每一个 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 时刻的栈内元素就是从 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 开始往起始方向跳，经过的所有元素。由于悬线存储的数据是不会更改的，倒推回去我们可以知道，悬线存储了每个时刻的单调栈信息并有多个点共享前驱 / 后继，其实就是一种另类的可持久化单调栈，并且复杂度与单调栈本体相同。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;与笛卡尔树的关联&#34;&gt;与笛卡尔树的关联&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;upd on 240704&lt;/em&gt;，学习了笛卡尔树。现在介绍悬线与笛卡尔树的关系。&lt;/p&gt;
+&lt;p&gt;容易发现元素 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 的 &lt;span class=&#34;math inline&#34;&gt;\(l_i,r_i\)&lt;/span&gt; 二值就是其在笛卡尔树上对应的区间。&lt;/p&gt;
+&lt;p&gt;更抽象的一点是悬线法中跳一跳的操作在笛卡尔树中的对应内涵。以小根堆为背景、在 &lt;span class=&#34;math inline&#34;&gt;\(l\)&lt;/span&gt; 上向左跳为例，注意到该操作相当于从左到右向笛卡尔树中新增节点。&lt;/p&gt;
+&lt;p&gt;这也进一步验证了悬线法复杂度的正确性：我们都知道，在新加入节点时，若从树中提取出由根节点和其一直向右走直到节点不存在右儿子构成的链，则该点被添加到链中某一点的右儿子，该点原本的右子树（完整包含了链的剩余部分）成为新建节点的左子树。&lt;/p&gt;
+&lt;p&gt;而悬线实现的就是从链的最低点暴力爬山，直到找到合法点；而根据上面的结论，被枚举过的链上较低点不会作为新节点的右边的子孙，自然也不会再次被枚举到。&lt;/p&gt;
+&lt;p&gt;故而每个点最多被枚举到一次，得证。&lt;/p&gt;
+&lt;p&gt;进一步的，可以开发出悬线法 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt; 建笛卡尔树的方法：&lt;/p&gt;
+&lt;p&gt;每次求解完 &lt;span class=&#34;math inline&#34;&gt;\(l_i\)&lt;/span&gt; 后，令 &lt;span class=&#34;math inline&#34;&gt;\(rc_{l_i-1}=i\)&lt;/span&gt; 即可（当然 &lt;span class=&#34;math inline&#34;&gt;\(rc_{l_i-1}\)&lt;/span&gt; 是会被多次更新的，这也是不直接用邻接表 / 前向星连边的原因），&lt;span class=&#34;math inline&#34;&gt;\(r_i\)&lt;/span&gt; 与 &lt;span class=&#34;math inline&#34;&gt;\(lc\)&lt;/span&gt; 同理。&lt;/p&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+    l[i] = i;
+    while (l[i] != 1 &amp;amp;&amp;amp; a[l[i] - 1] &amp;gt; a[i])
+        l[i] = l[l[i] - 1];
+    rc[l[i] - 1] = i;
+&amp;#125;
+for (int i = n; i; --i) &amp;#123;
+    r[i] = i;
+    while (r[i] != n &amp;amp;&amp;amp; a[r[i] + 1] &amp;gt; a[i])
+        r[i] = r[r[i] + 1];
+    lc[r[i] + 1] = i;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;其中，根节点即为 &lt;code&gt;rc[0]&lt;/code&gt; 或 &lt;code&gt;lc[n + 1]&lt;/code&gt;。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;进一步从笛卡尔树出发，探究悬线法能够循环内维护的数据特点。&lt;/p&gt;
+&lt;p&gt;为何是循环内维护？因为循环外维护就只能从左右的直接儿子进行更新，那和笛卡尔树就没有区别了。&lt;/p&gt;
+&lt;p&gt;但其实结果是没什么可探究的，因为其经过的节点——自己左子树下最右端链——实在不具有什么特殊性，它们所对应的区间——从 &lt;span class=&#34;math inline&#34;&gt;\([l_i, i - 1]\)&lt;/span&gt; 到 &lt;span class=&#34;math inline&#34;&gt;\([i - 1, i - 1]\)&lt;/span&gt; 也看不出什么值得研究的，更何况可以被笛卡尔树更具象地代替；如果你要从前缀最值的角度出发，那就没意思了，完全等价于单调栈。&lt;/p&gt;
+&lt;p&gt;所以我们认为这次悬线法的开发最终以失败告终，&lt;del&gt;不然它早被别人开发了&lt;/del&gt;，我在此能给出的意见是，可以用悬线法完成矩形题目等不需要笛卡尔树树形结构的问题，至于其他，甚至包括上面提到的 &lt;a href=&#34;/20231004&#34;&gt;情景剧&lt;/a&gt; 一题，都可以直接上笛卡尔树。&lt;/p&gt;
+&lt;p&gt;但笛卡尔树的建树我还是肯定会用悬线的！毕竟照应开头，我不会单调栈 &lt;img src=&#34;/em/dy.gif&#34; alt=&#34;得意&#34; /&gt;&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

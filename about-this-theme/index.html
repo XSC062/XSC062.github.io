@@ -28,9 +28,7 @@ const searchPath = "/search.xml"
 <script src="/js/jQuery.js"></script>
 
 <!-- 载入 Valine -->
-
-<script src="/js/Valine.min.js"></script>
-
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
 <!-- css 引入 -->
 
 <link rel="stylesheet" href="/css/layout.css">
@@ -39,6 +37,11 @@ const searchPath = "/search.xml"
 <link rel="stylesheet" href="/css/prcss/prism.css">
 
 
+
+<!-- rss -->
+<link rel="alternate" type="application/rss+xml" title="" href="https://xsc062.netlify.app/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="" href="https://xsc062.netlify.app/atom.xml" />
+<link rel="alternate" type="application/json" title="" href="https://xsc062.netlify.app/feed.json" />
 
 <meta charset="utf-8"> 
 <meta name="generator" content="Hexo 7.2.0"></head>
@@ -73,15 +76,7 @@ const searchPath = "/search.xml"
 <div id="search-bg">
 	<div id="search-box">
 		<input type="text" id="search-input" placeholder="Type to search...">
-		<div id="search-results"></div>
-		<p>恭喜你触发了这个 box，由于我还没有写关闭键，你只能通过刷新页面来关闭它。非常抱歉 ;-)</p>
-		<p>为了证明我没有摆烂，在这里放一个进度：</p>
-		<p>- 250715：尝试实现搜索功能，初步成功，能够搜索到包含关键词的文章了（<strong>也能关掉了</strong>）。不知道为啥输入 123 可以匹配所有文章，但是输入 1234 就一篇都匹配不上。（250814 upd：搜索的是 html 源码，<code>{</code> 的 ASCII 码为 123 / <code>&</code><code>#123;</code>）</p>
-		<p>- 250716：尝试加入关键词上下文来 de 上面的 bug，然后把 js 写成史了，现在这个框框并不具备搜索功能（也不具备关闭功能） :-(</p>
-		<p>- 250814：<strong>能关了</strong>，我很勤勉</p>
-		<p>什么？居然还能搜索！还能高亮关键词？谢谢你，hexo-generator-searchdb！但是你为什么没有注释，让我阅读理解了半天 :-(</p>
-		<p>css 等有空了再写吧，能用就行</p>
-		<p>**为什么有 bug？试着找一个关键词发现有的文章没有匹配上**/p>
+		<div id="search-results">键入以搜索</div>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
@@ -126,11 +121,21 @@ const searchPath = "/search.xml"
 	<h1 id="title">更新日志 / 关于 iwll</h1>
     <div class="ui text container yahei">
 		<p>iwll 是这个 theme 的名字，是 will 的乱序，取 “I want, I will, I could” 之意。</p>
-<p>2022 年 10 月，晚自习，面对一笔未动的数学作业，我在草稿本上画下了本主题的大致面貌。2022 年 12 月，iwll 在一双只实现过简单 Stylus 的手下初具雏形。</p>
-<p>一路上修修补补，直到今天，当年的 To-do list 只剩下搜索还在鸽；还实装了很多使用时想到的功能。</p>
+<p>2022 年 10 月，晚自习，面对一笔未动的数学作业，我在草稿本上画下了 iwll 的大致布局。2022 年 12 月，iwll 在一双只实现过简单 Stylus 的手下初具雏形。</p>
+<p>一路上修修补补，直到今天，当年的 To-do list 已经清空；还实装了很多使用时才想到的功能。</p>
 <p>以下从观感上似乎更像是 Site change log 而非 Theme’s，对这样随意维护的博客来说差不太多。</p>
 <h2 id="change-log">Change Log</h2>
 <ul>
+<li>250830：
+<ul>
+<li>在放 <span class="citation" data-cites="crashed">@crashed</span> 的友链的时候发现 QQ 内置头像的 <code>s=5</code> 不太靠谱，故加上了 <code>width=63px</code>（虽然这会让图变糊）。</li>
+</ul></li>
+<li>250822：
+<ul>
+<li>解决了搜索预处理内容摘取不完整的 bug；代价是控制台有一堆报错。</li>
+<li>添加了字数、时间统计功能。</li>
+<li>解决了长目录不能完整显示的 bug；代价是美观程度。</li>
+</ul></li>
 <li>250814：
 <ul>
 <li>实现了搜索 box 预期的大部分功能；暂未添加 CSS；暂未实现跳转后行为；</li>
@@ -260,7 +265,8 @@ const searchPath = "/search.xml"
 		appKey: 'TW6t8mFeGLmhPjWisvmllvvo',
 		recordIP: true,
 		enableQQ: true, 
-		// 目前 Valine 的 QQ 自动获取昵称似乎不可用 故不建议开启
+		// [EDITED] 目前 Valine 的 QQ 自动获取昵称似乎不可用
+		// 该问题在 v1.5.3 中已修复
 		pageSize: 10,
 		requiredFields:
 			

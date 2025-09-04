@@ -1,6 +1,6 @@
 /*
-啊？这玩意儿是我写的？我居然还会写 js？
-🤔😲😇
+啊？我居然还会写 js？
+🤔 😲 😇
 */
 // 获取相对路径
 function GetUrlRelativePath() {

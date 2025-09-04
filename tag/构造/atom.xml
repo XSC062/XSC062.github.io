@@ -1,0 +1,827 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://xsc062.netlify.app</id>
+    <title> • Posts by &#34;构造&#34; tag</title>
+    <link href="https://xsc062.netlify.app" />
+    <updated>2025-05-18T06:43:30.000Z</updated>
+    <category term="并查集" />
+    <category term="斜率优化" />
+    <category term="悬线法" />
+    <category term="哈希" />
+    <category term="字典树" />
+    <category term="DP" />
+    <category term="单调队列" />
+    <category term="分治" />
+    <category term="二分图" />
+    <category term="CRT / exCRT" />
+    <category term="排列组合" />
+    <category term="网络流" />
+    <category term="费用流" />
+    <category term="二分" />
+    <category term="上下界网络流" />
+    <category term="容斥原理" />
+    <category term="线段树" />
+    <category term="树状数组" />
+    <category term="区间 DP" />
+    <category term="构造" />
+    <category term="Tarjan" />
+    <category term="数据结构" />
+    <category term="下饭" />
+    <category term="LCA" />
+    <category term="倍增" />
+    <category term="鸽巢原理" />
+    <category term="概率期望" />
+    <category term="调和级数" />
+    <category term="差分" />
+    <category term="思维" />
+    <category term="树形 DP" />
+    <category term="最小生成树" />
+    <category term="SAM" />
+    <category term="状压" />
+    <category term="分块" />
+    <category term="可持久化" />
+    <category term="笛卡尔树" />
+    <category term="高维前缀和" />
+    <category term="闲话" />
+    <category term="欧拉回路" />
+    <category term="树链剖分" />
+    <category term="长链剖分" />
+    <category term="KMP" />
+    <category term="border" />
+    <category term="字符串" />
+    <category term="AC 自动机" />
+    <category term="SA" />
+    <category term="数学" />
+    <category term="树上差分" />
+    <category term="FWT" />
+    <category term="堆" />
+    <category term="树的重心" />
+    <category term="二项式定理" />
+    <category term="二项式反演" />
+    <category term="贪心" />
+    <category term="均摊" />
+    <category term="计数" />
+    <category term="优化建图" />
+    <category term="反悔贪心" />
+    <category term="调整法" />
+    <category term="背包" />
+    <category term="博弈论" />
+    <category term="DP 优化" />
+    <category term="虚树" />
+    <category term="点分治" />
+    <category term="WQS 二分" />
+    <category term="闵可夫斯基和" />
+    <category term="slope trick" />
+    <category term="四边形不等式" />
+    <category term="暴力" />
+    <category term="状压 DP" />
+    <category term="组合数学" />
+    <category term="支配对" />
+    <category term="DDP" />
+    <category term="平衡树" />
+    <category term="容斥" />
+    <category term="猫树" />
+    <category term="Kruskal 重构树" />
+    <category term="李超线段树" />
+    <entry>
+        <id>https://xsc062.netlify.app/20250518/</id>
+        <title>构造类问题的很少解题方法</title>
+        <link rel="alternate" href="https://xsc062.netlify.app/20250518/"/>
+        <content type="html">&lt;p&gt;病毒可能具有膜结构，但不存在生物膜系统。核糖体是唯一所有细胞均含有的细胞器，但病毒中无核糖体。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;p&gt;病毒的主要组成是 &lt;span class=&#34;math inline&#34;&gt;\(10\%\sim 20\%\)&lt;/span&gt; 的核酸，&lt;span class=&#34;math inline&#34;&gt;\(60\%\sim 70\%\)&lt;/span&gt; 的蛋白质外壳，&lt;span class=&#34;math inline&#34;&gt;\(&amp;lt;10\%\)&lt;/span&gt; 的结合水，可能具有逆转录酶、RNA 聚合酶。病毒的含水量（&lt;span class=&#34;math inline&#34;&gt;\(&amp;lt;10\%\)&lt;/span&gt;）远远小于细胞（&lt;span class=&#34;math inline&#34;&gt;\(70\%\)&lt;/span&gt;）。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;type-i调整法---1&#34;&gt;Type I：调整法 - 1&lt;/h2&gt;
+&lt;p&gt;虽然话是这么说，感觉这就是平常正常的做题路径，『想做法』——『发现有锅』——『打补丁』。&lt;/p&gt;
+&lt;p&gt;只是可能这是在提醒你在构造题中发现有锅不要急着换做法（？）&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;例题c---stations&#34;&gt;例题：C - Stations&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://qoj.ac/problem/1139&#34; class=&#34;uri&#34;&gt;https://qoj.ac/problem/1139&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;一个简单的想法是，当可用的编号范围很大时，可以记下每个点 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 的 &lt;span class=&#34;math inline&#34;&gt;\(DFN_u\)&lt;/span&gt; 和出栈序（记为 &lt;span class=&#34;math inline&#34;&gt;\(RFN_u\)&lt;/span&gt;），这样就能解决查询；但标号是 &lt;span class=&#34;math inline&#34;&gt;\(N^2\)&lt;/span&gt; 级别的。&lt;/p&gt;
+&lt;p&gt;现在思考，我们为什么需要记录 &lt;span class=&#34;math inline&#34;&gt;\(RFN_u\)&lt;/span&gt; 呢？因为在询问时，需要判断 &lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt; 的位置：如果在 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 某一儿子的子树内，答案为该儿子；否则，答案为 &lt;span class=&#34;math inline&#34;&gt;\(fa\)&lt;/span&gt;。当 &lt;span class=&#34;math inline&#34;&gt;\(DFN_t\)&lt;/span&gt; 比 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 最靠后的儿子 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 的 &lt;span class=&#34;math inline&#34;&gt;\(DFN\)&lt;/span&gt; 还要大时，无法判断 &lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt; 在 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 内还是在 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 外。&lt;/p&gt;
+&lt;p&gt;此处有一个解决方案（原谅我实在无法猜出是怎么想到的），将树按奇数层、偶数层分层，计数层记录 &lt;span class=&#34;math inline&#34;&gt;\(DFN\)&lt;/span&gt;，偶数层记录 &lt;span class=&#34;math inline&#34;&gt;\(RFN\)&lt;/span&gt;（具体地，奇数层在入栈时编号，偶数层在出栈时编号）；接下来进行判断（注意我们并不知道 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 所在层数的奇偶性）：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;若不存在 &lt;span class=&#34;math inline&#34;&gt;\(id_i&amp;gt;id_u\)&lt;/span&gt;，说明 &lt;span class=&#34;math inline&#34;&gt;\(id_u\)&lt;/span&gt; 为 &lt;span class=&#34;math inline&#34;&gt;\(RFN_u\)&lt;/span&gt;；此时 可以判断 &lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt; 是否位于 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 内。&lt;/li&gt;
+&lt;li&gt;否则，&lt;span class=&#34;math inline&#34;&gt;\(id_u\)&lt;/span&gt; 为 &lt;span class=&#34;math inline&#34;&gt;\(DFN_u\)&lt;/span&gt;。由于知道 &lt;span class=&#34;math inline&#34;&gt;\(RFN_v\)&lt;/span&gt;，可以判断 &lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt; 是否位于 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 内。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;容易证明其他一般情况也可以判断 &lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt; 的位置。复杂度 &lt;span class=&#34;math inline&#34;&gt;\(O(n^2)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;quot;stations.h&amp;quot;
+#include &amp;lt;bits/stdc++.h&amp;gt;
+std::vector&amp;lt;int&amp;gt; label(int n, int k, std::vector&amp;lt;int&amp;gt; u, std::vector&amp;lt;int&amp;gt; v) &amp;#123;
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g(n);
+    for (int i = 0; i &amp;lt; n - 1; ++i)
+        g[u[i]].push_back(v[i]), g[v[i]].push_back(u[i]);
+    std::vector&amp;lt;int&amp;gt; id(n, -1);
+    int now = 0;
+    std::function&amp;lt;void(int, int, int)&amp;gt; DFS = [&amp;amp;](int x, int fa, int tag) &amp;#123;
+        if (tag)
+            id[x] = now++;
+        for (auto i : g[x])
+            if (i != fa)
+                DFS(i, x, tag ^ 1);
+        if (!tag)
+            id[x] = now++;
+        return;
+    &amp;#125;;
+    DFS(0, -1, 1);
+    return id;
+&amp;#125;
+int find_next_station(int s, int t, std::vector&amp;lt;int&amp;gt; c) &amp;#123;
+    if (c.back() &amp;lt; s) &amp;#123;
+        int fa = c.front();
+        if (t &amp;gt; s)
+            return fa;
+        for (int i = (int)c.size() - 1; ~i; --i)
+            if (t &amp;gt;= c[i])
+                return c[i];
+        return fa;
+    &amp;#125;
+    else &amp;#123;
+        int fa = c.back();
+        if (t &amp;lt; s)
+            return fa;
+        for (int i = 0; i &amp;lt; (int)c.size() - 1; ++i)
+            if (t &amp;lt;= c[i])
+                return c[i];
+        return fa;
+    &amp;#125;
+    // assert(0);
+    return 114514;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;type-ii调整法---2&#34;&gt;Type II：调整法 - 2&lt;/h2&gt;
+&lt;p&gt;题目要求构造『恰好为 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;』，可以先不看这个限制，对于局面求出上界和下界，然后再看是不是上下界中全部（或大多数）都能取到，此时有两个路径：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;直接在某个上界 / 下界局面中通过若干步极小改动调整到恰好为 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;；&lt;/li&gt;
+&lt;li&gt;通过这一点优化 DP 状态（这样就可以大量压缩『可到达局面』这一信息）。见 &lt;a href=&#34;/20250510/#b---miriany-and-matchstick&#34;&gt;此&lt;/a&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;例题d---construct-the-binary-tree&#34;&gt;例题：D - Construct the Binary Tree&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/problemset/problem/1311/E&#34; class=&#34;uri&#34;&gt;https://codeforces.com/problemset/problem/1311/E&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;首先从找上下界的角度出发，发现链为上界，完全二叉树为下界。&lt;/p&gt;
+&lt;p&gt;那么只需先 check &lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt; 是否在该范围内；固定树最左侧的一条链，每次拿走右下角的一个叶子（这样就能&lt;strong&gt;维持完全二叉树性质&lt;/strong&gt;），如果可以插入到链底就 do so；否则由于这是个左边挂着单链的完全二叉树，可以证明你想取的任意深度都可以取到，暴力跳即可，且跳完后就构造完了。&lt;/p&gt;
+&lt;p&gt;复杂度 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(O(nd)\)&lt;/span&gt; 是每次取点时扫一遍完全二叉树找一个能让当前点深度 &lt;span class=&#34;math inline&#34;&gt;\(+1\)&lt;/span&gt; 的父节点。&lt;span class=&#34;math inline&#34;&gt;\(O(d)\)&lt;/span&gt; 的做法是慢慢把树变窄变高，一次还是只 &lt;span class=&#34;math inline&#34;&gt;\(+1\)&lt;/span&gt;，二者的弊端都在于没利用『上界为链』即链和完全二叉树的优美性质。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int T;
+    for (std::cin &amp;gt;&amp;gt; T; T--; ) &amp;#123;
+        int n, d;
+        std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; d;
+        std::vector&amp;lt;int&amp;gt; tag(n + 1), dep(n + 1), cnt(n + 1), fa(n + 1);
+        int L = 0, R = n * (n - 1) / 2;
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            L += std::__lg(i), dep[i] = std::__lg(i);
+            if (i * 2 &amp;lt;= n)
+                ++cnt[i], fa[i * 2] = i;
+            if (i * 2 + 1 &amp;lt;= n)
+                ++cnt[i], fa[i * 2 + 1] = i;
+        &amp;#125;
+        if (L &amp;lt;= d &amp;amp;&amp;amp; d &amp;lt;= R) &amp;#123;
+            std::cout &amp;lt;&amp;lt; &amp;quot;YES\n&amp;quot;;
+            int t = 1;
+            for (int i = 1; i &amp;lt;= n; i *= 2)
+                tag[i] = 1, t = i;
+            for (int i = n; i &amp;amp;&amp;amp; L != d; --i)
+                if (!tag[i]) &amp;#123;
+                    // printf(&amp;quot;i = %d\n&amp;quot;, i);
+                    if (L + (dep[t] + 1) - dep[i] &amp;lt;= d) &amp;#123;
+                        // printf(&amp;quot;L += %d - %d\n&amp;quot;, dep[t] + 1, dep[i]);
+                        L += (dep[t] + 1) - dep[i];
+                        --cnt[fa[i]], cnt[i] = 0, ++cnt[t];
+                        dep[i] = dep[t] + 1, fa[i] = t;
+                        t = i, tag[i] = 1;
+                    &amp;#125;
+                    else &amp;#123;
+                        for (int j = 1; j &amp;lt;= n; ++j)
+                            if (cnt[j] != 2 &amp;amp;&amp;amp; L + (dep[j] + 1) - dep[i] == d) &amp;#123;
+                                fa[i] = j, L = d;
+                                break;
+                            &amp;#125;
+                    &amp;#125;
+                &amp;#125;
+            for (int i = 2; i &amp;lt;= n; ++i)
+                std::cout &amp;lt;&amp;lt; fa[i] &amp;lt;&amp;lt; &amp;#39; &amp;#39;;
+            std::cout &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+        &amp;#125;
+        else &amp;#123;
+            // printf(&amp;quot;[%d, %d]\n&amp;quot;, L, R);
+            std::cout &amp;lt;&amp;lt; &amp;quot;NO\n&amp;quot;;
+        &amp;#125;
+    &amp;#125;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;type-iii增量法-规约法&#34;&gt;Type III：增量法 / 规约法&lt;/h2&gt;
+&lt;p&gt;增量法：类似数归，发现可以方便地从 &lt;span class=&#34;math inline&#34;&gt;\(n-k\)&lt;/span&gt; 扩展到 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;，考虑 &lt;span class=&#34;math inline&#34;&gt;\(n-k\)&lt;/span&gt; 给 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 带来的限制 / 性质，就可以类递推地做了。&lt;/p&gt;
+&lt;p&gt;规约法：发现抠掉一个好处理的 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 之后可以转化为规模为 &lt;span class=&#34;math inline&#34;&gt;\(n-k\)&lt;/span&gt; 的子问题，考虑 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 给 &lt;span class=&#34;math inline&#34;&gt;\(n - k\)&lt;/span&gt; 带来的限制，也可以类递推地做。&lt;/p&gt;
+&lt;p&gt;其实真差不多哈，并不能说是一正一反之类的，因为思维路径真没太差。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;例题经典题&#34;&gt;例题：经典题&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;给定大小为 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 的竞赛图，&lt;span class=&#34;math inline&#34;&gt;\(O(n^2)\)&lt;/span&gt; 内求出一条哈密顿路径。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;竞赛图：给完全图的每条边定向。&lt;/li&gt;
+&lt;li&gt;哈密顿路径：经过每个点恰好一次，对边无要求。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;假设已经知道规模为 &lt;span class=&#34;math inline&#34;&gt;\(n-1\)&lt;/span&gt; 的子问题的解法，塞一个新点进去，考察 &lt;span class=&#34;math inline&#34;&gt;\(P(n-1)\)&lt;/span&gt; 中的 &lt;span class=&#34;math inline&#34;&gt;\(\forall\, u\to v\)&lt;/span&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;若只存在 &lt;span class=&#34;math inline&#34;&gt;\(n\to u,n\to v\)&lt;/span&gt;：对于路径起点 &lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt; 也有 &lt;span class=&#34;math inline&#34;&gt;\(n\to s\)&lt;/span&gt;，把 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 添加到开头即可。&lt;/li&gt;
+&lt;li&gt;若只存在 &lt;span class=&#34;math inline&#34;&gt;\(u\to n,v\to n\)&lt;/span&gt;：对于路径终点 &lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt; 也有 &lt;span class=&#34;math inline&#34;&gt;\(t\to n\)&lt;/span&gt;，把 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 添加到末尾即可。&lt;/li&gt;
+&lt;li&gt;若只存在 &lt;span class=&#34;math inline&#34;&gt;\(n\to u,v\to n\)&lt;/span&gt;：对于路径起点 &lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt; 也有 &lt;span class=&#34;math inline&#34;&gt;\(n\to s\)&lt;/span&gt;，对于路径终点 &lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt; 也有 &lt;span class=&#34;math inline&#34;&gt;\(t\to n\)&lt;/span&gt;，爱加哪儿就加哪儿。&lt;/li&gt;
+&lt;li&gt;否则：存在 &lt;span class=&#34;math inline&#34;&gt;\(u\to n,n\to v\)&lt;/span&gt;，皆大欢喜，将 &lt;span class=&#34;math inline&#34;&gt;\(u\to v\)&lt;/span&gt; 改为 &lt;span class=&#34;math inline&#34;&gt;\(u\to n\to v\)&lt;/span&gt; 即可。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由此就可以解决问题。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;例题e---travelling-salesperson&#34;&gt;例题：E - Travelling Salesperson&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P6644&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P6644&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;注意本题为无向边！&lt;/p&gt;
+&lt;p&gt;相似地，对于 &lt;span class=&#34;math inline&#34;&gt;\(P(n-1)\)&lt;/span&gt;，假如存在 &lt;span class=&#34;math inline&#34;&gt;\(u\to v\)&lt;/span&gt;，欲加入 &lt;span class=&#34;math inline&#34;&gt;\(u\to n\to v\)&lt;/span&gt; 讨论以下几种情况：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;若 &lt;span class=&#34;math inline&#34;&gt;\(P(n - 1)\)&lt;/span&gt; 中只含有一种颜色的边：直接加入首 / 尾即可。&lt;/li&gt;
+&lt;li&gt;若存在 &lt;span class=&#34;math inline&#34;&gt;\(\color{red}{\to} u\color{red}{\to}v\color{red}{\to}\)&lt;/span&gt;、&lt;span class=&#34;math inline&#34;&gt;\(u\color{red}{\to} n\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(n\color{red}{\to} v\)&lt;/span&gt;（蓝色同理）：直接加入，皆大欢喜。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;其余情况，就是 &lt;span class=&#34;math inline&#34;&gt;\(\color{red}{\to} u\color{blue}{\to} v\color{blue}{\to}\)&lt;/span&gt; 的情况了。容易发现除了 &lt;span class=&#34;math inline&#34;&gt;\(u\color{blue}{\to} n\land n\color{red}{\to} v\)&lt;/span&gt; 之外的情况都可以直接将边加入。故接下来讨论该特例。&lt;/p&gt;
+&lt;p&gt;此时在 &lt;span class=&#34;math inline&#34;&gt;\((u,v)\)&lt;/span&gt; 处无法加入；尝试考虑相邻的点。由于在 &lt;span class=&#34;math inline&#34;&gt;\(u\color{blue}{\to} v\)&lt;/span&gt; 处切换颜色，易知 &lt;span class=&#34;math inline&#34;&gt;\(u\ne s\)&lt;/span&gt;，即 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 存在前驱（记为 &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;）。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;若存在 &lt;span class=&#34;math inline&#34;&gt;\(p\color{blue}{\to} i\)&lt;/span&gt;：连接 &lt;span class=&#34;math inline&#34;&gt;\(p,i,u\)&lt;/span&gt;，最终局面为 &lt;span class=&#34;math inline&#34;&gt;\(\color{red}{\to} p\color{blue}{\to} i\color{blue}{\to} u\color{blue}{\to} v\color{blue}{\to}\)&lt;/span&gt;，即将变换处提前两位。&lt;/li&gt;
+&lt;li&gt;否则：存在 &lt;span class=&#34;math inline&#34;&gt;\(p\color{red}{\to} i\)&lt;/span&gt;，仍然连接 &lt;span class=&#34;math inline&#34;&gt;\(p,i,u\)&lt;/span&gt;，最终局面为 &lt;span class=&#34;math inline&#34;&gt;\(\color{red}{\to} p\color{red}{\to} i\color{blue}{\to} u\color{blue}{\to} v\color{blue}{\to}\)&lt;/span&gt;，即将变换处提前一位。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由此可解决问题。可以发现并不存在所谓无解的情况 &lt;img src=&#34;/em/ll.gif&#34; /&gt; —— 倒不如说可以对所有点套用最后一种情况（和第一种）——就能够 &lt;span class=&#34;math inline&#34;&gt;\(O(n^2)\)&lt;/span&gt; 解决原问题了。&lt;/p&gt;
+&lt;details&gt;
+&lt;p&gt;loj 上过了但洛谷过不了 &lt;img src=&#34;/em/kt.gif&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    if (n == 1) &amp;#123;
+        std::cout &amp;lt;&amp;lt; &amp;quot;1\n1&amp;quot; &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+        return 0;
+    &amp;#125;
+    std::vector&amp;lt;std::vector&amp;lt;char&amp;gt; &amp;gt; g(n + 1, std::vector&amp;lt;char&amp;gt; (n + 1));
+    for (int i = 2; i &amp;lt;= n; ++i)
+        for (int j = 1; j &amp;lt; i; ++j)
+            std::cin &amp;gt;&amp;gt; g[i][j], g[j][i] = g[i][j];
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        std::vector&amp;lt;int&amp;gt; tag(n + 1);
+        std::list&amp;lt;int&amp;gt; p(&amp;#123; i, i == 1 ? 2 : 1 &amp;#125;);
+        tag[p.front()] = tag[p.back()] = 1;
+        bool flag = 1;
+        char R = g[p.front()][p.back()], B = ((R == &amp;#39;R&amp;#39;) ? &amp;#39;B&amp;#39; : &amp;#39;R&amp;#39;);
+        auto pos = --p.end();
+        for (int j = 1; j &amp;lt;= n; ++j)
+            if (!tag[j]) &amp;#123;
+                if (flag &amp;amp;&amp;amp; g[j][p.back()] == R)
+                    // printf(&amp;quot;%d: 30  &amp;quot;, j),
+                    p.push_back(j), ++pos;
+                else if (g[j][p.back()] == B)
+                    // printf(&amp;quot;%d: 33  &amp;quot;, j),
+                    p.push_back(j), flag = 0;
+                else &amp;#123;
+                    auto u = pos, v = std::next(pos);
+                    if (g[*u][j] == R &amp;amp;&amp;amp; g[j][*v] == R) &amp;#123;
+                        // printf(&amp;quot;%d: 38  &amp;quot;, j),
+                        p.insert(v, j), ++++pos;
+                        if (v == --p.end())
+                            flag = 1;
+                    &amp;#125;
+                    else if (g[*u][j] == R &amp;amp;&amp;amp; g[j][*v] == B)
+                        // printf(&amp;quot;%d: 41  &amp;quot;, j),
+                        p.insert(v, j), ++pos;
+                    else if (g[*u][j] == B &amp;amp;&amp;amp; g[j][*v] == B)
+                        // printf(&amp;quot;%d: 44  &amp;quot;, j),
+                        p.insert(v, j);
+                    else &amp;#123;
+                        auto pr(std::prev(u));
+                        if (g[*pr][j] == B)
+                            // printf(&amp;quot;%d: 49  &amp;quot;, j),
+                            p.insert(u, j), ----pos;
+                        else
+                            // printf(&amp;quot;%d: 52  &amp;quot;, j),
+                            p.insert(u, j), --pos;
+                    &amp;#125;
+                &amp;#125;
+                // for (auto j : p)
+                //     std::cout &amp;lt;&amp;lt; j &amp;lt;&amp;lt; &amp;#39; &amp;#39;;
+                // printf(&amp;quot; flag = %d\n&amp;quot;, flag);
+            &amp;#125;
+        std::cout &amp;lt;&amp;lt; n &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+        for (auto j : p)
+            std::cout &amp;lt;&amp;lt; j &amp;lt;&amp;lt; &amp;#39; &amp;#39;;
+        std::cout &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    &amp;#125;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;f---sergeys-problem&#34;&gt;F - Sergey’s problem&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/problemset/problem/1019/C&#34; class=&#34;uri&#34;&gt;https://codeforces.com/problemset/problem/1019/C&lt;/a&gt;&lt;/p&gt;
+</content>
+        <category term="构造" />
+        <category term="调整法" />
+        <updated>2025-05-18T06:43:30.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://xsc062.netlify.app/20231005/</id>
+        <title>构造</title>
+        <link rel="alternate" href="https://xsc062.netlify.app/20231005/"/>
+        <content type="html">&lt;p&gt;&lt;a href=&#34;https://vjudge.net/contest/585791&#34;&gt;构造杂题&lt;/a&gt;。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;a---errich-tac-toe-hard-version&#34;&gt;A - Errich-Tac-Toe (Hard Version)&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://vjudge.net/contest/585791#problem/A&#34; class=&#34;uri&#34;&gt;https://vjudge.net/contest/585791#problem/A&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;如果我们将地图按国际象棋式斜向黑白染色分组，规定黑组要么黑色要么无色，白组要么白色要么无色，那么这样是一定不会三连击的。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://pic.imgdb.cn/item/651e6652c458853aef280846.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;容易发现无色格子永远不会被更改，而在方式 A 中被更改的格子在方式 B 中一定不会被更改；相应地，在方式 A 中不被更改的格子在方式 B 中一定会被更改，故两种染色方式更改的格子数总和就是一开始非无色的格子数。所以根据抽屉原理，一定能找到一种染色方式，代价 &lt;span class=&#34;math inline&#34;&gt;\(\le \dfrac k2\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;但是我们要找到的，是代价 &lt;span class=&#34;math inline&#34;&gt;\(\le \dfrac k3\)&lt;/span&gt; 的方案呀？我们观察到我们上面的分组方式，直接让相邻两个不一样了，连二连击都做不到；所以我们要使我们的染色方式更廉价。&lt;/p&gt;
+&lt;p&gt;我们仍然斜向染色，但是分为三组：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://pic.imgdb.cn/item/651e691fc458853aef28c528.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;这样，因为刚才叙述过的原因，一定能找到一种染色方法，代价 &lt;span class=&#34;math inline&#34;&gt;\(\le \dfrac k3\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;枚举三种方式，取代价最小的一种即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 305;
+char a[maxn][maxn];
+int col[maxn][maxn];
+int T, n, res, id, typ;
+int min(int x, int y) &amp;#123; return x &amp;lt; y ? x : y; &amp;#125;
+int func(int x, int y) &amp;#123;
+    int res = 0;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        for (int j = 1; j &amp;lt;= n; ++j) &amp;#123;
+            if (col[i][j] == y)
+                res += (a[i][j] == &amp;#39;X&amp;#39;);
+            else if (col[i][j] != x)
+                res += (a[i][j] == &amp;#39;O&amp;#39;);
+        &amp;#125;
+    &amp;#125;
+    return res;
+&amp;#125;
+int main() &amp;#123;
+    scanf(&amp;quot;%d&amp;quot;, &amp;amp;T);
+    while (T--) &amp;#123;
+        scanf(&amp;quot;%d&amp;quot;, &amp;amp;n);
+        int cnt = 0;
+        for (int i = 1; i &amp;lt;= n; ++i)
+            scanf(&amp;quot;%s&amp;quot;, a[i] + 1);
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            for (int j = 1; j &amp;lt;= n; ++j)
+                cnt += (a[i][j] != &amp;#39;.&amp;#39;);
+            for (int j = 1; j &amp;lt;= i; ++j)
+                col[j][i - j + 1] = (i - 1) % 3 + 1;
+        &amp;#125;
+        for (int i = 2; i &amp;lt;= n; ++i) &amp;#123;
+            for (int j = 1; j &amp;lt;= n - i + 1; ++j)
+                col[j + i - 1][n - j + 1] = (n + i - 2) % 3 + 1;
+        &amp;#125;
+        res = func(1, 2), id = 1, typ = 2;
+        if (func(1, 3) &amp;lt; res)
+            res = func(1, 3), id = 1, typ = 3;
+        if (func(2, 1) &amp;lt; res)
+            res = func(2, 1), id = 2, typ = 1;
+        if (func(2, 3) &amp;lt; res)
+            res = func(2, 3), id = 2, typ = 3;
+        if (func(3, 1) &amp;lt; res)
+            res = func(3, 1), id = 3, typ = 1;
+        if (func(3, 2) &amp;lt; res)
+            res = func(3, 2), id = 3, typ = 2;
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            for (int j = 1; j &amp;lt;= n; ++j) &amp;#123;
+                if (col[i][j] == typ) &amp;#123;
+                    if (a[i][j] == &amp;#39;X&amp;#39;)
+                        a[i][j] = &amp;#39;O&amp;#39;;
+                &amp;#125;
+                else if (col[i][j] != id) &amp;#123;
+                    if (a[i][j] == &amp;#39;O&amp;#39;)
+                        a[i][j] = &amp;#39;X&amp;#39;;
+                &amp;#125;
+            &amp;#125;
+        &amp;#125;
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            for (int j = 1; j &amp;lt;= n; ++j)
+                putchar(a[i][j]);
+            putchar(&amp;#39;\n&amp;#39;);
+        &amp;#125;
+    &amp;#125;
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;p&gt;抽屉原理是构造中经常用到的手段，后面我们也会遇到运用了抽屉原理的更多题目。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;b---mine-sweeper-ii&#34;&gt;B - Mine Sweeper II&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://vjudge.net/contest/585791#problem/B&#34; class=&#34;uri&#34;&gt;https://vjudge.net/contest/585791#problem/B&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;观察到答案必须 &lt;span class=&#34;math inline&#34;&gt;\(\le \dfrac {n\times m}2\)&lt;/span&gt;，根据在上一道题目得到的经验，考虑找到两种地位相等、并完全相反的方案。&lt;/p&gt;
+&lt;p&gt;我们知道，把 B 变成 A 一定可以满足条件；从「完全相反」出发，考虑把所有雷变成空地、所有空地变成雷。&lt;/p&gt;
+&lt;p&gt;将空地上的数字视为由空地向周围八格的雷连边，可以连到的边的数量。将地图完全翻转后，边除了起点和终点翻转之外，&lt;strong&gt;没有任何变化&lt;/strong&gt;。所以，数字之和不变。&lt;/p&gt;
+&lt;p&gt;由此我们就得到了分两组的方案，由抽屉原理，必有一组方案的代价 &lt;span class=&#34;math inline&#34;&gt;\(\le \dfrac {n\times m}2\)&lt;/span&gt;，取较小者即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 1e3 + 5;
+int n, m, res1, res2;
+char a[maxn][maxn], b[maxn][maxn];
+int main() &amp;#123;
+    scanf(&amp;quot;%d %d&amp;quot;, &amp;amp;n, &amp;amp;m);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        scanf(&amp;quot;%s&amp;quot;, a[i] + 1);
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        scanf(&amp;quot;%s&amp;quot;, b[i] + 1);
+        for (int j = 1; j &amp;lt;= m; ++j) &amp;#123;
+            res1 += (a[i][j] != b[i][j]);
+            res2 += (a[i][j] == b[i][j]);
+        &amp;#125;
+    &amp;#125;
+    if (res1 &amp;lt; res2) &amp;#123;
+        for (int i = 1; i &amp;lt;= n; ++i)
+            puts(a[i] + 1);
+    &amp;#125;
+    else &amp;#123;
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            for (int j = 1; j &amp;lt;= m; ++j) &amp;#123;
+                if (a[i][j] == &amp;#39;.&amp;#39;)
+                    putchar(&amp;#39;X&amp;#39;);
+                else putchar(&amp;#39;.&amp;#39;);
+            &amp;#125;
+            putchar(&amp;#39;\n&amp;#39;);
+        &amp;#125;
+    &amp;#125;
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;c---ehabs-last-corollary&#34;&gt;C - Ehab’s Last Corollary&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://vjudge.net/contest/585791#problem/C&#34; class=&#34;uri&#34;&gt;https://vjudge.net/contest/585791#problem/C&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;我们尝试证明出题人的猜想……&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;如果整个图上没有环，就整个一棵树&lt;/p&gt;
+树呢，是一个二分图对不对，然后抽屉原理，我们看两部节点中比较大的那一坨，它的大小一定是 &lt;span class=&#34;math inline&#34;&gt;\(\ge \dfrac n2\)&lt;/span&gt; 又 &lt;span class=&#34;math inline&#34;&gt;\(\ge \dfrac k2\)&lt;/span&gt; 的，直接输出就好了。&lt;/li&gt;
+&lt;li&gt;否则，对于一个环，如果它的点数小于等于 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;，那我们直接将它作为第二个问题的答案输出。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;否则，我们在图的最小环上隔一个点选一个点，一定能选出 &lt;span class=&#34;math inline&#34;&gt;\(\left\lfloor\dfrac k2\right\rfloor\)&lt;/span&gt; 个相互独立的点。你说为什么它们之间没有直接连边呢？因为我们是在一个比 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 大的最小环上选的，要是它们之间有直接连边，那就会又构成一个更小的环了。&lt;/p&gt;
+&lt;p&gt;所以我们只需要找到一个最小的环然后按上述操作得到答案…… 然而找最小环这一点本身不太现实……&lt;/p&gt;
+&lt;p&gt;这个时候我们怎么办呢？&lt;/p&gt;
+&lt;p&gt;我们用一点神奇科技。考虑图的 DFS 树。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果有返祖边 &lt;span class=&#34;math inline&#34;&gt;\((v, u)\)&lt;/span&gt;，且深度 &lt;span class=&#34;math inline&#34;&gt;\(d_v-d_u&amp;lt; k\)&lt;/span&gt;，那么 &lt;span class=&#34;math inline&#34;&gt;\(u\to v\)&lt;/span&gt; 在树上的简单路径和返祖边 &lt;span class=&#34;math inline&#34;&gt;\((v, u)\)&lt;/span&gt; 共同构成一个长度不超过 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 的环，直接输出。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;否则，因为 &lt;span class=&#34;math inline&#34;&gt;\(d_v-d_u\ge k\)&lt;/span&gt;，有 &lt;span class=&#34;math inline&#34;&gt;\(d_v\ge k\)&lt;/span&gt;，且对于任意 &lt;span class=&#34;math inline&#34;&gt;\(d_y-d_x&amp;lt;k\)&lt;/span&gt;，返祖边 &lt;span class=&#34;math inline&#34;&gt;\((y,x)\)&lt;/span&gt; 不存在。&lt;/p&gt;
+&lt;p&gt;我们仍然考虑上面提到的隔一个取一个的方法。从任意 &lt;span class=&#34;math inline&#34;&gt;\(d_v\ge k\)&lt;/span&gt; 开始取点，分别取 &lt;span class=&#34;math inline&#34;&gt;\(v\)&lt;/span&gt; 的 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt; 代父辈（即自身），&lt;span class=&#34;math inline&#34;&gt;\(2\)&lt;/span&gt; 代父辈（即爷爷），&lt;span class=&#34;math inline&#34;&gt;\(4\)&lt;/span&gt; 代父辈……&lt;/p&gt;
+&lt;p&gt;为什么这么取就不会出 bug 呢？因为我们上面提到的「对于任意 &lt;span class=&#34;math inline&#34;&gt;\(d_y-d_x&amp;lt;k\)&lt;/span&gt;，返祖边 &lt;span class=&#34;math inline&#34;&gt;\((y,x)\)&lt;/span&gt; 不存在」，所以不会有杂边干扰。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;时间复杂度 &lt;span class=&#34;math inline&#34;&gt;\(O(n + m)\)&lt;/span&gt;。只能说真是妙啊。jly 赛高！&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 1e5 + 5;
+bool vis[maxn];
+int n, m, k, x, y;
+int f[maxn], dep[maxn];
+std::vector&amp;lt;int&amp;gt; g[maxn];
+int col[maxn], cnt[5];
+void color(int x, int fa, int now) &amp;#123;
+    col[x] = now, ++cnt[now];
+    for (auto i : g[x]) &amp;#123;
+        if (i == fa) continue;
+        color(i, x, 3 - now);
+    &amp;#125;
+    return;
+&amp;#125;
+void DFS(int x, int fa) &amp;#123;
+    vis[x] = 1;
+    for (auto i : g[x]) &amp;#123;
+        if (i == fa) continue;
+        if (vis[i]) &amp;#123;
+            if (dep[i] &amp;lt; dep[x] &amp;amp;&amp;amp;
+                dep[x] - dep[i] &amp;lt; k) &amp;#123;
+                print(2, &amp;#39;\n&amp;#39;);
+                int p = x, cnt = 1;
+                while (p != i) ++cnt, p = f[p];
+                print(cnt, &amp;#39;\n&amp;#39;), p = x;
+                while (p != i) print(p, &amp;#39; &amp;#39;), p = f[p];
+                print(i, &amp;#39;\n&amp;#39;), exit(0);
+            &amp;#125;
+            continue;
+        &amp;#125;
+        f[i] = x;
+        dep[i] = dep[x] + 1;
+        DFS(i, x);
+    &amp;#125;
+    return;
+&amp;#125;
+void add(int x, int y) &amp;#123;
+    g[x].push_back(y);
+    return;
+&amp;#125;
+int main() &amp;#123;
+    read(n), read(m), read(k);
+    for (int i = 1; i &amp;lt;= m; ++i) &amp;#123;
+        read(x), read(y);
+        add(x, y), add(y, x);
+    &amp;#125;
+    if (m == n - 1) &amp;#123;
+        print(1, &amp;#39;\n&amp;#39;);
+        color(1, -1, 1);
+        k = (k + 1) / 2;
+        x = cnt[1] &amp;gt; cnt[2] ? 1 : 2;
+        for (int i = 1; i &amp;lt;= n &amp;amp;&amp;amp; k; ++i) &amp;#123;
+            if (col[i] == x)
+                print(i, &amp;#39; &amp;#39;), --k;
+        &amp;#125;
+        putchar(&amp;#39;\n&amp;#39;);
+        return 0;
+    &amp;#125;
+    dep[1] = 1, DFS(1, -1);
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        if (dep[i] &amp;gt;= k) &amp;#123;
+            print(1, &amp;#39;\n&amp;#39;);
+            x = i, k = (k + 1) / 2;
+            while (k--)
+                print(x, &amp;#39; &amp;#39;), x = f[f[x]];
+            putchar(&amp;#39;\n&amp;#39;);
+            break;
+        &amp;#125;
+    &amp;#125;
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;d---景点划分&#34;&gt;D - 景点划分&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://vjudge.net/contest/585791#problem/D&#34; class=&#34;uri&#34;&gt;https://vjudge.net/contest/585791#problem/D&lt;/a&gt;&lt;/p&gt;
+&lt;details&gt;
+&lt;p&gt;&lt;summary&gt;🤡 前言&lt;/summary&gt;&lt;/p&gt;
+&lt;p&gt;你打开了题目。你想，不就是从图里抠两个连通块出来吗，这也能进 IOI？&lt;/p&gt;
+&lt;p&gt;你开始打代码。你突然发现不对劲。你抠掉了一个大小为 &lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt; 的连通块，然后发现剩下的部分裂成了很多个块，其中根本找不到一个大小 &lt;span class=&#34;math inline&#34;&gt;\(\ge b\)&lt;/span&gt; 的块。&lt;/p&gt;
+&lt;p&gt;你发现，事情没有这么简单。&lt;/p&gt;
+&lt;p&gt;这是你吗？不，这不是你，这是我，小丑 lym 🤡&lt;/p&gt;
+&lt;/details&gt;
+&lt;p&gt;不妨设 &lt;span class=&#34;math inline&#34;&gt;\(a\le b\le c\)&lt;/span&gt;，则由抽屉原理，&lt;span class=&#34;math inline&#34;&gt;\(a\le \dfrac n3\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;我们从最特殊的情况开始思考。假如图是树，那么答案怎么求呢？&lt;/p&gt;
+&lt;p&gt;对于任意一条边，在其左右两边的连通块中，根据抽屉原理，较大者的大小必定 &lt;span class=&#34;math inline&#34;&gt;\(\ge \dfrac{n}{2}\)&lt;/span&gt;，根据重心的定义，重心必然属于较大连通块。&lt;/p&gt;
+&lt;p&gt;后面鸽了。总之先放个代码在这里。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 1e5 + 5;
+int org[5];
+bool book[maxn];
+int solFlag, sumFa, faP;
+int siz[maxn], col[maxn];
+int n, m, a, b, c, x, y, P;
+bool vis[maxn], legSon[maxn];
+std::vector&amp;lt;int&amp;gt; w[maxn], g[maxn];
+void DFS(int x, int fa) &amp;#123;
+    bool flag = 1;
+    vis[x] = 1, siz[x] = 1;
+    for (auto i : w[x]) &amp;#123;
+        if (vis[i]) continue;
+        DFS(i, x);
+        if (siz[i] &amp;gt; n / 2) flag = 0;
+        siz[x] += siz[i];
+        g[x].push_back(i);
+    &amp;#125;
+    if (n - siz[x] &amp;gt; n / 2) flag = 0;
+    if (flag &amp;amp;&amp;amp; !P) &amp;#123;
+        P = x, faP = fa;
+        if (n - siz[x] &amp;gt;= a)
+            solFlag = fa;
+        else &amp;#123;
+            for (auto i : g[x]) &amp;#123;
+                if (siz[i] &amp;gt;= a) &amp;#123;
+                    solFlag = i;
+                    break;
+                &amp;#125;
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    return;
+&amp;#125;
+void fillA(int x) &amp;#123;
+    if (a == 0) return;
+    col[x] = 1, --a;
+    for (auto i : g[x]) fillA(i);
+    return;
+&amp;#125;
+void fillB(int x) &amp;#123;
+    if (b == 0) return;
+    col[x] = 2, --b;
+    for (auto i : g[x]) &amp;#123;
+        if (x == P &amp;amp;&amp;amp; i == solFlag)
+            continue;
+        fillB(i);
+    &amp;#125;
+    return;
+&amp;#125;
+void fillC(void) &amp;#123;
+    for (int i = 1; i &amp;lt;= n; ++i)
+        if (!col[i]) col[i] = 3;
+    return;
+&amp;#125;
+void DFS1(int x) &amp;#123;
+    if (!a || x == P) return;
+    col[x] = 1, --a;
+    for (auto i : g[x]) DFS1(i);
+    return;
+&amp;#125;
+void DFS2(int x) &amp;#123;
+    if (b == 0) return;
+    if (!col[x]) col[x] = 2, --b;
+    for (auto i : g[x]) DFS2(i);
+    return;
+&amp;#125;
+void func(void) &amp;#123;
+    int pos[5] = &amp;#123;&amp;#125;;
+    if (a &amp;gt;= b &amp;amp;&amp;amp; b &amp;gt;= c) // cba
+        org[1] = 3, org[2] = 2, org[3] = 1;
+    else if (a &amp;gt;= b &amp;amp;&amp;amp; a &amp;gt;= c) // bca
+        org[1] = 2, org[2] = 3, org[3] = 1;
+    else if (a &amp;gt;= b) // bac
+        org[1] = 2, org[2] = 1, org[3] = 3;
+    else if (c &amp;gt;= b) // abc
+        org[1] = 1, org[2] = 2, org[3] = 3;
+    else if (c &amp;gt;= a) // acb
+        org[1] = 1, org[2] = 3, org[3] = 2;
+    else // cab
+        org[1] = 3, org[2] = 1, org[3] = 2;
+    pos[1] = a, pos[2] = b, pos[3] = c;
+    std::sort(pos + 1, pos + 4);
+    a = pos[1], b = pos[2], c = pos[3];
+    return;
+&amp;#125;
+void ADD(int x) &amp;#123; // 判断儿子是否合法 
+    if (x == P)
+        return;
+    book[x] = 1;
+    for (auto i : w[x]) &amp;#123;
+        if (i == P &amp;amp;&amp;amp; x != faP) legSon[x] = 1;
+        if (!book[i]) ADD(i);
+    &amp;#125;
+    return;
+&amp;#125;
+void DFS3(int x) &amp;#123; // Sub2 染头上 
+    if (!a || x == P) return;
+    col[x] = 1, --a;
+    for (auto i : g[x]) DFS3(i);
+    return;
+&amp;#125;
+void DFS4(int x) &amp;#123; // Sub2 染儿子
+    if (a == 0) return;
+    col[x] = 1, --a;
+    for (auto i : g[x]) DFS4(i);
+    return;
+&amp;#125;
+void DFS5(int x) &amp;#123; // Sub2 染 B 色
+    if (b == 0) return;
+    col[x] = 2, --b;
+    for (auto i : g[x]) &amp;#123;
+        // 如果子树加入了 A
+        // 那么起码子树的根是会被染的。 
+        if (col[i]) continue;
+        DFS5(i);
+    &amp;#125;
+    return;
+&amp;#125;
+int main() &amp;#123;
+    read(n), read(m);
+    read(a), read(b), read(c), func();
+    while (m--) &amp;#123;
+        read(x), read(y), ++x, ++y;
+        w[x].push_back(y), w[y].push_back(x);
+    &amp;#125;
+    DFS(1, -1);
+    if (solFlag) &amp;#123;
+        if (solFlag == faP) DFS1(1), DFS2(P);
+        else fillA(solFlag), fillB(1);
+        fillC();
+    &amp;#125;
+    else &amp;#123;
+        ADD(1), sumFa = n - siz[P];
+        auto now = g[P].begin(), ex = now;
+        while (sumFa &amp;lt; a) &amp;#123;
+            while (now != g[P].end() &amp;amp;&amp;amp; !legSon[*now]) ++now;
+            if (now == g[P].end()) goto noSol;
+            sumFa += siz[*(ex = now++)];
+        &amp;#125;
+        auto pos = g[P].begin();
+        DFS3(1);
+        for (;; ++pos) &amp;#123;
+            if (!legSon[*pos]) continue;
+            DFS4(*pos);
+            if (pos == ex) break;
+        &amp;#125;
+        DFS5(P), fillC();
+    &amp;#125;
+    noSol: ;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+    #ifdef ONLINE_JUDGE
+        print(org[col[i]], &amp;#39; &amp;#39;);
+    #else
+        print(col[i], &amp;#39; &amp;#39;);
+    #endif
+    &amp;#125;
+    putchar(&amp;#39;\n&amp;#39;);
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062
+int main() &amp;#123;
+    XSC062::main();
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;f---strange-housing&#34;&gt;F - Strange Housing&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://vjudge.net/contest/585791#problem/F&#34; class=&#34;uri&#34;&gt;https://vjudge.net/contest/585791#problem/F&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;是难得一见的小清新题目（经历过前两题的洗礼之后）。&lt;/p&gt;
+&lt;p&gt;我们从原图中抽一个生成树出来，比如 DFS 树。&lt;/p&gt;
+&lt;p&gt;然后我们又知道树是连通二分图，所以我们按照二分图来染色就可以了。&lt;/p&gt;
+&lt;p&gt;但这么做有个 bug，就是树里有返祖边，这就可能会导致二分图的一个部分里出现在原图中相连的点。&lt;/p&gt;
+&lt;p&gt;所以我们可以换一种思考方式，把二分图的染色方法带到原图里。&lt;/p&gt;
+&lt;p&gt;一个点当且仅当周围有染色点或自身为染色点时是可达的。&lt;/p&gt;
+&lt;p&gt;对于一个点，我们先检查其周围一圈有没有染色点；如果有就不能染色。在 DFS 遍历的时候直接染色即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+const int maxn = 3e5 + 5;
+int col[maxn];
+bool vis[maxn];
+int T, n, m, x, y, cnt;
+std::vector&amp;lt;int&amp;gt; g[maxn];
+void DFS(int x) &amp;#123;
+    vis[x] = 1;
+    for (auto i : g[x]) &amp;#123;
+        if (col[i] == 1) &amp;#123;
+            col[x] = 0;
+            break;
+        &amp;#125;
+    &amp;#125;
+    if (col[x] == -1)
+        ++cnt, col[x] = 1;
+    for (auto i : g[x]) &amp;#123;
+        if (vis[i]) continue;
+        if (col[x] == 1) col[i] = 0;
+        DFS(i);
+    &amp;#125;
+    return;
+&amp;#125;
+void add(int x, int y) &amp;#123;
+    g[x].push_back(y);
+    return;
+&amp;#125;
+int main() &amp;#123;
+    read(T);
+    while (T--) &amp;#123;
+        read(n), read(m);
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            g[i].clear();
+            g[i].shrink_to_fit();
+            vis[i] = 0, col[i] = -1;
+        &amp;#125;
+        while (m--) &amp;#123;
+            read(x), read(y);
+            add(x, y), add(y, x);
+        &amp;#125;
+        cnt = 0, DFS(1);
+        for (int i = 2; i &amp;lt;= n; ++i) &amp;#123;
+            if (!vis[i]) &amp;#123;
+                puts(&amp;quot;NO&amp;quot;);
+                goto noSol;
+            &amp;#125;
+        &amp;#125;
+        puts(&amp;quot;YES&amp;quot;), print(cnt, &amp;#39;\n&amp;#39;);
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            if (col[i] == 1)
+                print(i, &amp;#39; &amp;#39;);
+        &amp;#125;
+        putchar(&amp;#39;\n&amp;#39;);
+        noSol: ;
+    &amp;#125;
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+</content>
+        <category term="构造" />
+        <updated>2023-10-05T08:42:43.000Z</updated>
+    </entry>
+</feed>
