@@ -54,8 +54,7 @@ function SetActiveItem() {
 	}
 }
 // Details 优化 1：鼠标悬浮优化
-//	这里因为理论上来说鼠标悬浮在 <summary> 上时才应该有
-//	cursor: pointer，但是大部分 details 都没有 summary
+//	这里因为理论上来说鼠标悬浮在 <summary> 上时才应该有 cursor: pointer，但是大部分 details 都没有 summary
 //	故自动添加
 function setDetailsSummary() {
 	$("summary>p").parent().text(function(r, o) {

@@ -11,3 +11,16 @@ function setHitokoto() {
             $('#hitokoto-from').css('display', '').text('来自「' + data.from + '」');
     });
 }
+
+// 随机英语小作文
+// <p><a id="rainbow" href=''>🌈 获取中...</a></p>
+function setRainbow() {
+    fetch('https://api.eatrice.top')
+    .then(response => response.json())
+    .then(data => {
+        var rainbow = document.getElementById('rainbow');
+        rainbow.innerHTML = data.Content;
+        rainbow.href = "https://rainbow.eatrice.top/?ID=" + data.ID;
+    })
+    .catch(console.error);
+}

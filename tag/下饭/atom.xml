@@ -24,8 +24,8 @@
     <category term="树状数组" />
     <category term="区间 DP" />
     <category term="构造" />
-    <category term="Tarjan" />
     <category term="数据结构" />
+    <category term="Tarjan" />
     <category term="下饭" />
     <category term="LCA" />
     <category term="倍增" />
@@ -73,15 +73,14 @@
     <category term="闵可夫斯基和" />
     <category term="slope trick" />
     <category term="四边形不等式" />
-    <category term="暴力" />
     <category term="状压 DP" />
     <category term="组合数学" />
     <category term="支配对" />
     <category term="DDP" />
-    <category term="平衡树" />
     <category term="容斥" />
-    <category term="猫树" />
     <category term="Kruskal 重构树" />
+    <category term="高精度" />
+    <category term="最短路" />
     <category term="李超线段树" />
     <entry>
         <id>https://xsc062.netlify.app/20241027/</id>
@@ -170,6 +169,11 @@
 扩：维护值域内恰好被区间覆盖 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 次的点的信息：线段树维护节点内前 &lt;span class=&#34;math inline&#34;&gt;\(k+1\)&lt;/span&gt; 小值的信息，则 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 一定出现在前 &lt;span class=&#34;math inline&#34;&gt;\(k+1\)&lt;/span&gt; 小值中。&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;线段树维护函数：如果对于任意区间，都能定义一个定义域为该区间的函数，可以线段树维护该函数。维护的总点数是 &lt;span class=&#34;math inline&#34;&gt;\(n\log n\)&lt;/span&gt; 的。&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;/details&gt;
+&lt;details&gt;
+&lt;p&gt;&lt;summary&gt;&lt;strong&gt;维护 &lt;span class=&#34;math inline&#34;&gt;\(\sum\limits_{i\in[L,R]}\sum\limits_{j\in[i,R]}\min\{a_{i\sim j}\}\)&lt;/span&gt;：&lt;/strong&gt;&lt;/summary&gt;&lt;/p&gt;
+&lt;p&gt;考虑单调栈，则只需做 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt; 次区间修改。&lt;/p&gt;
+&lt;p&gt;goto &lt;a href=&#34;/20250911/#f---yunlis-subarray-queries-extreme-version&#34;&gt;CF2009G3&lt;/a&gt;。&lt;/p&gt;
 &lt;/details&gt;
 &lt;hr /&gt;
 &lt;h2 id=&#34;数学&#34;&gt;数学&lt;/h2&gt;
@@ -292,7 +296,8 @@
 &lt;li&gt;&lt;p&gt;静态问题：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;不要求方向且能预处理：树上差分。&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;要求方向且能预处理：倍增、树剖（多一个 log 但跑不满；综合来看慢一些）。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;要求方向且能预处理：倍增、树剖（多一个 log 但跑不满；综合来看慢一些）。&lt;/p&gt;
+&lt;p&gt;注意这里的倍增如果要维护信息，一定是一个左闭右开的形式，可以少很多麻烦。&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;离线、要求方向且不能预处理：&lt;/p&gt;
 &lt;p&gt;把询问挂在 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 和 LCA 上，第一遍 DFS 把 &lt;span class=&#34;math inline&#34;&gt;\(u\to\)&lt;/span&gt; LCA 的答案计算出来（需要可合并信息），第二遍 DFS 利用回溯把 LCA &lt;span class=&#34;math inline&#34;&gt;\(\to v\)&lt;/span&gt; 的答案计算出来。&lt;/p&gt;
 goto &lt;a href=&#34;/20250809/#a---记忆&#34;&gt;solu to &lt;em&gt;记忆&lt;/em&gt;&lt;/a&gt;。&lt;/li&gt;
@@ -395,8 +400,6 @@ goto &lt;a href=&#34;/20230716-1/&#34;&gt;solu to &lt;em&gt;匹配数&lt;/em&gt;
 &lt;p&gt;Goto &lt;a href=&#34;https://www.luogu.com.cn/article/ugg047a7&#34;&gt;NOI2024 D1T1&lt;/a&gt;，&lt;a href=&#34;/20221010/&#34;&gt;solu to &lt;em&gt;博弈&lt;/em&gt;&lt;/a&gt;。&lt;/p&gt;
 &lt;/details&gt;
 &lt;hr /&gt;
-&lt;h2 id=&#34;二分&#34;&gt;二分&lt;/h2&gt;
-&lt;hr /&gt;
 &lt;h2 id=&#34;关于最值&#34;&gt;关于最值&lt;/h2&gt;
 &lt;h3 id=&#34;关于冒泡排序&#34;&gt;关于冒泡排序&lt;/h3&gt;
 &lt;p&gt;&lt;em&gt;『冒泡排序有一种被出烂但是每次碰到我都不会的美感。』——wosile&lt;/em&gt;&lt;/p&gt;
@@ -428,14 +431,25 @@ goto &lt;a href=&#34;/20250510/#c---1-loop-bubble-sort&#34;&gt;1 Loop Bubble Sor
 &lt;p&gt;随机序列的笛卡尔树深度为 &lt;span class=&#34;math inline&#34;&gt;\(\log\)&lt;/span&gt;；令块长为 &lt;span class=&#34;math inline&#34;&gt;\(B=\sqrt {\log n}\)&lt;/span&gt;，维护每个点跳 &lt;span class=&#34;math inline&#34;&gt;\(B\)&lt;/span&gt; 步的答案；那么就能 &lt;span class=&#34;math inline&#34;&gt;\(O(\sqrt {\log n})\)&lt;/span&gt; 跳悬线。&lt;/p&gt;
 &lt;/details&gt;
 &lt;details&gt;
-&lt;p&gt;&lt;summary&gt;&lt;strong&gt;多组元素两两配对，要求同一组间不成对：&lt;/strong&gt;&lt;/summary&gt;&lt;/p&gt;
-&lt;p&gt;设元素总数为 &lt;span class=&#34;math inline&#34;&gt;\(2n\)&lt;/span&gt;，则有解当且仅当最大的一组元素数不超过 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;。&lt;/p&gt;
-&lt;p&gt;若需要输出一种方案，可以看作有两个长为 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;、上下并行放置的盒子，现欲用若干元素充满盒子，使得上下对应位置元素不同组。一种简单的构造方式是，把上下两个盒子拼在一起，按任意顺序把所有组连续放入，然后从拼接处断开，上下对应即为一对，容易发现上下元素一定不同组。&lt;/p&gt;
+&lt;p&gt;&lt;summary&gt;&lt;strong&gt;摩尔投票：&lt;/strong&gt;&lt;/summary&gt;&lt;/p&gt;
+&lt;p&gt;设元素总数为 &lt;span class=&#34;math inline&#34;&gt;\(k\cdot n\)&lt;/span&gt;，则『将元素划分为 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 个 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 元组，满足每个 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 元组中不存在相同元素』等价于『出现次数最多的元素出现次数不超过 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;』。&lt;/p&gt;
+&lt;p&gt;思路是让出现次数最多的元素（动态的）和其他元素抵消。&lt;/p&gt;
+&lt;p&gt;应用：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(k=2\)&lt;/span&gt;，则这样的元素最多只有一个。&lt;/p&gt;
+goto &lt;a href=&#34;/20250907/#d---non-ancestor-matching&#34;&gt;ARC205D&lt;/a&gt;，&lt;a href=&#34;/20250717/#a---perfect-matching-on-a-tree&#34;&gt;ABC362F&lt;/a&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;求众数。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/details&gt;
 &lt;details&gt;
 &lt;p&gt;&lt;summary&gt;&lt;strong&gt;撤销思想：&lt;/strong&gt;&lt;/summary&gt;&lt;/p&gt;
 &lt;p&gt;当题目给出『按一定的操作序列，将整块逐步分解为小段，问至晚哪一步后满足条件（需要单调性）』，可以考虑从最后的局面开始考虑，逐步『合并』，并 check 最早合并到哪一步时满足条件。&lt;/p&gt;
 &lt;p&gt;Goto &lt;a href=&#34;/20220808/&#34;&gt;solu to &lt;em&gt;CF567D&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/details&gt;
+&lt;details&gt;
+&lt;p&gt;&lt;summary&gt;&lt;strong&gt;『连续数子段』的转化：&lt;/strong&gt;&lt;/summary&gt;&lt;/p&gt;
+&lt;p&gt;对于 &lt;span class=&#34;math inline&#34;&gt;\(i\in (l,r],\)&lt;/span&gt;a_i=a_{i-1}+1$ 式的『连续数子段』，令 &lt;span class=&#34;math inline&#34;&gt;\(a_i\gets a_i-i\)&lt;/span&gt;，则全部变为同一个数。&lt;/p&gt;
+&lt;p&gt;goto &lt;a href=&#34;/20250911/#f---yunlis-subarray-queries-extreme-version&#34;&gt;CF2009G3&lt;/a&gt;。&lt;/p&gt;
 &lt;/details&gt;
 &lt;details&gt;
 &lt;p&gt;&lt;summary&gt;&lt;strong&gt;双栈模拟双端队列：&lt;/strong&gt;&lt;/summary&gt;&lt;/p&gt;

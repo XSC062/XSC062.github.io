@@ -271,20 +271,20 @@ class LocalSearch {
 
             let resultItem = '';
 
-            url = new URL(url, location.origin);
-            url.searchParams.append('highlight', keywords.join(' '));
+            let absoluteURL = new URL(url, location.origin);
+            absoluteURL.searchParams.append('highlight', keywords.join(' '));
 
             if (slicesOfTitle.length !== 0) {
-                resultItem += `<div><a href="${url.href}" class="search-result-title">${this.highlightKeyword(title, slicesOfTitle[0])}`;
+                resultItem += `<a href="${absoluteURL.href}"><div class="search-result-item"><span class="search-result-title">${this.highlightKeyword(title, slicesOfTitle[0])}</span><span class="search-result-url">${url}</span>`;
             } else {
-                resultItem += `<div><a href="${url.href}" class="search-result-title">${title}`;
+                resultItem += `<a href="${absoluteURL.href}"><div class="search-result-item"><span class="search-result-title">${title}</span><span class="search-result-url">${url}</span>`;
             }
 
             slicesOfContent.forEach(slice => {
                 resultItem += `<p class="search-result">${this.highlightKeyword(content, slice)}...</p>`;
             });
+            resultItem += '</div></a>';
 
-            resultItem += '</a></div>';
             resultItems.push({
                 item: resultItem,
                 id  : resultItems.length,
@@ -327,7 +327,7 @@ class LocalSearch {
         for (const { position, length } of slice.hits) {
             const text = document.createTextNode(val.substring(index, position));
             index = position + length;
-            const mark = document.createElement('mark');
+            const mark = document.createElement('span');
             mark.className = className;
             mark.appendChild(document.createTextNode(val.substr(position, length)));
             children.push(text, mark);

@@ -2,7 +2,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const bg = document.getElementById('search-bg')
-    const modal = document.getElementById('search-box');
     const input = document.getElementById('search-input');
     const results = document.getElementById('search-results');
     const localSearch = new LocalSearch({
@@ -25,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     input.addEventListener('input', () => {
         const query = input.value.split(" ");
         const res = localSearch.getResultItems(query);
+        res.reverse();
         results.innerHTML = '';
         res.forEach(item => {
             results.innerHTML += item.item;

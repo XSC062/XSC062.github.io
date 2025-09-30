@@ -1,0 +1,18 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "null • All posts by \"高精度\" tag",
+    "description": "",
+    "home_page_url": "https://xsc062.netlify.app",
+    "items": [
+        {
+            "id": "https://xsc062.netlify.app/20250906/",
+            "url": "https://xsc062.netlify.app/20250906/",
+            "title": "学习笔记：压位高精",
+            "date_published": "2025-09-06T07:02:56.000Z",
+            "content_html": "<p>把 ddxrS 吓到了，发出惊世疑问：『为什么高二机房正在激烈地讨论怎么写高精度？』</p>\n<span id=\"more\"></span>\n<hr />\n<p>考虑 10-base 高精度，单次运算复杂度为 <span class=\"math inline\">\\(O(\\log_{10}V)\\)</span>。使用 10-base 的主要原因是 <code>std::to_string</code> 很方便、输出也很简单。</p>\n<p>但效率太低。实际上，一般打高精度都是 1e4-base，或更激进地，1e9-base。</p>\n<p>注意高精乘低精是 <span class=\"math inline\">\\(O(len)\\)</span> 而非 <span class=\"math inline\">\\(O(len^2)\\)</span>。</p>\n<p>需要考虑输出。由于用的是 10-power 作为 base，所以只需要把每四位直接输出即可。注意除首位外需要补前导 0 直到四位。</p>\n<details>\n<pre class=\"cpp\"><code>struct BI &#123;\n    std::vector&lt;int&gt; s;\n    BI() &#123;&#125;\n    BI(int x) &#123;\n        for (; x; s.push_back(x % 10000), x /= 10000);\n        return;\n    &#125;\n    BI&amp; operator= (int q) &#123;\n        return *this = (BI)q;\n    &#125;\n    bool operator&gt; (const BI &amp;q) &#123;\n        if (s.size() != q.s.size())\n            return s.size() &gt; q.s.size();\n        for (int i = (int)s.size() - 1; ~i; --i)\n            if (s[i] != q.s[i])\n                return s[i] &gt; q.s[i];\n        return 0;\n    &#125;\n    BI operator* (int q) const &#123;\n        int lx = s.size();\n        std::vector&lt;long long&gt; res(lx + 3);\n        for (int i = 0; i &lt; lx; ++i)\n            res[i] = (long long)s[i] * q;\n        BI p;\n        for (int j = 0; j &lt; lx + 2; ++j)\n            res[j + 1] += res[j] / 10000, res[j] %= 10000;\n        int len = lx + 2;\n        for (; ~len &amp;&amp; !res[len]; --len);\n        for (int j = 0; j &lt;= len; ++j)\n            p.s.push_back(res[j]);\n        return p;\n    &#125;\n    void out(void) &#123;\n        for (int i = (int)s.size() - 1; ~i; --i) &#123;\n            auto p = std::to_string(s[i]);\n            if (i != (int)s.size() - 1)\n                for (; (int)p.size() &lt; 4; p = &quot;0&quot; + p);\n            std::cout &lt;&lt; p;\n        &#125;\n        std::cout &lt;&lt; &#39;\\n&#39;;\n        return;\n    &#125;\n&#125;;</code></pre>\n</details>\n",
+            "tags": [
+                "高精度"
+            ]
+        }
+    ]
+}

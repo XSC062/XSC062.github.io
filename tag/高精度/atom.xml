@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://xsc062.netlify.app</id>
+    <title> • Posts by &#34;高精度&#34; tag</title>
+    <link href="https://xsc062.netlify.app" />
+    <updated>2025-09-06T07:02:56.000Z</updated>
+    <category term="并查集" />
+    <category term="斜率优化" />
+    <category term="悬线法" />
+    <category term="哈希" />
+    <category term="字典树" />
+    <category term="DP" />
+    <category term="单调队列" />
+    <category term="分治" />
+    <category term="二分图" />
+    <category term="CRT / exCRT" />
+    <category term="排列组合" />
+    <category term="网络流" />
+    <category term="费用流" />
+    <category term="二分" />
+    <category term="上下界网络流" />
+    <category term="容斥原理" />
+    <category term="线段树" />
+    <category term="树状数组" />
+    <category term="区间 DP" />
+    <category term="构造" />
+    <category term="数据结构" />
+    <category term="Tarjan" />
+    <category term="下饭" />
+    <category term="LCA" />
+    <category term="倍增" />
+    <category term="鸽巢原理" />
+    <category term="概率期望" />
+    <category term="调和级数" />
+    <category term="差分" />
+    <category term="思维" />
+    <category term="树形 DP" />
+    <category term="最小生成树" />
+    <category term="SAM" />
+    <category term="状压" />
+    <category term="分块" />
+    <category term="可持久化" />
+    <category term="笛卡尔树" />
+    <category term="高维前缀和" />
+    <category term="闲话" />
+    <category term="欧拉回路" />
+    <category term="树链剖分" />
+    <category term="长链剖分" />
+    <category term="KMP" />
+    <category term="border" />
+    <category term="字符串" />
+    <category term="AC 自动机" />
+    <category term="SA" />
+    <category term="数学" />
+    <category term="树上差分" />
+    <category term="FWT" />
+    <category term="堆" />
+    <category term="树的重心" />
+    <category term="二项式定理" />
+    <category term="二项式反演" />
+    <category term="贪心" />
+    <category term="均摊" />
+    <category term="计数" />
+    <category term="优化建图" />
+    <category term="反悔贪心" />
+    <category term="调整法" />
+    <category term="背包" />
+    <category term="博弈论" />
+    <category term="DP 优化" />
+    <category term="虚树" />
+    <category term="点分治" />
+    <category term="WQS 二分" />
+    <category term="闵可夫斯基和" />
+    <category term="slope trick" />
+    <category term="四边形不等式" />
+    <category term="状压 DP" />
+    <category term="组合数学" />
+    <category term="支配对" />
+    <category term="DDP" />
+    <category term="容斥" />
+    <category term="Kruskal 重构树" />
+    <category term="高精度" />
+    <category term="最短路" />
+    <category term="李超线段树" />
+    <entry>
+        <id>https://xsc062.netlify.app/20250906/</id>
+        <title>学习笔记：压位高精</title>
+        <link rel="alternate" href="https://xsc062.netlify.app/20250906/"/>
+        <content type="html">&lt;p&gt;把 ddxrS 吓到了，发出惊世疑问：『为什么高二机房正在激烈地讨论怎么写高精度？』&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;p&gt;考虑 10-base 高精度，单次运算复杂度为 &lt;span class=&#34;math inline&#34;&gt;\(O(\log_{10}V)\)&lt;/span&gt;。使用 10-base 的主要原因是 &lt;code&gt;std::to_string&lt;/code&gt; 很方便、输出也很简单。&lt;/p&gt;
+&lt;p&gt;但效率太低。实际上，一般打高精度都是 1e4-base，或更激进地，1e9-base。&lt;/p&gt;
+&lt;p&gt;注意高精乘低精是 &lt;span class=&#34;math inline&#34;&gt;\(O(len)\)&lt;/span&gt; 而非 &lt;span class=&#34;math inline&#34;&gt;\(O(len^2)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;需要考虑输出。由于用的是 10-power 作为 base，所以只需要把每四位直接输出即可。注意除首位外需要补前导 0 直到四位。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;struct BI &amp;#123;
+    std::vector&amp;lt;int&amp;gt; s;
+    BI() &amp;#123;&amp;#125;
+    BI(int x) &amp;#123;
+        for (; x; s.push_back(x % 10000), x /= 10000);
+        return;
+    &amp;#125;
+    BI&amp;amp; operator= (int q) &amp;#123;
+        return *this = (BI)q;
+    &amp;#125;
+    bool operator&amp;gt; (const BI &amp;amp;q) &amp;#123;
+        if (s.size() != q.s.size())
+            return s.size() &amp;gt; q.s.size();
+        for (int i = (int)s.size() - 1; ~i; --i)
+            if (s[i] != q.s[i])
+                return s[i] &amp;gt; q.s[i];
+        return 0;
+    &amp;#125;
+    BI operator* (int q) const &amp;#123;
+        int lx = s.size();
+        std::vector&amp;lt;long long&amp;gt; res(lx + 3);
+        for (int i = 0; i &amp;lt; lx; ++i)
+            res[i] = (long long)s[i] * q;
+        BI p;
+        for (int j = 0; j &amp;lt; lx + 2; ++j)
+            res[j + 1] += res[j] / 10000, res[j] %= 10000;
+        int len = lx + 2;
+        for (; ~len &amp;amp;&amp;amp; !res[len]; --len);
+        for (int j = 0; j &amp;lt;= len; ++j)
+            p.s.push_back(res[j]);
+        return p;
+    &amp;#125;
+    void out(void) &amp;#123;
+        for (int i = (int)s.size() - 1; ~i; --i) &amp;#123;
+            auto p = std::to_string(s[i]);
+            if (i != (int)s.size() - 1)
+                for (; (int)p.size() &amp;lt; 4; p = &amp;quot;0&amp;quot; + p);
+            std::cout &amp;lt;&amp;lt; p;
+        &amp;#125;
+        std::cout &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+        return;
+    &amp;#125;
+&amp;#125;;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+</content>
+        <category term="高精度" />
+        <updated>2025-09-06T07:02:56.000Z</updated>
+    </entry>
+</feed>
