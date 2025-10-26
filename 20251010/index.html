@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 网站图标 -->
+<link rel="icon" type="image/png" sizes="32x32" href="/images/icon.svg">
+<!-- 其他图标支持 -->
+<link rel="stylesheet" href="/css/facss/fa-brands.min.css">
+<link rel="stylesheet" href="/css/facss/fa-regular.min.css">
+<link rel="stylesheet" href="/css/facss/fa-solid.min.css">
+<link rel="stylesheet" href="/css/facss/fontawesome.min.css">
+<link rel="stylesheet" href="/css/facss/fontawesome-all.css">
+<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+<!-- 网站标题 -->
+<title>
+	
+		树状数组 -
+	
+	XSC062 的博客
+</title>
+<!-- js 引入 -->
+<script>
+const searchPath = "/search.xml"
+</script>
+
+<script src="/js/afterloaded.js"></script>
+
+
+<script src="/js/jQuery.js"></script>
+
+<!-- 载入 Valine -->
+
+<script src="/js/Valine.min.js"></script>
+
+<!-- css 引入 -->
+
+<link rel="stylesheet" href="/css/layout.css">
+
+
+<link rel="stylesheet" href="/css/prcss/prism.css">
+
+
+
+<!-- rss -->
+<link rel="alternate" type="application/rss+xml" title="" href="https://xsc062.netlify.app/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="" href="https://xsc062.netlify.app/atom.xml" />
+<link rel="alternate" type="application/json" title="" href="https://xsc062.netlify.app/feed.json" />
+
+<meta charset="utf-8"> 
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body class="line-numbers match-braces no-brace-select rainbow-braces">
+	
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            processEscapes: true
+          }
+        });
+      </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+            tex2jax: {
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+          });
+      </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+              var all = MathJax.Hub.getAllJax(), i;
+              for(i=0; i < all.length; i += 1) {
+                  all[i].SourceElement().parentNode.className += ' has-jax';
+              }
+          });
+      </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
+
+	<!-- 搜索 -->
+<div id="search-bg">
+	<div id="search-box">
+		<input type="text" id="search-input" placeholder="Type to search...">
+		<div id="search-results"><div id="emptyInput">键入以搜索…</div></div>
+	</div>
+</div>
+<!-- 顶栏整体导航菜单 -->
+<div class="ui top menu">
+	<!-- 左对齐 logo -->
+	<a class="logo" href="/">
+		<img src="/images/icon.png"></img>
+		<div id="bartitle" class="text">
+			XSC062 的博客
+		</div>
+	</a>
+	<!-- 右对齐部分导航 -->
+	<div id="rightali" class="serif">
+		<a class="item" id="Search" type="button">
+			<i class="btn text-muted fa fa-search" id="search-icon" disabled></i>
+		</a>
+		<a class="item" id="Home" href="/">
+			Home
+		</a>
+		<a class="item" id="Arch" href="/archives">
+			Archives
+		</a>
+		<!-- <a class="item" id="Cate" href="/categories">
+			Categories
+		</a> -->
+		<a class="item" id="Tags" href="/tags">
+			Tags
+		</a>
+		<a class="item" id="Frie" href="/friends">
+			Friends
+		</a>
+		<a class="item" id="Abou" href="/about">
+			About
+		</a>
+	</div>
+</div>
+    
+<link rel="stylesheet" href="/css/post.css">
+
+
+<script src="/js/post.js"></script>
+
+
+<div class="main">
+	<div id="sidebar" class="text">
+		<aside id="toc">
+			<span id="toctitle">
+				<i class="fas fa-list"></i>
+				目录
+			</span>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E7%82%B9%E4%BF%AE%E6%94%B9%E5%8C%BA%E9%97%B4%E6%9F%A5%E8%AF%A2"><span class="toc-text">单点修改，区间查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%BA%E9%97%B4%E4%BF%AE%E6%94%B9%E5%8D%95%E7%82%B9%E6%9F%A5%E8%AF%A2"><span class="toc-text">区间修改，单点查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%BA%E9%97%B4%E4%BF%AE%E6%94%B9%E5%8C%BA%E9%97%B4%E6%9F%A5%E8%AF%A2"><span class="toc-text">区间修改，区间查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#excercise"><span class="toc-text">Excercise</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ex.-%E5%8C%97%E6%A0%A1%E9%97%A8%E5%A4%96%E7%9A%84%E5%9B%9E%E5%BF%86"><span class="toc-text">Ex. 北校门外的回忆</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bit-%E4%B8%8A%E5%80%8D%E5%A2%9E"><span class="toc-text">BIT 上倍增</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%B0%E7%81%AB%E6%88%98%E5%A3%AB"><span class="toc-text">冰火战士</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sails-%E8%88%B9%E5%B8%86"><span class="toc-text">sails 船帆</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#insert"><span class="toc-text">Insert</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%B0%E5%AE%9D%E7%9F%B3"><span class="toc-text">买宝石</span></a></li></ol></li></ol>
+		</aside>
+	</div>
+	<div class="ui post container">
+		<div class="ui text container">
+			<span id="postcon">
+				<span id="postinfo">
+					<div class="ui post title serif">
+						<div id="fortitle" data-content="树状数组">
+							树状数组
+						</div>
+						<div class="ui title background">
+						</div>
+					</div>
+					<span id="date">
+						<i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
+						2025-10-10
+					</span>
+				</span>
+			</span>
+			<div id="posttags" class="dotted border">
+				
+					
+						<a href="/tags/树状数组/" class="citem">树状数组</a>
+					
+						<a href="/tags/倍增/" class="citem">倍增</a>
+					
+				
+			</div>
+			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
+			
+			<div id="content">
+				<p>我有一个朋友今天才会树状数组（存疑）</p>
+<span id="more"></span>
+<p>因为到了今天还是不会</p>
+<hr />
+<h2 id="单点修改区间查询">单点修改，区间查询</h2>
+<ul>
+<li><p>树状数组本身是一个多叉树结构。每个点 <span class="math inline">\(i\)</span> 上保存 <span class="math inline">\([i-\text{lowbit}(i)+1,i]\)</span> 的和，并指向若干个更小的子区间（彼此不重，且拼起来是自身）</p>
+<figure>
+<img src="image-1.png" alt="图源 OI Wiki" /><figcaption>图源 OI Wiki</figcaption>
+</figure></li>
+<li>修改 <span class="math inline">\(x\)</span>：从包含 <span class="math inline">\(x\)</span> 的最低点（id 为 <span class="math inline">\(x\)</span> 且右端点为 <span class="math inline">\(x\)</span>）一直向上修改包含 <span class="math inline">\(x\)</span> 的区间。</li>
+<li><p>查询 <span class="math inline">\([1, x]\)</span>：从右端点为 <span class="math inline">\(x\)</span> 的区间（id 为 <span class="math inline">\(x\)</span>）出发，不断找到前方紧邻的区间（<span class="math inline">\(id\)</span> 差为 lowbit），累加进答案。</p></li>
+</ul>
+<hr />
+<h2 id="区间修改单点查询">区间修改，单点查询</h2>
+<ul>
+<li>运用序列问题上的技巧，转化为差分数组上的单点修改、前缀查询。</li>
+<li>事实上除了基本结构以外的内容，树状数组本身并没有参与，只需当作<strong>一个输入单点修改，输出前缀和的黑盒</strong>即可。</li>
+</ul>
+<hr />
+<h2 id="区间修改区间查询">区间修改，区间查询</h2>
+<ul>
+<li><p>考虑沿用差分的方法实现区间修改。考虑数学推导表达区间前缀和。</p>
+<p>已知 <span class="math inline">\(d_i=a_i-a_{i-1}\)</span>，则：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sum\limits_{i=1}^x a_i=&amp;\sum\limits_{i=1}^x\sum_{j=1}^i d_j\\
+=&amp;\sum\limits_{i=1}^x d_i\cdot (x-i+1)\\
+=&amp;(x+1)\cdot \left(\sum\limits_{i=1}^x d_i\right) - \left(\sum\limits_{i=1}^x i\cdot d_i\right)
+\end{aligned}
+\]</span></p></li>
+<li>故只需要在黑盒中维护 <span class="math inline">\(d_i\)</span> 和 <span class="math inline">\(i\cdot d_i\)</span> 的单点修改即可。</li>
+<li><p>在实现时感到违和：对 <span class="math inline">\([l, r]\)</span> 做区间修改时，对于 <span class="math inline">\(l\)</span> 处的 <span class="math inline">\(i\cdot d_i\)</span> 作出了 <span class="math inline">\(l\cdot \Delta\)</span> 的修改，为何在 <span class="math inline">\(r+1\)</span> 处作 <span class="math inline">\((r + 1)\cdot \Delta\)</span> 的修改（而非也是 <span class="math inline">\(l\cdot \Delta\)</span>？）</p>
+<p>事实上，对于 <span class="math inline">\(i\cdot d_i\)</span> 的修改是对 <span class="math inline">\(d_i\)</span> 修改的字面反映，这个量本身并没有具体的含义。</p>
+<p>感觉有点唐唐的，也就只有我会有这种疑惑了……</p></li>
+</ul>
+<hr />
+<h3 id="excercise">Excercise</h3>
+<ul>
+<li><p>维护 <span class="math inline">\(a_i\)</span> 的区间加、<span class="math inline">\(a_i\)</span> 的区间和查询、<span class="math inline">\(i\cdot a_i\)</span> 的区间和查询。</p>
+<p>令 <span class="math inline">\(d_i=a_i-a_{i-1}\)</span>，考虑变形：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sum\limits_{i=1}^x i\cdot a_i=&amp;\sum\limits_{i=1}^xi\cdot \sum_{j=1}^i d_j\\
+=&amp;\sum\limits_{i=1}^x d_i\cdot \left(i+(i+1)+\cdots +x\right)\\
+=&amp;\sum\limits_{i=1}^x d_i\cdot \dfrac {(x+i)\cdot (x-i+1)}2\\
+=&amp;\sum\limits_{i=1}^x d_i\cdot \dfrac {x^2+x-i^2+i}2\\
+=&amp;\dfrac{(x^2+x)\cdot \left(\sum\limits_{i=1}^x d_i\right) + \left(\sum\limits_{i=1}^x i\cdot d_i\right) - \left(\sum\limits_{i=1}^x i^2\cdot d_i\right)}2
+\end{aligned}
+\]</span></p></li>
+<li><p>故只需要在黑盒中维护 <span class="math inline">\(d_i\)</span>、<span class="math inline">\(i\cdot d_i\)</span> 和 <span class="math inline">\(i^2\cdot d_i\)</span> 的单点修改即可。</p>
+<p>见 <a href="/20251007/#c.-相互抵消">相互抵消</a>。</p></li>
+</ul>
+<hr />
+<h3 id="ex.-北校门外的回忆">Ex. 北校门外的回忆</h3>
+<p><a target="_blank" rel="noopener" href="https://loj.ac/p/510" class="uri">https://loj.ac/p/510</a></p>
+<blockquote>
+<p>定义 <span class="math inline">\(\text{lowbit}_K(x)\)</span> 为 <span class="math inline">\(x\)</span> 在 <span class="math inline">\(K\)</span> 进制下最低非零位的值。有一个异或和树状数组，把原本代码中的 <span class="math inline">\(\text{lowbit}_2(x)\)</span> 全部替换为 <span class="math inline">\(\text{lowbit}_K(x)\)</span>，得到一个正确性和复杂度均错误的『树状数组』，现在给定若干次 <code>add</code> 和 <code>ask</code> 操作，你需要输出错误的代码运行的结果。</p>
+<p><span class="math inline">\(m\le 2\times 10^5\)</span>。</p>
+</blockquote>
+<ul>
+<li>需要意识到并不是真的要用树状数组模拟这个操作，一边转化一边要想办法把这个错误代码用正常 DS 的操作表述出来。</li>
+<li><code>add</code> 的本质是对于非零最低位乘二并进位。手玩可以发现，有的时候『非零最低位』的位置是不变的，有的时候『非零最低位』变成 <span class="math inline">\(0\)</span> 了，就会前移。</li>
+<li><p>这显然是个 <span class="math inline">\(x\to 2x\bmod K\)</span> 的内向基环树森林，且当存在自环 <span class="math inline">\(0\)</span> 时，一个树中的最大跳跃次数为 <span class="math inline">\(\log_2K\)</span>。</p>
+<figure>
+<img src="image-2.png" alt="mobai Grisses" /><figcaption>mobai Grisses</figcaption>
+</figure>
+<p>故这个时候（即 <span class="math inline">\(x\)</span> 包含了『<span class="math inline">\(K\)</span> 除了 <span class="math inline">\(2\)</span> 之外的因子』时 ）暴力跳即可。对于每一位都这么跳是可以接受的。</p></li>
+<li><p><span class="math inline">\(0\)</span> 不在树中，最终会有一个循环节。不妨把经过的所有点拉出来成为一条链。</p>
+<p>这个时候可以停下来想一想题目给的两个操作是在做什么。显然每个叶子会引导一条无限长的链，则 <code>add</code> 就是给这个链做了一个后缀加（<span class="math inline">\(N\)</span> 的限制是没影响的），<code>ask</code> 则是问了 log 个点值。</p>
+<p>则如果这个链真的可以被处理出来，只需要 bit 维护差分即可。</p></li>
+<li><p>考虑倍增预处理 <span class="math inline">\(f(i,j)\)</span> 表示 <span class="math inline">\(i\)</span> 走了 <span class="math inline">\(2^j\)</span> 步后到的点，模拟跳 <span class="math inline">\(0\)</span>、倍增跳循环节即可。</p></li>
+</ul>
+<hr />
+<h2 id="bit-上倍增">BIT 上倍增</h2>
+<p>更偏数据结构技巧了，也重新回到结构上面。</p>
+<p>对标线段树上二分，缺陷在于能维护的数据限制很大，优势在于常数很小。在出题人刻意只放树状数组过，或者<strong>树套树</strong>外层为树状数组的时候用处比较明显。</p>
+<hr />
+<h3 id="冰火战士">冰火战士</h3>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6619" class="uri">https://www.luogu.com.cn/problem/P6619</a></p>
+<blockquote>
+<p>给定初始为空的二元组数组 <span class="math inline">\(A, B\)</span>。对于阈值 <span class="math inline">\(k\)</span>，令 <span class="math inline">\(s_A\)</span> 表示 <span class="math inline">\(A\)</span> 中关键字一 <span class="math inline">\(\le k\)</span> 的元素关键字二之和，<span class="math inline">\(s_B\)</span> 表示 <span class="math inline">\(B\)</span> 中关键字一 <span class="math inline">\(\ge k\)</span> 的元素关键字二之和。</p>
+<p>维护若干次 <span class="math inline">\(A,B\)</span> 的加点、删点操作，每次操作后输出：</p>
+<ul>
+<li>自由选取 <span class="math inline">\(k\)</span>，求 <span class="math inline">\(\min\{s_A,s_B\}\)</span> 的最大值。</li>
+</ul>
+<p><span class="math inline">\(m\le 2\times 10^6\)</span>，<span class="math inline">\(V\le 10^9\)</span>。</p>
+</blockquote>
+<ul>
+<li>不妨考虑固定状态下的询问。容易想到将 <span class="math inline">\(A,B\)</span> 按关键字一<strong>升序排序</strong>。随着 <span class="math inline">\(k\)</span> 的增大，<span class="math inline">\(s_A\)</span> 是 <span class="math inline">\(A\)</span> 关键字二的前缀和，<span class="math inline">\(s_B\)</span> 是 <span class="math inline">\(B\)</span> 关键字二的后缀和。</li>
+<li><p>我并不会三分，但题解说因为有平台所以三分做不了。</p>
+<p>但由于最高点同时是交点，可以二分找到最值点。离散化元素后维护此处的前缀和即可。</p></li>
+<li>容易想到线段树上二分，然而常数太大难以通过。</li>
+<li><p>如果改用树状数组呢？树状数组有办法进行类似线段树上二分的操作吗？</p>
+<p>事实上，bit 的结构更适合倍增。其出发点和线段树上二分是相同的，在于规避重复询问。</p>
+<p>假设当前在一个合法位置 <span class="math inline">\(p\)</span>，已经累加到 <span class="math inline">\(s\)</span>，要验证 <span class="math inline">\(p+2^k\)</span>（<span class="math inline">\(\text{lowbit}(p+2^k)=2^k\)</span>）是否仍然合法，仅需 check <span class="math inline">\(s+c_{p+2^k}\)</span> 是否合法（结合树状数组结构想一想）。</p></li>
+</ul>
+<details>
+<p>其实 Peace 是有点难判的…… 我写了个结构题维护了数量用来判断。</p>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int m;
+    std::cin &gt;&gt; m;
+    struct query &#123; int op, k, x, y; &#125;;
+    std::vector&lt;query&gt; a(m + 1);
+    std::vector&lt;int&gt; l(1);
+    for (int i = 1; i &lt;= m; ++i) &#123;
+        std::cin &gt;&gt; a[i].op &gt;&gt; a[i].k;
+        if (a[i].op == 1) &#123;
+            std::cin &gt;&gt; a[i].x &gt;&gt; a[i].y;
+            l.push_back(a[i].x);
+        &#125;
+        else &#123;
+            int k = a[i].k;
+            a[i].op = -1;
+            a[i].k = a[k].k, a[i].x = a[k].x, a[i].y = a[k].y;
+        &#125;
+    &#125;
+    std::sort(l.begin() + 1, l.end());
+    l.erase(std::unique(l.begin() + 1, l.end()), l.end());
+    int n = (int)l.size();
+    std::vector&lt;int&gt; cnt(2);
+    std::vector&lt;long long&gt; sum(2);
+    struct node &#123;
+        int c;
+        long long v;
+        node(void): c(0), v(0ll) &#123;&#125;
+        node(int c1, long long v1): c(c1), v(v1) &#123;&#125;
+        node operator+ (const node &amp;q) const &#123;
+            return node(c + q.c, v + q.v);
+        &#125;
+        node operator- (const node &amp;q) const &#123;
+            return node(c - q.c, v - q.v);
+        &#125;
+        node&amp; operator+= (const node q) &#123;
+            return *this = *this + q;
+        &#125;
+        node &amp;operator-= (const node &amp;q) &#123;
+            return *this = *this - q;
+        &#125;
+    &#125;;
+    std::vector&lt;std::vector&lt;node&gt; &gt; bit(2, std::vector&lt;node&gt; (n + 1)), s(2, std::vector&lt;node&gt; (n + 1));
+    auto lowbit = [&amp;](int x) &#123; return x &amp; -x; &#125;;
+    for (int i = 1; i &lt;= m; ++i) &#123;
+        a[i].x = std::lower_bound(l.begin() + 1, l.end(), a[i].x) - l.begin() + a[i].k;
+        cnt[a[i].k] += a[i].op, sum[a[i].k] += a[i].op * a[i].y;
+        s[a[i].k][a[i].x] += node(a[i].op, a[i].op * a[i].y);
+        for (int j = a[i].x; j &lt;= n; j += lowbit(j))
+            bit[a[i].k][j] += node(a[i].op, a[i].op * a[i].y);
+        if (std::min(cnt[0], cnt[1]) == 0)
+            std::cout &lt;&lt; &quot;Peace\n&quot;;
+        else &#123;
+            int p = 0;
+            node s0(0, 0ll), s1(cnt[1], sum[1]);
+            for (int i = 20; ~i; --i)
+                if (p + (1 &lt;&lt; i) &lt;= n &amp;&amp; (s0 + bit[0][p + (1 &lt;&lt; i)]).v &lt;= (s1 - bit[1][p + (1 &lt;&lt; i)]).v)
+                    p += (1 &lt;&lt; i), s0 += bit[0][p], s1 -= bit[1][p];
+            if (p + 1 &lt;= n &amp;&amp; s1.c != s[1][p + 1].c &amp;&amp; (s1 - s[1][p + 1]).v &gt;= s0.v) &#123;
+                s1 -= s[1][p + 1], s0 = node(cnt[1], sum[1]), p = 0;
+                for (int i = 20; ~i; --i)
+                    if (p + (1 &lt;&lt; i) &lt;= n &amp;&amp; (s0 - bit[1][p + (1 &lt;&lt; i)]).v &gt;= s1.v)
+                        p += (1 &lt;&lt; i), s0 -= bit[1][p];
+                std::cout &lt;&lt; l[p] &lt;&lt; &#39; &#39; &lt;&lt; 2 * s1.v &lt;&lt; &#39;\n&#39;;
+            &#125;
+            else if (s0.c)
+                std::cout &lt;&lt; l[p] &lt;&lt; &#39; &#39; &lt;&lt; 2 * s0.v &lt;&lt; &#39;\n&#39;;
+            else
+                std::cout &lt;&lt; &quot;Peace\n&quot;;
+        &#125;
+    &#125;
+#ifndef ONLINE_JUDGE
+    std::cerr &lt;&lt; std::fixed &lt;&lt; std::setprecision(6) &lt;&lt; std::chrono::duration&lt;double&gt; (std::chrono::steady_clock::now() - stime).count() &lt;&lt; &quot;s\n&quot;;
+#endif
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h3 id="sails-船帆">sails 船帆</h3>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4647" class="uri">https://www.luogu.com.cn/problem/P4647</a></p>
+<ul>
+<li><p>需要意识到<strong>帆的顺序对答案没有影响，同一行帆的个数对答案有影响</strong>。</p>
+<p>从这一点出发会有一个比较显然的贪心：把柱状图斜过来，把柱子按 <span class="math inline">\(h\)</span> 从小到大<strong>排序</strong>，问题变为对于第 <span class="math inline">\(i\)</span> 次操作，选 <span class="math inline">\(1\sim h_i\)</span> 里最矮的几列使其高度 +1。</p>
+<p>其实会有一些其他的贪心方法，比如我一开始想的是不排序，在 <span class="math inline">\(1\sim h_i\)</span> 内，优先使最矮的高度 +1，高度相同的使编号更大的柱子高度 +1。这个的正确性也比较好证明，但是太复杂了，没什么好的优化。<strong>把贪心策略中的偏序关系提前到一次排序</strong>就会简单很多。</p></li>
+<li><p>现在需要找到最矮的这几列。<del>我会文艺平衡树</del></p>
+<p>考虑更加天才的做法。如果我们需要用 bit，线段树这样的结构来维护操作，就会有一些问题： 为了快速修改，需要保证修改的元素是连续的。简单的方法是让元素有序地在 ds 中排列。但修改操作本身会破坏这样的偏序关系。</p></li>
+<li><p>不妨假设元素降序排列（和后方的 0 衔接），那么需要把 <span class="math inline">\([h-k+1,h]\)</span> 这段元素 +1，但这会造成部分元素的前移，考虑前移的过程到底发生了什么。</p>
+<p>考虑这样的场景：</p>
+<p><img src="image.png" /></p>
+<p><strong>由于 delta 为 1，至多只会有一段数发生这样的前移。</strong>先 ask 一下 <span class="math inline">\(h-k+1\)</span> 处的值，假设这一段的左右端点为 <span class="math inline">\([l,r]\)</span>，只需要修改 <span class="math inline">\([l,l+(r-(h-k+1))]\)</span> 和 <span class="math inline">\([r+1,h]\)</span> 两段区间即可。</p></li>
+<li><p><span class="math inline">\([l,r]\)</span> 是可以通过 bit 上倍增求出的。复杂度 <span class="math inline">\(O(n\log n)\)</span>。</p></li>
+</ul>
+<hr />
+<h3 id="insert">Insert</h3>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_abc392_f" class="uri">https://www.luogu.com.cn/problem/AT_abc392_f</a></p>
+<ul>
+<li>维护每个数的位置，相当于给值在 <span class="math inline">\([P_i,i-1]\)</span> 的元素做区间 +1，显然右端点是单增的，那么就转化为上一题。</li>
+</ul>
+<hr />
+<h3 id="买宝石">买宝石</h3>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/6620/problem/4" class="uri">https://www.becoder.com.cn/contest/6620/problem/4</a></p>
+<p>见 <a href="/20251007-1/#买宝石">树套树</a>。</p>
+
+			</div>
+			<hr class="dotted">
+			<div class="post footer">
+				<div id="hitokoto">
+					<h3 id="hitokoto-title">
+						言论
+					</h3>
+					<div id="hitokoto-content">
+					</div>
+					<div id="hitokoto-from">
+					</div>
+				</div>
+				<div class="button flex">
+					<div id="prev">
+						
+							<!-- 吐槽，为啥还需要加 / -->
+							<a href="/20251013/">
+								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
+								生成树 III
+							</a>
+						
+					</div>
+					<div id="next">
+						
+							<a href="/20251007-1/">
+								学习笔记 树套树
+								<i class="fas fa-angle-double-right" style="margin-left: 10px;"></i>
+							</a>
+						
+					</div>
+				</div>
+				<div id="vcomments" class="text"></div>
+<script>
+	new Valine({
+		el: '#vcomments',
+		appId: 'OlmvQ0a2Zw7xo3no2bwabOzx-gzGzoHsz',
+		appKey: 'TW6t8mFeGLmhPjWisvmllvvo',
+		recordIP: true,
+		enableQQ: true, 
+		// [EDITED] 目前 Valine 的 QQ 自动获取昵称似乎不可用
+		// 该问题在 v1.5.3 中已修复
+		pageSize: 10,
+		requiredFields:
+			
+				['nick']
+			,
+		placeholder: "The world is but a little place after all...\n能够根据邮箱获取你的 Gravatar 头像。昵称是必填项，长度需不低于 3。",
+		avatar: 'identicon',
+		avatar_cdn: 'https://cravatar.cn/avatar/',
+		emojiCDN: 'https://xsc062.netlify.app/em/', 
+		emojiMaps: {
+			
+				"微笑": "wx.gif",
+			
+				"龇牙": "cy.gif",
+			
+				"流泪": "ll.gif",
+			
+				"笑哭": "xk.gif",
+			
+				"流汗": "lh.gif",
+			
+				"擦汗": "ch.gif",
+			
+				"亲亲": "qq.gif",
+			
+				"色": "se.gif",
+			
+				"疑问": "yiw.gif",
+			
+				"发呆": "fd.gif",
+			
+				"晕": "yun.gif",
+			
+				"鼓掌": "gz.gif",
+			
+				"憨笑": "hanx.gif",
+			
+				"快哭了": "kk.gif",
+			
+				"得意": "dy.gif",
+			
+				"狂笑": "kx.gif",
+			
+				"害羞": "hx.gif",
+			
+				"妈妈生的": "dz.gif",
+			
+				"糗大了": "qd.gif",
+			
+				"吃瓜": "cg.gif",
+			
+				"睁眼": "zy.webp",
+			
+				"辣眼睛": "lyj.gif",
+			
+				"酸了": "nm.gif",
+			
+				"滚": "gun.webp",
+			
+				"惊恐": "jk.gif",
+			
+				"幽灵": "youl.gif",
+			
+				"无聊": "wul.gif",
+			
+				"吃": "eat.gif",
+			
+				"你很棒棒": "bb.gif",
+			
+				"赞": "qiang.gif",
+			
+				"踩": "ruo.gif",
+			
+				"握手": "wsh.gif",
+			
+				"发抖": "fad.gif",
+			
+				"挥手": "hsh.gif",
+			
+				"磕头": "kt.gif",
+			
+				"怄火": "oh.gif",
+			
+		},
+	})
+</script>
+			</div>
+			<script>setHitokoto();</script>
+		</div> 
+	</div>
+</div>
+    <!-- 页脚开始 -->
+<div id="footer" class="serif">
+    Powered by
+    <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>
+    &
+    <a href="/about-this-theme">
+        iwll
+    </a>
+    <p style="margin-top: 5px;">
+        2021 - 2025
+    </p>
+</div>
+<!-- Valine 相关配置 -->
+<script>
+    const getValineDomTimer = setInterval(() => {
+        // 不知道为什么 我从原博客 js 文件粘过来的参数是
+        // "#valine .vcards .vcard"
+        // DEBUG 了半天才定位到这个问题。。。
+        const vcards =
+            document.querySelectorAll('#valine, .vcards, .vcard');
+        if (vcards.length > 0) {
+            let author = 'XSC062';
+            for (let vcard of vcards) {
+                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                if (vnick_dom != null) {
+                    const vnick = vnick_dom.innerHTML;
+                    if (vnick === author) {
+                        vnick_dom.innerHTML =
+                        `${vnick} <span id="rootitem" class="code">root</span>`
+                    }
+                }
+            }
+        }
+        else {
+            clearInterval(getValineDomTimer);
+        }
+    }, 2000);
+    SetActiveItem();
+    setDetailsSummary();
+    setTitleAnchor();
+    setEmptyToc();
+    setCodeClassName();
+</script>
+
+
+<!-- js -->
+<!-- 搜索功能相关配置 -->
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/local-search.js"></script>
+
+</script>
+<!-- prism 相关配置 -->
+<script type="text/javascript" src="/js/prism.js" defer></script>
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/clipboard-use.js"></script>
+<!-- 页脚结束 -->
+</body>
+</html>

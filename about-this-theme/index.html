@@ -28,7 +28,9 @@ const searchPath = "/search.xml"
 <script src="/js/jQuery.js"></script>
 
 <!-- 载入 Valine -->
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script src="/js/Valine.min.js"></script>
+
 <!-- css 引入 -->
 
 <link rel="stylesheet" href="/css/layout.css">
@@ -70,7 +72,7 @@ const searchPath = "/search.xml"
               }
           });
       </script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
 
 	<!-- 搜索 -->
 <div id="search-bg">
@@ -84,12 +86,12 @@ const searchPath = "/search.xml"
 	<!-- 左对齐 logo -->
 	<a class="logo" href="/">
 		<img src="/images/icon.png"></img>
-		<div id="bartitle">
+		<div id="bartitle" class="text">
 			XSC062 的博客
 		</div>
 	</a>
 	<!-- 右对齐部分导航 -->
-	<div id="rightali">
+	<div id="rightali" class="serif">
 		<a class="item" id="Search" type="button">
 			<i class="btn text-muted fa fa-search" id="search-icon" disabled></i>
 		</a>
@@ -118,15 +120,38 @@ const searchPath = "/search.xml"
 
 
 <div class="ui content container">
-	<h1 id="title">更新日志 / 关于 iwll</h1>
-    <div class="ui text container yahei">
-		<p>iwll 是这个 theme 的名字，是 will 的乱序。</p>
+	<h1 id="title" class="serif">更新日志 / 关于 iwll</h1>
+    <div class="ui container text">
+		<div id="content">
+			<p>iwll 是这个 theme 的名字，是 will 的乱序。</p>
 <p>2022 年 10 月，晚自习，面对一笔未动的数学作业，我在草稿本上画下了 iwll 的大致布局。</p>
 <p>2022 年 12 月，iwll 在一双只实现过简单 Stylus 的手下初具雏形。</p>
 <p>修修补补到今天，当年的 To-do list 已经清空；还实装了很多后来想到的功能。</p>
 <p>以下从观感上似乎更像是 Site change log 而非 Theme’s，对这样随意维护的博客来说差不太多。</p>
 <h2 id="change-log">Change Log</h2>
 <ul>
+<li><p>251020：</p>
+<ul>
+<li>学到了很多有关字体的知识，现在 Windows 下也可以用好看的衬线字体了（大概）</li>
+<li>修了一些不统一的 layout，修好了上次修挂掉的 <code>&lt;blockquote&gt;</code></li>
+<li>index 页的 paginator 忘加 <code>transition</code> 了，故加之</li>
+</ul></li>
+<li>251016：
+<ul>
+<li><p>修复了 Valine 中 <code>&lt;blockquote&gt;</code> 的 css 冲突。</p>
+<p>251020 upd：修挂了</p></li>
+</ul></li>
+<li>251014：
+<ul>
+<li>给 tagcloud 加了 hover 提示</li>
+<li><p>修复了页面的衬线字体 &amp; 非衬线字体，至少在 Linux 下显示符合预期。</p>
+<p>Windows 下没什么好的衬线字体，遂摆之。</p></li>
+</ul></li>
+<li>251013：
+<ul>
+<li>给关于页加了背景</li>
+<li>把 tagcloud 的颜色做得更好看了（原本是 tagcloud 的默认词云），一部分 hover 提示还没加</li>
+</ul></li>
 <li>250922：
 <ul>
 <li>优化了搜索结果的滚动条。</li>
@@ -217,29 +242,27 @@ const searchPath = "/search.xml"
 </ul></li>
 <li><p>240620：</p>
 <ul>
-<li>对不起我熬夜了，但是我把友链阴影交互写出来了。事实证明不需要 rybp 我也很厉害！</li>
-<li>想办法解决了 <code>text-overflow: ellipsis</code> 必须要文字容器元素提供精确数值宽度的问题，只需要把 <code>width: 100%</code> 换成 <code>width: calc(100%)</code> 就行了，我可真是个天才！</li>
+<li>把友链阴影交互写出来了。</li>
+<li>想办法解决了 <code>text-overflow: ellipsis</code> 必须要文字容器元素提供精确数值宽度的问题，只需要把 <code>width: 100%</code> 换成 <code>width: calc(100%)</code> 就行了</li>
 <li>修好了归档页和标签归档页标题无法正常显示的问题，运算优先级赛高。</li>
 </ul></li>
 <li><p>240619：中考完了，调整了一下友链相关内容：</p>
 <ul>
 <li>将词条大小固定为一个比较美观的值，而非任由 <code>boxing</code> 乱搞；</li>
-<li>因为显更新太麻烦而且看起来太臃肿而去掉了 intro 环节；</li>
+<li>因为显更新太麻烦而且看起来太臃肿而去掉了 intro；</li>
 <li><p>增加了 <code>hover</code> 时的神奇三维 rotate，灵感来源于 <a target="_blank" rel="noopener" href="https://prts.wiki/w/时装回廊" class="uri">https://prts.wiki/w/时装回廊</a>，虽然显然人家这个比我的高级。</p>
-<p>思考了一下为什么大概是因为人家的 <code>box-shadow</code> 看起来比较震撼。想了一下怎么解决，应该还是要算一下。</p>
-算了，到时候让数学带师 rybp 帮忙解决。</li>
+<p>思考了一下为什么大概是因为人家的 <code>box-shadow</code> 看起来比较震撼。想了一下怎么解决，应该还是要算一下。</p></li>
 </ul></li>
 <li>240517：给 Valine 增加了评论置顶功能。</li>
 <li>240509：修了相对路径乱打导致 404 的问题。</li>
 <li><p>240503：</p>
 <ul>
-<li>做了个看不见也不可能看见的优化，比如把 Valine 的用户主题交互加上了。</li>
-<li>把 Valine 的表情功能关了，因为原来挂在 Gitee 上的 CDN 挂掉了</li>
+<li>加上了 Valine 的用户主题交互。</li>
+<li>原来挂在 Gitee 上的 CDN 挂掉了，故把 Valine 的表情功能关了</li>
 <li>把 tags 和 archives 页中的大段代码独立到一个 partial 里面了。方便后续实现。</li>
 <li>注意到上述的 partial 对于每一年份中的文章数量统计其实是前缀和，但是由于我这里只有 24 年和 23 年的博客，23 年的又比 24 年的多得多所以之前一直没有发现，今天实现了标签过后随便点着玩才发现不对劲（）</li>
 <li>在文章页显示了文章的标签。</li>
-<li><p>修好了因为无参函数后面没打括号导致 if 起飞而引发的网站标题显示问题。</p>
-人话：<code>if (!is_home)</code> to <code>if (!is_home())</code>。</li>
+<li><code>if (!is_home)</code> to <code>if (!is_home())</code>。</li>
 </ul></li>
 <li>240502：暂时性地 <strong>实现</strong> 了标签功能。就是说只有功能实现了。等差不多全部写完了就把 iwll 这个东西 push 上去。</li>
 <li>240402：给 index 页加了鸽了一个世纪的 paginator。</li>
@@ -266,9 +289,10 @@ const searchPath = "/search.xml"
 <li><p>230718：历史性地解决了代码首行 <code>padding</code> 莫名其妙错位的问题；历史性地解决了行号和代码错位的问题，虽然解决方式很不优雅。</p></li>
 </ul>
 
+		</div>
 		<hr class="dotted">
 		<div class="post footer">
-			<div id="vcomments" class="yahei"></div>
+			<div id="vcomments" class="text"></div>
 <script>
 	new Valine({
 		el: '#vcomments',
@@ -284,7 +308,7 @@ const searchPath = "/search.xml"
 				['nick']
 			,
 		placeholder: "The world is but a little place after all...\n能够根据邮箱获取你的 Gravatar 头像。昵称是必填项，长度需不低于 3。",
-		avatar: 'mp',
+		avatar: 'identicon',
 		avatar_cdn: 'https://cravatar.cn/avatar/',
 		emojiCDN: 'https://xsc062.netlify.app/em/', 
 		emojiMaps: {
@@ -368,11 +392,9 @@ const searchPath = "/search.xml"
 	</div> 
 </div>
     <!-- 页脚开始 -->
-<div id="footer" class="yahei">
+<div id="footer" class="serif">
     Powered by
-    <a target="_blank" rel="noopener" href="https://hexo.io">
-        Hexo
-    </a>
+    <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>
     &
     <a href="/about-this-theme">
         iwll
@@ -397,7 +419,7 @@ const searchPath = "/search.xml"
                     const vnick = vnick_dom.innerHTML;
                     if (vnick === author) {
                         vnick_dom.innerHTML =
-                        `${vnick} <span id="rootitem" class="fira">root</span>`
+                        `${vnick} <span id="rootitem" class="code">root</span>`
                     }
                 }
             }

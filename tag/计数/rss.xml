@@ -15,6 +15,7 @@
         <category>DP</category>
         <category>单调队列</category>
         <category>分治</category>
+        <category>计数</category>
         <category>二分图</category>
         <category>CRT / exCRT</category>
         <category>排列组合</category>
@@ -63,7 +64,6 @@
         <category>二项式反演</category>
         <category>贪心</category>
         <category>均摊</category>
-        <category>计数</category>
         <category>优化建图</category>
         <category>反悔贪心</category>
         <category>调整法</category>
@@ -84,6 +84,9 @@
         <category>Kruskal 重构树</category>
         <category>高精度</category>
         <category>最短路</category>
+        <category>树套树</category>
+        <category>Boruvka</category>
+        <category>树链剖分 - 最小生成树</category>
         <category>李超线段树</category>
         <item>
             <guid isPermalink="true">https://xsc062.netlify.app/20250430/</guid>
@@ -423,6 +426,163 @@ h(S, k) = \sum_{T\subset S} f(T) \cdot h(S - T, k-1)
 \]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;注意为什么要用一个 &lt;span class=&#34;math inline&#34;&gt;\(h\)&lt;/span&gt; 来转移 &lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt; 呢？我们发现 &lt;span class=&#34;math inline&#34;&gt;\(-1\)&lt;/span&gt; 的次数和缩出来的点数是有关的，而光凭 &lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt; 无法表示点数信息，所以需要用 &lt;span class=&#34;math inline&#34;&gt;\(h\)&lt;/span&gt; 来搭个桥。&lt;/p&gt;
 &lt;p&gt;直接 DP，复杂度 &lt;span class=&#34;math inline&#34;&gt;\(O(n\cdot 3^n)\)&lt;/span&gt;。&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">https://xsc062.netlify.app/20230418/</guid>
+            <title>解题报告 两双手</title>
+            <link>https://xsc062.netlify.app/20230418/</link>
+            <category>DP</category>
+            <category>计数</category>
+            <pubDate>Tue, 18 Apr 2023 16:48:22 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;凳子充分地让我切身实地地体会到了平行四边形的不稳定性。做题的时候可以 360° 无死角地把下半身转来转去，有点意思。也有点容易摔（×&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;a.-两双手&#34;&gt;A. 两双手&lt;/h3&gt;
+&lt;p&gt;http://222.180.160.110:1024/contest/3506/problem/1&lt;/p&gt;
+&lt;p&gt;不难发现可以通过解二元一次方程组得到用几个 A 操作和 B 操作才能让横纵坐标分别改变一些特定的值。可惜我没能想到一个经典的容斥 DP 思想：&lt;/p&gt;
+&lt;p&gt;定义起点为点 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;。定义 &lt;span class=&#34;math inline&#34;&gt;\(C(x,y)\)&lt;/span&gt; 表示从 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 点走到 &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; 点的方案数（可经过特殊点）。对于特殊点 &lt;span class=&#34;math inline&#34;&gt;\(1\sim n\)&lt;/span&gt;，顺序枚举，对于点 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;，定义 &lt;span class=&#34;math inline&#34;&gt;\(f_i\)&lt;/span&gt; 表示从 &lt;span class=&#34;math inline&#34;&gt;\(0\sim i\)&lt;/span&gt; 不经过任何除 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 以外的特殊点的方案数，则 &lt;span class=&#34;math inline&#34;&gt;\(f_i=C(0,i)-\sum\limits_{j=1}^{i-1}f_j\times C(j,i)\)&lt;/span&gt;。其中 &lt;span class=&#34;math inline&#34;&gt;\(\sum\limits_{j=1}^{i-1}f_j\times C(j,i)\)&lt;/span&gt; 就是从 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt; 到 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;，除 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 以外经过至少 1 个特殊点的方案数。用总方案数减去不合法方案数，则得到合法方案数。&lt;/p&gt;
+&lt;p&gt;一个细节。我们枚举时，可能会遇到只能从 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 到达 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt;，而不能从 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 到达 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 的情况。若恰好 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 在 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 前面，那么从 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 到 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 的路径就会被统计漏。这个时候怎么办呢？对于任意点 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;，我们求得从 &lt;span class=&#34;math inline&#34;&gt;\(0\to i\)&lt;/span&gt; 所需的步数，并以此为关键字从小到大排序，那么我们就能保证，任意一条合法路径都会被我们统计到。&lt;/p&gt;
+&lt;p&gt;还是没那么难，有点套路。时间复杂度 &lt;span class=&#34;math inline&#34;&gt;\(\mathcal O(n^2)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;namespace XSC062 &amp;#123;
+using namespace fastIO;
+#define mkp std::make_pair
+using pii = std::pair&amp;lt;int, int&amp;gt;;
+const int lim = 1e6;
+const int maxn = 505;
+const int mod = 1e9 + 7;
+const int maxm = 1e6 + 5;
+struct _ &amp;#123; int x, y, w; &amp;#125;;
+std::set&amp;lt;pii&amp;gt; t;
+_ s[maxn], s1[maxn];
+int fac[maxm], f[maxn];
+int ex, ey, n1, n, ax, ay, bx, by;
+inline int gcd(int x, int y) &amp;#123;
+    return y ? gcd(y, x % y) : x;
+&amp;#125;
+inline int lcm(int x, int y) &amp;#123;
+    return x / gcd(x, y) * y;
+&amp;#125;
+pii Solve(int a, int b, int c,
+                int d, int e, int f) &amp;#123;
+    int N = 0, M = 0;
+    if (!a) &amp;#123;
+        if (c % b)
+            return mkp(-1, -1);
+        M = c / b, f -= M * e;
+        if (f % d)
+            return mkp(-1, -1);
+        N = f / d;
+    &amp;#125;
+    else if (!b) &amp;#123;
+        if (c % a)
+            return mkp(-1, -1);
+        N = c / a, f -= N * d;
+        if (f % e)
+            return mkp(-1, -1);
+        M = f / e;
+    &amp;#125;
+    else if (!d) &amp;#123;
+        if (f % e)
+            return mkp(-1, -1);
+        M = f / e, f -= M * b;
+        if (c % a)
+            return mkp(-1, -1);
+        N = c / a;
+    &amp;#125;
+    else if (!e) &amp;#123;
+        if (f % d)
+            return mkp(-1, -1);
+        N = f / d, c -= N * a;
+        if (c % b)
+            return mkp(-1, -1);
+        M = c / b;
+    &amp;#125;
+    else &amp;#123;
+        int g = lcm(b, e);
+        a *= g / b, c *= g / b, b = g;
+        d *= g / e, f *= g / e, e = g;
+        if ((c - f) % (a - d))
+            return mkp(-1, -1);
+        N = (c - f) / (a - d), c -= N * a;
+        if (c % b)
+            return mkp(-1, -1);
+        M = c / b;
+    &amp;#125;
+    return mkp(N, M);
+&amp;#125;
+inline int qkp(int x, int y) &amp;#123;
+    int res = 1;
+    while (y) &amp;#123;
+        if (y &amp;amp; 1)
+            (res *= x) %= mod;
+        (x *= x) %= mod;
+        y &amp;gt;&amp;gt;= 1;
+    &amp;#125;
+    return res;
+&amp;#125;
+inline int inv(int x) &amp;#123;
+    return qkp(x, mod - 2);
+&amp;#125;
+inline int A(int n, int m) &amp;#123;
+    return (fac[n] * inv(fac[n - m])) % mod;
+&amp;#125;
+inline int C(int n, int m) &amp;#123;
+    return (A(n, m) * inv(A(m, m))) % mod;
+&amp;#125;
+inline void Init(void) &amp;#123;
+    fac[0] = 1;
+    for (int i = 1; i &amp;lt;= lim; ++i)
+        fac[i] = (fac[i - 1] * i) % mod;
+    return;
+&amp;#125;
+int main() &amp;#123;
+    read(ex), read(ey), read(n1);
+    read(ax), read(ay), read(bx), read(by);
+    for (int i = 1; i &amp;lt;= n1; ++i) &amp;#123;
+        read(s1[i].x), read(s1[i].y);
+        pii t = Solve(ax, bx, s1[i].x,
+                        ay, by, s1[i].y);
+        s1[i].w = t.first + t.second;
+    &amp;#125;
+    std::sort(s1 + 1, s1 + n1 + 1,
+        [&amp;amp;](_ x, _ y) &amp;#123; return x.w &amp;lt; y.w; &amp;#125;);
+    Init(), f[0] = 1, ++n1;
+    s1[n1].x = ex, s1[n1].y = ey;
+    for (int i = 1; i &amp;lt;= n1; ++i) &amp;#123;
+        pii t = Solve(ax, bx, s1[i].x,
+                        ay, by, s1[i].y);
+        if (t.first &amp;lt; 0 || t.second &amp;lt; 0) &amp;#123;
+            if (i == n1) &amp;#123;
+                puts(&amp;quot;0&amp;quot;);
+                return 0;
+            &amp;#125;
+            continue;
+        &amp;#125;
+        s[++n] = s1[i];
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        for (int j = 1; j &amp;lt; i; ++j) &amp;#123;
+            pii t = Solve(ax, bx, s[i].x
+                - s[j].x, ay, by, s[i].y
+                - s[j].y);
+            if (t.first &amp;lt; 0 || t.second &amp;lt; 0)
+                continue;
+            (f[i] += (f[j] * C(t.first +
+                    t.second, t.first)) %
+                    mod) %= mod;
+        &amp;#125;
+        pii t = Solve(ax, bx, s[i].x,
+                    ay, by, s[i].y);
+        f[i] = (C(t.first + t.second,
+                t.first) + mod - f[i]) % mod;
+    &amp;#125;
+    print(f[n]);
+    return 0;
+&amp;#125;
+&amp;#125; // namespace XSC062&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
  ]]></description>
         </item>
     </channel>

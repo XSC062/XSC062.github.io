@@ -28,7 +28,9 @@ const searchPath = "/search.xml"
 <script src="/js/jQuery.js"></script>
 
 <!-- 载入 Valine -->
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script src="/js/Valine.min.js"></script>
+
 <!-- css 引入 -->
 
 <link rel="stylesheet" href="/css/layout.css">
@@ -70,7 +72,7 @@ const searchPath = "/search.xml"
               }
           });
       </script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
 
 	<!-- 搜索 -->
 <div id="search-bg">
@@ -84,12 +86,12 @@ const searchPath = "/search.xml"
 	<!-- 左对齐 logo -->
 	<a class="logo" href="/">
 		<img src="/images/icon.png"></img>
-		<div id="bartitle">
+		<div id="bartitle" class="text">
 			XSC062 的博客
 		</div>
 	</a>
 	<!-- 右对齐部分导航 -->
-	<div id="rightali">
+	<div id="rightali" class="serif">
 		<a class="item" id="Search" type="button">
 			<i class="btn text-muted fa fa-search" id="search-icon" disabled></i>
 		</a>
@@ -121,7 +123,7 @@ const searchPath = "/search.xml"
 
 
 <div class="main">
-	<div id="sidebar">
+	<div id="sidebar" class="text">
 		<aside id="toc">
 			<span id="toctitle">
 				<i class="fas fa-list"></i>
@@ -134,7 +136,7 @@ const searchPath = "/search.xml"
 		<div class="ui text container">
 			<span id="postcon">
 				<span id="postinfo">
-					<div class="ui post title">
+					<div class="ui post title serif">
 						<div id="fortitle" data-content="学习笔记：后缀数组">
 							学习笔记：后缀数组
 						</div>
@@ -163,66 +165,84 @@ const searchPath = "/search.xml"
 <span id="more"></span>
 <hr />
 <h2 id="定义">定义</h2>
-<p>显而易见一个长度为 <span class="math inline">\(n\)</span> 的字符串中有 <span class="math inline">\(n\)</span> 个长度分别为 <span class="math inline">\(1\sim n\)</span> 的后缀，如果我们对其按字典序排序，分别存储下排名 <span class="math inline">\(i\)</span> 的后缀 <span class="math inline">\(sa_i\)</span> 和每个后缀 <span class="math inline">\(i\)</span> 的排名 <span class="math inline">\(rk_i\)</span>。虽然看着挺没头没尾的，但是很有用。</p>
+<ul>
+<li>一个长度为 <span class="math inline">\(n\)</span> 的字符串中有 <span class="math inline">\(n\)</span> 个长度分别为 <span class="math inline">\(1\sim n\)</span> 的后缀</li>
+<li>对其按字典序排序，分别存储下排名为 <span class="math inline">\(i\)</span> 的后缀编号 <span class="math inline">\(sa_i\)</span> 和每个后缀 <span class="math inline">\(i\)</span> 的排名 <span class="math inline">\(rk_i\)</span>。</li>
+<li>这样相当于构造了有序的『前缀的后缀』，所以会有很多字符串功能。</li>
+</ul>
 <h2 id="求解">求解</h2>
 <h3 id="哈希-排序">哈希 + 排序</h3>
-<p>直接把所有后缀拿来排序的话，字符串比较是 <span class="math inline">\(O(n)\)</span> 的。如果我们用哈希 + 二分优化比较过程，就可以把整个排序优化到 <span class="math inline">\(O(n\log^2 n)\)</span>。</p>
+<ul>
+<li>直接把所有后缀拿来排序的话，字符串比较是 <span class="math inline">\(O(n)\)</span> 的。</li>
+<li>用哈希 + 二分优化比较过程，就可以把整个排序优化到 <span class="math inline">\(O(n\log^2 n)\)</span>。</li>
+</ul>
 <h3 id="倍增">倍增</h3>
-<p>先对所有后缀按 <strong>第一个字符</strong> 排序，记排序后排名序列为 <span class="math inline">\(a\)</span>。</p>
-<p>那么怎么按 <strong>前两个字符</strong> 排序呢？对于第 <span class="math inline">\(i\)</span> 组字符，我们用 <span class="math inline">\((a_i,a_{i+1})\)</span> 双关键字排序即可。记此时排名序列为 <span class="math inline">\(b\)</span>，那么如果需要按照前四个字符排序，用 <span class="math inline">\((b_i,b_{i+2})\)</span> 进行双关键字排序即可。总共需要进行 <span class="math inline">\(\log n\)</span> 次排序。复杂度为 <span class="math inline">\(O(n\log^2n)\)</span>。</p>
-<p>此时我们注意到排名数组的值域为 <span class="math inline">\(n\)</span>，那么我们用桶排就能少一个 <span class="math inline">\(\log\)</span>。</p>
+<ul>
+<li>首先，把后缀按照 <span class="math inline">\(s_i\)</span>，即<strong>第一个字符</strong>排序；记排序后排名序列为 <span class="math inline">\(a\)</span>。</li>
+<li>相似地，对于第 <span class="math inline">\(i\)</span> 个后缀，我们用 <span class="math inline">\((a_i,a_{i+1})\)</span> 双关键字排序，即可按照后缀的<strong>前两个字符</strong>排序；记此时排名序列为 <span class="math inline">\(b\)</span>。</li>
+<li>进一步地，用 <span class="math inline">\((b_i,b_{i+2})\)</span> 进行双关键字排序，即可实现按后缀的<strong>前四个字符</strong>排序。</li>
+<li>进行 <span class="math inline">\(\log n\)</span> 次双关键字排序后，就能完成对整个后缀的正确排序。</li>
+<li>由于把字符串排序压缩成了值域很小的整数排序，用桶排就可以减一个 <span class="math inline">\(\log\)</span>，实现 <span class="math inline">\(O(n\log n)\)</span> 求 SA。</li>
+</ul>
 <h2 id="实现">实现</h2>
-<p>哈希很好实现，这里就按下不表，主要讲解倍增法的实现。</p>
-<p>描述起来很简单，实现起来很要命。OI wiki 上的实现算是相对好理解的：</p>
-<p>首先了解双关键字桶排的方法，首先用单关键字桶排完成对 <strong>第二关键字</strong> 的排序；对于第一关键字，令桶 <span class="math inline">\(i\)</span> 记录前 <span class="math inline">\(i\)</span> 个元素的数量；遍历排序后的第二关键字数组，将元素放到桶中记录数值对应的下标中，并将桶中数值 <span class="math inline">\(-1\)</span>。实际上桶 <span class="math inline">\(c\)</span> 充当计算下标范围的作用，<span class="math inline">\((c_{i-1},c_i]\)</span> 即为 <span class="math inline">\(i\)</span> 分布的范围。</p>
-<p>显然，当且仅当排名种类为 <span class="math inline">\(n\)</span>，即没有并列排名时，排序完成。设本轮区间长度为 <span class="math inline">\(w\)</span>，对于一轮操作：</p>
+<ul>
+<li>哈希很好实现，这里按下不表。主要讲解倍增法的实现。</li>
+<li><p>首先了解双关键字桶排的方法：</p>
+<p>计算出<strong>第一关键字</strong>的桶序列，令桶 <span class="math inline">\(c_i\)</span> 记录<strong>前</strong> <span class="math inline">\(i\)</span> 个元素的数量。这样做的目的是让桶 <span class="math inline">\(c\)</span> 充当计算下标范围的作用，<span class="math inline">\((c_{i-1},c_i]\)</span> 即为 <span class="math inline">\(i\)</span> 分布的范围。</p>
+<p>遍历<strong>排序后的第二关键字数组</strong>（在 SA 中，排序在上一轮完成），将元素放到第一关键字在 <span class="math inline">\(c\)</span> 中记录的下标中，并将 <span class="math inline">\(c\)</span> 中数值 <span class="math inline">\(-1\)</span>。</p>
+<p>显然当排名种类为 <span class="math inline">\(n\)</span>，即没有并列排名时，排序完成。</p></li>
+<li><p>设本轮区间长度为 <span class="math inline">\(2w\)</span>，对于一轮操作：</p>
 <ol type="1">
-<li>计算每个区间按后半段 <span class="math inline">\(\frac w2\)</span> 长度字符排序的结果：<span class="math inline">\((n-w,n]\)</span> 开头的区间后半段均为空，直接放在序列首端；接着按照上一轮 <span class="math inline">\(sa\)</span> 结果，把能够作为后半段的元素依次放入。</li>
-<li>依照上一轮的 <span class="math inline">\(rk\)</span> 作为前半段排名，进行双关键字桶排。</li>
-<li>依照 <span class="math inline">\(sa\)</span> 和第二关键字（处理并列），求出 <span class="math inline">\(rk\)</span>。</li>
-</ol>
+<li>计算每个区间按后 <span class="math inline">\(w\)</span> 长度字符排序的结果：<span class="math inline">\((n-w,n]\)</span> 开头的区间后半段均为空，直接放在序列首端；接着按照上一轮 <span class="math inline">\(sa\)</span> 结果，把能够作为后半段的元素依次放入。</li>
+<li>依照上一轮的 <span class="math inline">\(rk\)</span> 作为第二关键字排名，进行双关键字桶排。</li>
+<li>依照得到的 <span class="math inline">\(sa\)</span> 和第二关键字的排名，处理并列，求出这一轮的 <span class="math inline">\(rk\)</span>。</li>
+</ol></li>
+</ul>
 <details>
-<pre class="cpp"><code>std::vector&lt;int&gt; la(n + 2);
-std::copy(s.begin(), s.end(), rk.begin());
-int m = 128;
+<p>倒着写是为了保证所谓稳定性。然而并没有什么所谓。</p>
+<pre class="cpp"><code>std::vector&lt;int&gt; sa(n + 1), rk(2 * n + 1);
 &#123;
-    std::vector&lt;int&gt; c(m + 1);
+    int m = 128;
+    std::vector&lt;int&gt; c(std::max(n, m) + 1), id, la(2 * n + 1);
+    std::copy(s.begin() + 1, s.end(), rk.begin() + 1);
     for (int i = 1; i &lt;= n; ++i)
         ++c[rk[i]];
-    std::partial_sum(c.begin(), c.end(), c.begin());
+    std::partial_sum(c.begin() + 1, c.begin() + m + 1, c.begin() + 1);
     for (int i = n; i; --i)
         sa[c[rk[i]]--] = i;
-&#125; 
-for (int w = 1, p; ; w &lt;&lt;= 1, m = p) &#123;
-    std::vector&lt;int&gt; id(1);
-    for (int i = n - w + 1; i &lt;= n; ++i)
-        id.push_back(i);
-    for (int i = 1; i &lt;= n; ++i)
-        if (sa[i] &gt; w)
-            id.push_back(sa[i] - w);
-    std::vector&lt;int&gt; c(m + 1);
-    for (int i = 1; i &lt;= n; ++i)
-        ++c[rk[i]];
-    std::partial_sum(c.begin(), c.end(), c.begin());
-    for (int i = n; i; --i)
-        sa[c[rk[id[i]]]--] = id[i];
-    p = 0;
-    std::copy(rk.begin(), rk.end(), la.begin());
-    for (int i = 1; i &lt;= n; ++i)
-        if (la[sa[i]] == la[sa[i - 1]] &amp;&amp; la[sa[i] + w] == la[sa[i - 1] + w])
-            rk[sa[i]] = p;
-        else
-            rk[sa[i]] = ++p;
-    if (p == n)
-        break;
+    for (int w = 1, p; ; w &lt;&lt;= 1, m = p) &#123;
+        id.clear(), id.push_back(-1);
+        for (int i = n - w + 1; i &lt;= n; ++i)
+            id.push_back(i);
+        for (int i = 1; i &lt;= n; ++i)
+            if (sa[i] &gt; w)
+                id.push_back(sa[i] - w);
+        std::fill(c.begin() + 1, c.begin() + m + 1, 0);
+        for (int i = 1; i &lt;= n; ++i)
+            ++c[rk[i]];
+        std::partial_sum(c.begin() + 1, c.begin() + m + 1, c.begin() + 1);
+        for (int i = n; i; --i)
+            sa[c[rk[id[i]]]--] = id[i];
+        p = 0;
+        std::copy(rk.begin() + 1, rk.end(), la.begin() + 1);
+        for (int i = 1; i &lt;= n; ++i)
+            if (i != 1 &amp;&amp; la[sa[i]] == la[sa[i - 1]] &amp;&amp; la[sa[i] + w] == la[sa[i - 1] + w])
+                rk[sa[i]] = p;
+            else
+                rk[sa[i]] = ++p;
+        if (p == n)
+            break;
+    &#125;
 &#125;</code></pre>
 </details>
 <hr />
 <h2 id="纯-sa-的应用">纯 SA 的应用</h2>
 <h3 id="最小表示法">最小表示法</h3>
-<p>模板：<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1368" class="uri">https://www.luogu.com.cn/problem/P1368</a>。</p>
-<p>对于循环位移相关要求，首先考虑将字符串重复一遍。</p>
-<p>在 <span class="math inline">\(ss\)</span> 中找到排名第一个 <span class="math inline">\(sa_i\le n\)</span> 即为答案。</p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P1368" class="uri">https://www.luogu.com.cn/problem/P1368</a>。</p>
+<ul>
+<li>对于循环位移相关要求，首先考虑将 <span class="math inline">\(\texttt s\)</span> 重复一遍。</li>
+<li>在 <span class="math inline">\(\texttt {ss}\)</span> 中找到第一个 <span class="math inline">\(sa_i\le n\)</span> 即为答案。</li>
+</ul>
 <details>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
 int main() &#123;
@@ -285,8 +305,10 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="字符串匹配">字符串匹配</h3>
-<p>二分，复杂度 <span class="math inline">\(O(|S|\log |T|)\)</span>。求出现次数则二分左右边界。</p>
-<p>太麻烦了且没有实际应用价值，代码略。</p>
+<ul>
+<li>二分，复杂度 <span class="math inline">\(O(|S|\log |T|)\)</span>。求出现次数则二分左右边界。</li>
+<li>太麻烦了且没有实际应用价值，代码略。</li>
+</ul>
 <hr />
 <h2 id="height-数组">height 数组</h2>
 <p>定义 <span class="math inline">\(h_i=\text {lcp}(sa_i, sa_i-1)\)</span>，特别地，<span class="math inline">\(h_1=0\)</span>。</p>
@@ -1017,7 +1039,7 @@ int main() &#123;
 						
 					</div>
 				</div>
-				<div id="vcomments" class="yahei"></div>
+				<div id="vcomments" class="text"></div>
 <script>
 	new Valine({
 		el: '#vcomments',
@@ -1033,7 +1055,7 @@ int main() &#123;
 				['nick']
 			,
 		placeholder: "The world is but a little place after all...\n能够根据邮箱获取你的 Gravatar 头像。昵称是必填项，长度需不低于 3。",
-		avatar: 'mp',
+		avatar: 'identicon',
 		avatar_cdn: 'https://cravatar.cn/avatar/',
 		emojiCDN: 'https://xsc062.netlify.app/em/', 
 		emojiMaps: {
@@ -1119,11 +1141,9 @@ int main() &#123;
 	</div>
 </div>
     <!-- 页脚开始 -->
-<div id="footer" class="yahei">
+<div id="footer" class="serif">
     Powered by
-    <a target="_blank" rel="noopener" href="https://hexo.io">
-        Hexo
-    </a>
+    <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>
     &
     <a href="/about-this-theme">
         iwll
@@ -1148,7 +1168,7 @@ int main() &#123;
                     const vnick = vnick_dom.innerHTML;
                     if (vnick === author) {
                         vnick_dom.innerHTML =
-                        `${vnick} <span id="rootitem" class="fira">root</span>`
+                        `${vnick} <span id="rootitem" class="code">root</span>`
                     }
                 }
             }

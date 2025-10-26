@@ -754,7 +754,7 @@ Prism.languages.c = Prism.languages.extend("clike", {
     },
     "typename":/\b(?:asm|auto|bool|char|class|const|consteval|constexpr|decltype|double|enum|explicit|exturn|float|friend|inline|int|long|mutable|namespace|private|protected|public|register|short|signed|static|struct|template|thread_local|typename|union|unsigned|virtual|void|volatile|wchar_t)\b/,
     "this": /\bthis\b/,
-    keyword: /\b(?:_Alignas|_Alignof|_Atomic|_Bool|_Complex|_Generic|_Imaginary|_Noreturn|_Static_assert|_Thread_local|__attribute__|asm|auto|break|case|char|const|continue|default|do|double|else|enum|extern|float|for|goto|if|inline|int|long|register|return|short|signed|sizeof|static|struct|switch|typedef|typeof|union|unsigned|void|volatile|while)\b/,
+    keyword: /\b(?:_Alignas|_Alignof|_Atomic|_Bool|_Complex|_Generic|_Imaginary|_Noreturn|_Static_assert|_Thread_local|__attribute__|asm|auto|bool|break|case|char|const|continue|default|do|double|else|enum|extern|float|for|goto|if|inline|int|long|register|return|short|signed|sizeof|static|struct|switch|typedef|typeof|union|unsigned|void|volatile|while)\b/,
     function: /\b[a-z_]\w*(?=\s*(?:\(|\[|\.))/i,
     number: /(?:\b0x(?:[\da-f]+(?:\.[\da-f]*)?|\.[\da-f]+)(?:p[+-]?\d+)?|(?:\b\d+(?:\.\d*)?|\B\.\d+)(?:e[+-]?\d+)?)[ful]{0,4}/i,
     operator: />>=?|<<=?|->|([-+&|:])\1|[?:~]|[-+*/%&|^!=<>]=?/
@@ -810,6 +810,7 @@ delete Prism.languages.c.boolean;
         return t.source
     }
     ));
+    // MODIFIED
     e.languages.cpp = e.languages.extend("c", {
         "class-name": [{
             pattern: RegExp("(\\b(?:class|concept|enum|struct|typename)\\s+)(?!<keyword>)\\w+".replace(/<keyword>/g, (function() {

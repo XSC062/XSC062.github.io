@@ -1,3 +1,4 @@
+// 魔改ed from @UniGravity, https://www.luogu.com.cn/user/582360
 async function loadJSON(id) {
     try {
         const response = await fetch(`dat${id}.json`); // 同目录下的 JSON 文件
@@ -15,50 +16,50 @@ async function searchContent() {
 
     // 清空结果容器
     resultsContainer.innerHTML = '';
-    
-    errInput=0;
-    jsonData=0,results=0;
+
+    errInput = 0;
+    jsonData = 0, results = 0;
 
     if (!searchValue) {
-        errInput=1;
-    }else{
-        let searchValue2=searchValue.slice(1);
-        numid=Number(searchValue2);
-        if(numid==NaN)errInput=1;
-        else{
-            qryid=0;
-            if(1000<=numid&&numid<2000)qryid=1;
-            if(2000<=numid&&numid<3000)qryid=2;
-            if(3000<=numid&&numid<4000)qryid=3;
-            if(4000<=numid&&numid<5000)qryid=4;
-            if(5000<=numid&&numid<6000)qryid=5;
-            if(6000<=numid&&numid<7000)qryid=6;
-            if(7000<=numid&&numid<8000)qryid=7;
-            if(8000<=numid&&numid<9000)qryid=8;
-            if(9000<=numid&&numid<10000)qryid=9;
-            if(10000<=numid&&numid<11000)qryid=10;
-            if(11000<=numid&&numid<12000)qryid=11;
-            if(12000<=numid&&numid<13000)qryid=12;
-            if(13000<=numid&&numid<14000)qryid=13;
+        errInput = 1;
+    } else {
+        let searchValue2 = searchValue.slice(1);
+        numid = Number(searchValue2);
+        if (numid == NaN) errInput = 1;
+        else {
+            qryid = 0;
+            if (1000 <= numid && numid < 2000) qryid = 1;
+            if (2000 <= numid && numid < 3000) qryid = 2;
+            if (3000 <= numid && numid < 4000) qryid = 3;
+            if (4000 <= numid && numid < 5000) qryid = 4;
+            if (5000 <= numid && numid < 6000) qryid = 5;
+            if (6000 <= numid && numid < 7000) qryid = 6;
+            if (7000 <= numid && numid < 8000) qryid = 7;
+            if (8000 <= numid && numid < 9000) qryid = 8;
+            if (9000 <= numid && numid < 10000) qryid = 9;
+            if (10000 <= numid && numid < 11000) qryid = 10;
+            if (11000 <= numid && numid < 12000) qryid = 11;
+            if (12000 <= numid && numid < 13000) qryid = 12;
+            if (13000 <= numid && numid < 14000) qryid = 13;
             // if(14000<=numid&&numid<15000)qryid=14;
 
-            if(!qryid)errInput=1;
-            else{
+            if (!qryid) errInput = 1;
+            else {
                 console.log(qryid);
                 // 在JSON数据中查找匹配项
                 // const 
                 jsonData = await loadJSON(qryid);
                 // const 
                 results = jsonData.filter(item => item.id === searchValue);
-                
+
                 if (results.length === 0) {
-                    errInput=1;
+                    errInput = 1;
                 }
             }
         }
     }
-    
-    if(errInput){
+
+    if (errInput) {
         resultsContainer.innerHTML = `
             <div class="problembox">
                 <div style="display: flex;justify-content: center;">
@@ -82,20 +83,20 @@ async function searchContent() {
         return;
     }
 
-    const diffcolor=["#BFBFBF","#FE4C61","#F39C11","#FFC31C","#52C41A","#3498DB","#9D3DCF","#0E1D69"];
-    const difftext=["暂无评定","入门","普及-","普及/提高-","普及+/提高","提高+/省选-","省选/NOI-","NOI/NOI+/CTSC"];
-    
+    const diffcolor = ["#BFBFBF", "#FE4C61", "#F39C11", "#FFC31C", "#52C41A", "#3498DB", "#9D3DCF", "#0E1D69"];
+    const difftext = ["暂无评定", "入门", "普及-", "普及/提高-", "普及+/提高", "提高+/省选-", "省选/NOI-", "NOI/NOI+/CTSC"];
+
     // 显示匹配结果
     results.forEach(item => {
         const resultElement = document.createElement('div');
         resultElement.className = 'result-item';
-        
+
         // // 高亮显示搜索词
         // const highlightedContent = item.content.replace(
         //     new RegExp(searchValue, 'gi'), 
         //     match => `<span class="highlight">${match}</span>`
         // );
-        
+
         resultElement.innerHTML = `
             <div class="problembox">
                 <a style="margin-top:-3px;font-weight:bold;font-size:24px;">${item.title}</a><a style="float: right;" href="https://www.luogu.com.cn/chat?uid=582360"><button class="modal-button">反馈问题</button></a><br><br>
@@ -126,19 +127,123 @@ async function searchContent() {
             </div>
             
         `;
-        
+
         resultsContainer.appendChild(resultElement);
-        
-        const btn1=document.getElementById("hintbtn1");const div1=document.getElementById("hintext1");const box1=document.getElementById("ansbox1");const customConfirm1=document.getElementById('customConfirm1');const confirmYes1=document.getElementById('confirmYes1');const confirmNo1=document.getElementById('confirmNo1');btn1.addEventListener("click",()=>{if(btn1.classList.contains("hintbtndown")){btn1.classList.toggle("hintbtndown");div1.classList.toggle("transhint");box1.classList.toggle("bigansbox");}else{customConfirm1.style.display='flex';}});confirmYes1.addEventListener('click',()=>{customConfirm1.style.display='none';btn1.classList.toggle("hintbtndown");div1.classList.toggle("transhint");box1.classList.toggle("bigansbox");});confirmNo1.addEventListener('click',()=>{customConfirm1.style.display='none';});
-        const btn2=document.getElementById("hintbtn2");const div2=document.getElementById("hintext2");const box2=document.getElementById("ansbox2");const customConfirm2=document.getElementById('customConfirm2');const confirmYes2=document.getElementById('confirmYes2');const confirmNo2=document.getElementById('confirmNo2');btn2.addEventListener("click",()=>{if(btn2.classList.contains("hintbtndown")){btn2.classList.toggle("hintbtndown");div2.classList.toggle("transhint");box2.classList.toggle("bigansbox");}else{customConfirm2.style.display='flex';}});confirmYes2.addEventListener('click',()=>{customConfirm2.style.display='none';btn2.classList.toggle("hintbtndown");div2.classList.toggle("transhint");box2.classList.toggle("bigansbox");});confirmNo2.addEventListener('click',()=>{customConfirm2.style.display='none';});
-        const btn3=document.getElementById("hintbtn3");const div3=document.getElementById("hintext3");const box3=document.getElementById("ansbox3");const customConfirm3=document.getElementById('customConfirm3');const confirmYes3=document.getElementById('confirmYes3');const confirmNo3=document.getElementById('confirmNo3');btn3.addEventListener("click",()=>{if(btn3.classList.contains("hintbtndown")){btn3.classList.toggle("hintbtndown");div3.classList.toggle("transhint");box3.classList.toggle("bigansbox");}else{customConfirm3.style.display='flex';}});confirmYes3.addEventListener('click',()=>{customConfirm3.style.display='none';btn3.classList.toggle("hintbtndown");div3.classList.toggle("transhint");box3.classList.toggle("bigansbox");});confirmNo3.addEventListener('click',()=>{customConfirm3.style.display='none';});
-        const btn4=document.getElementById("hintbtn4");const div4=document.getElementById("hintext4");const box4=document.getElementById("ansbox4");const customConfirm4=document.getElementById('customConfirm4');const confirmYes4=document.getElementById('confirmYes4');const confirmNo4=document.getElementById('confirmNo4');btn4.addEventListener("click",()=>{if(btn4.classList.contains("hintbtndown")){btn4.classList.toggle("hintbtndown");div4.classList.toggle("transhint");box4.classList.toggle("bigansbox");}else{customConfirm4.style.display='flex';}});confirmYes4.addEventListener('click',()=>{customConfirm4.style.display='none';btn4.classList.toggle("hintbtndown");div4.classList.toggle("transhint");box4.classList.toggle("bigansbox");});confirmNo4.addEventListener('click',()=>{customConfirm4.style.display='none';});
-        const btn5=document.getElementById("hintbtn5");const div5=document.getElementById("hintext5");const box5=document.getElementById("ansbox5");const customConfirm5=document.getElementById('customConfirm5');const confirmYes5=document.getElementById('confirmYes5');const confirmNo5=document.getElementById('confirmNo5');btn5.addEventListener("click",()=>{if(btn5.classList.contains("hintbtndown")){btn5.classList.toggle("hintbtndown");div5.classList.toggle("transhint");box5.classList.toggle("bigansbox");}else{customConfirm5.style.display='flex';}});confirmYes5.addEventListener('click',()=>{customConfirm5.style.display='none';btn5.classList.toggle("hintbtndown");div5.classList.toggle("transhint");box5.classList.toggle("bigansbox");});confirmNo5.addEventListener('click',()=>{customConfirm5.style.display='none';});
+
+        const btn1 = document.getElementById("hintbtn1");
+        const div1 = document.getElementById("hintext1");
+        const box1 = document.getElementById("ansbox1");
+        const customConfirm1 = document.getElementById('customConfirm1');
+        const confirmYes1 = document.getElementById('confirmYes1');
+        const confirmNo1 = document.getElementById('confirmNo1');
+        btn1.addEventListener("click", () => {
+            customConfirm1.style.display = 'none';
+            btn1.classList.toggle("hintbtndown");
+            div1.classList.toggle("transhint");
+            box1.classList.toggle("bigansbox");
+        });
+        confirmYes1.addEventListener('click', () => {
+            customConfirm1.style.display = 'none';
+            btn1.classList.toggle("hintbtndown");
+            div1.classList.toggle("transhint");
+            box1.classList.toggle("bigansbox");
+        });
+        confirmNo1.addEventListener('click', () => { 
+            customConfirm1.style.display = 'none';
+        });
+
+        const btn2 = document.getElementById("hintbtn2");
+        const div2 = document.getElementById("hintext2");
+        const box2 = document.getElementById("ansbox2");
+        const customConfirm2 = document.getElementById('customConfirm2');
+        const confirmYes2 = document.getElementById('confirmYes2');
+        const confirmNo2 = document.getElementById('confirmNo2');
+        btn2.addEventListener("click", () => {
+            customConfirm2.style.display = 'none';
+            btn2.classList.toggle("hintbtndown");
+            div2.classList.toggle("transhint");
+            box2.classList.toggle("bigansbox");
+        });
+        confirmYes2.addEventListener('click', () => {
+            customConfirm2.style.display = 'none';
+            btn2.classList.toggle("hintbtndown");
+            div2.classList.toggle("transhint");
+            box2.classList.toggle("bigansbox");
+        });
+        confirmNo2.addEventListener('click', () => { 
+            customConfirm2.style.display = 'none';
+        });
+
+        const btn3 = document.getElementById("hintbtn3");
+        const div3 = document.getElementById("hintext3");
+        const box3 = document.getElementById("ansbox3");
+        const customConfirm3 = document.getElementById('customConfirm3');
+        const confirmYes3 = document.getElementById('confirmYes3');
+        const confirmNo3 = document.getElementById('confirmNo3');
+        btn3.addEventListener("click", () => {
+            customConfirm3.style.display = 'none';
+            btn3.classList.toggle("hintbtndown");
+            div3.classList.toggle("transhint");
+            box3.classList.toggle("bigansbox");
+        });
+        confirmYes3.addEventListener('click', () => {
+            customConfirm3.style.display = 'none';
+            btn3.classList.toggle("hintbtndown");
+            div3.classList.toggle("transhint");
+            box3.classList.toggle("bigansbox");
+        });
+        confirmNo3.addEventListener('click', () => { 
+            customConfirm3.style.display = 'none';
+        });
+
+        const btn4 = document.getElementById("hintbtn4");
+        const div4 = document.getElementById("hintext4");
+        const box4 = document.getElementById("ansbox4");
+        const customConfirm4 = document.getElementById('customConfirm4');
+        const confirmYes4 = document.getElementById('confirmYes4');
+        const confirmNo4 = document.getElementById('confirmNo4');
+        btn4.addEventListener("click", () => {
+            customConfirm4.style.display = 'none';
+            btn4.classList.toggle("hintbtndown");
+            div4.classList.toggle("transhint");
+            box4.classList.toggle("bigansbox");
+        });
+        confirmYes4.addEventListener('click', () => {
+            customConfirm4.style.display = 'none';
+            btn4.classList.toggle("hintbtndown");
+            div4.classList.toggle("transhint");
+            box4.classList.toggle("bigansbox");
+        });
+        confirmNo4.addEventListener('click', () => { 
+            customConfirm4.style.display = 'none';
+        });
+
+        const btn5 = document.getElementById("hintbtn5");
+        const div5 = document.getElementById("hintext5");
+        const box5 = document.getElementById("ansbox5");
+        const customConfirm5 = document.getElementById('customConfirm5');
+        const confirmYes5 = document.getElementById('confirmYes5');
+        const confirmNo5 = document.getElementById('confirmNo5');
+        btn5.addEventListener("click", () => {
+            customConfirm5.style.display = 'none';
+            btn5.classList.toggle("hintbtndown");
+            div5.classList.toggle("transhint");
+            box5.classList.toggle("bigansbox");
+        });
+        confirmYes5.addEventListener('click', () => {
+            customConfirm5.style.display = 'none';
+            btn5.classList.toggle("hintbtndown");
+            div5.classList.toggle("transhint");
+            box5.classList.toggle("bigansbox");
+        });
+        confirmNo5.addEventListener('click', () => { 
+            customConfirm5.style.display = 'none';
+        });
     });
 }
 
 // 添加键盘支持
-document.getElementById('searchInput').addEventListener('keypress', function(e) {
+document.getElementById('searchInput').addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
         searchContent();
     }

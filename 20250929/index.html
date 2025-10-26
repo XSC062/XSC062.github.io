@@ -28,7 +28,9 @@ const searchPath = "/search.xml"
 <script src="/js/jQuery.js"></script>
 
 <!-- 载入 Valine -->
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script src="/js/Valine.min.js"></script>
+
 <!-- css 引入 -->
 
 <link rel="stylesheet" href="/css/layout.css">
@@ -70,7 +72,7 @@ const searchPath = "/search.xml"
               }
           });
       </script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
 
 	<!-- 搜索 -->
 <div id="search-bg">
@@ -84,12 +86,12 @@ const searchPath = "/search.xml"
 	<!-- 左对齐 logo -->
 	<a class="logo" href="/">
 		<img src="/images/icon.png"></img>
-		<div id="bartitle">
+		<div id="bartitle" class="text">
 			XSC062 的博客
 		</div>
 	</a>
 	<!-- 右对齐部分导航 -->
-	<div id="rightali">
+	<div id="rightali" class="serif">
 		<a class="item" id="Search" type="button">
 			<i class="btn text-muted fa fa-search" id="search-icon" disabled></i>
 		</a>
@@ -121,20 +123,20 @@ const searchPath = "/search.xml"
 
 
 <div class="main">
-	<div id="sidebar">
+	<div id="sidebar" class="text">
 		<aside id="toc">
 			<span id="toctitle">
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E5%85%AC%E5%80%8D%E6%A0%91"><span class="toc-text">最小公倍树</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%89%B2"><span class="toc-text">色</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dfs-trees"><span class="toc-text">DFS Trees</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#minimum-spanning-tree-for-each-edge"><span class="toc-text">Minimum spanning tree for each edge</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#minimum-spanning-tree"><span class="toc-text">Minimum Spanning Tree</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#power-tree"><span class="toc-text">Power Tree</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#another-minimum-spanning-tree"><span class="toc-text">Another Minimum Spanning Tree</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#a---design-tutorial-inverse-the-problem"><span class="toc-text">A - Design Tutorial: Inverse the Problem</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b---phoenix-and-earthquake"><span class="toc-text">B - Phoenix and Earthquake</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E5%BA%A6%E9%99%90%E5%88%B6%E7%94%9F%E6%88%90%E6%A0%91-easy-version"><span class="toc-text">最小度限制生成树 (Easy Version)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E5%BA%A6%E9%99%90%E5%88%B6%E7%94%9F%E6%88%90%E6%A0%91-hard-version"><span class="toc-text">最小度限制生成树 (Hard Version)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E5%BA%A6%E9%99%90%E5%88%B6%E7%94%9F%E6%88%90%E6%A0%91-extreme-version"><span class="toc-text">最小度限制生成树 (Extreme Version)</span></a></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
 		<div class="ui text container">
 			<span id="postcon">
 				<span id="postinfo">
-					<div class="ui post title">
+					<div class="ui post title serif">
 						<div id="fortitle" data-content="生成树练习">
 							生成树练习
 						</div>
@@ -149,13 +151,623 @@ const searchPath = "/search.xml"
 			</span>
 			<div id="posttags" class="dotted border">
 				
-					<span style="color: #888;">暂无标签</span>
+					
+						<a href="/tags/最小生成树/" class="citem">最小生成树</a>
+					
 				
 			</div>
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
-				
+				<p>zyz /bx /bx /bx</p>
+<span id="more"></span>
+<p><a href="图论杂谈%20by%20Para.pdf">图论杂谈 by Para.pdf</a></p>
+<hr />
+<h2 id="最小公倍树">最小公倍树</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P8207" class="uri">https://www.luogu.com.cn/problem/P8207</a></p>
+<ul>
+<li>会想到从数论角度优化。需要想到<strong>最小化 lcm <span class="math inline">\(\to\)</span> 最大化 gcd。</strong></li>
+<li><p>枚举 gcd <span class="math inline">\(u\)</span>，那么 <span class="math inline">\(u\)</span> 的倍数在 <span class="math inline">\([L,R]\)</span> 中呈现为 <span class="math inline">\(k\cdot u,(k+1)\cdot u,(k+2)\cdot u,\cdots\)</span>。<strong>虽然这些数两两之间的 gcd 并不一定为 <span class="math inline">\(u\)</span>，但我们在枚举时『钦定』<span class="math inline">\(u\)</span> 就是 gcd，故贪心地将所有 <span class="math inline">\(k+i\)</span> 和 <span class="math inline">\(k\)</span> 连边。</strong></p>
+<p>这种钦定的思想是很重要但我不太容易想到的。许多关于『最优化』的转化都会用到这种钦定的想法。</p></li>
+<li><p>优化建图后跑 Kruskal 即可。</p></li>
+</ul>
+<details>
+<p>古老代码</p>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+#define int long long
+namespace fastIO &#123;
+const int LEN = (1 &lt;&lt; 20);
+#ifdef ONLINE_JUDGE
+inline int nec(void) &#123;
+    static char buf[LEN], *p = buf, *e = buf;
+    if (p == e) &#123;
+        e = buf + fread(buf, 1, LEN, stdin);
+        if (e == buf) return EOF;
+        p = buf;
+    &#125;
+    return *p++;
+&#125;
+#else
+#define nec getchar
+#endif
+inline bool read(int &amp;x) &#123;
+    x = 0;
+    bool f = 0;
+    char ch = nec();
+    while (ch &lt; &#39;0&#39; || ch &gt; &#39;9&#39;) &#123;
+        if (ch == EOF) return 0;
+        if (ch == &#39;-&#39;) f = 1;
+        ch = nec();
+    &#125;
+    while (ch &gt;= &#39;0&#39; &amp;&amp; ch &lt;= &#39;9&#39;) &#123;
+        x = x * 10 + ch - &#39;0&#39;;
+        ch = nec();
+    &#125;
+    if (f) x = -x;
+    return 1;
+&#125;
+void print(int x) &#123;
+    if (x &lt; 0)
+        putchar(&#39;-&#39;), x = -x;
+    if (x &gt;= 10) print(x / 10);
+    putchar(x % 10 + &#39;0&#39;);
+    return;
+&#125;
+void print(int x, char ch) &#123;
+    print(x), putchar(ch);
+    return;
+&#125;
+&#125; // namespace fastIO
+namespace XSC062 &#123;
+using namespace fastIO;
+const int maxn = 1e6 + 5;
+struct _ &#123;
+    int x, y, w;
+    _() &#123;&#125;
+    _(int x1, int y1, int w1) &#123;
+        x = x1, y = y1, w = w1;
+    &#125;
+    bool operator&lt; (const _ &amp;q) const &#123;
+        return w &lt; q.w;
+    &#125;
+&#125;;
+int f[maxn];
+std::vector&lt;_&gt; e;
+int n, res, l, r;
+int find(int x) &#123; return x == f[x] ? x : f[x] = find(f[x]); &#125;
+void merge(int x, int y) &#123; f[find(x)] = find(y); &#125;
+int gcd(int x, int y) &#123; return y ? gcd(y, x % y) : x; &#125;
+int lcm(int x, int y) &#123; return x / gcd(x, y) * y; &#125;
+int main() &#123;
+    read(l), read(r);
+    for (int i = 1; i &lt;= r; ++i) &#123;
+        f[i] = i;
+        int x = ((l + i - 1) / i) * i;
+        for(int y = x + i; y &lt;= r; y += i)
+            e.emplace_back(x, y, lcm(x, y));
+    &#125;
+    std::sort(e.begin(), e.end());
+    for (auto i : e) &#123;
+        if (find(i.x) != find(i.y))
+            merge(i.x, i.y), res += i.w;
+    &#125;
+    print(res, &#39;\n&#39;);
+    return 0;
+&#125;
+&#125; // namespace XSC062
+#undef int
+int main() &#123;
+    XSC062::main();
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="色">色</h2>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/problem/46791" class="uri">http://222.180.160.110:61235/problem/46791</a></p>
+<ul>
+<li>容易发现相当于在问最短的边，满足两端颜色不同</li>
+<li><p>进一步地，<strong>『最短边』问题应该思考边是否一定在 mst 上</strong>，就可以借助树的结构。考虑证明：</p>
+<p>若 Kruskal 时，边两端的连通块内部都是同色的，且二者不同色，则这条边是最短的异色边。</p></li>
+<li><p>问题转化为问树上最短异色边。乍一看好像和图没什么区别，困境还是『一次修改影响边数太多』，或『无法简单判定边的类型转化』。</p>
+<p>树上问题经验不足。可以<strong>分为儿子和父亲维护</strong>，儿子<strong>整体维护</strong>每个颜色的个数，对父亲<strong>暴力修改</strong>即可。</p></li>
+<li>另一种做法是，忽略 mst 性质，对图上的<strong>边序列排序后分块</strong>。</li>
+<li>询问时枚举所有块，如果该块中存在异色边，则暴力枚举块中边然后 break。</li>
+<li><p>修改则是祖传哈希，给每条边、每个颜色赋一个随机系数并<strong>强行有向化，起点为加终点为减</strong></p>
+<p><strong>记录每个块中的系数和，最后总和为 0 则块不可选。</strong></p></li>
+</ul>
+<details>
+<p>古老代码</p>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+using ull = unsigned long long;
+const int maxk = 555;
+const int maxn = 2e5 + 5;
+const int maxm = 3e5 + 5;
+struct _ &#123; int u, v, w; &#125;;
+_ g[maxm];
+int l[maxk], r[maxk], a[maxn];
+ull hash[maxm], w[maxk], to[maxn], val[maxk][maxn];
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    std::cout.tie(nullptr);
+#else
+    freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+#endif
+    int n, m, q;
+    std::cin &gt;&gt; n &gt;&gt; m &gt;&gt; q &gt;&gt; q;
+    std::mt19937_64 rnd(0xabcdef);
+    for (int i = 1; i &lt;= m; ++i) &#123;
+        std::cin &gt;&gt; g[i].u &gt;&gt; g[i].v &gt;&gt; g[i].w;
+        hash[i] = rnd();
+    &#125;
+    for (int i = 1; i &lt;= n; ++i) &#123;
+        std::cin &gt;&gt; a[i];
+        for (; !to[a[i]]; to[a[i]] = rnd());
+    &#125;
+    std::sort(g + 1, g + m + 1, [](_ x, _ y) &#123; return x.w &lt; y.w; &#125;);
+    int siz = sqrt(m), k = (m + siz - 1) / siz;
+    for (int i = 1; i &lt;= k; ++i) &#123;
+        l[i] = r[i - 1] + 1, r[i] = std::min(l[i] + siz - 1, m);
+        for (int j = l[i]; j &lt;= r[i]; ++j) &#123;
+            val[i][g[j].u] += hash[j];
+            val[i][g[j].v] -= hash[j];
+            w[i] += hash[j] * (to[a[g[j].u]] - to[a[g[j].v]]);
+        &#125;
+    &#125;
+    for (int x, y; q--; ) &#123;
+        std::cin &gt;&gt; x &gt;&gt; y;
+        for (; !to[y]; to[y] = rnd());
+        for (int i = 1; i &lt;= k; ++i)
+            w[i] += val[i][x] * (to[y] - to[a[x]]);
+        a[x] = y;
+        for (int i = 1; i &lt;= k; ++i) &#123;
+            if (w[i]) &#123;
+                for (int j = l[i]; j &lt;= r[i]; ++j)
+                    if (a[g[j].u] != a[g[j].v]) &#123;
+                        std::cout &lt;&lt; g[j].w &lt;&lt; &#39;\n&#39;;
+                        break;
+                    &#125;
+                break;
+            &#125;
+        &#125;
+    &#125;
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="dfs-trees">DFS Trees</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF1707C" class="uri">https://www.luogu.com.cn/problem/CF1707C</a></p>
+<ul>
+<li><p>一个结论：若图中边权两两不同，则图的最小生成树唯一。</p>
+<details>
+<p><summary>借鉴次小生成树的思路证明…</summary></p>
+<p>对于两个 mst <span class="math inline">\(T_1,T_2\)</span>，假设二者边集不同但权值相同，对于其对称差 <span class="math inline">\(S\)</span>，设 <span class="math inline">\(e\)</span> 是其中最小的边，且 <span class="math inline">\(e\in T_1,e\notin T_2\)</span>。</p>
+<p>将 <span class="math inline">\(e\)</span> 加入 <span class="math inline">\(T_2\)</span>，则形成的环上存在 <span class="math inline">\(e&#39;\)</span> 使得 <span class="math inline">\(e&#39;\in T_2,e&#39;\notin T_1\)</span>，那么 <span class="math inline">\(e&#39;\in S\)</span>。删掉 <span class="math inline">\(e&#39;\)</span> 并加入 <span class="math inline">\(e\)</span>，得到 <span class="math inline">\(T_2&#39;\)</span>。</p>
+<p>由于 <span class="math inline">\(e\)</span> 是 <span class="math inline">\(S\)</span> 中最小边，那么 <span class="math inline">\(e&lt;e&#39;\)</span>。也即 <span class="math inline">\(T_2&#39;&lt;T_1\)</span>，与前提矛盾。</p>
+</details>
+<p>知道了这一点，就很好从 DFS 树的方向下手了。考虑如何什么时候 DFS 树就是 mst。</p></li>
+<li><p>对于一条非 mst 树边 <span class="math inline">\((u,v,w)\)</span>：</p>
+<ul>
+<li>由 DFS 树的性质，<strong>若其为横叉边，必被经过。</strong></li>
+<li>由 mst 的性质，<span class="math inline">\(w\)</span> 一定比 <span class="math inline">\(u,v\)</span> 简单路径上的所有边边权更大，也即，当可以走这条路径时，一定不走 <span class="math inline">\(w\)</span>。</li>
+</ul>
+<p>结合起来，<span class="math inline">\(w\)</span> 不被经过，当且仅当 <span class="math inline">\(u,v\)</span> 间存在祖孙关系。对应子树即为合法根。实现时还是需要倍增来找到差分范围，较为难受。</p></li>
+</ul>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n, m;
+    std::cin &gt;&gt; n &gt;&gt; m;
+    std::vector&lt;std::pair&lt;int, int&gt; &gt; e(m + 1);
+    for (int i = 1; i &lt;= m; ++i)
+        std::cin &gt;&gt; e[i].first &gt;&gt; e[i].second;
+    std::vector&lt;int&gt; f(n + 1);
+    std::iota(f.begin() + 1, f.end(), 1);
+    std::function&lt;int(int)&gt; find = [&amp;](int x) &#123;
+        return x == f[x] ? x : f[x] = find(f[x]);
+    &#125;;
+    auto merge = [&amp;](int x, int y) &#123;
+        f[find(x)] = find(y);
+        return;
+    &#125;;
+    std::vector&lt;std::pair&lt;int, int&gt; &gt; u;
+    std::vector&lt;std::vector&lt;int&gt; &gt; g(n + 1);
+    for (int i = 1; i &lt;= m; ++i) &#123;
+        auto &amp;[x, y] = e[i];
+        if (find(x) != find(y)) &#123;
+            g[x].push_back(y), g[y].push_back(x);
+            merge(x, y);
+        &#125;
+        else
+            u.push_back(e[i]);
+    &#125;
+    std::vector&lt;int&gt; dep(n + 1);
+    std::vector&lt;std::array&lt;int, 19&gt; &gt; fa(n + 1);
+    std::function&lt;void(int)&gt; DFS = [&amp;](int x) &#123;
+        for (auto i : g[x])
+            if (i != fa[x][0]) &#123;
+                dep[i] = dep[x] + 1;
+                fa[i][0] = x;
+                for (int j = 1; j &lt; 19; ++j)
+                    fa[i][j] = fa[fa[i][j - 1]][j - 1];
+                DFS(i);
+            &#125;
+        return;
+    &#125;;
+    dep[1] = 1, DFS(1);
+    auto ask = [&amp;](int x, int y) &#123;
+        if (dep[x] &lt; dep[y])
+            std::swap(x, y);
+        for (int i = 18; ~i; --i)
+            if (dep[fa[x][i]] &gt;= dep[y])
+                x = fa[x][i];
+        if (x == y)
+            return x;
+        for (int i = 18; ~i; --i)
+            if (fa[x][i] != fa[y][i])
+                x = fa[x][i], y = fa[y][i];
+        return fa[x][0];
+    &#125;;
+    std::vector&lt;int&gt; diff(n + 1);
+    for (auto [x, y] : u) &#123;
+        ++diff[x], ++diff[y];
+        if (dep[x] &lt; dep[y])
+            std::swap(x, y);
+        if (ask(x, y) == y) &#123;
+            for (int i = 18; ~i; --i)
+                if (dep[fa[x][i]] &gt; dep[y])
+                    x = fa[x][i];
+            --diff[x];
+        &#125;
+    &#125;
+    std::vector&lt;int&gt; res(n + 1);
+    std::function&lt;void(int, int)&gt; DFS1 = [&amp;](int x, int s) &#123;
+        s += diff[x];
+        res[x] = (s == (int)u.size());
+        for (auto i : g[x])
+            if (i != fa[x][0])
+                DFS1(i, s);
+        return;
+    &#125;;
+    DFS1(1, 0);
+    for (int i = 1; i &lt;= n; ++i)
+        std::cout &lt;&lt; res[i];
+    std::cout &lt;&lt; &#39;\n&#39;;
+#ifndef ONLINE_JUDGE
+    std::cerr &lt;&lt; std::fixed &lt;&lt; std::setprecision(6) &lt;&lt; std::chrono::duration&lt;double&gt; (std::chrono::steady_clock::now() - stime).count() &lt;&lt; &quot;s\n&quot;;
+#endif
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="minimum-spanning-tree-for-each-edge">Minimum spanning tree for each edge</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF609E" class="uri">https://www.luogu.com.cn/problem/CF609E</a></p>
+<p>挺没意思的题…… 略了。</p>
+<p>考虑这个题的孪生版本：</p>
+<h2 id="minimum-spanning-tree">Minimum Spanning Tree</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_icpc2013spring_e" class="uri">https://www.luogu.com.cn/problem/AT_icpc2013spring_e</a></p>
+<p>用非树边更新环上每条树边的最小取代边即可。类似树上差分。代码略。</p>
+<hr />
+<h2 id="power-tree">Power Tree</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF1120D" class="uri">https://www.luogu.com.cn/problem/CF1120D</a></p>
+<ul>
+<li>容易想到把原问题转化为叶子序列上的差分。那么对于任意一个初始差分序列，我们都需要把它通过这样的差分操作变为 <span class="math inline">\(1\sim n\)</span> 全 0，第 <span class="math inline">\(n+1\)</span> 位为 <span class="math inline">\(-s\)</span>。</li>
+<li>联想到<strong>差分和连有向边的转化</strong>，那么要求连一个 <span class="math inline">\(n+1\)</span> 为唯一汇点的树出来。显然就是原图的 mst。</li>
+<li><p>考虑怎么求出可能被 mst 包含的边。对于每一条非树边，若环上存在边权相同的边，那么这条非树边也能成为树边。</p>
+<p>考虑一个孪生问题：怎么求出一定被 mst 包含的边？</p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF160D" class="uri">https://www.luogu.com.cn/problem/CF160D</a></p>
+<p>树上差分 + 线段树合并即可，注意单次线段树合并只有线性，直接做 DSU on tree 的复杂度是单 log 的。</p></li>
+<li><p>关于具体实现，可以参考 <a target="_blank" rel="noopener" href="https://oi-wiki.org/graph/mst/#%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91%E7%9A%84%E5%94%AF%E4%B8%80%E6%80%A7">最小生成树的唯一性 - OI Wiki</a>。</p></li>
+</ul>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+#define int long long
+namespace fastIO &#123;
+const int LEN = (1 &lt;&lt; 20);
+#ifdef ONLINE_JUDGE
+inline int nec(void) &#123;
+    static char buf[LEN], *p = buf, *e = buf;
+    if (p == e) &#123;
+        e = buf + fread(buf, 1, LEN, stdin);
+        if (e == buf) return EOF;
+        p = buf;
+    &#125;
+    return *p++;
+&#125;
+#else
+#define nec getchar
+#endif
+inline bool read(int &amp;x) &#123;
+    x = 0;
+    bool f = 0;
+    char ch = nec();
+    while (ch &lt; &#39;0&#39; || ch &gt; &#39;9&#39;) &#123;
+        if (ch == EOF) return 0;
+        if (ch == &#39;-&#39;) f = 1;
+        ch = nec();
+    &#125;
+    while (ch &gt;= &#39;0&#39; &amp;&amp; ch &lt;= &#39;9&#39;) &#123;
+        x = x * 10 + ch - &#39;0&#39;;
+        ch = nec();
+    &#125;
+    if (f) x = -x;
+    return 1;
+&#125;
+void print(int x) &#123;
+    if (x &lt; 0)
+        putchar(&#39;-&#39;), x = -x;
+    if (x &gt;= 10) print(x / 10);
+    putchar(x % 10 + &#39;0&#39;);
+    return;
+&#125;
+void print(int x, char ch) &#123;
+    print(x), putchar(ch);
+    return;
+&#125;
+&#125; // namespace fastIO
+namespace XSC062 &#123;
+using namespace fastIO;
+const int maxn = 2e5 + 5;
+struct _ &#123;
+    int x, y, i;
+    _() &#123;&#125;
+    _(int x1, int y1, int i1) &#123;
+        x = x1, y = y1, i = i1;
+    &#125;
+    bool operator&lt; (const _ &amp;q) const;
+&#125;;
+_ t[maxn];
+int a[maxn], f[maxn];
+std::vector&lt;int&gt; res;
+int n, now, x, y, sum; 
+int beg[maxn], to[maxn];
+std::vector&lt;int&gt; g[maxn];
+bool _::operator&lt; (const _ &amp;q) const &#123;
+    return a[i] &lt; a[q.i];
+&#125;
+int find(int x) &#123; return x == f[x] ? x : f[x] = find(f[x]); &#125;
+void merge(int x, int y) &#123;
+    f[find(x)] = find(y);
+    return;
+&#125;
+void DFS(int x, int fa) &#123;
+    if (~fa &amp;&amp; (int)g[x].size() == 1)
+        beg[x] = to[x] = ++now;
+    for (auto i : g[x]) &#123;
+        if (i == fa) continue;
+        DFS(i, x);
+        if (!beg[x]) beg[x] = beg[i];
+        to[x] = to[i];
+    &#125;
+    t[x] = _(beg[x], to[x] + 1, x);
+    return;
+&#125;
+void add(int x, int y) &#123;
+    g[x].push_back(y);
+    return;
+&#125;
+int main() &#123;
+    read(n);
+    for (int i = 1; i &lt;= n; ++i) read(a[i]);
+    for (int i = 1; i &lt;= n + 1; ++i) f[i] = i;
+    for (int i = 1; i &lt; n; ++i) &#123;
+        read(x), read(y);
+        add(x, y), add(y, x);
+    &#125;
+    DFS(1, -1);
+    std::sort(t + 1, t + n + 1);
+    for (int l = 1, r = 0; l &lt;= n; l = r + 1) &#123;
+        while (r &lt; n &amp;&amp; a[t[r + 1].i] == a[t[l].i]) ++r;
+        for (int i = l; i &lt;= r; ++i) &#123;
+            if (find(t[i].x) != find(t[i].y))
+                res.push_back(t[i].i);
+        &#125;
+        for (int i = l; i &lt;= r; ++i) &#123;
+            if (find(t[i].x) != find(t[i].y))
+                sum += a[t[i].i], merge(t[i].x, t[i].y);
+        &#125;
+    &#125;
+    std::sort(res.begin(), res.end());
+    print(sum, &#39; &#39;), print(res.size(), &#39;\n&#39;);
+    for (auto i : res) print(i, &#39; &#39;);
+    putchar(&#39;\n&#39;);
+    return 0;
+&#125;
+&#125; // namespace XSC062
+#undef int
+int main() &#123;
+    XSC062::main();
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="another-minimum-spanning-tree">Another Minimum Spanning Tree</h2>
+<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/problem/29212" class="uri">http://222.180.160.110:61235/problem/29212</a></p>
+<p>goto <a href="/20240206/">曼哈顿最小距离生成树</a>。</p>
+<hr />
+<h2 id="a---design-tutorial-inverse-the-problem">A - Design Tutorial: Inverse the Problem</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF472D" class="uri">https://www.luogu.com.cn/problem/CF472D</a></p>
+<ul>
+<li>发现给出的完全图的最小生成树就是原树。check 一下是否合法即可。</li>
+<li>图较稠密，需要用 Prim。</li>
+</ul>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n;
+    std::cin &gt;&gt; n;
+    std::vector&lt;std::vector&lt;std::pair&lt;int, int&gt; &gt; &gt; g(n + 1);
+    std::vector&lt;std::vector&lt;int&gt; &gt; g0(n + 1, std::vector&lt;int&gt; (n + 1));
+    for (int i = 1; i &lt;= n; ++i)
+        for (int j = 1; j &lt;= n; ++j)
+            std::cin &gt;&gt; g0[i][j];
+    for (int i = 1; i &lt;= n; ++i) &#123;
+        if (g0[i][i] != 0) &#123;
+            std::cout &lt;&lt; &quot;NO\n&quot;;
+            return 0;
+        &#125;
+        for (int j = 1; j &lt; i; ++j)
+            if (g0[i][j] != g0[j][i] || !g0[i][j]) &#123;
+                std::cout &lt;&lt; &quot;NO\n&quot;;
+                return 0;
+            &#125;
+    &#125;
+    std::vector&lt;int&gt; pos(n + 1), tag(n + 1);
+    tag[1] = 1;
+    for (int _ = 1, s = 1; _ &lt; n; ++_) &#123;
+        for (int i = 1; i &lt;= n; ++i)
+            if (!tag[i] &amp;&amp; (!pos[i] || g0[s][i] &lt; g0[pos[i]][i]))
+                pos[i] = s;
+        s = 0;
+        int t = 0;
+        for (int i = 1; i &lt;= n; ++i)
+            if (!tag[i] &amp;&amp; pos[i] &amp;&amp; (!s || g0[pos[i]][i] &lt; g0[pos[s]][s]))
+                s = i, t = pos[i];
+        tag[s] = 1;
+        g[s].emplace_back(t, g0[s][t]), g[t].emplace_back(s, g0[s][t]);
+    &#125;
+    std::vector&lt;int&gt; tab(n + 1), dis(n + 1);
+    std::function&lt;void(int, int)&gt; DFS = [&amp;](int x, int fa) &#123;
+        static int now = 0;
+        tab[++now] = x;
+        int L = now, R = now;
+        for (auto [i, w] : g[x])
+            if (i != fa) &#123;
+                dis[i] = dis[x] + w;
+                DFS(i, x);
+                for (int p = L; p &lt;= R; ++p)
+                    for (int q = R + 1; q &lt;= now; ++q) &#123;
+                        if (g0[tab[p]][tab[q]] != dis[tab[p]] + dis[tab[q]] - 2 * dis[x]) &#123;
+                            std::cout &lt;&lt; &quot;NO\n&quot;;
+                            exit(0); // extremely ugly
+                        &#125;
+                    &#125;
+                R = now;
+            &#125;
+        return;
+    &#125;;
+    DFS(1, -1);
+    std::cout &lt;&lt; &quot;YES\n&quot;;
+#ifndef ONLINE_JUDGE
+    std::cerr &lt;&lt; std::fixed &lt;&lt; std::setprecision(6) &lt;&lt; std::chrono::duration&lt;double&gt; (std::chrono::steady_clock::now() - stime).count() &lt;&lt; &quot;s\n&quot;;
+#endif
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="b---phoenix-and-earthquake">B - Phoenix and Earthquake</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF1515F" class="uri">https://www.luogu.com.cn/problem/CF1515F</a></p>
+<ul>
+<li><p>会想到，有解的充要条件是的点权之和 <span class="math inline">\(\ge (n-1)\cdot x\)</span>。证明方法很广泛，但规约的思想对破题是决定性的。</p>
+<ul>
+<li><p>对于 <span class="math inline">\(u\ge x\)</span>，将 <span class="math inline">\(u\)</span> 和任意相邻点合并后缩点，规约为更小规模的问题。</p></li>
+<li><p>对于 <span class="math inline">\(u&lt;x\)</span>，一次合并使点权和减少 <span class="math inline">\(u\)</span>，点权需求减少 <span class="math inline">\(x\)</span>，故子问题合法则该问题合法。</p></li>
+</ul></li>
+<li><p>条件是充要的，则可以任意合并，但这样不太好做，考虑借助规约的结构，若 <span class="math inline">\(u\ge x\)</span> 则直接合并，否则等到其他部分合并完后再合并这一条边。这是一个栈的结构。</p></li>
+</ul>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n, m, k;
+    std::cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+    std::vector&lt;long long&gt; a(n + 1);
+    for (int i = 1; i &lt;= n; ++i)
+        std::cin &gt;&gt; a[i];
+    if (std::accumulate(a.begin() + 1, a.end(), 0ll) &lt; (long long)k * (n - 1)) &#123;
+        std::cout &lt;&lt; &quot;NO\n&quot;;
+        return 0;
+    &#125;
+    std::cout &lt;&lt; &quot;YES\n&quot;;
+    std::vector&lt;int&gt; f(n + 1);
+    std::iota(f.begin() + 1, f.end(), 1);
+    std::function&lt;int(int)&gt; find = [&amp;](int x) &#123;
+        return x == f[x] ? x : f[x] = find(f[x]);
+    &#125;;
+    auto merge = [&amp;](int x, int y) &#123;
+        f[find(x)] = find(y);
+        return;
+    &#125;;
+    std::vector&lt;std::vector&lt;std::pair&lt;int, int&gt; &gt; &gt; g(n + 1);
+    for (int i = 1, x, y; m--; ++i) &#123;
+        std::cin &gt;&gt; x &gt;&gt; y;
+        if (find(x) != find(y)) &#123;
+            g[x].emplace_back(y, i);
+            g[y].emplace_back(x, i);
+            merge(x, y);
+        &#125;
+    &#125;
+    std::vector&lt;int&gt; t;
+    std::function&lt;void(int, int)&gt; DFS = [&amp;](int x, int fa) &#123;
+        for (auto [i, id] : g[x])
+            if (i != fa) &#123;
+                DFS(i, x);
+                if (a[i] &gt;= k) &#123;
+                    a[x] += a[i] - k;
+                    std::cout &lt;&lt; id &lt;&lt; &#39;\n&#39;;
+                &#125;
+                else
+                    t.push_back(id);
+            &#125;
+        return;
+    &#125;;
+    DFS(1, -1);
+    for (; !t.empty(); t.pop_back())
+        std::cout &lt;&lt; t.back() &lt;&lt; &#39;\n&#39;;
+#ifndef ONLINE_JUDGE
+    std::cerr &lt;&lt; std::fixed &lt;&lt; std::setprecision(6) &lt;&lt; std::chrono::duration&lt;double&gt; (std::chrono::steady_clock::now() - stime).count() &lt;&lt; &quot;s\n&quot;;
+#endif
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="最小度限制生成树-easy-version">最小度限制生成树 (Easy Version)</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5633" class="uri">https://www.luogu.com.cn/problem/P5633</a></p>
+<blockquote>
+<p>要求：两只 log。</p>
+</blockquote>
+<p>wqs 二分即可。</p>
+<hr />
+<h2 id="最小度限制生成树-hard-version">最小度限制生成树 (Hard Version)</h2>
+<blockquote>
+<p>要求：一只 log。</p>
+</blockquote>
+<p>注意到涉及的边是固定的，且偏移量相同，故对于『与 <span class="math inline">\(s\)</span> 有关的边』和『与 <span class="math inline">\(s\)</span> 无关的边』先分别排序作为预处理，二分内部仅需归并即可。</p>
+<hr />
+<h2 id="最小度限制生成树-extreme-version">最小度限制生成树 (Extreme Version)</h2>
+<blockquote>
+<p>要求：</p>
+<ul>
+<li>一只 log；</li>
+<li>对于 <span class="math inline">\(k=1,2,\cdots,n\)</span>，分别输出答案。</li>
+</ul>
+</blockquote>
+<p>观看 <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/article/ym8ixzr8" class="uri">https://www.luogu.com.cn/article/ym8ixzr8</a>。</p>
 
 			</div>
 			<hr class="dotted">
@@ -172,6 +784,12 @@ const searchPath = "/search.xml"
 				<div class="button flex">
 					<div id="prev">
 						
+							<!-- 吐槽，为啥还需要加 / -->
+							<a href="/20251004/">
+								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
+								生成树 II
+							</a>
+						
 					</div>
 					<div id="next">
 						
@@ -182,7 +800,7 @@ const searchPath = "/search.xml"
 						
 					</div>
 				</div>
-				<div id="vcomments" class="yahei"></div>
+				<div id="vcomments" class="text"></div>
 <script>
 	new Valine({
 		el: '#vcomments',
@@ -198,7 +816,7 @@ const searchPath = "/search.xml"
 				['nick']
 			,
 		placeholder: "The world is but a little place after all...\n能够根据邮箱获取你的 Gravatar 头像。昵称是必填项，长度需不低于 3。",
-		avatar: 'mp',
+		avatar: 'identicon',
 		avatar_cdn: 'https://cravatar.cn/avatar/',
 		emojiCDN: 'https://xsc062.netlify.app/em/', 
 		emojiMaps: {
@@ -284,11 +902,9 @@ const searchPath = "/search.xml"
 	</div>
 </div>
     <!-- 页脚开始 -->
-<div id="footer" class="yahei">
+<div id="footer" class="serif">
     Powered by
-    <a target="_blank" rel="noopener" href="https://hexo.io">
-        Hexo
-    </a>
+    <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>
     &
     <a href="/about-this-theme">
         iwll
@@ -313,7 +929,7 @@ const searchPath = "/search.xml"
                     const vnick = vnick_dom.innerHTML;
                     if (vnick === author) {
                         vnick_dom.innerHTML =
-                        `${vnick} <span id="rootitem" class="fira">root</span>`
+                        `${vnick} <span id="rootitem" class="code">root</span>`
                     }
                 }
             }

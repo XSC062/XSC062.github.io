@@ -12,6 +12,7 @@
     <category term="DP" />
     <category term="单调队列" />
     <category term="分治" />
+    <category term="计数" />
     <category term="二分图" />
     <category term="CRT / exCRT" />
     <category term="排列组合" />
@@ -60,7 +61,6 @@
     <category term="二项式反演" />
     <category term="贪心" />
     <category term="均摊" />
-    <category term="计数" />
     <category term="优化建图" />
     <category term="反悔贪心" />
     <category term="调整法" />
@@ -81,6 +81,9 @@
     <category term="Kruskal 重构树" />
     <category term="高精度" />
     <category term="最短路" />
+    <category term="树套树" />
+    <category term="Boruvka" />
+    <category term="树链剖分 - 最小生成树" />
     <category term="李超线段树" />
     <entry>
         <id>https://xsc062.netlify.app/20250202/</id>
@@ -90,66 +93,84 @@
 &lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
 &lt;hr /&gt;
 &lt;h2 id=&#34;定义&#34;&gt;定义&lt;/h2&gt;
-&lt;p&gt;显而易见一个长度为 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 的字符串中有 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 个长度分别为 &lt;span class=&#34;math inline&#34;&gt;\(1\sim n\)&lt;/span&gt; 的后缀，如果我们对其按字典序排序，分别存储下排名 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 的后缀 &lt;span class=&#34;math inline&#34;&gt;\(sa_i\)&lt;/span&gt; 和每个后缀 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 的排名 &lt;span class=&#34;math inline&#34;&gt;\(rk_i\)&lt;/span&gt;。虽然看着挺没头没尾的，但是很有用。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一个长度为 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 的字符串中有 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 个长度分别为 &lt;span class=&#34;math inline&#34;&gt;\(1\sim n\)&lt;/span&gt; 的后缀&lt;/li&gt;
+&lt;li&gt;对其按字典序排序，分别存储下排名为 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 的后缀编号 &lt;span class=&#34;math inline&#34;&gt;\(sa_i\)&lt;/span&gt; 和每个后缀 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 的排名 &lt;span class=&#34;math inline&#34;&gt;\(rk_i\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;这样相当于构造了有序的『前缀的后缀』，所以会有很多字符串功能。&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&#34;求解&#34;&gt;求解&lt;/h2&gt;
 &lt;h3 id=&#34;哈希-排序&#34;&gt;哈希 + 排序&lt;/h3&gt;
-&lt;p&gt;直接把所有后缀拿来排序的话，字符串比较是 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt; 的。如果我们用哈希 + 二分优化比较过程，就可以把整个排序优化到 &lt;span class=&#34;math inline&#34;&gt;\(O(n\log^2 n)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;直接把所有后缀拿来排序的话，字符串比较是 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt; 的。&lt;/li&gt;
+&lt;li&gt;用哈希 + 二分优化比较过程，就可以把整个排序优化到 &lt;span class=&#34;math inline&#34;&gt;\(O(n\log^2 n)\)&lt;/span&gt;。&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;倍增&#34;&gt;倍增&lt;/h3&gt;
-&lt;p&gt;先对所有后缀按 &lt;strong&gt;第一个字符&lt;/strong&gt; 排序，记排序后排名序列为 &lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;。&lt;/p&gt;
-&lt;p&gt;那么怎么按 &lt;strong&gt;前两个字符&lt;/strong&gt; 排序呢？对于第 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 组字符，我们用 &lt;span class=&#34;math inline&#34;&gt;\((a_i,a_{i+1})\)&lt;/span&gt; 双关键字排序即可。记此时排名序列为 &lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;，那么如果需要按照前四个字符排序，用 &lt;span class=&#34;math inline&#34;&gt;\((b_i,b_{i+2})\)&lt;/span&gt; 进行双关键字排序即可。总共需要进行 &lt;span class=&#34;math inline&#34;&gt;\(\log n\)&lt;/span&gt; 次排序。复杂度为 &lt;span class=&#34;math inline&#34;&gt;\(O(n\log^2n)\)&lt;/span&gt;。&lt;/p&gt;
-&lt;p&gt;此时我们注意到排名数组的值域为 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;，那么我们用桶排就能少一个 &lt;span class=&#34;math inline&#34;&gt;\(\log\)&lt;/span&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;首先，把后缀按照 &lt;span class=&#34;math inline&#34;&gt;\(s_i\)&lt;/span&gt;，即&lt;strong&gt;第一个字符&lt;/strong&gt;排序；记排序后排名序列为 &lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;相似地，对于第 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 个后缀，我们用 &lt;span class=&#34;math inline&#34;&gt;\((a_i,a_{i+1})\)&lt;/span&gt; 双关键字排序，即可按照后缀的&lt;strong&gt;前两个字符&lt;/strong&gt;排序；记此时排名序列为 &lt;span class=&#34;math inline&#34;&gt;\(b\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;进一步地，用 &lt;span class=&#34;math inline&#34;&gt;\((b_i,b_{i+2})\)&lt;/span&gt; 进行双关键字排序，即可实现按后缀的&lt;strong&gt;前四个字符&lt;/strong&gt;排序。&lt;/li&gt;
+&lt;li&gt;进行 &lt;span class=&#34;math inline&#34;&gt;\(\log n\)&lt;/span&gt; 次双关键字排序后，就能完成对整个后缀的正确排序。&lt;/li&gt;
+&lt;li&gt;由于把字符串排序压缩成了值域很小的整数排序，用桶排就可以减一个 &lt;span class=&#34;math inline&#34;&gt;\(\log\)&lt;/span&gt;，实现 &lt;span class=&#34;math inline&#34;&gt;\(O(n\log n)\)&lt;/span&gt; 求 SA。&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&#34;实现&#34;&gt;实现&lt;/h2&gt;
-&lt;p&gt;哈希很好实现，这里就按下不表，主要讲解倍增法的实现。&lt;/p&gt;
-&lt;p&gt;描述起来很简单，实现起来很要命。OI wiki 上的实现算是相对好理解的：&lt;/p&gt;
-&lt;p&gt;首先了解双关键字桶排的方法，首先用单关键字桶排完成对 &lt;strong&gt;第二关键字&lt;/strong&gt; 的排序；对于第一关键字，令桶 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 记录前 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 个元素的数量；遍历排序后的第二关键字数组，将元素放到桶中记录数值对应的下标中，并将桶中数值 &lt;span class=&#34;math inline&#34;&gt;\(-1\)&lt;/span&gt;。实际上桶 &lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt; 充当计算下标范围的作用，&lt;span class=&#34;math inline&#34;&gt;\((c_{i-1},c_i]\)&lt;/span&gt; 即为 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 分布的范围。&lt;/p&gt;
-&lt;p&gt;显然，当且仅当排名种类为 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;，即没有并列排名时，排序完成。设本轮区间长度为 &lt;span class=&#34;math inline&#34;&gt;\(w\)&lt;/span&gt;，对于一轮操作：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;哈希很好实现，这里按下不表。主要讲解倍增法的实现。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;首先了解双关键字桶排的方法：&lt;/p&gt;
+&lt;p&gt;计算出&lt;strong&gt;第一关键字&lt;/strong&gt;的桶序列，令桶 &lt;span class=&#34;math inline&#34;&gt;\(c_i\)&lt;/span&gt; 记录&lt;strong&gt;前&lt;/strong&gt; &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 个元素的数量。这样做的目的是让桶 &lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt; 充当计算下标范围的作用，&lt;span class=&#34;math inline&#34;&gt;\((c_{i-1},c_i]\)&lt;/span&gt; 即为 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 分布的范围。&lt;/p&gt;
+&lt;p&gt;遍历&lt;strong&gt;排序后的第二关键字数组&lt;/strong&gt;（在 SA 中，排序在上一轮完成），将元素放到第一关键字在 &lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt; 中记录的下标中，并将 &lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt; 中数值 &lt;span class=&#34;math inline&#34;&gt;\(-1\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;显然当排名种类为 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;，即没有并列排名时，排序完成。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;设本轮区间长度为 &lt;span class=&#34;math inline&#34;&gt;\(2w\)&lt;/span&gt;，对于一轮操作：&lt;/p&gt;
 &lt;ol type=&#34;1&#34;&gt;
-&lt;li&gt;计算每个区间按后半段 &lt;span class=&#34;math inline&#34;&gt;\(\frac w2\)&lt;/span&gt; 长度字符排序的结果：&lt;span class=&#34;math inline&#34;&gt;\((n-w,n]\)&lt;/span&gt; 开头的区间后半段均为空，直接放在序列首端；接着按照上一轮 &lt;span class=&#34;math inline&#34;&gt;\(sa\)&lt;/span&gt; 结果，把能够作为后半段的元素依次放入。&lt;/li&gt;
-&lt;li&gt;依照上一轮的 &lt;span class=&#34;math inline&#34;&gt;\(rk\)&lt;/span&gt; 作为前半段排名，进行双关键字桶排。&lt;/li&gt;
-&lt;li&gt;依照 &lt;span class=&#34;math inline&#34;&gt;\(sa\)&lt;/span&gt; 和第二关键字（处理并列），求出 &lt;span class=&#34;math inline&#34;&gt;\(rk\)&lt;/span&gt;。&lt;/li&gt;
-&lt;/ol&gt;
+&lt;li&gt;计算每个区间按后 &lt;span class=&#34;math inline&#34;&gt;\(w\)&lt;/span&gt; 长度字符排序的结果：&lt;span class=&#34;math inline&#34;&gt;\((n-w,n]\)&lt;/span&gt; 开头的区间后半段均为空，直接放在序列首端；接着按照上一轮 &lt;span class=&#34;math inline&#34;&gt;\(sa\)&lt;/span&gt; 结果，把能够作为后半段的元素依次放入。&lt;/li&gt;
+&lt;li&gt;依照上一轮的 &lt;span class=&#34;math inline&#34;&gt;\(rk\)&lt;/span&gt; 作为第二关键字排名，进行双关键字桶排。&lt;/li&gt;
+&lt;li&gt;依照得到的 &lt;span class=&#34;math inline&#34;&gt;\(sa\)&lt;/span&gt; 和第二关键字的排名，处理并列，求出这一轮的 &lt;span class=&#34;math inline&#34;&gt;\(rk\)&lt;/span&gt;。&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;details&gt;
-&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;std::vector&amp;lt;int&amp;gt; la(n + 2);
-std::copy(s.begin(), s.end(), rk.begin());
-int m = 128;
+&lt;p&gt;倒着写是为了保证所谓稳定性。然而并没有什么所谓。&lt;/p&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;std::vector&amp;lt;int&amp;gt; sa(n + 1), rk(2 * n + 1);
 &amp;#123;
-    std::vector&amp;lt;int&amp;gt; c(m + 1);
+    int m = 128;
+    std::vector&amp;lt;int&amp;gt; c(std::max(n, m) + 1), id, la(2 * n + 1);
+    std::copy(s.begin() + 1, s.end(), rk.begin() + 1);
     for (int i = 1; i &amp;lt;= n; ++i)
         ++c[rk[i]];
-    std::partial_sum(c.begin(), c.end(), c.begin());
+    std::partial_sum(c.begin() + 1, c.begin() + m + 1, c.begin() + 1);
     for (int i = n; i; --i)
         sa[c[rk[i]]--] = i;
-&amp;#125; 
-for (int w = 1, p; ; w &amp;lt;&amp;lt;= 1, m = p) &amp;#123;
-    std::vector&amp;lt;int&amp;gt; id(1);
-    for (int i = n - w + 1; i &amp;lt;= n; ++i)
-        id.push_back(i);
-    for (int i = 1; i &amp;lt;= n; ++i)
-        if (sa[i] &amp;gt; w)
-            id.push_back(sa[i] - w);
-    std::vector&amp;lt;int&amp;gt; c(m + 1);
-    for (int i = 1; i &amp;lt;= n; ++i)
-        ++c[rk[i]];
-    std::partial_sum(c.begin(), c.end(), c.begin());
-    for (int i = n; i; --i)
-        sa[c[rk[id[i]]]--] = id[i];
-    p = 0;
-    std::copy(rk.begin(), rk.end(), la.begin());
-    for (int i = 1; i &amp;lt;= n; ++i)
-        if (la[sa[i]] == la[sa[i - 1]] &amp;amp;&amp;amp; la[sa[i] + w] == la[sa[i - 1] + w])
-            rk[sa[i]] = p;
-        else
-            rk[sa[i]] = ++p;
-    if (p == n)
-        break;
+    for (int w = 1, p; ; w &amp;lt;&amp;lt;= 1, m = p) &amp;#123;
+        id.clear(), id.push_back(-1);
+        for (int i = n - w + 1; i &amp;lt;= n; ++i)
+            id.push_back(i);
+        for (int i = 1; i &amp;lt;= n; ++i)
+            if (sa[i] &amp;gt; w)
+                id.push_back(sa[i] - w);
+        std::fill(c.begin() + 1, c.begin() + m + 1, 0);
+        for (int i = 1; i &amp;lt;= n; ++i)
+            ++c[rk[i]];
+        std::partial_sum(c.begin() + 1, c.begin() + m + 1, c.begin() + 1);
+        for (int i = n; i; --i)
+            sa[c[rk[id[i]]]--] = id[i];
+        p = 0;
+        std::copy(rk.begin() + 1, rk.end(), la.begin() + 1);
+        for (int i = 1; i &amp;lt;= n; ++i)
+            if (i != 1 &amp;amp;&amp;amp; la[sa[i]] == la[sa[i - 1]] &amp;amp;&amp;amp; la[sa[i] + w] == la[sa[i - 1] + w])
+                rk[sa[i]] = p;
+            else
+                rk[sa[i]] = ++p;
+        if (p == n)
+            break;
+    &amp;#125;
 &amp;#125;&lt;/code&gt;&lt;/pre&gt;
 &lt;/details&gt;
 &lt;hr /&gt;
 &lt;h2 id=&#34;纯-sa-的应用&#34;&gt;纯 SA 的应用&lt;/h2&gt;
 &lt;h3 id=&#34;最小表示法&#34;&gt;最小表示法&lt;/h3&gt;
-&lt;p&gt;模板：&lt;a href=&#34;https://www.luogu.com.cn/problem/P1368&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P1368&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;对于循环位移相关要求，首先考虑将字符串重复一遍。&lt;/p&gt;
-&lt;p&gt;在 &lt;span class=&#34;math inline&#34;&gt;\(ss\)&lt;/span&gt; 中找到排名第一个 &lt;span class=&#34;math inline&#34;&gt;\(sa_i\le n\)&lt;/span&gt; 即为答案。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P1368&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P1368&lt;/a&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对于循环位移相关要求，首先考虑将 &lt;span class=&#34;math inline&#34;&gt;\(\texttt s\)&lt;/span&gt; 重复一遍。&lt;/li&gt;
+&lt;li&gt;在 &lt;span class=&#34;math inline&#34;&gt;\(\texttt {ss}\)&lt;/span&gt; 中找到第一个 &lt;span class=&#34;math inline&#34;&gt;\(sa_i\le n\)&lt;/span&gt; 即为答案。&lt;/li&gt;
+&lt;/ul&gt;
 &lt;details&gt;
 &lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
 int main() &amp;#123;
@@ -212,8 +233,10 @@ int main() &amp;#123;
 &lt;/details&gt;
 &lt;hr /&gt;
 &lt;h3 id=&#34;字符串匹配&#34;&gt;字符串匹配&lt;/h3&gt;
-&lt;p&gt;二分，复杂度 &lt;span class=&#34;math inline&#34;&gt;\(O(|S|\log |T|)\)&lt;/span&gt;。求出现次数则二分左右边界。&lt;/p&gt;
-&lt;p&gt;太麻烦了且没有实际应用价值，代码略。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;二分，复杂度 &lt;span class=&#34;math inline&#34;&gt;\(O(|S|\log |T|)\)&lt;/span&gt;。求出现次数则二分左右边界。&lt;/li&gt;
+&lt;li&gt;太麻烦了且没有实际应用价值，代码略。&lt;/li&gt;
+&lt;/ul&gt;
 &lt;hr /&gt;
 &lt;h2 id=&#34;height-数组&#34;&gt;height 数组&lt;/h2&gt;
 &lt;p&gt;定义 &lt;span class=&#34;math inline&#34;&gt;\(h_i=\text {lcp}(sa_i, sa_i-1)\)&lt;/span&gt;，特别地，&lt;span class=&#34;math inline&#34;&gt;\(h_1=0\)&lt;/span&gt;。&lt;/p&gt;

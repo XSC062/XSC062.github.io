@@ -5,8 +5,8 @@
         <link>https://xsc062.netlify.app</link>
         <description></description>
         <language>zh-CN</language>
-        <pubDate>Sat, 10 May 2025 10:18:21 +0800</pubDate>
-        <lastBuildDate>Sat, 10 May 2025 10:18:21 +0800</lastBuildDate>
+        <pubDate>Tue, 12 Aug 2025 08:16:52 +0800</pubDate>
+        <lastBuildDate>Tue, 12 Aug 2025 08:16:52 +0800</lastBuildDate>
         <category>并查集</category>
         <category>斜率优化</category>
         <category>悬线法</category>
@@ -15,6 +15,7 @@
         <category>DP</category>
         <category>单调队列</category>
         <category>分治</category>
+        <category>计数</category>
         <category>二分图</category>
         <category>CRT / exCRT</category>
         <category>排列组合</category>
@@ -63,7 +64,6 @@
         <category>二项式反演</category>
         <category>贪心</category>
         <category>均摊</category>
-        <category>计数</category>
         <category>优化建图</category>
         <category>反悔贪心</category>
         <category>调整法</category>
@@ -84,7 +84,1871 @@
         <category>Kruskal 重构树</category>
         <category>高精度</category>
         <category>最短路</category>
+        <category>树套树</category>
+        <category>Boruvka</category>
+        <category>树链剖分 - 最小生成树</category>
         <category>李超线段树</category>
+        <item>
+            <guid isPermalink="true">https://xsc062.netlify.app/20250812/</guid>
+            <title>DDP 与全局平衡二叉树</title>
+            <link>https://xsc062.netlify.app/20250812/</link>
+            <category>线段树</category>
+            <category>树链剖分</category>
+            <category>DDP</category>
+            <pubDate>Tue, 12 Aug 2025 08:16:52 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;其实动态 DP 不是动态树 DP 的同义词&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;动态-dp&#34;&gt;动态 DP&lt;/h2&gt;
+&lt;p&gt;对于转移只依赖前几项的 DP，可以放进矩阵。&lt;/p&gt;
+&lt;p&gt;默认转移范围是 &lt;span class=&#34;math inline&#34;&gt;\([1,n]\)&lt;/span&gt;；如果我们需要改变求解范围，发现如果能获取转移矩阵的乘积就很快了。考虑存下来。&lt;/p&gt;
+&lt;p&gt;如果需要单点修改，等价于修改其所在矩阵，则想要尽可能少地修改存储的答案，考虑使用线段树优化该过程。&lt;/p&gt;
+&lt;h3 id=&#34;例海报&#34;&gt;例：海报&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P9790&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P9790&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;容易列出暴力 DP 式：令 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,j}\)&lt;/span&gt; 表示枚举到 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 时，包含 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 在内已经有 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 个连续的人举起海报，易得：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_{i,0}=\max(f_{i-1,0},f_{i-1,1},f_{i-1,2},f_{i-1,3})\\
+f_{i,j}=f_{i-1,j-1}+a_i \forall 1\le j\le 3
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;发现满足 + / max &lt;strong&gt;矩阵乘法&lt;/strong&gt; 的形式；想到用线段树保存每段区间对应矩阵（对应性质：结合律），每次修改 / 查询就能在 &lt;span class=&#34;math inline&#34;&gt;\(O(\log n)\)&lt;/span&gt; 之内完成。&lt;/p&gt;
+&lt;p&gt;原问题是环形的，可以再加一维 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 表示钦定选了前 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 个且不选第 &lt;span class=&#34;math inline&#34;&gt;\(k+1\)&lt;/span&gt; 个时的答案。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int maxn = 4e4 + 5;
+const long long inf = 1e18;
+struct mat &amp;#123;
+    int n, m;
+    long long a[4][4];
+    mat() &amp;#123;&amp;#125;
+    mat(int n1, int m1): n(n1), m(m1) &amp;#123;
+        for (int i = 0; i &amp;lt; n; ++i)
+            for (int j = 0; j &amp;lt; m; ++j)
+                a[i][j] = -inf;
+        return;
+    &amp;#125;
+    long long* operator[] (const int q) &amp;#123;
+        return a[q];
+    &amp;#125;
+    mat operator* (mat &amp;amp;q) const &amp;#123;
+        mat res(n, q.m);
+        for (int i = 0; i &amp;lt; n; ++i)
+            for (int k = 0; k &amp;lt; q.m; ++k)
+                for (int j = 0; j &amp;lt; m; ++j)
+                    res[i][k] = std::max(res[i][k], a[i][j] + q[j][k]);
+        return res;
+    &amp;#125;
+    mat&amp;amp; operator*= (mat &amp;amp;q) &amp;#123;
+        return *this = *this * q;
+    &amp;#125;
+&amp;#125;;
+struct &amp;#123; int l, r; mat u[4]; &amp;#125; t[maxn &amp;lt;&amp;lt; 2];
+int a[maxn];
+#define lt (p &amp;lt;&amp;lt; 1)
+#define rt (lt | 1)
+#define c t[p].u[i]
+void bld(int p, int l, int r) &amp;#123;
+    t[p].l = l, t[p].r = r;
+    if (l == r) &amp;#123;
+        for (int i = 0; i &amp;lt;= 3; ++i) &amp;#123;
+            c = mat(4, 4);
+            if (l &amp;gt; i + 1) &amp;#123;
+                c[0][0] = c[1][0] = c[2][0] = c[3][0] = 0;
+                c[0][1] = c[1][2] = c[2][3] = a[l];
+            &amp;#125;
+            else if (l == i + 1)
+                c[0][0] = c[1][0] = c[2][0] = c[3][0] = 0;
+            else
+                c[0][1] = c[1][2] = c[2][3] = a[l];
+        &amp;#125;
+        return;
+    &amp;#125;
+    int mid = (l + r) &amp;gt;&amp;gt; 1;
+    bld(lt, l, mid), bld(rt, mid + 1, r);
+    for (int i = 0; i &amp;lt;= 3; ++i)
+        t[p].u[i] = t[lt].u[i] * t[rt].u[i];
+    return;
+&amp;#125;
+void add(int p, int x, int v) &amp;#123;
+    if (t[p].l == t[p].r) &amp;#123;
+        for (int i = 0; i &amp;lt;= 3; ++i)
+            if (t[p].l != i + 1) 
+                c[0][1] = c[1][2] = c[2][3] = v;
+        return;
+    &amp;#125;
+    int mid = (t[p].l + t[p].r) &amp;gt;&amp;gt; 1;
+    if (x &amp;lt;= mid)
+        add(lt, x, v);
+    else
+        add(rt, x, v);
+    for (int i = 0; i &amp;lt;= 3; ++i)
+        t[p].u[i] = t[lt].u[i] * t[rt].u[i];
+    return;
+&amp;#125;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    for (int i = 1; i &amp;lt;= n; ++i)
+        std::cin &amp;gt;&amp;gt; a[i];
+    bld(1, 1, n);
+    auto calc = [&amp;amp;](void) &amp;#123;
+        mat f(1, 4);
+        f[0][0] = 0;
+        auto res = -inf;
+        for (int i = 0; i &amp;lt;= 3; ++i) &amp;#123;
+            auto r = (f * t[1].u[i]);
+            for (int j = 0; j &amp;lt;= 3; ++j)
+                if (i + j &amp;lt;= 3) &amp;#123;
+                    res = std::max(res, r[0][j]);
+                    // printf(&amp;quot;f[%d][%d] = %lld\n&amp;quot;, i, j, f[i][j]);
+                &amp;#125;
+        &amp;#125;
+        return res;
+    &amp;#125;;
+    std::cout &amp;lt;&amp;lt; calc() &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    int q;
+    std::cin &amp;gt;&amp;gt; q;
+    for (int x, v; q--; ) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; v;
+        add(1, x, v);
+        std::cout &amp;lt;&amp;lt; calc() &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    &amp;#125;
+#ifndef ONLINE_JUDGE
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt; (std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s\n&amp;quot;;
+#endif
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;p&gt;发现矩阵本身和 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 无关，还可以可以共用一个线段树上的信息，就可以只开一个线段树了。&lt;/p&gt;
+&lt;details&gt;
+&lt;p&gt;我写这一版本的原因是 &lt;code&gt;maxn&lt;/code&gt; 开大了导致 MLE，实际上四个线段树是没有任何空间压力的 😅&lt;/p&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int maxn = 4e5 + 5;
+const long long inf = 1e18;
+struct mat &amp;#123;
+    int n, m;
+    long long a[4][4];
+    mat() &amp;#123;&amp;#125;
+    mat(int n1, int m1): n(n1), m(m1) &amp;#123;
+        for (int i = 0; i &amp;lt; n; ++i)
+            for (int j = 0; j &amp;lt; m; ++j)
+                a[i][j] = -inf;
+        return;
+    &amp;#125;
+    long long* operator[] (const int q) &amp;#123;
+        return a[q];
+    &amp;#125;
+    mat operator* (mat q) const &amp;#123;
+        mat res(n, q.m);
+        for (int i = 0; i &amp;lt; n; ++i)
+            for (int k = 0; k &amp;lt; q.m; ++k)
+                for (int j = 0; j &amp;lt; m; ++j)
+                    res[i][k] = std::max(res[i][k], a[i][j] + q[j][k]);
+        return res;
+    &amp;#125;
+    mat&amp;amp; operator*= (mat &amp;amp;q) &amp;#123;
+        return *this = *this * q;
+    &amp;#125;
+&amp;#125;;
+struct &amp;#123; int l, r; mat u; &amp;#125; t[maxn &amp;lt;&amp;lt; 2];
+int a[maxn];
+#define lt (p &amp;lt;&amp;lt; 1)
+#define rt (lt | 1)
+void bld(int p, int l, int r) &amp;#123;
+    t[p].l = l, t[p].r = r;
+    if (l == r) &amp;#123;
+        t[p].u = mat(4, 4);
+        t[p].u[0][0] = t[p].u[1][0] = t[p].u[2][0] = t[p].u[3][0] = 0;
+        t[p].u[0][1] = t[p].u[1][2] = t[p].u[2][3] = a[l];
+        return;
+    &amp;#125;
+    int mid = (l + r) &amp;gt;&amp;gt; 1;
+    bld(lt, l, mid), bld(rt, mid + 1, r);
+    t[p].u = t[lt].u * t[rt].u;
+    return;
+&amp;#125;
+void add(int p, int x, int v) &amp;#123;
+    if (t[p].l == t[p].r) &amp;#123;
+        t[p].u[0][1] = t[p].u[1][2] = t[p].u[2][3] = v;
+        return;
+    &amp;#125;
+    int mid = (t[p].l + t[p].r) &amp;gt;&amp;gt; 1;
+    if (x &amp;lt;= mid)
+        add(lt, x, v);
+    else
+        add(rt, x, v);
+    t[p].u = t[lt].u * t[rt].u;
+    return;
+&amp;#125;
+mat ask(int p, int l, int r) &amp;#123;
+    if (l &amp;lt;= t[p].l &amp;amp;&amp;amp; t[p].r &amp;lt;= r)
+        return t[p].u;
+    int mid = (t[p].l + t[p].r) &amp;gt;&amp;gt; 1;
+    if (r &amp;lt;= mid)
+        return ask(lt, l, r);
+    if (l &amp;gt; mid)
+        return ask(rt, l, r);
+    return ask(lt, l, r) * ask(rt, l, r);
+&amp;#125;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    for (int i = 1; i &amp;lt;= n; ++i)
+        std::cin &amp;gt;&amp;gt; a[i];
+    bld(1, 1, n);
+    auto calc = [&amp;amp;](void) &amp;#123;
+        mat f(1, 4);
+        f[0][0] = 0, f[0][1] = f[0][2] = f[0][3] = -inf;
+        auto r(f * ask(1, 2, n));
+        auto res(*std::max_element(r[0], r[0] + 4));
+        mat z(4, 4);
+        z[0][0] = z[1][0] = z[2][0] = z[3][0] = 0ll;
+        for (int i = 1; i &amp;lt;= 3; ++i) &amp;#123;
+            mat op(4, 4);
+            op[0][1] = op[1][2] = op[2][3] = a[i];
+            f *= op;
+            if (i + 2 &amp;lt;= n)
+                r = f * z * ask(1, i + 2, n);
+            else
+                r = f * z;
+            res = std::max(res, *std::max_element(r[0], r[0] + 4 - i));
+        &amp;#125;
+        return res;
+    &amp;#125;;
+    std::cout &amp;lt;&amp;lt; calc() &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    int q;
+    std::cin &amp;gt;&amp;gt; q;
+    for (int x, v; q--; ) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; v, a[x] = v;
+        add(1, x, v);
+        std::cout &amp;lt;&amp;lt; calc() &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    &amp;#125;
+#ifndef ONLINE_JUDGE
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt; (std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s\n&amp;quot;;
+#endif
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;经典题gss3&#34;&gt;经典题：GSS3&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/SP1716&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/SP1716&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;怎么是子段和 😓&lt;/p&gt;
+&lt;p&gt;同样列出能够矩阵乘法的 DP 式，发现限制在于至少要选一个数。设 &lt;span class=&#34;math inline&#34;&gt;\(f_{i}\)&lt;/span&gt; 表示选了 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 的最大值，&lt;span class=&#34;math inline&#34;&gt;\(g_i\)&lt;/span&gt; 表示历史最大值，则：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_i=\max(f_{i-1}+a_i,0+a_i)\\
+g_i=\max(g_{i-1}+0,f_{i-1}+a_i,0+a_i)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;容易发现是一个 + / max 矩乘，线段树维护即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int maxn = 4e5 + 5;
+const long long inf = 1e18;
+struct mat &amp;#123;
+    int n, m;
+    long long a[3][3];
+    mat() &amp;#123;&amp;#125;
+    mat(int n1, int m1): n(n1), m(m1) &amp;#123;
+        for (int i = 0; i &amp;lt; n; ++i)
+            for (int j = 0; j &amp;lt; m; ++j)
+                a[i][j] = -inf;
+        return;
+    &amp;#125;
+    long long* operator[] (const int q) &amp;#123;
+        return a[q];
+    &amp;#125;
+    mat operator* (mat q) const &amp;#123;
+        mat res(n, q.m);
+        for (int i = 0; i &amp;lt; n; ++i)
+            for (int k = 0; k &amp;lt; q.m; ++k)
+                for (int j = 0; j &amp;lt; m; ++j)
+                    res[i][k] = std::max(res[i][k], a[i][j] + q[j][k]);
+        return res;
+    &amp;#125;
+    mat&amp;amp; operator*= (mat &amp;amp;q) &amp;#123;
+        return *this = *this * q;
+    &amp;#125;
+&amp;#125;;
+struct &amp;#123; int l, r; mat u; &amp;#125; t[maxn &amp;lt;&amp;lt; 2]; 
+int a[maxn];
+#define lt (p &amp;lt;&amp;lt; 1)
+#define rt (lt | 1)
+void bld(int p, int l, int r) &amp;#123;
+    t[p].l = l, t[p].r = r;
+    if (l == r) &amp;#123;
+        t[p].u = mat(3, 3);
+        t[p].u[0][0] = t[p].u[2][0] = a[l];
+        t[p].u[0][1] = a[l], t[p].u[1][1] = 0ll, t[p].u[2][1] = a[l];
+        t[p].u[2][2] = 0ll;
+        return;
+    &amp;#125;
+    int mid = (l + r) &amp;gt;&amp;gt; 1;
+    bld(lt, l, mid), bld(rt, mid + 1, r);
+    t[p].u = t[lt].u * t[rt].u;
+    return;
+&amp;#125;
+void add(int p, int x, int v) &amp;#123;
+    if (t[p].l == t[p].r) &amp;#123;
+        t[p].u[0][0] = t[p].u[2][0] = t[p].u[0][1] = t[p].u[2][1] = v;
+        return;
+    &amp;#125;
+    int mid = (t[p].l + t[p].r) &amp;gt;&amp;gt; 1;
+    if (x &amp;lt;= mid)
+        add(lt, x, v);
+    else
+        add(rt, x, v);
+    t[p].u = t[lt].u * t[rt].u;
+    return;
+&amp;#125;
+mat ask(int p, int l, int r) &amp;#123;
+    if (l &amp;lt;= t[p].l &amp;amp;&amp;amp; t[p].r &amp;lt;= r)
+        return t[p].u;
+    int mid = (t[p].l + t[p].r) &amp;gt;&amp;gt; 1;
+    if (r &amp;lt;= mid)
+        return ask(lt, l, r);
+    if (l &amp;gt; mid)
+        return ask(rt, l, r);
+    return ask(lt, l, r) * ask(rt, l, r);
+&amp;#125;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    for (int i = 1; i &amp;lt;= n; ++i)
+        std::cin &amp;gt;&amp;gt; a[i];
+    bld(1, 1, n);
+    auto calc = [&amp;amp;](int l, int r) &amp;#123;
+        mat f(1, 3);
+        f[0][2] = 0ll;
+        auto res(f * ask(1, l, r));
+        return res[0][1];
+    &amp;#125;;
+    int q;
+    std::cin &amp;gt;&amp;gt; q;
+    for (int op; q--; ) &amp;#123;
+        std::cin &amp;gt;&amp;gt; op;
+        if (op == 1) &amp;#123;
+            int l, r;
+            std::cin &amp;gt;&amp;gt; l &amp;gt;&amp;gt; r;
+            std::cout &amp;lt;&amp;lt; calc(l, r) &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+        &amp;#125;
+        else &amp;#123;
+            int x, v;
+            std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; v;
+            a[x] = v, add(1, x, v);
+        &amp;#125;
+    &amp;#125;
+#ifndef ONLINE_JUDGE
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt; (std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s\n&amp;quot;;
+#endif
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;动态树-dp&#34;&gt;动态树 DP&lt;/h2&gt;
+&lt;p&gt;把上述过程放到树上，很容易想到树剖 + 线段树。&lt;/p&gt;
+&lt;p&gt;由于认为线段树上的矩乘只能进行从重儿子到父亲的转移，轻儿子的转移会被合并为一个新函数（同时是矩阵的系数），在跳重链的时候被单独更新。&lt;/p&gt;
+&lt;p&gt;由于两个函数相互依赖，需要思考清楚更新的先后顺序。&lt;/p&gt;
+&lt;h3 id=&#34;模板动态-dp&#34;&gt;【模板】动态 DP&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P4719&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P4719&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;令 &lt;span class=&#34;math inline&#34;&gt;\(f_{u,0/1}\)&lt;/span&gt; 表示在 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 上，选 / 不选 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 的最大价值。容易得出转移：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_{u,0}=\sum\max(f_{v,0},f_{v,1})\\
+f_{u,1}=a_i+\sum f_{v,0}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;把转移矩阵放到树剖上后，考虑更新，发现求和这一步很困难。解决方案是&lt;strong&gt;直接将求和用另一个函数代替&lt;/strong&gt;。定义 &lt;span class=&#34;math inline&#34;&gt;\(g_{u,0}\)&lt;/span&gt; 表示取 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;、不取 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 的所有轻儿子的答案，&lt;span class=&#34;math inline&#34;&gt;\(g_{u,1}\)&lt;/span&gt; 不取 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt;，轻儿子可选可不选的答案。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt; 是可求的，且只需要在跳重链的时候更新 &lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt;。具体更新起来非常绞，因为 &lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt; 是相互依赖的，需要分清楚先后关系。&lt;/p&gt;
+&lt;p&gt;首先 &lt;span class=&#34;math inline&#34;&gt;\(g_u\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(f_u\)&lt;/span&gt; 都会被更新；接着，重链上其它的 &lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt; 不会被影响，而链顶的 &lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt; 需要被新的 &lt;span class=&#34;math inline&#34;&gt;\(g_u\)&lt;/span&gt; 更新；由此链顶父亲的 &lt;span class=&#34;math inline&#34;&gt;\(g\)&lt;/span&gt; 被更新；依次类推。注意到对于一个链顶，其 &lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt; 值是整条重链的乘积，故需要记录链底。&lt;/p&gt;
+&lt;p&gt;复杂度 &lt;span class=&#34;math inline&#34;&gt;\(O(q\log ^2n)\)&lt;/span&gt;。注意很重要的一点是线段树内乘法应从右往左。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int maxn = 1e5 + 5;
+const int inf = 0x3f3f3f3f;
+struct mat &amp;#123;
+    int n, m, a[2][2];
+    mat() &amp;#123;&amp;#125;
+    mat(int n1, int m1): n(n1), m(m1) &amp;#123;
+        for (int i = 0; i &amp;lt; n; ++i)
+            for (int j = 0; j &amp;lt; m; ++j)
+                a[i][j] = -inf;
+        return;
+    &amp;#125;
+    int* operator[] (const int q) &amp;#123;
+        return a[q];
+    &amp;#125;
+    mat operator* (mat q) const &amp;#123;
+        mat res(n, q.m);
+        for (int i = 0; i &amp;lt; n; ++i)
+            for (int k = 0; k &amp;lt; q.m; ++k)
+                for (int j = 0; j &amp;lt; m; ++j)
+                    res[i][k] = std::max(res[i][k], a[i][j] + q[j][k]);
+        return res;
+    &amp;#125;
+    mat&amp;amp; operator*= (mat &amp;amp;q) &amp;#123;
+        return *this = *this * q;
+    &amp;#125;
+&amp;#125;;
+struct &amp;#123; int l, r; mat u; &amp;#125; t[maxn &amp;lt;&amp;lt; 2]; 
+int g[maxn][2], tab[maxn];
+#define lt (p &amp;lt;&amp;lt; 1)
+#define rt (lt | 1)
+void bld(int p, int l, int r) &amp;#123;
+    t[p].l = l, t[p].r = r;
+    if (l == r) &amp;#123;
+        int u = tab[l];
+        t[p].u = mat(2, 2);
+        t[p].u[0][0] = t[p].u[1][0] = g[u][1];
+        t[p].u[0][1] = g[u][0];
+        return;
+    &amp;#125;
+    int mid = (l + r) &amp;gt;&amp;gt; 1;
+    bld(lt, l, mid), bld(rt, mid + 1, r);
+    t[p].u = t[rt].u * t[lt].u;
+    return;
+&amp;#125;
+void add(int p, int x) &amp;#123;
+    if (t[p].l == t[p].r) &amp;#123;
+        int u = tab[x];
+        t[p].u[0][0] = t[p].u[1][0] = g[u][1];
+        t[p].u[0][1] = g[u][0];
+        return;
+    &amp;#125;
+    int mid = (t[p].l + t[p].r) &amp;gt;&amp;gt; 1;
+    if (x &amp;lt;= mid)
+        add(lt, x);
+    else
+        add(rt, x);
+    t[p].u = t[rt].u * t[lt].u;
+    return;
+&amp;#125;
+mat ask(int p, int l, int r) &amp;#123;
+    if (l &amp;lt;= t[p].l &amp;amp;&amp;amp; t[p].r &amp;lt;= r)
+        return t[p].u;
+    int mid = (t[p].l + t[p].r) &amp;gt;&amp;gt; 1;
+    if (r &amp;lt;= mid)
+        return ask(lt, l, r);
+    if (l &amp;gt; mid)
+        return ask(rt, l, r);
+    return ask(rt, l, r) * ask(lt, l, r);
+&amp;#125;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n, q;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; q;
+    std::vector&amp;lt;int&amp;gt; a(n + 1);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        std::cin &amp;gt;&amp;gt; a[i];
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g1(n + 1);
+    for (int i = 1, x, y; i &amp;lt; n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y;
+        g1[x].push_back(y), g1[y].push_back(x);
+    &amp;#125;
+    std::vector&amp;lt;int&amp;gt; siz(n + 1), son(n + 1), fa(n + 1);
+    std::function&amp;lt;void(int)&amp;gt; DFS = [&amp;amp;](int x) &amp;#123;
+        siz[x] = 1;
+        for (auto i : g1[x])
+            if (i != fa[x]) &amp;#123;
+                fa[i] = x, DFS(i);
+                siz[x] += siz[i];
+                if (siz[i] &amp;gt; siz[son[x]])
+                    son[x] = i;
+            &amp;#125;
+        return;
+    &amp;#125;;
+    DFS(1);
+    std::vector&amp;lt;std::array&amp;lt;int, 2&amp;gt; &amp;gt; f(n + 1);
+    std::vector&amp;lt;int&amp;gt; top(n + 1), bot(n + 1), dfn(n + 1);
+    DFS = [&amp;amp;](int x) &amp;#123;
+        static int now = 0;
+        dfn[x] = ++now, tab[now] = x;
+        if (son[x]) &amp;#123;
+            top[son[x]] = top[x], DFS(son[x]);
+            bot[x] = bot[son[x]];
+            g[x][0] = a[x];
+            for (auto i : g1[x])
+                if (i != son[x] &amp;amp;&amp;amp; i != fa[x]) &amp;#123;
+                    top[i] = i, DFS(i);
+                    g[x][0] += f[i][0];
+                    g[x][1] += std::max(f[i][1], f[i][0]);
+                &amp;#125;
+            f[x][0] = g[x][1] + std::max(f[son[x]][0], f[son[x]][1]);
+            f[x][1] = g[x][0] + f[son[x]][0];
+        &amp;#125;
+        else
+            f[x][1] = g[x][0] = a[x], bot[x] = x;
+        return;
+    &amp;#125;;
+    top[1] = 1, DFS(1);
+    bld(1, 1, n);
+    for (int x, v; q--; ) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; v;
+        g[x][0] -= a[x], g[x][0] += v, a[x] = v;
+        for (; top[x] != 1; ) &amp;#123;
+            auto r = ask(1, dfn[top[x]], dfn[bot[x]]);
+            f[top[x]][0] = r[0][0], f[top[x]][1] = r[0][1];
+            g[fa[top[x]]][0] -= f[top[x]][0];
+            g[fa[top[x]]][1] -= std::max(f[top[x]][0], f[top[x]][1]);
+            add(1, dfn[x]);
+            r = ask(1, dfn[top[x]], dfn[bot[x]]);
+            f[top[x]][0] = r[0][0], f[top[x]][1] = r[0][1];
+            g[fa[top[x]]][0] += f[top[x]][0];
+            g[fa[top[x]]][1] += std::max(f[top[x]][0], f[top[x]][1]);
+            x = fa[top[x]];
+        &amp;#125;
+        add(1, dfn[x]);
+        auto r = ask(1, dfn[1], dfn[bot[1]]);
+        f[1][0] = r[0][0], f[1][1] = r[0][1];
+        std::cout &amp;lt;&amp;lt; std::max(f[1][0], f[1][1]) &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    &amp;#125;
+#ifndef ONLINE_JUDGE
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt; (std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s\n&amp;quot;;
+#endif
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;全局平衡二叉树&#34;&gt;全局平衡二叉树&lt;/h2&gt;
+&lt;p&gt;回顾树剖（重剖），功能在于解决路径问题，单次操作能够在 &lt;span class=&#34;math inline&#34;&gt;\(O(\log^2 n)\)&lt;/span&gt; 的时间内完成。这个功能可以被&lt;strong&gt;全局平衡二叉树（GBT）&lt;/strong&gt;上位替代。GBT 能够在单次 &lt;span class=&#34;math inline&#34;&gt;\(O(\log n)\)&lt;/span&gt; 的复杂度内完成链操作、子树操作。&lt;em&gt;&lt;a href=&#34;QTREE解法的一些研究.pdf&#34;&gt;Yang Zhe - SPOJ375 QTREE 解法的一些研究&lt;/a&gt; 中更为详细严谨地对 GBT 进行了说明，我传了份文件上来。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;考虑树剖能被卡的原因：每次线段树询问都会卡满 &lt;span class=&#34;math inline&#34;&gt;\(O(\log n)\)&lt;/span&gt;，找一条卡得满 &lt;span class=&#34;math inline&#34;&gt;\(O(\log n)\)&lt;/span&gt; 次跳重链次数的路径一直薅，就可以卡到 &lt;span class=&#34;math inline&#34;&gt;\(O(\log^2 n)\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;在实现线段树时发现，对于&lt;strong&gt;路径操作&lt;/strong&gt;和&lt;strong&gt;单点操作&lt;/strong&gt;，树剖只需要维护同一条重链的信息，建一个大线段树会产生许多重链间的无效维护。故一种经典的树剖卡常技巧是对于每一条重链建出线段树。&lt;/p&gt;
+&lt;p&gt;在本文中定义&lt;strong&gt;全局二叉树&lt;/strong&gt;：将单个线段树按照在原树上重链顶的相对祖孙关系连边得到的模型。这里为了和&lt;strong&gt;全局平衡二叉树&lt;/strong&gt;形成照应而命名，实际上模型并不是二叉树。容易发现&lt;strong&gt;修改某个点花费的操作次数和其在全局二叉树中的深度相同&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;考虑本方法理论上仍可卡到 &lt;span class=&#34;math inline&#34;&gt;\(O(\log^2 n)\)&lt;/span&gt; 单次操作的原因，虽然单个线段树平衡，但&lt;strong&gt;全局二叉树&lt;/strong&gt;并不平衡；能够构造数据使得树高达到 &lt;span class=&#34;math inline&#34;&gt;\(\log^2 n\)&lt;/span&gt;。考虑使得全局二叉树平衡，即调整线段树结构使得任何一个点在全局二叉树上的左右儿子大小最接近。发现是易做的，只需在建线段树时移动左右儿子分割点使得两边子树大小均为全树的一半即可。&lt;/p&gt;
+&lt;p&gt;法一：求出每个点的轻子树大小 &lt;span class=&#34;math inline&#34;&gt;\(ls_u=1+\sum siz_v\)&lt;/span&gt;，作为加权在线段树上找 mid 就能满足全局平衡；证明可以见上面的论文。这里用线段树代替了 BST，常数很大。&lt;/p&gt;
+&lt;p&gt;法二：用一个 BST 实现上述功能，需要满足：任意子树的根为子树的带权 mid；BST 的中序遍历为原重链。显然有：树高为 log 级别。这就决定了所有问题都可以通过暴力爬山解决。&lt;/p&gt;
+&lt;p&gt;GBT 能够快速维护&lt;strong&gt;普通树剖操作&lt;/strong&gt;和 &lt;strong&gt;DDP 信息&lt;/strong&gt;。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;维护-ddp模板动态-dp加强版&#34;&gt;维护 DDP：【模板】动态 DP（加强版）&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P4751&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P4751&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;和未加强版类似，把所有线段树操作替换为 BST 即可。如果写得丑可能需要一些额外的卡常技巧。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int maxn = 1e6 + 5;
+const int inf = 0x3f3f3f3f;
+const int LEN = (1 &amp;lt;&amp;lt; 20);
+int nec(void) &amp;#123;
+    static char buf[LEN], *p = buf, *e = buf;
+    if (p == e) &amp;#123;
+        e = buf + fread(buf, 1, LEN, stdin);
+        if (e == buf) return EOF;
+        p = buf;
+    &amp;#125;
+    return *p++;
+&amp;#125;
+bool read(int &amp;amp;x) &amp;#123;
+    x = 0;
+    bool f = 0;
+    char ch = nec();
+    while (ch &amp;lt; &amp;#39;0&amp;#39; || ch &amp;gt; &amp;#39;9&amp;#39;) &amp;#123;
+        if (ch == EOF) return 0;
+        if (ch == &amp;#39;-&amp;#39;) f = 1;
+        ch = nec();
+    &amp;#125;
+    while (ch &amp;gt;= &amp;#39;0&amp;#39; &amp;amp;&amp;amp; ch &amp;lt;= &amp;#39;9&amp;#39;) &amp;#123;
+        x = x * 10 + ch - &amp;#39;0&amp;#39;;
+        ch = nec();
+    &amp;#125;
+    if (f) x = -x;
+    return 1;
+&amp;#125;
+void print(int x) &amp;#123;
+    if (x &amp;lt; 0)
+        putchar(&amp;#39;-&amp;#39;), x = -x;
+    if (x &amp;gt;= 10) print(x / 10);
+    putchar(x % 10 + &amp;#39;0&amp;#39;);
+    return;
+&amp;#125;
+void print(int x, char ch) &amp;#123;
+    print(x), putchar(ch);
+    return;
+&amp;#125;
+struct mat &amp;#123;
+    int a[2][2];
+    int* operator[] (const int q) &amp;#123; 
+        return a[q];
+    &amp;#125;
+    mat operator* (mat &amp;amp;q) const &amp;#123;
+        mat res;
+        res[0][0] = res[0][1] = res[1][0] = res[1][1] = -inf;
+        for (int i = 0; i &amp;lt; 2; ++i)
+            for (int k = 0; k &amp;lt; 2; ++k)
+                for (int j = 0; j &amp;lt; 2; ++j)
+                    res[i][k] = std::max(res[i][k], a[i][j] + q[j][k]);
+        return res;
+    &amp;#125;
+    mat&amp;amp; operator*= (mat &amp;amp;q) &amp;#123;
+        return *this = *this * q;
+    &amp;#125;
+&amp;#125;;
+struct &amp;#123; int lc, rc, fa; mat u; &amp;#125; t[maxn]; 
+int g[maxn][2], tab[maxn], ls[maxn];
+mat p[maxn];
+void pushup(int x) &amp;#123;
+    t[x].u = t[t[x].rc].u * p[x] * t[t[x].lc].u;
+    return;
+&amp;#125;
+void bld(int &amp;amp;x, int l, int r) &amp;#123;
+    if (l &amp;gt; r)
+        return;
+    int s = 0, k = 0;
+    for (int i = l; i &amp;lt;= r; ++i)
+        s += ls[tab[i]];
+    for (int i = l; i &amp;lt;= r; ++i, k += ls[tab[i]])
+        if ((k + ls[tab[i]]) * 2 &amp;gt; s) &amp;#123;
+            x = tab[i];
+            bld(t[x].lc, l, i - 1), t[t[x].lc].fa = x;
+            bld(t[x].rc, i + 1, r), t[t[x].rc].fa = x;
+            pushup(x);
+            break;
+        &amp;#125;
+    return;
+&amp;#125;
+#undef lt
+#undef rt
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    t[0].u[0][0] = t[0].u[1][1] = 0, t[0].u[0][1] = t[0].u[1][0] = -inf;
+    int n, q;
+    read(n), read(q);
+    std::vector&amp;lt;int&amp;gt; a(n + 1), rt(n + 1);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        read(a[i]);
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g1(n + 1);
+    for (int i = 1, x, y; i &amp;lt; n; ++i) &amp;#123;
+        read(x), read(y);
+        g1[x].push_back(y), g1[y].push_back(x);
+    &amp;#125;
+    std::vector&amp;lt;int&amp;gt; son(n + 1), fa(n + 1), siz(n + 1);
+    std::function&amp;lt;void(int)&amp;gt; DFS = [&amp;amp;](int x) &amp;#123;
+        siz[x] = 1;
+        for (auto i : g1[x])
+            if (i != fa[x]) &amp;#123;
+                fa[i] = x, DFS(i);
+                siz[x] += siz[i];
+                if (siz[i] &amp;gt; siz[son[x]])
+                    son[x] = i;
+            &amp;#125;
+        return;
+    &amp;#125;;
+    DFS(1);
+    std::vector&amp;lt;std::array&amp;lt;int, 2&amp;gt; &amp;gt; f(n + 1);
+    std::vector&amp;lt;int&amp;gt; top(n + 1), bot(n + 1), dfn(n + 1);
+    DFS = [&amp;amp;](int x) &amp;#123;
+        static int now = 0;
+        dfn[x] = ++now, tab[now] = x, ls[x] = 1;
+        if (son[x]) &amp;#123;
+            top[son[x]] = top[x], DFS(son[x]);
+            bot[x] = bot[son[x]];
+            g[x][0] = a[x];
+            for (auto i : g1[x])
+                if (i != son[x] &amp;amp;&amp;amp; i != fa[x]) &amp;#123;
+                    top[i] = i, DFS(i), t[rt[i]].fa = x;
+                    ls[x] += siz[i];
+                    g[x][0] += f[i][0];
+                    g[x][1] += std::max(f[i][1], f[i][0]);
+                &amp;#125;
+            f[x][0] = g[x][1] + std::max(f[son[x]][0], f[son[x]][1]);
+            f[x][1] = g[x][0] + f[son[x]][0];
+        &amp;#125;
+        else
+            f[x][1] = g[x][0] = a[x], bot[x] = x;
+        p[x][0][0] = p[x][1][0] = g[x][1];
+        p[x][0][1] = g[x][0], p[x][1][1] = -inf;
+        if (x == top[x])
+            bld(rt[x], dfn[x], dfn[bot[x]]);
+        return;
+    &amp;#125;;
+    top[1] = 1, DFS(1);
+    for (int x, v, la = 0; q--; ) &amp;#123;
+        read(x), read(v), x ^= la;
+        p[x][0][1] += v - a[x], a[x] = v;
+        for (; x; ) &amp;#123;
+            int fa = t[x].fa;
+            if (fa &amp;amp;&amp;amp; x != t[fa].lc &amp;amp;&amp;amp; x != t[fa].rc) &amp;#123;
+                int f0 = t[x].u[0][0], f1 = std::max(f0, t[x].u[0][1]);
+                pushup(x);
+                int F0 = t[x].u[0][0], F1 = std::max(F0, t[x].u[0][1]);
+                p[fa][0][0] += F1 - f1, p[fa][1][0] += F1 - f1;
+                p[fa][0][1] += F0 - f0;
+            &amp;#125;
+            else
+                pushup(x);
+            x = fa;
+        &amp;#125;
+        print(la = std::max(t[rt[1]].u[0][0], t[rt[1]].u[0][1]), &amp;#39;\n&amp;#39;);
+    &amp;#125;
+#ifndef ONLINE_JUDGE
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt; (std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s\n&amp;quot;;
+#endif
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;p&gt;也给出一个线段树版本的&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int maxn = 1e6 + 5;
+const int inf = 0x3f3f3f3f;
+const int LEN = (1 &amp;lt;&amp;lt; 20);
+int nec(void) &amp;#123;
+    static char buf[LEN], *p = buf, *e = buf;
+    if (p == e) &amp;#123;
+        e = buf + fread(buf, 1, LEN, stdin);
+        if (e == buf) return EOF;
+        p = buf;
+    &amp;#125;
+    return *p++;
+&amp;#125;
+bool read(int &amp;amp;x) &amp;#123;
+    x = 0;
+    bool f = 0;
+    char ch = nec();
+    while (ch &amp;lt; &amp;#39;0&amp;#39; || ch &amp;gt; &amp;#39;9&amp;#39;) &amp;#123;
+        if (ch == EOF) return 0;
+        if (ch == &amp;#39;-&amp;#39;) f = 1;
+        ch = nec();
+    &amp;#125;
+    while (ch &amp;gt;= &amp;#39;0&amp;#39; &amp;amp;&amp;amp; ch &amp;lt;= &amp;#39;9&amp;#39;) &amp;#123;
+        x = x * 10 + ch - &amp;#39;0&amp;#39;;
+        ch = nec();
+    &amp;#125;
+    if (f) x = -x;
+    return 1;
+&amp;#125;
+void print(int x) &amp;#123;
+    if (x &amp;lt; 0)
+        putchar(&amp;#39;-&amp;#39;), x = -x;
+    if (x &amp;gt;= 10) print(x / 10);
+    putchar(x % 10 + &amp;#39;0&amp;#39;);
+    return;
+&amp;#125;
+void print(int x, char ch) &amp;#123;
+    print(x), putchar(ch);
+    return;
+&amp;#125;
+struct mat &amp;#123;
+    int a[2][2];
+    int* operator[] (const int q) &amp;#123;
+        return a[q];
+    &amp;#125;
+    mat operator* (mat q) const &amp;#123;
+        mat res;
+        res[0][0] = res[0][1] = res[1][0] = res[1][1] = -inf;
+        for (int i = 0; i &amp;lt; 2; ++i)
+            for (int k = 0; k &amp;lt; 2; ++k)
+                for (int j = 0; j &amp;lt; 2; ++j)
+                    res[i][k] = std::max(res[i][k], a[i][j] + q[j][k]);
+        return res;
+    &amp;#125;
+    mat&amp;amp; operator*= (mat &amp;amp;q) &amp;#123;
+        return *this = *this * q;
+    &amp;#125;
+&amp;#125;;
+struct &amp;#123; int lc, rc, l, r, mid; mat u; &amp;#125; t[maxn &amp;lt;&amp;lt; 2]; 
+int g[maxn][2], tab[maxn], ls[maxn];
+#define lt t[p].lc
+#define rt t[p].rc
+void bld(int &amp;amp;p, int l, int r) &amp;#123;
+    static int tot = 0;
+    p = ++tot, t[p].l = l, t[p].r = r;
+    if (l == r) &amp;#123;
+        int u = tab[l];
+        t[p].u[0][0] = t[p].u[1][0] = g[u][1];
+        t[p].u[0][1] = g[u][0], t[p].u[1][1] = -inf;
+        return;
+    &amp;#125;
+    int s = 0, u = ls[tab[l]];
+    for (int i = l; i &amp;lt;= r; ++i)
+        s += ls[tab[i]];
+    s &amp;gt;&amp;gt;= 1;
+    t[p].mid = r - 1;
+    for (int i = l + 1; i &amp;lt; r; ++i) &amp;#123;
+        u += ls[tab[i]];
+        if (u + ls[tab[i + 1]] &amp;gt; s) &amp;#123;
+            t[p].mid = i;
+            break;
+        &amp;#125;
+    &amp;#125;
+    bld(lt, l, t[p].mid), bld(rt, t[p].mid + 1, r);
+    t[p].u = t[rt].u * t[lt].u;
+    return;
+&amp;#125;
+void add(int p, int x) &amp;#123;
+    if (t[p].l == t[p].r) &amp;#123;
+        int u = tab[x];
+        t[p].u[0][0] = t[p].u[1][0] = g[u][1];
+        t[p].u[0][1] = g[u][0];
+        return;
+    &amp;#125;
+    if (x &amp;lt;= t[p].mid)
+        add(lt, x);
+    else
+        add(rt, x);
+    t[p].u = t[rt].u * t[lt].u;
+    return;
+&amp;#125;
+mat ask(int p, int l, int r) &amp;#123;
+    if (l &amp;lt;= t[p].l &amp;amp;&amp;amp; t[p].r &amp;lt;= r)
+        return t[p].u;
+    if (r &amp;lt;= t[p].mid)
+        return ask(lt, l, r);
+    if (l &amp;gt; t[p].mid)
+        return ask(rt, l, r);
+    return ask(rt, l, r) * ask(lt, l, r);
+&amp;#125;
+#undef lt
+#undef rt
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n, q;
+    read(n), read(q);
+    std::vector&amp;lt;int&amp;gt; a(n + 1), rt(n + 1);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        read(a[i]);
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g1(n + 1);
+    for (int i = 1, x, y; i &amp;lt; n; ++i) &amp;#123;
+        read(x), read(y);
+        g1[x].push_back(y), g1[y].push_back(x);
+    &amp;#125;
+    std::vector&amp;lt;int&amp;gt; siz(n + 1), son(n + 1), fa(n + 1);
+    std::function&amp;lt;void(int)&amp;gt; DFS = [&amp;amp;](int x) &amp;#123;
+        siz[x] = 1;
+        for (auto i : g1[x])
+            if (i != fa[x]) &amp;#123;
+                fa[i] = x, DFS(i);
+                siz[x] += siz[i];
+                if (siz[i] &amp;gt; siz[son[x]])
+                    son[x] = i;
+            &amp;#125;
+        return;
+    &amp;#125;;
+    DFS(1);
+    std::vector&amp;lt;std::array&amp;lt;int, 2&amp;gt; &amp;gt; f(n + 1);
+    std::vector&amp;lt;int&amp;gt; top(n + 1), bot(n + 1), dfn(n + 1);
+    DFS = [&amp;amp;](int x) &amp;#123;
+        static int now = 0;
+        dfn[x] = ++now, tab[now] = x;
+        ls[x] = 1;
+        if (son[x]) &amp;#123;
+            top[son[x]] = top[x], DFS(son[x]);
+            bot[x] = bot[son[x]];
+            g[x][0] = a[x];
+            for (auto i : g1[x])
+                if (i != son[x] &amp;amp;&amp;amp; i != fa[x]) &amp;#123;
+                    top[i] = i, DFS(i);
+                    ls[x] += siz[i];
+                    g[x][0] += f[i][0];
+                    g[x][1] += std::max(f[i][1], f[i][0]);
+                &amp;#125;
+            f[x][0] = g[x][1] + std::max(f[son[x]][0], f[son[x]][1]);
+            f[x][1] = g[x][0] + f[son[x]][0];
+        &amp;#125;
+        else
+            f[x][1] = g[x][0] = a[x], bot[x] = x;
+        if (x == top[x])
+            bld(rt[x], dfn[x], dfn[bot[x]]);
+        return;
+    &amp;#125;;
+    top[1] = 1, DFS(1);
+    for (int x, v, la = 0; q--; ) &amp;#123;
+        read(x), read(v), x ^= la;
+        g[x][0] -= a[x], g[x][0] += v, a[x] = v;
+        for (; top[x] != 1; ) &amp;#123;
+            auto r = t[rt[top[x]]].u;
+            f[top[x]][0] = r[0][0], f[top[x]][1] = r[0][1];
+            g[fa[top[x]]][0] -= f[top[x]][0];
+            g[fa[top[x]]][1] -= std::max(f[top[x]][0], f[top[x]][1]);
+            add(rt[top[x]], dfn[x]);
+            r = t[rt[top[x]]].u;
+            f[top[x]][0] = r[0][0], f[top[x]][1] = r[0][1];
+            g[fa[top[x]]][0] += f[top[x]][0];
+            g[fa[top[x]]][1] += std::max(f[top[x]][0], f[top[x]][1]);
+            x = fa[top[x]];
+        &amp;#125;
+        add(rt[1], dfn[x]);
+        auto r =  t[rt[1]].u;
+        f[1][0] = r[0][0], f[1][1] = r[0][1];
+        std::cout &amp;lt;&amp;lt; (la = std::max(f[1][0], f[1][1])) &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    &amp;#125;
+#ifndef ONLINE_JUDGE
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt; (std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s\n&amp;quot;;
+#endif
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;树上路径问题染色&#34;&gt;树上路径问题：染色&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P2486&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P2486&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;GBT 上的&lt;strong&gt;路径问题&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;BST：首先暴力爬山到 LCA，统计一路上的答案；然后跳到当前 BST 的根。由于本题有标记，所以需要在跳的同时想办法把标记问题解决一下。&lt;/p&gt;
+&lt;p&gt;线段树：把树剖的线段树略改一下就过了。从上一行模棱两可的描述就可以看出来 BST 实现起来不太轻松；还是线段树更轮椅啊！&lt;/p&gt;
+&lt;details&gt;
+&lt;p&gt;跑得没纯树剖快，因为数据没有刻意构造导致树高很低，再加上常数的影响吧。&lt;/p&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int maxn = 1e5 + 5;
+const int LEN = (1 &amp;lt;&amp;lt; 20);
+int nec(void) &amp;#123;
+    static char buf[LEN], *p = buf, *e = buf;
+    if (p == e) &amp;#123;
+        e = buf + fread(buf, 1, LEN, stdin);
+        if (e == buf) return EOF;
+        p = buf;
+    &amp;#125;
+    return *p++;
+&amp;#125;
+bool read(int &amp;amp;x) &amp;#123;
+    x = 0;
+    bool f = 0;
+    char ch = nec();
+    while (ch &amp;lt; &amp;#39;0&amp;#39; || ch &amp;gt; &amp;#39;9&amp;#39;) &amp;#123;
+        if (ch == EOF) return 0;
+        if (ch == &amp;#39;-&amp;#39;) f = 1;
+        ch = nec();
+    &amp;#125;
+    while (ch &amp;gt;= &amp;#39;0&amp;#39; &amp;amp;&amp;amp; ch &amp;lt;= &amp;#39;9&amp;#39;) &amp;#123;
+        x = x * 10 + ch - &amp;#39;0&amp;#39;;
+        ch = nec();
+    &amp;#125;
+    if (f) x = -x;
+    return 1;
+&amp;#125;
+void read(char &amp;amp;x) &amp;#123;
+    for (x = nec(); x != &amp;#39;C&amp;#39; &amp;amp;&amp;amp; x != &amp;#39;Q&amp;#39;; x = nec());
+    return;
+&amp;#125;
+void print(int x) &amp;#123;
+    if (x &amp;lt; 0)
+        putchar(&amp;#39;-&amp;#39;), x = -x;
+    if (x &amp;gt;= 10) print(x / 10);
+    putchar(x % 10 + &amp;#39;0&amp;#39;);
+    return;
+&amp;#125;
+void print(int x, char ch) &amp;#123;
+    print(x), putchar(ch);
+    return;
+&amp;#125;
+class node &amp;#123;
+private:
+    int lt, rt;
+public:
+    int l, r, mid, lc, rc, u, d;
+    node(): u(-1) &amp;#123;&amp;#125;
+    inline int&amp;amp; ls(void) &amp;#123; return lt; &amp;#125;
+    inline int&amp;amp; rs(void) &amp;#123; return rt; &amp;#125;
+    node&amp;amp; operator= (const node &amp;amp;q) &amp;#123;
+        lc = q.lc, rc = q.rc, u = q.u;
+        return *this;
+    &amp;#125;
+    node operator+ (const node &amp;amp;q) const &amp;#123;
+        if (u == -1)
+            return q;
+        if (q.u == -1)
+            return *this;
+        node res;
+        res.lc = lc, res.rc = q.rc, res.u = u + q.u - (rc == q.lc);
+        return res;
+    &amp;#125;
+    inline void swap(void) &amp;#123;
+        if (~u)
+            lc ^= rc ^= lc ^= rc;
+        return;
+    &amp;#125;
+&amp;#125; t[maxn &amp;lt;&amp;lt; 2]; 
+int tab[maxn], ls[maxn], a[maxn];
+#define lt t[p].ls()
+#define rt t[p].rs()
+void bld(int &amp;amp;p, int l, int r) &amp;#123;
+    static int tot = 0;
+    p = ++tot, t[p].l = l, t[p].r = r;
+    if (l == r) &amp;#123;
+        t[p].u = 1;
+        t[p].lc = t[p].rc = a[tab[l]];
+        return;
+    &amp;#125;
+    int s = 0, u = ls[tab[l]];
+    for (int i = l; i &amp;lt;= r; ++i)
+        s += ls[tab[i]];
+    s &amp;gt;&amp;gt;= 1;
+    t[p].mid = r - 1;
+    for (int i = l + 1; i &amp;lt; r; ++i) &amp;#123;
+        u += ls[tab[i]];
+        if (u + ls[tab[i + 1]] &amp;gt; s) &amp;#123;
+            t[p].mid = i;
+            break;
+        &amp;#125;
+    &amp;#125;
+    bld(lt, l, t[p].mid), bld(rt, t[p].mid + 1, r);
+    t[p] = t[lt] + t[rt];
+    return;
+&amp;#125;
+void pushdown(int p) &amp;#123;
+    if (t[p].d) &amp;#123;
+        t[lt].d = t[lt].lc = t[lt].rc = t[rt].d = t[rt].lc = t[rt].rc = t[p].d;
+        t[lt].u = t[rt].u = 1;
+        t[p].d = 0;
+    &amp;#125;
+    return;
+&amp;#125;
+void add(int p, int l, int r, int v) &amp;#123;
+    if (l &amp;lt;= t[p].l &amp;amp;&amp;amp; t[p].r &amp;lt;= r) &amp;#123;
+        t[p].u = 1;
+        t[p].lc = t[p].rc = t[p].d = v;
+        return;
+    &amp;#125;
+    pushdown(p);
+    if (l &amp;lt;= t[p].mid)
+        add(lt, l, r, v);
+    if (r &amp;gt; t[p].mid)
+        add(rt, l, r, v);
+    t[p] = t[lt] + t[rt];
+    return;
+&amp;#125;
+node ask(int p, int l, int r) &amp;#123;
+    if (l &amp;lt;= t[p].l &amp;amp;&amp;amp; t[p].r &amp;lt;= r)
+        return t[p];
+    pushdown(p);
+    if (r &amp;lt;= t[p].mid)
+        return ask(lt, l, r);
+    if (l &amp;gt; t[p].mid)
+        return ask(rt, l, r);
+    return ask(lt, l, r) + ask(rt, l, r);
+&amp;#125;
+#undef lt
+#undef rt
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+#else
+    std::freopen(&amp;quot;paint17.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n, q;
+    read(n), read(q);
+    std::vector&amp;lt;int&amp;gt; rt(n + 1);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        read(a[i]);
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g(n + 1);
+    for (int i = 1, x, y; i &amp;lt; n; ++i) &amp;#123;
+        read(x), read(y);
+        g[x].push_back(y), g[y].push_back(x);
+    &amp;#125;
+    std::vector&amp;lt;int&amp;gt; siz(n + 1), son(n + 1), fa(n + 1), dep(n + 1);
+    std::function&amp;lt;void(int)&amp;gt; DFS = [&amp;amp;](int x) &amp;#123;
+        siz[x] = 1;
+        for (auto i : g[x])
+            if (i != fa[x]) &amp;#123;
+                dep[i] = dep[x] + 1;
+                fa[i] = x, DFS(i);
+                siz[x] += siz[i];
+                if (siz[i] &amp;gt; siz[son[x]])
+                    son[x] = i;
+            &amp;#125;
+        return;
+    &amp;#125;;
+    DFS(1);
+    std::vector&amp;lt;std::array&amp;lt;int, 2&amp;gt; &amp;gt; f(n + 1);
+    std::vector&amp;lt;int&amp;gt; top(n + 1), bot(n + 1), dfn(n + 1);
+    DFS = [&amp;amp;](int x) &amp;#123;
+        static int now = 0;
+        dfn[x] = ++now, tab[now] = x, ls[x] = 1;
+        if (son[x]) &amp;#123;
+            top[son[x]] = top[x], DFS(son[x]);
+            bot[x] = bot[son[x]];
+        &amp;#125;
+        else
+            bot[x] = x;
+        for (auto i : g[x])
+            if (i != son[x] &amp;amp;&amp;amp; i != fa[x]) &amp;#123;
+                top[i] = i;
+                DFS(i);
+                ls[x] += siz[i];
+            &amp;#125;
+        if (x == top[x])
+            bld(rt[x], dfn[x], dfn[bot[x]]);
+        return;
+    &amp;#125;;
+    top[1] = 1, DFS(1);
+    for (char op; q--; ) &amp;#123;
+        read(op);
+        if (op == &amp;#39;C&amp;#39;) &amp;#123;
+            int x, y, c;
+            read(x), read(y), read(c);
+            for (; top[x] != top[y]; x = fa[top[x]]) &amp;#123;
+                if (dep[top[x]] &amp;lt; dep[top[y]])
+                    std::swap(x, y);
+                add(rt[top[x]], dfn[top[x]], dfn[x], c);
+            &amp;#125;
+            if (dep[x] &amp;gt; dep[y])
+                std::swap(x, y);
+            add(rt[top[x]], dfn[x], dfn[y], c);
+        &amp;#125;
+        else &amp;#123;
+            int x, y;
+            read(x), read(y);
+            node res1, res2;
+            for (; top[x] != top[y]; )
+                if (dep[top[x]] &amp;lt; dep[top[y]]) &amp;#123;
+                    res2 = ask(rt[top[y]], dfn[top[y]], dfn[y]) + res2;
+                    y = fa[top[y]];
+                &amp;#125;
+                else &amp;#123;
+                    res1 = ask(rt[top[x]], dfn[top[x]], dfn[x]) + res1;
+                    x = fa[top[x]];
+                &amp;#125;
+            if (dep[x] &amp;gt; dep[y])
+                res1 = ask(rt[top[y]], dfn[y], dfn[x]) + res1;
+            else
+                res2 = ask(rt[top[x]], dfn[x], dfn[y]) + res2;
+            res1.swap();
+            print((res1 + res2).u, &amp;#39;\n&amp;#39;);
+        &amp;#125;
+    &amp;#125;
+#ifndef ONLINE_JUDGE
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt; (std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s\n&amp;quot;;
+#endif
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;树上路径查询&#34;&gt;树上路径查询？&lt;/h3&gt;
+&lt;p&gt;做题的时候可以感受到，路径询问的存在很诡异，因为只需要一条链的操作，更偏向链上 DDP 而非树上的；&lt;strong&gt;轻儿子的信息是不用维护的&lt;/strong&gt;，形式上更像树剖（DS）；当成链上的 DDP 就可以解决了。&lt;/p&gt;
+&lt;p&gt;可以用倍增维护 DDP（不用考虑轻重儿子，只用维护父子关系，进一步向序列 DDP 靠近），就不用打 GBT 了，常数也会小一些。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;习题&#34;&gt;习题&lt;/h2&gt;
+&lt;p&gt;GBT 就统一用线段树了。DDP 也就可以顺带用 GBT 优化了。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;e---猫或狗-cats-or-dogs&#34;&gt;E - 猫或狗 / Cats or Dogs&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P9597&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P9597&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;设 &lt;span class=&#34;math inline&#34;&gt;\(f_{u,0/1}\)&lt;/span&gt; 表示从根上颜色为 &lt;span class=&#34;math inline&#34;&gt;\(0/1\)&lt;/span&gt; 时的最小断边数，显然无色可以视作任选一个颜色。那么有：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f_{u,a}=\sum\limits_v\min\limits_{b\in\{0,1\}}\{f_{v,b}+[a\ne b]\}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;直接把轻儿子的项提出来，记 &lt;span class=&#34;math inline&#34;&gt;\(g_{u,0/1}\)&lt;/span&gt; 表示 &lt;span class=&#34;math inline&#34;&gt;\(f_{u,0/1}\)&lt;/span&gt; 对应的轻儿子贡献即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int maxn = 1e5 + 5;
+const int inf = 0x3f3f3f3f;
+struct mat &amp;#123;
+    int a[2][2];
+    int* operator[] (const int q) &amp;#123; 
+        return a[q];
+    &amp;#125;
+    mat operator* (mat &amp;amp;q) const &amp;#123;
+        mat res;
+        res[0][0] = res[0][1] = res[1][0] = res[1][1] = inf;
+        for (int i = 0; i &amp;lt; 2; ++i)
+            for (int k = 0; k &amp;lt; 2; ++k)
+                for (int j = 0; j &amp;lt; 2; ++j)
+                    res[i][k] = std::min(res[i][k], a[i][j] + q[j][k]);
+        return res;
+    &amp;#125;
+    mat&amp;amp; operator*= (mat &amp;amp;q) &amp;#123;
+        return *this = *this * q;
+    &amp;#125;
+&amp;#125; p[maxn];
+struct &amp;#123; int lc, rc, l, r, mid; mat u; &amp;#125; t[maxn &amp;lt;&amp;lt; 2]; 
+int ls[maxn], tab[maxn], g[maxn][2], rt[maxn], top[maxn], dfn[maxn], fa[maxn];
+std::vector&amp;lt;int&amp;gt; a;
+#define lt t[p].lc
+#define rt t[p].rc
+void bld(int &amp;amp;p, int l, int r) &amp;#123;
+    static int tot = 0;
+    p = ++tot, t[p].l = l, t[p].r = r;
+    if (l == r) &amp;#123;
+        t[p].u[0][1] = t[p].u[1][0] = 1;
+        return;
+    &amp;#125;
+    int s = 0, u = ls[tab[l]];
+    for (int i = l; i &amp;lt;= r; ++i)
+        s += ls[tab[i]];
+    s &amp;gt;&amp;gt;= 1;
+    t[p].mid = r - 1;
+    for (int i = l + 1; i &amp;lt; r; ++i) &amp;#123;
+        u += ls[tab[i]];
+        if (u + ls[tab[i + 1]] &amp;gt; s) &amp;#123;
+            t[p].mid = i;
+            break;
+        &amp;#125;
+    &amp;#125;
+    bld(lt, l, t[p].mid), bld(rt, t[p].mid + 1, r);
+    t[p].u = t[rt].u * t[lt].u;
+    return;
+&amp;#125;
+void add(int p, int x) &amp;#123;
+    if (t[p].l == t[p].r) &amp;#123;
+        int u = tab[x], g0 = (a[u] == 1 ? inf : g[u][0]), g1 = (a[u] == 0 ? inf : g[u][1]);
+        t[p].u[0][0] = g0, t[p].u[0][1] = g1 + 1;
+        t[p].u[1][0] = g0 + 1, t[p].u[1][1] = g1;
+        return;
+    &amp;#125;
+    if (x &amp;lt;= t[p].mid)
+        add(lt, x);
+    else
+        add(rt, x);
+    t[p].u = t[rt].u * t[lt].u;
+    return;
+&amp;#125;
+#undef lt
+#undef rt
+void initialize(int n, std::vector&amp;lt;int&amp;gt; A, std::vector&amp;lt;int&amp;gt; B) &amp;#123;
+    a.assign(n + 1, -1);
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g1(n + 1);
+    for (int i = 0; i &amp;lt; n - 1; ++i)
+        g1[A[i]].push_back(B[i]), g1[B[i]].push_back(A[i]);
+    std::vector&amp;lt;int&amp;gt; siz(n + 1), son(n + 1);
+    std::function&amp;lt;void(int)&amp;gt; DFS = [&amp;amp;](int x) &amp;#123;
+        siz[x] = 1;
+        for (auto i : g1[x])
+            if (i != fa[x]) &amp;#123;
+                fa[i] = x, DFS(i);
+                siz[x] += siz[i];
+                if (siz[i] &amp;gt; siz[son[x]])
+                    son[x] = i;
+            &amp;#125;
+        return;
+    &amp;#125;;
+    DFS(1);
+    std::vector&amp;lt;int&amp;gt; bot(n + 1);
+    DFS = [&amp;amp;](int x) &amp;#123;
+        static int now = 0;
+        dfn[x] = ++now, tab[now] = x, ls[x] = 1;
+        if (son[x]) &amp;#123;
+            top[son[x]] = top[x], DFS(son[x]);
+            bot[x] = bot[son[x]];
+            for (auto i : g1[x])
+                if (i != son[x] &amp;amp;&amp;amp; i != fa[x]) &amp;#123;
+                    top[i] = i, DFS(i);
+                    ls[x] += siz[i];
+                &amp;#125;
+        &amp;#125;
+        else
+            bot[x] = x;
+        if (x == top[x])
+            bld(rt[x], dfn[x], dfn[bot[x]]);
+        return;
+    &amp;#125;;
+    top[1] = 1, DFS(1);
+    return;
+&amp;#125;
+int upd(int x) &amp;#123;
+    for (; top[x] != 1; ) &amp;#123;
+        int faa = fa[top[x]];
+        auto &amp;amp;id = t[rt[top[x]]].u;
+        int f0 = std::min(id[0][0], id[1][0]), f1 = std::min(id[0][1], id[1][1]);
+        g[faa][0] -= std::min(f0, f1 + 1);
+        g[faa][1] -= std::min(f0 + 1, f1);
+        add(rt[top[x]], dfn[x]);
+        f0 = std::min(id[0][0], id[1][0]), f1 = std::min(id[0][1], id[1][1]);
+        // printf(&amp;quot;%d: f0 = %d, f1 = %d\n&amp;quot;, top[x], f0, f1);
+        g[faa][0] += std::min(f0, f1 + 1);
+        g[faa][1] += std::min(f0 + 1, f1);
+        x = faa;
+    &amp;#125;
+    add(rt[1], dfn[x]);
+    auto &amp;amp;id = t[rt[1]].u;
+    int f0 = std::min(id[0][0], id[1][0]), f1 = std::min(id[0][1], id[1][1]);
+    // printf(&amp;quot;%d: f0 = %d, f1 = %d\n&amp;quot;, 1, f0, f1);
+    return std::min(f0, f1);
+&amp;#125;
+int cat(int x) &amp;#123;
+    a[x] = 0;
+    return upd(x);
+&amp;#125;
+int dog(int x) &amp;#123;
+    a[x] = 1;
+    return upd(x);
+&amp;#125;
+int neighbor(int x) &amp;#123;
+    a[x] = -1;
+    return upd(x);
+&amp;#125;
+#ifndef ONLINE_JUDGE
+int main() &amp;#123;
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    std::vector&amp;lt;int&amp;gt; A(n - 1), B(n - 1);
+    for (int i = 0; i &amp;lt; n - 1; ++i)
+        std::cin &amp;gt;&amp;gt; A[i] &amp;gt;&amp;gt; B[i];
+    initialize(n, A, B);
+    int q;
+    std::cin &amp;gt;&amp;gt; q;
+    for (int op, x; q--; ) &amp;#123;
+        std::cin &amp;gt;&amp;gt; op &amp;gt;&amp;gt; x;
+        std::cout &amp;lt;&amp;lt; (op == 1 ? cat(x) : (op == 2 ? dog(x) : neighbor(x))) &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    &amp;#125;
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt; (std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s\n&amp;quot;;
+    return 0;
+&amp;#125;
+#endif&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;f---hash-on-tree&#34;&gt;F - Hash on Tree&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/AT_abc351_g&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/AT_abc351_g&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;记 &lt;span class=&#34;math inline&#34;&gt;\(g_x\)&lt;/span&gt; 为轻儿子的哈希值之积，则 &lt;span class=&#34;math inline&#34;&gt;\(f_u=A_u+f_{son}\cdot g_u\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;然后开一个常数维即可。快速幂的 log 省不掉，所以是双 log 的。&lt;/p&gt;
+&lt;p&gt;初值和修改都有可能为 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，需要维护实际哈希值和去掉 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt; 的哈希值。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int maxn = 1e6 + 5;
+const int LEN = (1 &amp;lt;&amp;lt; 20);
+const int mod = 998244353;
+int nec(void) &amp;#123;
+    static char buf[LEN], *p = buf, *e = buf;
+    if (p == e) &amp;#123;
+        e = buf + fread(buf, 1, LEN, stdin);
+        if (e == buf) return EOF;
+        p = buf;
+    &amp;#125;
+    return *p++;
+&amp;#125;
+bool read(int &amp;amp;x) &amp;#123;
+    x = 0;
+    bool f = 0;
+    char ch = nec();
+    while (ch &amp;lt; &amp;#39;0&amp;#39; || ch &amp;gt; &amp;#39;9&amp;#39;) &amp;#123;
+        if (ch == EOF) return 0;
+        if (ch == &amp;#39;-&amp;#39;) f = 1;
+        ch = nec();
+    &amp;#125;
+    while (ch &amp;gt;= &amp;#39;0&amp;#39; &amp;amp;&amp;amp; ch &amp;lt;= &amp;#39;9&amp;#39;) &amp;#123;
+        x = x * 10 + ch - &amp;#39;0&amp;#39;;
+        ch = nec();
+    &amp;#125;
+    if (f) x = -x;
+    return 1;
+&amp;#125;
+void print(int x) &amp;#123;
+    if (x &amp;lt; 0)
+        putchar(&amp;#39;-&amp;#39;), x = -x;
+    if (x &amp;gt;= 10) print(x / 10);
+    putchar(x % 10 + &amp;#39;0&amp;#39;);
+    return;
+&amp;#125;
+void print(int x, char ch) &amp;#123;
+    print(x), putchar(ch);
+    return;
+&amp;#125;
+struct mat &amp;#123;
+    int n, m;
+    long long a[2][2];
+    long long* operator[] (const int q) &amp;#123;
+        return a[q];
+    &amp;#125;
+    mat operator* (mat &amp;amp;q) const &amp;#123;
+        mat res;
+        res.n = n, res.m = q.m;
+        res[0][0] = res[0][1] = res[1][0] = res[1][1] = 0ll;
+        for (int i = 0; i &amp;lt; n; ++i)
+            for (int k = 0; k &amp;lt; q.m; ++k) &amp;#123;
+                for (int j = 0; j &amp;lt; m; ++j)
+                    res[i][k] += a[i][j] * q[j][k];
+                res[i][k] %= mod;
+            &amp;#125;
+        return res;
+    &amp;#125;
+    mat&amp;amp; operator*= (mat &amp;amp;q) &amp;#123;
+        return *this = *this * q;
+    &amp;#125;
+&amp;#125;;
+struct &amp;#123; int lc, rc, l, r, mid; mat u; &amp;#125; t[maxn &amp;lt;&amp;lt; 2]; 
+long long g[maxn];
+int tab[maxn], ls[maxn], a[maxn];
+#define lt t[p].lc
+#define rt t[p].rc
+void bld(int &amp;amp;p, int l, int r) &amp;#123;
+    static int tot = 0;
+    p = ++tot, t[p].l = l, t[p].r = r;
+    if (l == r) &amp;#123;
+        int u = tab[l];
+        t[p].u.n = t[p].u.m = 2;
+        t[p].u[0][0] = g[u];
+        t[p].u[0][1] = 0ll;
+        t[p].u[1][0] = a[u];
+        t[p].u[1][1] = 1ll;
+        return;
+    &amp;#125;
+    int s = 0, u = ls[tab[l]];
+    for (int i = l; i &amp;lt;= r; ++i)
+        s += ls[tab[i]];
+    s &amp;gt;&amp;gt;= 1;
+    t[p].mid = r - 1;
+    for (int i = l + 1; i &amp;lt; r; ++i) &amp;#123;
+        u += ls[tab[i]];
+        if (u + ls[tab[i + 1]] &amp;gt; s) &amp;#123;
+            t[p].mid = i;
+            break;
+        &amp;#125;
+    &amp;#125;
+    bld(lt, l, t[p].mid), bld(rt, t[p].mid + 1, r);
+    t[p].u = t[rt].u * t[lt].u;
+    return;
+&amp;#125;
+void add(int p, int x) &amp;#123;
+    if (t[p].l == t[p].r) &amp;#123;
+        int u = tab[x];
+        t[p].u[0][0] = g[u];
+        t[p].u[1][0] = a[u];
+        return;
+    &amp;#125;
+    if (x &amp;lt;= t[p].mid)
+        add(lt, x);
+    else
+        add(rt, x);
+    t[p].u = t[rt].u * t[lt].u;
+    return;
+&amp;#125;
+#undef lt
+#undef rt
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n, q;
+    read(n), read(q);
+    std::vector&amp;lt;int&amp;gt; rt(n + 1);
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g1(n + 1);
+    for (int i = 2, x; i &amp;lt;= n; ++i) &amp;#123;
+        read(x);
+        g1[i].push_back(x), g1[x].push_back(i);
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= n; ++i)
+        read(a[i]);
+    std::vector&amp;lt;int&amp;gt; siz(n + 1), son(n + 1), fa(n + 1);
+    std::function&amp;lt;void(int)&amp;gt; DFS = [&amp;amp;](int x) &amp;#123;
+        siz[x] = 1;
+        for (auto i : g1[x])
+            if (i != fa[x]) &amp;#123;
+                fa[i] = x, DFS(i);
+                siz[x] += siz[i];
+                if (siz[i] &amp;gt; siz[son[x]])
+                    son[x] = i;
+            &amp;#125;
+        return;
+    &amp;#125;;
+    DFS(1);
+    std::vector&amp;lt;long long&amp;gt; f(n + 1);
+    std::vector&amp;lt;int&amp;gt; top(n + 1), bot(n + 1), dfn(n + 1), la(n + 1), cnt(n + 1);
+    DFS = [&amp;amp;](int x) &amp;#123;
+        static int now = 0;
+        dfn[x] = ++now, tab[now] = x, ls[x] = 1;
+        if (son[x]) &amp;#123;
+            top[son[x]] = top[x], DFS(son[x]);
+            bot[x] = bot[son[x]];
+            g[x] = 1ll;
+            for (auto i : g1[x])
+                if (i != son[x] &amp;amp;&amp;amp; i != fa[x]) &amp;#123;
+                    top[i] = i, DFS(i);
+                    ls[x] += siz[i];
+                    if (f[i] == 0ll)
+                        ++cnt[x];
+                    else
+                        (la[x] *= f[i]) %= mod;
+                    (g[x] *= f[i]) %= mod;
+                &amp;#125;
+            f[x] = (a[x] + g[x] * f[son[x]]) % mod;
+        &amp;#125;
+        else
+            f[x] = a[x], bot[x] = x;
+        // printf(&amp;quot;f[%d] = %lld\n&amp;quot;, x, f[x]);
+        if (x == top[x])
+            bld(rt[x], dfn[x], dfn[bot[x]]);
+        return;
+    &amp;#125;;
+    top[1] = 1, DFS(1);
+    mat init;
+    init.n = 1, init.m = 2;
+    init[0][0] = 0ll, init[0][1] = 1ll;
+    auto qkp = [&amp;amp;](long long x, int y) &amp;#123;
+        auto res(1ll);
+        for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    auto inv = [&amp;amp;](int x) &amp;#123;
+        return qkp(x, mod - 2);
+    &amp;#125;;
+    for (int x, v; q--; ) &amp;#123;
+        read(x), read(v);
+        a[x] = v;
+        for (; top[x] != 1; ) &amp;#123;
+            int faa = fa[top[x]];
+            auto &amp;amp;id = t[rt[top[x]]].u;
+            int f = (init * id)[0][0];
+            if (f == 0) &amp;#123;
+                if (--cnt[faa] == 0)
+                    g[faa] = la[faa];
+            &amp;#125;
+            else &amp;#123;
+                f = inv(f);
+                (g[faa] *= f) %= mod;
+                (la[faa] *= f) %= mod;
+            &amp;#125;
+            add(rt[top[x]], dfn[x]);
+            f = (init * id)[0][0];
+            if (f == 0) &amp;#123;
+                if (cnt[faa]++ == 0)
+                    la[faa] = g[faa];
+                g[faa] = 0ll;
+            &amp;#125;
+            else &amp;#123;
+                (g[faa] *= f) %= mod;
+                (la[faa] *= f) %= mod;
+            &amp;#125;
+            x = faa;
+        &amp;#125;
+        add(rt[1], dfn[x]);
+        auto &amp;amp;id = t[rt[1]].u;
+        int f = (init * id)[0][0];
+        std::cout &amp;lt;&amp;lt; f &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    &amp;#125;
+#ifndef ONLINE_JUDGE
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt; (std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s\n&amp;quot;;
+#endif
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h3 id=&#34;g---考试-2&#34;&gt;G - 考试 2&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P10626&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P10626&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;运算均是线性的，容易想到『按位』维护，即只维护某个特定点值。如果将询问离线下来排序，每个函数的点值只会变化 &lt;span class=&#34;math inline&#34;&gt;\(O(1)\)&lt;/span&gt; 次。&lt;/p&gt;
+&lt;p&gt;建出符号二叉树，进行 DDP 即可。具体地，令 &lt;span class=&#34;math inline&#34;&gt;\(f_u\)&lt;/span&gt; 表示在运算 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 处的答案，计算 &lt;span class=&#34;math inline&#34;&gt;\(g_u\)&lt;/span&gt; 为轻儿子的答案，按照 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 处的符号写矩阵即可。叶子不是一次运算，应该直接填入点值（注意线段树上的叶子不一定是原树上的叶子）。&lt;/p&gt;
+&lt;p&gt;建树和矩阵更新有点史，适当封装一下感觉会好一点&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int maxn = 1e6 + 5;
+const char mp[] = &amp;quot;x!&amp;amp;|^&amp;quot;;
+const int LEN = (1 &amp;lt;&amp;lt; 20);
+#define nec getchar
+inline bool read(int &amp;amp;x) &amp;#123;
+    x = 0;
+    bool f = 0;
+    char ch = nec();
+    while (ch &amp;lt; &amp;#39;0&amp;#39; || ch &amp;gt; &amp;#39;9&amp;#39;) &amp;#123;
+        if (ch == EOF) return 0;
+        if (ch == &amp;#39;-&amp;#39;) f = 1;
+        ch = nec();
+    &amp;#125;
+    while (ch &amp;gt;= &amp;#39;0&amp;#39; &amp;amp;&amp;amp; ch &amp;lt;= &amp;#39;9&amp;#39;) &amp;#123;
+        x = x * 10 + ch - &amp;#39;0&amp;#39;;
+        ch = nec();
+    &amp;#125;
+    if (f) x = -x;
+    return 1;
+&amp;#125;
+void print(int x) &amp;#123;
+    if (x &amp;lt; 0)
+        putchar(&amp;#39;-&amp;#39;), x = -x;
+    if (x &amp;gt;= 10) print(x / 10);
+    putchar(x % 10 + &amp;#39;0&amp;#39;);
+    return;
+&amp;#125;
+void print(int x, char ch) &amp;#123;
+    print(x), putchar(ch);
+    return;
+&amp;#125;
+struct mat &amp;#123;
+    int n, m;
+    int a[2][2];
+    int* operator[] (const int q) &amp;#123;
+        return a[q];
+    &amp;#125;
+    inline mat operator* (mat &amp;amp;q) const &amp;#123;
+        mat res;
+        res.n = n, res.m = q.m;
+        res[0][0] = res[0][1] = res[1][0] = res[1][1] = 0ll;
+        for (int i = 0; i &amp;lt; n; ++i)
+            for (int k = 0; k &amp;lt; q.m; ++k)
+                for (int j = 0; j &amp;lt; m; ++j)
+                    res[i][k] += a[i][j] * q[j][k];
+        return res;
+    &amp;#125;
+    mat&amp;amp; operator*= (mat &amp;amp;q) &amp;#123;
+        return *this = *this * q;
+    &amp;#125;
+&amp;#125;;
+struct &amp;#123; int lc, rc, l, r, mid; mat u; &amp;#125; t[maxn &amp;lt;&amp;lt; 2]; 
+int g1[maxn][2];
+int g[maxn], ty[maxn];
+int tab[maxn], ls[maxn], lim[maxn];
+#define lt t[p].lc
+#define rt t[p].rc
+void fillmat(mat &amp;amp;a, int op, int g) &amp;#123;
+    if (op == 0) &amp;#123;
+        a.n = 1, a.m = 2;
+        a[0][!g] = 0, a[0][g] = 1;
+        return;
+    &amp;#125;
+    a.n = 2, a.m = 2;
+    switch (op) &amp;#123;
+    case 1: // !
+        a[0][0] = 0, a[0][1] = 1;
+        a[1][0] = 1, a[1][1] = 0;
+        break;
+    case 2: // &amp;amp;
+        a[0][0] = 1, a[0][1] = 0;
+        a[1][0] = !g, a[1][1] = g;
+        break;
+    case 3: // |
+        a[0][0] = !g, a[0][1] = g;
+        a[1][0] = 0, a[1][1] = 1;
+        break;
+    case 4: // ^
+        a[0][0] = !g, a[0][1] = g;
+        a[1][0] = g, a[1][1] = !g;
+        break;
+    default:
+        assert(0);
+    &amp;#125;
+    return;
+&amp;#125;
+void bld(int &amp;amp;p, int l, int r) &amp;#123;
+    static int tot = 0;
+    p = ++tot, t[p].l = l, t[p].r = r;
+    if (l == r) &amp;#123;
+        fillmat(t[p].u, ty[tab[l]], g[tab[l]]);
+        return;
+    &amp;#125;
+    int s = 0, u = ls[tab[l]];
+    for (int i = l; i &amp;lt;= r; ++i)
+        s += ls[tab[i]];
+    s &amp;gt;&amp;gt;= 1;
+    t[p].mid = r - 1;
+    for (int i = l + 1; i &amp;lt; r; ++i) &amp;#123;
+        u += ls[tab[i]];
+        if (u + ls[tab[i + 1]] &amp;gt; s) &amp;#123;
+            t[p].mid = i;
+            break;
+        &amp;#125;
+    &amp;#125;
+    bld(lt, l, t[p].mid), bld(rt, t[p].mid + 1, r);
+    t[p].u = t[rt].u * t[lt].u;
+    return;
+&amp;#125;
+void add(int p, int x) &amp;#123;
+    if (t[p].l == t[p].r) &amp;#123;
+        fillmat(t[p].u, ty[tab[t[p].l]], g[tab[t[p].l]]);
+        return;
+    &amp;#125;
+    if (x &amp;lt;= t[p].mid)
+        add(lt, x);
+    else
+        add(rt, x);
+    t[p].u = t[rt].u * t[lt].u;
+    return;
+&amp;#125;
+#undef lt
+#undef rt
+int main() &amp;#123;
+#ifndef ONLINE_JUDGE
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n = 0, q, p;
+    read(q), read(q);
+    &amp;#123;
+        std::string s;
+        std::cin &amp;gt;&amp;gt; s;
+        std::stringstream in(s);
+        std::stack&amp;lt;char&amp;gt; op;
+        std::stack&amp;lt;int&amp;gt; id;
+        auto trans = [&amp;amp;](char t) &amp;#123;
+            switch (t) &amp;#123;
+            case &amp;#39;!&amp;#39;:
+                return 1;
+            case &amp;#39;&amp;amp;&amp;#39;:
+                return 2;
+            case &amp;#39;|&amp;#39;:
+                return 3;
+            case &amp;#39;^&amp;#39;:
+                return 4;
+            &amp;#125;
+            assert(0);
+            return -1;
+        &amp;#125;;
+        auto calcNot = [&amp;amp;](void) &amp;#123;
+            for (; !op.empty() &amp;amp;&amp;amp; op.top() == &amp;#39;!&amp;#39;; ) &amp;#123;
+                ty[++n] = trans(op.top());
+                g1[n][0] = id.top(), id.pop(), id.push(n);
+                op.pop();
+            &amp;#125;
+            return;
+        &amp;#125;;
+        auto opt = [&amp;amp;](void) &amp;#123;
+            ty[++n] = trans(op.top());
+            g1[n][0] = id.top(), id.pop();
+            g1[n][1] = id.top(), id.pop();
+            id.push(n), op.pop();
+            return;
+        &amp;#125;;
+        for (char t; in &amp;gt;&amp;gt; t; )
+            if (t == &amp;#39;[&amp;#39;) &amp;#123;
+                int x;
+                in &amp;gt;&amp;gt; x, in &amp;gt;&amp;gt; t;
+                lim[++n] = x - 1;
+                id.push(n), calcNot();
+            &amp;#125;
+            else if (t == &amp;#39;(&amp;#39;)
+                op.push(t);
+            else if (t == &amp;#39;)&amp;#39;) &amp;#123;
+                for (; op.top() != &amp;#39;(&amp;#39;; opt());
+                op.pop(), calcNot();
+            &amp;#125;
+            else if (t == &amp;#39;&amp;amp;&amp;#39;)
+                op.push(t);
+            else if (t == &amp;#39;^&amp;#39;) &amp;#123;
+                for (; !op.empty() &amp;amp;&amp;amp; op.top() == &amp;#39;&amp;amp;&amp;#39;; opt());
+                op.push(t);
+            &amp;#125;
+            else if (t == &amp;#39;|&amp;#39;) &amp;#123;
+                for (; !op.empty() &amp;amp;&amp;amp; (op.top() == &amp;#39;&amp;amp;&amp;#39; || op.top() == &amp;#39;^&amp;#39;); opt());
+                op.push(t);
+            &amp;#125;
+            else &amp;#123;
+                assert(t == &amp;#39;!&amp;#39;);
+                op.push(t);
+            &amp;#125;
+        for (; !op.empty(); opt());
+        p = id.top();
+    &amp;#125;
+    std::vector&amp;lt;int&amp;gt; rt(n + 1);
+    std::vector&amp;lt;int&amp;gt; siz(n + 1), son(n + 1), fa(n + 1);
+    std::function&amp;lt;void(int)&amp;gt; DFS = [&amp;amp;](int x) &amp;#123;
+        siz[x] = 1;
+        for (auto i : g1[x])
+            if (i != 0) &amp;#123;
+                fa[i] = x, DFS(i);
+                siz[x] += siz[i];
+                if (siz[i] &amp;gt; siz[son[x]])
+                    son[x] = i;
+            &amp;#125;
+        return;
+    &amp;#125;;
+    DFS(p);
+    std::vector&amp;lt;long long&amp;gt; f(n + 1);
+    std::vector&amp;lt;int&amp;gt; top(n + 1), bot(n + 1), dfn(n + 1);
+    DFS = [&amp;amp;](int x) &amp;#123;
+        static int now = 0;
+        dfn[x] = ++now, tab[now] = x, ls[x] = 1;
+        if (son[x]) &amp;#123;
+            top[son[x]] = top[x], DFS(son[x]);
+            bot[x] = bot[son[x]];
+            for (auto i : g1[x])
+                if (i != son[x] &amp;amp;&amp;amp; i != 0) &amp;#123;
+                    top[i] = i, DFS(i);
+                    ls[x] += siz[i], g[x] = f[i];
+                &amp;#125;
+            switch (ty[x]) &amp;#123;
+            case 1:
+                f[x] = !f[son[x]];
+                break;
+            case 2:
+                f[x] = g[x] &amp;amp; f[son[x]];
+                break;
+            case 3:
+                f[x] = g[x] | f[son[x]];
+                break;
+            case 4:
+                f[x] = g[x] ^ f[son[x]];
+                break;
+            default:
+                assert(0);
+                break;
+            &amp;#125;
+        &amp;#125;
+        else
+            assert(!ty[x]), f[x] = g[x] = 0, bot[x] = x;
+        if (x == top[x])
+            bld(rt[x], dfn[x], dfn[bot[x]]);
+        return;
+    &amp;#125;;
+    top[p] = p, DFS(p);
+    std::vector&amp;lt;int&amp;gt; a(q + 1), res(q + 1);
+    for (int i = 1; i &amp;lt;= q; ++i)
+        read(a[i]);
+    std::vector&amp;lt;int&amp;gt; qid(q), nid;
+    for (int i = 1; i &amp;lt;= n; ++i)
+        if (ty[i] == 0)
+            nid.push_back(i);
+    std::iota(qid.begin(), qid.end(), 1);
+    std::sort(qid.begin(), qid.end(), [&amp;amp;](int x, int y) &amp;#123; return a[x] &amp;lt; a[y]; &amp;#125;);
+    std::sort(nid.begin(), nid.end(), [&amp;amp;](int x, int y) &amp;#123; return lim[x] &amp;gt; lim[y]; &amp;#125;);
+    for (auto i : qid) &amp;#123;
+        for (; !nid.empty() &amp;amp;&amp;amp; lim[nid.back()] &amp;lt; a[i]; ) &amp;#123;
+            int x = nid.back();
+            nid.pop_back();
+            g[x] = 1;
+            for (; top[x] != p; ) &amp;#123;
+                add(rt[top[x]], dfn[x]);
+                g[fa[top[x]]] = t[rt[top[x]]].u[0][1];
+                x = fa[top[x]];
+            &amp;#125;
+            add(rt[p], dfn[x]);
+        &amp;#125;
+        res[i] = t[rt[p]].u[0][1];
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= q; ++i)
+        if (res[i])
+            std::cout &amp;lt;&amp;lt; &amp;quot;True\n&amp;quot;;
+        else
+            std::cout &amp;lt;&amp;lt; &amp;quot;False\n&amp;quot;;
+#ifndef ONLINE_JUDGE
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt; (std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s\n&amp;quot;;
+#endif
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+ ]]></description>
+        </item>
         <item>
             <guid isPermalink="true">https://xsc062.netlify.app/20250510/</guid>
             <title>杂题</title>
