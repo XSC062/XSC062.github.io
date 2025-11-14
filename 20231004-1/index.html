@@ -75,17 +75,34 @@ const searchPath = "/search.xml"
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
 
 	<!-- 搜索 -->
+<script>
+	function closeSearchBox() {
+		$("#search-bg").css("transition", "null"); 
+		$("#search-bg").css("z-index", "-1"); 
+		$("#search-bg").css("opacity", "0%");
+		return;
+	}
+</script>
 <div id="search-bg">
 	<div id="search-box">
+		<button id="close-button" onclick="closeSearchBox()">
+			<i class="fas fa-times"></i>
+		</button>
 		<input type="text" id="search-input" placeholder="Type to search...">
-		<div id="search-results"><div id="emptyInput">键入以搜索…</div></div>
+		<div id="search-results">
+			<div id="emptyInput">
+				<p>键入以搜索…</p>
+				<p><i>匹配算法</i>：把输入按空格拆分，单独<strong>匹配</strong>每一段输入（不区分大小写，仅匹配文章文本内容），输出取或后的结果。</p>
+				<p>模糊搜索似乎很难搞，目前没有相关打算。</p>
+			</div>
+		</div>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
 	<!-- 左对齐 logo -->
 	<a class="logo" href="/">
-		<img src="/images/icon.png"></img>
+		<img width="25px" height="25px" style="border: solid transparent 2.5px" src="/images/icon.svg"></img>
 		<div id="bartitle" class="text">
 			XSC062 的博客
 		</div>
@@ -166,11 +183,11 @@ const searchPath = "/search.xml"
 				<hr class="dotted" style="margin-bottom: 0;">
 			
 			<div id="content">
-				<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4272">牛客普及</a>。</p>
+				<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/4272">牛客普及</a>。</p>
 <span id="more"></span>
 <hr />
 <h3 id="a.-学习求余">A. 学习求余</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4272/problem/1" class="uri">http://222.180.160.110:61235/contest/4272/problem/1</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/4272/problem/1" class="uri">https://www.becoder.com.cn/contest/4272/problem/1</a></p>
 <p>今天我们来学习求余！这种题放普及 T1 不合适吧！</p>
 <p>令 <span class="math inline">\(k=\left\lfloor \dfrac n2 \right\rfloor + 1\)</span>，直接输出 <span class="math inline">\(k\times (n - k)\)</span> 即可。</p>
 <details>
@@ -198,7 +215,7 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="b.-提取数字">B. 提取数字</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4272/problem/2" class="uri">http://222.180.160.110:61235/contest/4272/problem/2</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/4272/problem/2" class="uri">https://www.becoder.com.cn/contest/4272/problem/2</a></p>
 <p>我被这道题（疑似 T1）坑到了！交了三遍才过！这合理吗？</p>
 <p>首先要开 <code>long long</code>！然后注意，你的判定条件应为「当前是否已存储数」而非「当前存数变量是否为 0」！因为数据中会有单个 0 的情况出现！</p>
 <p>然后就没有了。</p>
@@ -228,7 +245,7 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="c.-武器选择">C. 武器选择</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4272/problem/3" class="uri">http://222.180.160.110:61235/contest/4272/problem/3</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/4272/problem/3" class="uri">https://www.becoder.com.cn/contest/4272/problem/3</a></p>
 <details>
 <p><summary>首先是我想了半个小时的狂拽酷炫吊炸天的法一：离线</summary></p>
 <p>我当时一边打一边怀疑现在的普及组是什么神仙，T3 考这么神奇的离线，难道是我落后于时代了？</p>
@@ -382,7 +399,7 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="d.-括号序列">D. 括号序列</h3>
-<p>http://222.180.160.110:61235/contest/4272/problem/4</p>
+<p>https://www.becoder.com.cn/contest/4272/problem/4</p>
 <p>呃呃呃，这，有什么好讲的吗？做过原题的应该都会吧……</p>
 <p>反正就是个比较裸的区间 DP，转移的时候注意一下究竟哪些是同一对括号，哪些是相邻括号就好。</p>
 <p>复杂度 <span class="math inline">\(O(n^2)\)</span>。</p>
@@ -468,7 +485,7 @@ int main() &#123;
 							<!-- 吐槽，为啥还需要加 / -->
 							<a href="/20231004/">
 								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
-								情景剧
+								解题报告 情景剧
 							</a>
 						
 					</div>
@@ -593,6 +610,7 @@ int main() &#123;
     <p style="margin-top: 5px;">
         2021 - 2025
     </p>
+    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" id="CCTAG"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg"></a>
 </div>
 <!-- Valine 相关配置 -->
 <script>

@@ -75,17 +75,34 @@ const searchPath = "/search.xml"
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
 
 	<!-- 搜索 -->
+<script>
+	function closeSearchBox() {
+		$("#search-bg").css("transition", "null"); 
+		$("#search-bg").css("z-index", "-1"); 
+		$("#search-bg").css("opacity", "0%");
+		return;
+	}
+</script>
 <div id="search-bg">
 	<div id="search-box">
+		<button id="close-button" onclick="closeSearchBox()">
+			<i class="fas fa-times"></i>
+		</button>
 		<input type="text" id="search-input" placeholder="Type to search...">
-		<div id="search-results"><div id="emptyInput">键入以搜索…</div></div>
+		<div id="search-results">
+			<div id="emptyInput">
+				<p>键入以搜索…</p>
+				<p><i>匹配算法</i>：把输入按空格拆分，单独<strong>匹配</strong>每一段输入（不区分大小写，仅匹配文章文本内容），输出取或后的结果。</p>
+				<p>模糊搜索似乎很难搞，目前没有相关打算。</p>
+			</div>
+		</div>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
 	<!-- 左对齐 logo -->
 	<a class="logo" href="/">
-		<img src="/images/icon.png"></img>
+		<img width="25px" height="25px" style="border: solid transparent 2.5px" src="/images/icon.svg"></img>
 		<div id="bartitle" class="text">
 			XSC062 的博客
 		</div>
@@ -162,7 +179,7 @@ const searchPath = "/search.xml"
 				<p>把 ddxrS 吓到了，发出惊世疑问：『为什么高二机房正在激烈地讨论怎么写高精度？』</p>
 <span id="more"></span>
 <hr />
-<p>考虑 10-base 高精度，单次运算复杂度为 <span class="math inline">\(O(\log_{10}V)\)</span>。使用 10-base 的主要原因是 <code>std::to_string</code> 很方便、输出也很简单。</p>
+<p>考虑 10-base 高精度，单次运算复杂度为 <span class="math inline">\(O(\log V)\)</span>。使用 10-base 的主要原因是 <code>std::to_string</code> 很方便、输出也很简单。</p>
 <p>但效率太低。实际上，一般打高精度都是 1e4-base，或更激进地，1e9-base。</p>
 <p>注意高精乘低精是 <span class="math inline">\(O(len)\)</span> 而非 <span class="math inline">\(O(len^2)\)</span>。</p>
 <p>需要考虑输出。由于用的是 10-power 作为 base，所以只需要把每四位直接输出即可。注意除首位外需要补前导 0 直到四位。</p>
@@ -355,6 +372,7 @@ const searchPath = "/search.xml"
     <p style="margin-top: 5px;">
         2021 - 2025
     </p>
+    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" id="CCTAG"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg"></a>
 </div>
 <!-- Valine 相关配置 -->
 <script>

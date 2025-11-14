@@ -75,17 +75,34 @@ const searchPath = "/search.xml"
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
 
 	<!-- 搜索 -->
+<script>
+	function closeSearchBox() {
+		$("#search-bg").css("transition", "null"); 
+		$("#search-bg").css("z-index", "-1"); 
+		$("#search-bg").css("opacity", "0%");
+		return;
+	}
+</script>
 <div id="search-bg">
 	<div id="search-box">
+		<button id="close-button" onclick="closeSearchBox()">
+			<i class="fas fa-times"></i>
+		</button>
 		<input type="text" id="search-input" placeholder="Type to search...">
-		<div id="search-results"><div id="emptyInput">键入以搜索…</div></div>
+		<div id="search-results">
+			<div id="emptyInput">
+				<p>键入以搜索…</p>
+				<p><i>匹配算法</i>：把输入按空格拆分，单独<strong>匹配</strong>每一段输入（不区分大小写，仅匹配文章文本内容），输出取或后的结果。</p>
+				<p>模糊搜索似乎很难搞，目前没有相关打算。</p>
+			</div>
+		</div>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
 	<!-- 左对齐 logo -->
 	<a class="logo" href="/">
-		<img src="/images/icon.png"></img>
+		<img width="25px" height="25px" style="border: solid transparent 2.5px" src="/images/icon.svg"></img>
 		<div id="bartitle" class="text">
 			XSC062 的博客
 		</div>
@@ -370,7 +387,7 @@ int main() &#123;
 </details>
 <hr />
 <h2 id="d.-团队选拔">D. 团队选拔</h2>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/6534/problem/4" class="uri">http://222.180.160.110:61235/contest/6534/problem/4</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/6534/problem/4" class="uri">https://www.becoder.com.cn/contest/6534/problem/4</a></p>
 <blockquote>
 <p>给定 <span class="math inline">\(a_{1\sim n}\)</span>，从中任选一些互不相交的区间，满足每个区间内元素的 gcd 相同。</p>
 <p><span class="math inline">\(n\le 10^5,V\le 10^7\)</span>。</p>
@@ -379,7 +396,7 @@ int main() &#123;
 <p>很容易想到与此原理类似的全局答案求法：对于每个 <span class="math inline">\(i\)</span>，向左处理出每一段 <span class="math inline">\([l,r]\)</span>，满足 <span class="math inline">\(\gcd(a_{l\cdots i})=\gcd(a_r\cdots i)\)</span>，并记录该 <span class="math inline">\(\gcd\)</span>。这样求出来的 <span class="math inline">\((i,l,r)\)</span> 共有 <span class="math inline">\(O(n\log V)\)</span> 段。</p>
 <p>对于每个 gcd 有 <span class="math inline">\(f_{i}=f_{i-1}+\sum\limits_{j=l_i}^{r_i} f_{j - 1}\)</span>，可以做一个扫描线，得到全局答案；向前向后分别做到 <span class="math inline">\(i-1,i+1\)</span>，相乘就能得到 <span class="math inline">\(i\)</span> 未被选取时的答案</p>
 <p>考虑怎么完成『相乘』这个动作：最后的 <span class="math inline">\(f\)</span> 在每个右端点处发生变化，可以转化成若干段 <span class="math inline">\(f\)</span>；反过来的 <span class="math inline">\(f&#39;\)</span> 亦可以这样转化。将 <span class="math inline">\(f\)</span> 整体后移一位、<span class="math inline">\(f&#39;\)</span> 整体前移一位，就可以对齐。二者的端点总数是均摊单 log 的，区间总数也就是均摊单 log 的（归并就能快速寻找到区间），用差分做一个区间加即可。</p>
-<p>用二分勉强单 log 解决了转移；还看到 <span class="citation" data-cites="spdarkle">@spdarkle</span> 疑似在 <span class="math inline">\(1\sim n\)</span> 上直接做的<a target="_blank" rel="noopener" href="http://222.180.160.110:61235/submission/3108272">做法</a>，和 <span class="citation" data-cites="Rosmist">@Rosmist</span> 疑似直接在每个 <span class="math inline">\(i\)</span> 上做的<a target="_blank" rel="noopener" href="http://222.180.160.110:61235/submission/3108581">做法</a>。官解是个看不懂的做法</p>
+<p>用二分勉强单 log 解决了转移；还看到 <span class="citation" data-cites="spdarkle">@spdarkle</span> 疑似在 <span class="math inline">\(1\sim n\)</span> 上直接做的<a target="_blank" rel="noopener" href="https://www.becoder.com.cn/submission/3108272">做法</a>，和 <span class="citation" data-cites="Rosmist">@Rosmist</span> 疑似直接在每个 <span class="math inline">\(i\)</span> 上做的<a target="_blank" rel="noopener" href="https://www.becoder.com.cn/submission/3108581">做法</a>。官解是个看不懂的做法</p>
 <p>呃，好像一不小心拿了最优解。而且优势很明显（怎么总用时比别人一个点还少？），这是为什么？</p>
 <p>可能因为大家都看不懂官解，做法比较多样？除了我之外比较快的 lwz 和 <span class="citation" data-cites="GoldSpade">@GoldSpade</span> 都用归并完成最后一步；我较他们的额外优势大概是用二分换掉了树状数组？迷惑</p>
 <details>
@@ -533,7 +550,7 @@ int main() &#123;
 <p>我一开始将 <span class="math inline">\(f\)</span> 定义为单点答案而非前缀和，会导致需要线段树维护等差序列，还丢失了答案段数不多这个性质，非常麻烦。将 <span class="math inline">\(f\)</span> 的意义替换为前缀和后，就可以很轻松地做了。</p>
 <hr />
 <h2 id="a.-宇宙">A. 宇宙</h2>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/6535/problem/1" class="uri">http://222.180.160.110:61235/contest/6535/problem/1</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/6535/problem/1" class="uri">https://www.becoder.com.cn/contest/6535/problem/1</a></p>
 <blockquote>
 <p>给定 <span class="math inline">\(a_{1\sim n}\)</span>，对于 <span class="math inline">\(k=1,2,\cdots,n-1\)</span>，回答：</p>
 <ul>
@@ -574,7 +591,7 @@ int main() &#123;
 </details>
 <hr />
 <h2 id="b.-跳跃">B. 跳跃</h2>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/6535/problem/2" class="uri">http://222.180.160.110:61235/contest/6535/problem/2</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/6535/problem/2" class="uri">https://www.becoder.com.cn/contest/6535/problem/2</a></p>
 <blockquote>
 <p>给定长度为 <span class="math inline">\(n\)</span> 的 01 序列和跳跃上限 <span class="math inline">\(k\)</span>。给定 <span class="math inline">\(q\)</span> 个询问，回答：</p>
 <ul>
@@ -760,8 +777,8 @@ int main() &#123;
 					</div>
 					<div id="next">
 						
-							<a href="/20250820/">
-								杂题
+							<a href="/20250822/">
+								学习笔记：猫树
 								<i class="fas fa-angle-double-right" style="margin-left: 10px;"></i>
 							</a>
 						
@@ -879,6 +896,7 @@ int main() &#123;
     <p style="margin-top: 5px;">
         2021 - 2025
     </p>
+    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" id="CCTAG"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg"></a>
 </div>
 <!-- Valine 相关配置 -->
 <script>

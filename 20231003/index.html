@@ -75,17 +75,34 @@ const searchPath = "/search.xml"
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
 
 	<!-- 搜索 -->
+<script>
+	function closeSearchBox() {
+		$("#search-bg").css("transition", "null"); 
+		$("#search-bg").css("z-index", "-1"); 
+		$("#search-bg").css("opacity", "0%");
+		return;
+	}
+</script>
 <div id="search-bg">
 	<div id="search-box">
+		<button id="close-button" onclick="closeSearchBox()">
+			<i class="fas fa-times"></i>
+		</button>
 		<input type="text" id="search-input" placeholder="Type to search...">
-		<div id="search-results"><div id="emptyInput">键入以搜索…</div></div>
+		<div id="search-results">
+			<div id="emptyInput">
+				<p>键入以搜索…</p>
+				<p><i>匹配算法</i>：把输入按空格拆分，单独<strong>匹配</strong>每一段输入（不区分大小写，仅匹配文章文本内容），输出取或后的结果。</p>
+				<p>模糊搜索似乎很难搞，目前没有相关打算。</p>
+			</div>
+		</div>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
 	<!-- 左对齐 logo -->
 	<a class="logo" href="/">
-		<img src="/images/icon.png"></img>
+		<img width="25px" height="25px" style="border: solid transparent 2.5px" src="/images/icon.svg"></img>
 		<div id="bartitle" class="text">
 			XSC062 的博客
 		</div>
@@ -166,7 +183,7 @@ const searchPath = "/search.xml"
 				<hr class="dotted" style="margin-bottom: 0;">
 			
 			<div id="content">
-				<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4268">周考 14</a>。</p>
+				<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/4268">周考 14</a>。</p>
 <span id="more"></span>
 <hr />
 <p>医生问我对药有什么要求吗，我说我宁死不喝冲剂。</p>
@@ -174,7 +191,7 @@ const searchPath = "/search.xml"
 <p>哈哈哈，我自找的。以此为证，A 一道题磕一片！！！</p>
 <hr />
 <h3 id="a.-修改序列">A. 修改序列</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4268/problem/1" class="uri">http://222.180.160.110:61235/contest/4268/problem/1</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/4268/problem/1" class="uri">https://www.becoder.com.cn/contest/4268/problem/1</a></p>
 <p>注意到一增一减，全数列的和 <span class="math inline">\(s\)</span> 不变，考虑这一点带来的提示。</p>
 <p>假设最后要求一部分数为 <span class="math inline">\(p\)</span>，另一部分为 <span class="math inline">\(p+1\)</span>，那么有 <span class="math inline">\(p = \lfloor \dfrac sn \rfloor\)</span>，<span class="math inline">\(p+1\)</span> 的数量 <span class="math inline">\(c_r=s\bmod n\)</span>，<span class="math inline">\(p\)</span> 的数量 <span class="math inline">\(c_l=n-c_r\)</span>。</p>
 <p>那么我们让 <span class="math inline">\(\le p\)</span> 的变成 <span class="math inline">\(p\)</span>，<span class="math inline">\(\ge p + 1\)</span> 的变成 <span class="math inline">\(p + 1\)</span>。直接求两数距离，最后将总和除以二即为答案、</p>
@@ -217,7 +234,7 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="b.-knuth-表示法">B. Knuth 表示法</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4268/problem/2" class="uri">http://222.180.160.110:61235/contest/4268/problem/2</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/4268/problem/2" class="uri">https://www.becoder.com.cn/contest/4268/problem/2</a></p>
 <p>模拟。输入的数用 <code>map</code> 转化为 <span class="math inline">\(10\)</span> 的次幂形式，然后幂次直接相加即表示指数相乘。</p>
 <p>最后按位数从大到小将次幂形式转化为字符串、再按位数从小到大输出。</p>
 <p>注意到开头的字符串不是 <code>one</code> 就是 <code>ten</code>，需要在没有抽出来 <code>ten</code> 的时候补 <code>one</code>。</p>
@@ -258,7 +275,7 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="c.-魔力塔">C. 魔力塔</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4268/problem/3" class="uri">http://222.180.160.110:61235/contest/4268/problem/3</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/4268/problem/3" class="uri">https://www.becoder.com.cn/contest/4268/problem/3</a></p>
 <p>神奇的线段树优化建图。这拿来放 T3？不合适吧。</p>
 <p>很好想到对于 <span class="math inline">\(a_i\ne -1\)</span>，连边 <span class="math inline">\(i\to a_i\)</span>；否则，连边 <span class="math inline">\(i\to x(x\in [i+1,\min(i + k,n+1)])\)</span>。BFS 遍历，复杂度 <span class="math inline">\(O(n\times k)\)</span>。</p>
 <p>问题在于无用边太多，例如 <span class="math inline">\(i\)</span> 和 <span class="math inline">\(i+1\)</span> 共同可达的点有整整 <span class="math inline">\(k-1\)</span> 个，造成大量浪费。</p>
@@ -310,7 +327,7 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="d.-卡牌游戏">D. 卡牌游戏</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4268/problem/4" class="uri">http://222.180.160.110:61235/contest/4268/problem/4</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/4268/problem/4" class="uri">https://www.becoder.com.cn/contest/4268/problem/4</a></p>
 <p>怎么说呢，爆搜可以拿 80pts！！！然而正解是区间 DP，哭唧唧。他这个数据范围给得很神奇，让人只会往搜索上面想。</p>
 <p>摧毁操作是一换一，不会更改串长，而入栈操作会增加初始串的长度。</p>
 <p>所以我们考虑 <strong>逆序 DP</strong>，从最终状态入手，用 <span class="math inline">\(f_{x, i, j}\)</span> 表示是否可以使用一个字符 <span class="math inline">\(x\)</span> 经过一系列操作消掉 <span class="math inline">\(w_{i\sim j}\)</span>。</p>
@@ -369,7 +386,7 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="e.-生长树">E. 生长树</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4268/problem/5" class="uri">http://222.180.160.110:61235/contest/4268/problem/5</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/4268/problem/5" class="uri">https://www.becoder.com.cn/contest/4268/problem/5</a></p>
 <p>一道很菜的题。我们发现有子树操作，第一时间想到树剖，那么接下来要考虑的内容就是线段树如何维护。</p>
 <p>题意换句话说就是往下数 0 代是加，数 1 代是减，数 2 代是加，以此类推。那么不难想到奇偶性。</p>
 <p>如果起点的深度是奇数，那么子树中所有奇数深度权值增加，偶数深度权值减少，反之同理。</p>
@@ -510,7 +527,7 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="f.-单词">F. 单词</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/4268/problem/6" class="uri">http://222.180.160.110:61235/contest/4268/problem/6</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/4268/problem/6" class="uri">https://www.becoder.com.cn/contest/4268/problem/6</a></p>
 <p><span class="math inline">\(n \le 20\)</span>，考虑状压。用 <span class="math inline">\(f_x\)</span> 表示状态为 <span class="math inline">\(x\)</span> 时的最小代价，其中 <span class="math inline">\(x\)</span> 是字符串合法情况的状态压缩。</p>
 <p>对于每一个待满足的串，枚举去满足它的哪一位，那么满足方式分两种情况：</p>
 <ul>
@@ -618,7 +635,7 @@ int main() &#123;
 					<div id="next">
 						
 							<a href="/20230928/">
-								颜色
+								解题报告 颜色
 								<i class="fas fa-angle-double-right" style="margin-left: 10px;"></i>
 							</a>
 						
@@ -736,6 +753,7 @@ int main() &#123;
     <p style="margin-top: 5px;">
         2021 - 2025
     </p>
+    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" id="CCTAG"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg"></a>
 </div>
 <!-- Valine 相关配置 -->
 <script>

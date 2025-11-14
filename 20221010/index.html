@@ -75,17 +75,34 @@ const searchPath = "/search.xml"
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
 
 	<!-- 搜索 -->
+<script>
+	function closeSearchBox() {
+		$("#search-bg").css("transition", "null"); 
+		$("#search-bg").css("z-index", "-1"); 
+		$("#search-bg").css("opacity", "0%");
+		return;
+	}
+</script>
 <div id="search-bg">
 	<div id="search-box">
+		<button id="close-button" onclick="closeSearchBox()">
+			<i class="fas fa-times"></i>
+		</button>
 		<input type="text" id="search-input" placeholder="Type to search...">
-		<div id="search-results"><div id="emptyInput">键入以搜索…</div></div>
+		<div id="search-results">
+			<div id="emptyInput">
+				<p>键入以搜索…</p>
+				<p><i>匹配算法</i>：把输入按空格拆分，单独<strong>匹配</strong>每一段输入（不区分大小写，仅匹配文章文本内容），输出取或后的结果。</p>
+				<p>模糊搜索似乎很难搞，目前没有相关打算。</p>
+			</div>
+		</div>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
 	<!-- 左对齐 logo -->
 	<a class="logo" href="/">
-		<img src="/images/icon.png"></img>
+		<img width="25px" height="25px" style="border: solid transparent 2.5px" src="/images/icon.svg"></img>
 		<div id="bartitle" class="text">
 			XSC062 的博客
 		</div>
@@ -129,7 +146,7 @@ const searchPath = "/search.xml"
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%9A%E5%BC%88"><span class="toc-text">博弈</span></a></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -167,6 +184,7 @@ const searchPath = "/search.xml"
 				<p>老题解批量补档。</p>
 <span id="more"></span>
 <hr />
+<h2 id="博弈">博弈</h2>
 <blockquote>
 <p>给定一棵带权树，将 <span class="math inline">\((u,v)\)</span> 间简单路径上的边权生成数组，两个人在数组中轮流选数，每次选走的数必须 <span class="math inline">\(\le\)</span> 上一个人选走的数，不能选的人输，问有多少个 <span class="math inline">\((u,v)\)</span> 满足先手必胜。</p>
 </blockquote>
@@ -278,7 +296,7 @@ int main() &#123;
 							<!-- 吐槽，为啥还需要加 / -->
 							<a href="/20230110/">
 								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
-								背单词
+								解题报告 背单词
 							</a>
 						
 					</div>
@@ -403,6 +421,7 @@ int main() &#123;
     <p style="margin-top: 5px;">
         2021 - 2025
     </p>
+    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" id="CCTAG"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg"></a>
 </div>
 <!-- Valine 相关配置 -->
 <script>

@@ -75,17 +75,34 @@ const searchPath = "/search.xml"
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
 
 	<!-- 搜索 -->
+<script>
+	function closeSearchBox() {
+		$("#search-bg").css("transition", "null"); 
+		$("#search-bg").css("z-index", "-1"); 
+		$("#search-bg").css("opacity", "0%");
+		return;
+	}
+</script>
 <div id="search-bg">
 	<div id="search-box">
+		<button id="close-button" onclick="closeSearchBox()">
+			<i class="fas fa-times"></i>
+		</button>
 		<input type="text" id="search-input" placeholder="Type to search...">
-		<div id="search-results"><div id="emptyInput">键入以搜索…</div></div>
+		<div id="search-results">
+			<div id="emptyInput">
+				<p>键入以搜索…</p>
+				<p><i>匹配算法</i>：把输入按空格拆分，单独<strong>匹配</strong>每一段输入（不区分大小写，仅匹配文章文本内容），输出取或后的结果。</p>
+				<p>模糊搜索似乎很难搞，目前没有相关打算。</p>
+			</div>
+		</div>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
 	<!-- 左对齐 logo -->
 	<a class="logo" href="/">
-		<img src="/images/icon.png"></img>
+		<img width="25px" height="25px" style="border: solid transparent 2.5px" src="/images/icon.svg"></img>
 		<div id="bartitle" class="text">
 			XSC062 的博客
 		</div>
@@ -129,7 +146,7 @@ const searchPath = "/search.xml"
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ds"><span class="toc-text">DS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6"><span class="toc-text">数学</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E8%AE%BA"><span class="toc-text">图论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E5%BB%BA%E6%A8%A1"><span class="toc-text">经典建模</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E5%BB%BA%E5%9B%BE"><span class="toc-text">优化建图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E4%B8%8A-dp"><span class="toc-text">图上 DP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84%E5%9B%BE%E7%9A%84%E7%9B%B4%E5%BE%84"><span class="toc-text">树的直径，图的直径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%91%E4%B8%8A%E9%97%AE%E9%A2%98"><span class="toc-text">树上问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dp"><span class="toc-text">DP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E8%83%8C%E5%8C%85"><span class="toc-text">关于背包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%88%E5%B8%8C"><span class="toc-text">哈希</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E6%9C%80%E5%80%BC"><span class="toc-text">关于最值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F"><span class="toc-text">关于冒泡排序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%82%E9%A1%B9"><span class="toc-text">杂项</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ds"><span class="toc-text">DS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6"><span class="toc-text">数学</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E8%AE%BA"><span class="toc-text">图论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E5%BB%BA%E6%A8%A1"><span class="toc-text">经典建模</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E5%BB%BA%E5%9B%BE"><span class="toc-text">优化建图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E4%B8%8A-dp"><span class="toc-text">图上 DP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84%E5%9B%BE%E7%9A%84%E7%9B%B4%E5%BE%84"><span class="toc-text">树的直径，图的直径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%91%E4%B8%8A%E9%97%AE%E9%A2%98"><span class="toc-text">树上问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dp"><span class="toc-text">DP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E8%83%8C%E5%8C%85"><span class="toc-text">关于背包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%88%E5%B8%8C"><span class="toc-text">哈希</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-text">字符串</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E6%9C%80%E5%80%BC"><span class="toc-text">关于最值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%82%E9%A1%B9"><span class="toc-text">杂项</span></a></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -167,9 +184,11 @@ const searchPath = "/search.xml"
 <details>
 <p><summary><strong>容易记错的操作复杂度：</strong></summary></p>
 <ul>
-<li><strong>线段树合并、线段树建树</strong>：<span class="math inline">\(O(n)\)</span>。</li>
+<li>线段树建树：<span class="math inline">\(O(n)\)</span>。</li>
+<li><p>线段树合并：单次线段树合并复杂度为新建的点数。均摊单次 <span class="math inline">\(O(\log n)\)</span>。</p>
+两颗满的线段树合并复杂度为 <span class="math inline">\(O(n)\)</span>，故 DSU on tree + 线段树合并的复杂度为 <span class="math inline">\(O(n\log n)\)</span>，且显然跑不满。</li>
 <li>FHQ Treap 建树：视作笛卡尔树，<span class="math inline">\(O(n)\)</span>。</li>
-<li>动态开店线段树单次访问至多增加 <span class="math inline">\(4\log\)</span> 个点，e.g. <span class="math inline">\([2,n-1]\)</span>。</li>
+<li><p>动态开店线段树单次访问至多增加 <span class="math inline">\(4\log\)</span> 个点，e.g. <span class="math inline">\([2,n-1]\)</span>。</p></li>
 </ul>
 </details>
 <details>
@@ -237,6 +256,14 @@ const searchPath = "/search.xml"
 <p><summary><strong>求线段穿过直线系的次数：</strong></summary></p>
 <p>求线段 <span class="math inline">\((x_1,y_1,x_2,y_2)\)</span> 穿过直线系 <span class="math inline">\(x+y=k\cdots m(k\in \mathbb{N}^*)\)</span> 的次数算出线段中 <span class="math inline">\(x+y\)</span> 的取值范围也即 <span class="math inline">\([x_1+y_1,x_2+y_2]\)</span>（斜率为负就不同了，但可以证明都是单调的），求出 <span class="math inline">\(k\cdot m\)</span> 在里面的出现次数就可以了。<del>有的人高中数学欠的债要到竞赛来还</del></p>
 <p>goto <a target="_blank" rel="noopener" href="https://codeforces.com/contest/2098/problem/E">CF2098E</a>。</p>
+</details>
+<details>
+<p><summary>模数非质数时求多重集组合：</summary></p>
+<p>杨辉三角求组合数，答案为：</p>
+<p><span class="math display">\[
+\prod_{i=1}^m \binom{\sum_{j=i}^m s_j}{s_i}
+\]</span></p>
+<p>goto <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_abc425_e">ABC425E</a>。</p>
 </details>
 <hr />
 <h2 id="图论">图论</h2>
@@ -377,7 +404,7 @@ goto <a href="/20250809/#a---记忆">solu to <em>记忆</em></a>。</li>
 <details>
 <p><summary><strong>与字典序有关的状态设计：</strong></summary></p>
 <p>要求字典序大于 / 小于给定值的方案数，考虑使用 <span class="math inline">\(f_i\)</span> 表示 <span class="math inline">\(1\sim i\)</span> 全部和给定值相同，<span class="math inline">\(i+1\)</span> 大于 / 小于给定值，后面无限制的情况总数。</p>
-<p>Goto <a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5423/problem/2">冒泡排序</a>。</p>
+<p>Goto <a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/5423/problem/2">冒泡排序</a>。</p>
 </details>
 <ul>
 <li>计数 DP 和容斥的选择。</li>
@@ -437,18 +464,28 @@ goto <a href="/20230716-1/">solu to <em>匹配数</em></a></li>
 <p>Goto <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/article/ugg047a7">NOI2024 D1T1</a>，<a href="/20221010/">solu to <em>博弈</em></a>。</p>
 </details>
 <hr />
+<h2 id="字符串">字符串</h2>
+<details>
+<p><summary>对于相邻 00 或 01 的操作，考虑奇数位 flip</summary></p>
+<p>这样可以让操作呈现出一些更好处理的性质，往往表现为：可以忽略 <span class="math inline">\(a_i=a_{i+1}\)</span> 的前提，得到一个适用于所有情况的新操作。</p>
+<p>goto <a href="/20240906/#legondary-grandmaster">solu to <em>LEGOndary Grandmaster</em></a>，<a href="/20251028/#b.-字符串转换">solu to <em>字符串转换</em></a>，<a target="_blank" rel="noopener" href="https://qoj.ac/problem/9565">QOJ#9565. Birthday Gift</a>。</p>
+</details>
+<hr />
 <h2 id="关于最值">关于最值</h2>
-<h3 id="关于冒泡排序">关于冒泡排序</h3>
-<p><em>『冒泡排序有一种被出烂但是每次碰到我都不会的美感。』——wosile</em></p>
-<p><em>这个人我不认识，但是我觉得这句话说得太好了！</em></p>
-<ul>
-<li><p>一轮冒泡排序做的事情：将序列按前缀最大值为段首划分为若干段，并把其移到段末。</p>
-goto <a href="/20250510/#c---1-loop-bubble-sort">1 Loop Bubble Sort</a>。</li>
-<li><p>前缀最大值在一轮冒泡排序后仍是前缀最大值。</p></li>
-</ul>
 <details>
 <p><summary>求某下标在序列所有的 LIS 中出现次数：</summary></p>
 <p>分别统计以其结尾和开头的 LIS 长度与次数，如果加起来是序列 LIS 的长度，那么次数相乘就是答案。</p>
+</details>
+<details>
+<p><summary>关于冒泡排序：</summary></p>
+<ul>
+<li><p><strong>反序表</strong>：</p>
+<p>令 <span class="math inline">\(f_i\)</span> 表示以 <span class="math inline">\(i\)</span> 结尾的逆序对数，那么对一个序列排序，需要的最少冒泡轮数为 <span class="math inline">\(\max\{f_i\}\)</span>。</p>
+<p>goto <a href="/20251028/#a.-排序">solu to <em>排序</em></a>。</p></li>
+<li><p>一轮冒泡排序做的事情：将序列按前缀最大值为段首划分为若干段，并把其移到段末。</p>
+<p>goto <a href="/20250510/#c---1-loop-bubble-sort">1 Loop Bubble Sort</a>。</p></li>
+<li><p>前缀最大值在一轮冒泡排序后仍是前缀最大值。</p></li>
+</ul>
 </details>
 <h2 id="杂项">杂项</h2>
 <details>
@@ -530,9 +567,16 @@ goto <a href="/20250907/#d---non-ancestor-matching">ARC205D</a>，<a href="/2025
 </blockquote>
 <p>goto <a href="/20250520/#abc407e-most-valuable-parentheses">solu to <em>abc407E</em></a>。</p>
 </details>
-<ul>
-<li><span class="math inline">\(k\)</span> 个「二者至少选其一」形式的限制，要求选的尽可能少，使用 <span class="math inline">\(2^k\)</span> 枚举后取并集代替 <span class="math inline">\(3^k\)</span> 枚举。</li>
-</ul>
+<details>
+<p><summary>切比雪夫距离：</summary></p>
+<p><span class="math display">\[
+|PQ|=\max(|x_P-x_Q|,|y_P-y_Q|)
+\]</span></p>
+<p>将平面直角坐标系旋转 <span class="math inline">\(45^\circ\)</span> 的坐标系中，两个点的切比雪夫距离是原坐标系中的曼哈顿距离。</p>
+<p>做仿射变换（<span class="math inline">\((x+y,y-x)\)</span> 之类，都行）即可得到新的坐标系。</p>
+<p>可以用于棋盘题，用于把『距某点曼哈顿距离为 <span class="math inline">\(d\)</span> 的点集』组成的斜向正方形变为正向的</p>
+<p>或者一些数据结构题中，把式子中的 max 转写成 +，方便算贡献。</p>
+</details>
 
 			</div>
 			<hr class="dotted">
@@ -550,7 +594,7 @@ goto <a href="/20250907/#d---non-ancestor-matching">ARC205D</a>，<a href="/2025
 					<div id="prev">
 						
 							<!-- 吐槽，为啥还需要加 / -->
-							<a href="/231230/">
+							<a href="/20231230/">
 								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
 								解题报告 [SDOI2016] 游戏
 							</a>
@@ -677,6 +721,7 @@ goto <a href="/20250907/#d---non-ancestor-matching">ARC205D</a>，<a href="/2025
     <p style="margin-top: 5px;">
         2021 - 2025
     </p>
+    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" id="CCTAG"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg"></a>
 </div>
 <!-- Valine 相关配置 -->
 <script>

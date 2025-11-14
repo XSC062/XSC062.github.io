@@ -75,17 +75,34 @@ const searchPath = "/search.xml"
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
 
 	<!-- 搜索 -->
+<script>
+	function closeSearchBox() {
+		$("#search-bg").css("transition", "null"); 
+		$("#search-bg").css("z-index", "-1"); 
+		$("#search-bg").css("opacity", "0%");
+		return;
+	}
+</script>
 <div id="search-bg">
 	<div id="search-box">
+		<button id="close-button" onclick="closeSearchBox()">
+			<i class="fas fa-times"></i>
+		</button>
 		<input type="text" id="search-input" placeholder="Type to search...">
-		<div id="search-results"><div id="emptyInput">键入以搜索…</div></div>
+		<div id="search-results">
+			<div id="emptyInput">
+				<p>键入以搜索…</p>
+				<p><i>匹配算法</i>：把输入按空格拆分，单独<strong>匹配</strong>每一段输入（不区分大小写，仅匹配文章文本内容），输出取或后的结果。</p>
+				<p>模糊搜索似乎很难搞，目前没有相关打算。</p>
+			</div>
+		</div>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
 	<!-- 左对齐 logo -->
 	<a class="logo" href="/">
-		<img src="/images/icon.png"></img>
+		<img width="25px" height="25px" style="border: solid transparent 2.5px" src="/images/icon.svg"></img>
 		<div id="bartitle" class="text">
 			XSC062 的博客
 		</div>
@@ -166,7 +183,7 @@ const searchPath = "/search.xml"
 <span id="more"></span>
 <hr />
 <h3 id="a.-distorted">A. distorted</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5611/problem/1" class="uri">http://222.180.160.110:61235/contest/5611/problem/1</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/5611/problem/1" class="uri">https://www.becoder.com.cn/contest/5611/problem/1</a></p>
 <p>考虑最多需要多少个元素。最坏情况是选取四个角的元素，已经可以覆盖整个矩阵。进一步考虑感性反证发现无论如何都选不出来五个，故最多选择四个。</p>
 <p>我们发现，选取中间一个就可以覆盖整个矩阵。扩展一下，选择中间列就可以覆盖上 / 下半个矩阵，选择中间行就可以覆盖左 / 右半个矩阵。剩下的选择过后只能保证照顾到对应的 1/4 矩阵且一定不会完全覆盖其他的 1/4 矩阵。</p>
 <p>我们发现，中心元素地位高于中间行 / 列元素高于左上、左下、右上、右下元素。由此出发讨论选择元素的个数。</p>
@@ -221,7 +238,7 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="b.-fate">B. fate</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5611/problem/2" class="uri">http://222.180.160.110:61235/contest/5611/problem/2</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/5611/problem/2" class="uri">https://www.becoder.com.cn/contest/5611/problem/2</a></p>
 <p>诈骗题。对于前半段，考虑取差分数组 <span class="math inline">\(d\)</span>，容易发现如果直接在差分数组上做减法，一定满足后面减得不比前面少。故只要满足差分数组每一项至少为 <span class="math inline">\(0\)</span> 即可，答案为 <span class="math inline">\(\prod {i\le p} a_i - a_{i-1} + 1\)</span>。</p>
 <p>对于后半段，我们考虑转化成和前半段相似的问题，将后半段翻转，同样取差分数组，则此时在该差分数组上满足后面减得不比前面少，同时需要满足差分数组每一项至多为 <span class="math inline">\(0\)</span>，前面的所有项初始为负，操作为减，自然满足；但第 <span class="math inline">\(p\)</span> 项在把前面减去的全部加上后不一定满足。故前面最多减去 <span class="math inline">\(d_p\)</span>，随便在哪里减都无所谓，组合意义一下，就是无标号球放有标号盒子可空放可不放，插板得答案为 <span class="math inline">\(\displaystyle {-d_p + n - p\choose n - p}\)</span>。</p>
 <p>前后乘起来即为答案。注意不要在最后一步乘起来的时候忘记取模，否则你会获得 76pts 的高分 <img src="/em/xk.gif" /></p>
@@ -570,6 +587,7 @@ int main() &#123;
     <p style="margin-top: 5px;">
         2021 - 2025
     </p>
+    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" id="CCTAG"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg"></a>
 </div>
 <!-- Valine 相关配置 -->
 <script>

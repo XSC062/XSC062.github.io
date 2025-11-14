@@ -3,7 +3,7 @@
     <id>https://xsc062.netlify.app</id>
     <title> • Posts by &#34;分块&#34; tag</title>
     <link href="https://xsc062.netlify.app" />
-    <updated>2024-05-01T07:44:48.000Z</updated>
+    <updated>2025-10-28T09:06:42.000Z</updated>
     <category term="并查集" />
     <category term="斜率优化" />
     <category term="悬线法" />
@@ -13,13 +13,12 @@
     <category term="单调队列" />
     <category term="分治" />
     <category term="计数" />
+    <category term="容斥" />
     <category term="二分图" />
     <category term="CRT / exCRT" />
     <category term="排列组合" />
     <category term="网络流" />
-    <category term="费用流" />
     <category term="二分" />
-    <category term="上下界网络流" />
     <category term="容斥原理" />
     <category term="线段树" />
     <category term="树状数组" />
@@ -28,37 +27,36 @@
     <category term="数据结构" />
     <category term="Tarjan" />
     <category term="下饭" />
+    <category term="李超线段树" />
+    <category term="树链剖分" />
     <category term="LCA" />
     <category term="倍增" />
     <category term="鸽巢原理" />
-    <category term="概率期望" />
+    <category term="数学" />
     <category term="调和级数" />
     <category term="差分" />
     <category term="思维" />
     <category term="树形 DP" />
     <category term="最小生成树" />
-    <category term="SAM" />
     <category term="状压" />
+    <category term="高维前缀和" />
+    <category term="SAM" />
     <category term="分块" />
     <category term="可持久化" />
     <category term="笛卡尔树" />
-    <category term="高维前缀和" />
     <category term="闲话" />
     <category term="欧拉回路" />
-    <category term="树链剖分" />
     <category term="长链剖分" />
     <category term="KMP" />
     <category term="border" />
+    <category term="随机化" />
     <category term="字符串" />
     <category term="AC 自动机" />
     <category term="SA" />
-    <category term="数学" />
     <category term="树上差分" />
     <category term="FWT" />
     <category term="堆" />
     <category term="树的重心" />
-    <category term="二项式定理" />
-    <category term="二项式反演" />
     <category term="贪心" />
     <category term="均摊" />
     <category term="优化建图" />
@@ -69,32 +67,544 @@
     <category term="DP 优化" />
     <category term="虚树" />
     <category term="点分治" />
-    <category term="WQS 二分" />
-    <category term="闵可夫斯基和" />
-    <category term="slope trick" />
     <category term="四边形不等式" />
-    <category term="状压 DP" />
-    <category term="组合数学" />
     <category term="支配对" />
     <category term="DDP" />
-    <category term="容斥" />
+    <category term="CDQ 分治" />
+    <category term="猫树" />
+    <category term="DP 套 DP" />
     <category term="Kruskal 重构树" />
     <category term="高精度" />
     <category term="最短路" />
     <category term="树套树" />
-    <category term="Boruvka" />
-    <category term="树链剖分 - 最小生成树" />
-    <category term="李超线段树" />
+    <category term="二项式反演" />
+    <category term="搜索" />
+    <entry>
+        <id>https://xsc062.netlify.app/20251028/</id>
+        <title>杂题</title>
+        <link rel="alternate" href="https://xsc062.netlify.app/20251028/"/>
+        <content type="html">&lt;p&gt;模拟赛的密度正在威胁其他文章的生存环境。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;a.-排序&#34;&gt;A. 排序&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P14352&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P14352&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;对于一个长度为 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 的排列 &lt;span class=&#34;math inline&#34;&gt;\(p\)&lt;/span&gt;，定义一轮冒泡：&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;for i in range(1, n):
+    if p[i] &amp;gt; p[i + 1]:
+        swap(p[i], p[i + 1])&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;给定 &lt;span class=&#34;math inline&#34;&gt;\(n,k\)&lt;/span&gt;，问在所有长度为 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 的排列中，可以在 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 轮冒泡后单增的排列数量。对 &lt;span class=&#34;math inline&#34;&gt;\(998244353\)&lt;/span&gt; 取模。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\le 10^{18},k\le 2\times 10^7\)&lt;/span&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;反序表。令 &lt;span class=&#34;math inline&#34;&gt;\(a_i\)&lt;/span&gt; 表示 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 结尾的逆序对数，那么限制相当于说 &lt;span class=&#34;math inline&#34;&gt;\(\max\{a\}\le k\)&lt;/span&gt;。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;也即限制一个元素之前大于之的元素数不超过 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;，可以直接计数。想象把 &lt;span class=&#34;math inline&#34;&gt;\(1\sim n\)&lt;/span&gt; 依次填入排列的过程：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;对于 &lt;span class=&#34;math inline&#34;&gt;\(1\sim n-k\)&lt;/span&gt;，只能填在剩余空位的左 &lt;span class=&#34;math inline&#34;&gt;\(k+1\)&lt;/span&gt; 个（因为填完它后，剩下的空位都比它大）；&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;对于 &lt;span class=&#34;math inline&#34;&gt;\(n-k+1\sim n\)&lt;/span&gt;，可以填在剩余任意一个空位。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;故答案为 &lt;span class=&#34;math inline&#34;&gt;\((k+1)^{n-k}\cdot k!\)&lt;/span&gt;。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 998244353;
+int main() &amp;#123;
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+    std::freopen(&amp;quot;sorting.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;sorting.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    auto stime = std::chrono::steady_clock::now();
+    long long n;
+    int k;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; k, k = std::min((long long)k, n);
+    auto qkp = [&amp;amp;](long long x, int y) &amp;#123;
+        auto res = 1ll;
+        for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    auto res = qkp(k + 1, (n - k) % (mod - 1));
+    for (int i = 1; i &amp;lt;= k; ++i)
+        (res *= i) %= mod;
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt;(std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s \n&amp;quot;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;b.-重排&#34;&gt;B. 重排&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P14353&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/P14353&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;给定一个初始为空的数组 &lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;，再给出 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 次加数操作，每次加数后输出：&lt;/p&gt;
+&lt;p&gt;任意排列 &lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt;，得到的 &lt;span class=&#34;math inline&#34;&gt;\(\sum\limits_{i=2}^n |a_{i+1}-a_{i}|\)&lt;/span&gt; 的最大值。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\le 3\times 10^6\)&lt;/span&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;显然从小到大排列，答案是后 &lt;span class=&#34;math inline&#34;&gt;\(\left\lfloor \dfrac n2\right\rfloor\)&lt;/span&gt; 个数的和减去前 &lt;span class=&#34;math inline&#34;&gt;\(\left\lfloor \dfrac n2\right\rfloor\)&lt;/span&gt; 的和的差的二倍，再减去位于中间 2 / 3 个数中，相邻两个差的最小值。&lt;/p&gt;
+&lt;p&gt;这家伙在说什么呢.jpg&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;用大根堆 + 小根堆维护即可，因为 pbds 过不去&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+    std::freopen(&amp;quot;rearrange.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;rearrange.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    auto stime = std::chrono::steady_clock::now();
+    int n, T;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; T;
+    auto res = 0ll, la = 0ll, sL = 0ll, sR = 0ll;
+    std::priority_queue&amp;lt;int&amp;gt; L;
+    std::priority_queue&amp;lt;int, std::vector&amp;lt;int&amp;gt;, std::greater&amp;lt;int&amp;gt; &amp;gt; R;
+    for (int i = 1, mid = 0; i &amp;lt;= n; ++i) &amp;#123;
+        long long x;
+        std::cin &amp;gt;&amp;gt; x;
+        int b =  T ? x ^ la : x;
+        if (i == 1)
+            mid = b, la = 0ll;
+        else if (i &amp;amp; 1) &amp;#123;
+            if (b &amp;lt; L.top()) &amp;#123;
+                mid = L.top(), sL -= mid;
+                L.pop();
+                sL += b, L.push(b);
+            &amp;#125;
+            else if (b &amp;gt; R.top()) &amp;#123;
+                mid = R.top(), sR -= mid;
+                R.pop();
+                sR += b, R.push(b);
+            &amp;#125;
+            else
+                mid = b;
+            la = 2 * (sR - sL) - std::min(R.top() - mid, mid - L.top());
+        &amp;#125;
+        else &amp;#123;
+            if (b &amp;lt;= mid) &amp;#123;
+                sL += b, sR += mid;
+                L.push(b), R.push(mid);
+            &amp;#125;
+            else &amp;#123;
+                sL += mid, sR += b;
+                L.push(mid), R.push(b);
+            &amp;#125;
+            la = 2 * (sR - sL) - (R.top() - L.top());
+        &amp;#125;
+        res ^= la;
+    &amp;#125;
+    printf(&amp;quot;%lld\n&amp;quot;, res);
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt;(std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s \n&amp;quot;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;c.-整式比较-qoj10506.-waga&#34;&gt;C. 整式比较 / qoj#10506. Waga&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.becoder.com.cn/contest/6685/problem/3&#34; class=&#34;uri&#34;&gt;https://www.becoder.com.cn/contest/6685/problem/3&lt;/a&gt; / &lt;a href=&#34;https://qoj.ac/problem/10506&#34; class=&#34;uri&#34;&gt;https://qoj.ac/problem/10506&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;给定 &lt;span class=&#34;math inline&#34;&gt;\(a_{1\cdots n}\)&lt;/span&gt;，和一个称，如下操作称为一次『称重』：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;选中 &lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt; 的一个子集，输入给称。记它们的和为 &lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;，那么称会返回 &lt;span class=&#34;math inline&#34;&gt;\(\min(k,\left\lfloor \dfrac sc \right\rfloor)\)&lt;/span&gt;，其中，&lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt; 为给定常数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;现在对于每个无序对 &lt;span class=&#34;math inline&#34;&gt;\((i,j)\)&lt;/span&gt;（&lt;span class=&#34;math inline&#34;&gt;\(i\ne j\)&lt;/span&gt;），你需要判断：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在已知 &lt;span class=&#34;math inline&#34;&gt;\(a\)&lt;/span&gt; 中除 &lt;span class=&#34;math inline&#34;&gt;\(a_i,a_j\)&lt;/span&gt; 外所有元素值，且 &lt;span class=&#34;math inline&#34;&gt;\(a_i,a_j\)&lt;/span&gt; 数值未知的前提下，是否可以通过若干次称重确定 &lt;span class=&#34;math inline&#34;&gt;\(a_i,a_j\)&lt;/span&gt; 的大小关系。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n,c\le 8000,k\le 10^5,1\le a_i&amp;lt; kc\)&lt;/span&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;显然，&lt;span class=&#34;math inline&#34;&gt;\(a_i\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(a_j\)&lt;/span&gt; 能区分，当且仅当 &lt;span class=&#34;math inline&#34;&gt;\(\left\lfloor\dfrac {a_i}c\right\rfloor\ne \left\lfloor\dfrac {a_j}c\right\rfloor\)&lt;/span&gt;，或者存在一个其他元素的子集 &lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt;，使得 &lt;span class=&#34;math inline&#34;&gt;\(\left\lfloor\dfrac {a_i+s}c\right\rfloor\ne \left\lfloor\dfrac {a_j + s}c\right\rfloor\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;反过来，如果 &lt;span class=&#34;math inline&#34;&gt;\(a_i\)&lt;/span&gt; 和 &lt;span class=&#34;math inline&#34;&gt;\(a_j\)&lt;/span&gt; 不能区分，一个前提是 &lt;span class=&#34;math inline&#34;&gt;\(\left\lfloor\dfrac {a_i}c\right\rfloor =\left\lfloor\dfrac {a_j}c\right\rfloor\)&lt;/span&gt;。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;下意识猜要排序，排序后打表发现使 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 不合法的 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 总是连续的。&lt;/p&gt;
+&lt;details&gt;
+&lt;p&gt;&lt;summary&gt;证明&lt;/summary&gt;&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;&lt;p&gt;需要证：对于 &lt;span class=&#34;math inline&#34;&gt;\(x&amp;lt;y&amp;lt;z\)&lt;/span&gt;，若 &lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt; 不可区分，且 &lt;span class=&#34;math inline&#34;&gt;\(y,z\)&lt;/span&gt; 不可区分，那么 &lt;span class=&#34;math inline&#34;&gt;\(x,z\)&lt;/span&gt; 不可区分。&lt;/p&gt;
+&lt;p&gt;记 &lt;span class=&#34;math inline&#34;&gt;\(\left\lfloor\dfrac {x}c\right\rfloor=\left\lfloor\dfrac {y}c\right\rfloor=\left\lfloor\dfrac {z}c\right\rfloor=w\)&lt;/span&gt;，不存在 &lt;span class=&#34;math inline&#34;&gt;\(s\le c\cdot (k-w)\)&lt;/span&gt;，使得 &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; 可以进位但 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 不可，也不存在这样的 &lt;span class=&#34;math inline&#34;&gt;\(s\)&lt;/span&gt; 使得 &lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt; 可以进位但 &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; 不可。&lt;/p&gt;
+&lt;p&gt;合并不等式容易得到不存在这样的 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 使得 &lt;span class=&#34;math inline&#34;&gt;\(z\)&lt;/span&gt; 可以进位但 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 不可。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;需要证：对于 &lt;span class=&#34;math inline&#34;&gt;\(x&amp;lt;y&amp;lt;z\)&lt;/span&gt;，若 &lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt; 可区分或 &lt;span class=&#34;math inline&#34;&gt;\(y,z\)&lt;/span&gt; 可区分，则 &lt;span class=&#34;math inline&#34;&gt;\(x,z\)&lt;/span&gt; 可区分。&lt;/p&gt;
+&lt;p&gt;调整法易得。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/details&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;故发现只需要讨论相邻两个元素是否可区分。需要知道所有可能的子集和用于 check，可以用分治预处理『只有某相邻两个元素不选』时的前后缀背包数组（到达某个余数时需要的最小整倍数），就可以 &lt;span class=&#34;math inline&#34;&gt;\(O(nc\log n)\)&lt;/span&gt; 解决问题。&lt;/p&gt;
+&lt;p&gt;考虑在做什么：删点在 &lt;span class=&#34;math inline&#34;&gt;\([l,mid]\)&lt;/span&gt;，那么 &lt;span class=&#34;math inline&#34;&gt;\([mid+1,r]\)&lt;/span&gt; 的 DP 数组不会受到影响；删点在 &lt;span class=&#34;math inline&#34;&gt;\([mid + 1, r]\)&lt;/span&gt;，那么 &lt;span class=&#34;math inline&#34;&gt;\([l,mid]\)&lt;/span&gt; 的 DP 数组不会受到影响。背包的物品是无顺序的，所以有正确性。&lt;/p&gt;
+&lt;p&gt;也就是说大部分信息是可继承的。&lt;em&gt;为什么题解管这个叫 CDQ？是因为普通分治总会被叫 CDQ 吗？&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;做一个类似 01 背包滚动数组的东西，维护每个点前 / 后可以凑出来的背包值，在最后下传到单点时统计答案即可。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;details&gt;
+&lt;p&gt;相邻两个的处理略显烧脑，但意外地简洁。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;&amp;gt;=&lt;/code&gt; 不要写成除，不然会慢成唐诗&lt;/p&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int maxn = 8e3 + 5;
+char nec(void) &amp;#123;
+    static char buf[1 &amp;lt;&amp;lt; 20], *p = buf, *e = buf;
+    if (p == e) &amp;#123;
+        e = buf + fread(buf, 1, 1 &amp;lt;&amp;lt; 20, stdin);
+        p = buf;
+    &amp;#125;
+    return *p++;
+&amp;#125;
+int read(void) &amp;#123;
+    auto x = 0ll;
+    char t = nec();
+    for (; t &amp;lt; &amp;#39;0&amp;#39; || t &amp;gt; &amp;#39;9&amp;#39;; t = nec());
+    for (; t &amp;gt;= &amp;#39;0&amp;#39; &amp;amp;&amp;amp; t &amp;lt;= &amp;#39;9&amp;#39;; t = nec())
+        x = x * 10 + t - &amp;#39;0&amp;#39;;
+    return x;
+&amp;#125;
+int ok[maxn], m, k;
+std::pair&amp;lt;int, int&amp;gt; a[maxn];
+void calc(int l, int r, const std::vector&amp;lt;int&amp;gt; f) &amp;#123;
+    if (l &amp;gt; r)
+        return;
+    if (l == r) &amp;#123;
+        if (a[l].first == a[l + 1].first)
+            ok[l] = 1;
+        else if (a[l].first / m == a[l + 1].first / m)
+            ok[l] = (*std::min_element(f.begin() + m - a[l + 1].first % m, f.begin() + m - a[l].first % m) + a[l].first / m &amp;gt;= k);
+        return;
+    &amp;#125;
+    int mid = (l + r) &amp;gt;&amp;gt; 1;
+    auto g = f;
+    for (int i = mid + 2; i &amp;lt;= r + 1; ++i) &amp;#123;
+        auto h = g;
+        for (int j = 0, k; j &amp;lt; m; ++j) &amp;#123;
+            k = (j + m - a[i].first % m) % m;
+            h[j] = std::min(h[j], g[k] + a[i].first / m + (k + a[i].first % m &amp;gt;= m));
+        &amp;#125;
+        h.swap(g);
+    &amp;#125;
+    calc(l, mid, g);
+    g = f;
+    for (int i = l; i &amp;lt;= mid; ++i) &amp;#123;
+        auto h = g;
+        for (int j = 0, k; j &amp;lt; m; ++j) &amp;#123;
+            k = (j + m - a[i].first % m) % m;
+            h[j] = std::min(h[j], g[k] + a[i].first / m + (k + a[i].first % m &amp;gt;= m));
+        &amp;#125;
+        h.swap(g);
+    &amp;#125;
+    calc(mid + 1, r, g);
+    return;
+&amp;#125;;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+    std::freopen(&amp;quot;intcmp.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;intcmp.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n = read();
+    m = read(), k = read();
+    for (int i = 1; i &amp;lt;= n; ++i)
+        a[i].first = read(), a[i].second = i;
+    std::sort(a + 1, a + n + 1);
+    std::vector&amp;lt;int&amp;gt; f(m, 0x3f3f3f3f);
+    f[0] = 0;
+    calc(1, n - 1, f);
+    std::vector&amp;lt;int&amp;gt; resL(n + 1), resR(n + 1);
+    int now = 0;
+    for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+        resR[a[i].second] = i - 1 - now;
+        if (i != n &amp;amp;&amp;amp; ok[i])
+            ++now;
+        else
+            now = 0;
+    &amp;#125;
+    now = 0;
+    for (int i = n; i; --i) &amp;#123;
+        resL[a[i].second] = n - i - now;
+        if (ok[i - 1])
+            ++now;
+        else
+            now = 0;
+    &amp;#125;
+    for (int i = 1; i &amp;lt;= n; ++i)
+        printf(&amp;quot;%d %d \n&amp;quot;, resL[i], resR[i]);
+#ifndef ONLINE_JUDGE
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt; (std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s\n&amp;quot;;
+#endif
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;b.-字符串转换&#34;&gt;B. 字符串转换&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.becoder.com.cn/problem/52055&#34; class=&#34;uri&#34;&gt;https://www.becoder.com.cn/problem/52055&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;给定等长 01 串 &lt;span class=&#34;math inline&#34;&gt;\(S,T\)&lt;/span&gt;，维护 &lt;span class=&#34;math inline&#34;&gt;\(Q\)&lt;/span&gt; 次操作：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;修改：Flip &lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt; 的某个字符。&lt;/li&gt;
+&lt;li&gt;修改：Flip &lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt; 的某个字符。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;每次操作后，问 &lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt; 能否通过若干次下列操作变为 &lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;选择 &lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt; 中的一个 &lt;code&gt;00&lt;/code&gt;，变为 &lt;code&gt;10&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;选择 &lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt; 中的一个 &lt;code&gt;11&lt;/code&gt;，变为 &lt;code&gt;01&lt;/code&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(|S|,Q\le 3\times 10^5\)&lt;/span&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;连续 00 / 11 操作，考虑奇数位取反。取反之后发现原操作等价于 &lt;span class=&#34;math inline&#34;&gt;\(a_i\gets a_{i+1}\)&lt;/span&gt;。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;这个操作只会使连续段的数量减少，故要求每一个后缀，&lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt; 的连续段个数不少于 &lt;span class=&#34;math inline&#34;&gt;\(T\)&lt;/span&gt; 的连续段个数，而且二者结尾相同。&lt;/p&gt;
+&lt;p&gt;线段树维护即可。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int maxn = 3e5 + 5;
+struct &amp;#123; int l, r, mn, d; &amp;#125; t[maxn &amp;lt;&amp;lt; 2];
+#define lt (p &amp;lt;&amp;lt; 1)
+#define rt (lt | 1)
+void bld(int p, int l, int r) &amp;#123;
+    t[p].l = l, t[p].r = r;
+    t[p].mn = t[p].d = 0;
+    if (l == r)
+        return;
+    int mid = (l + r) &amp;gt;&amp;gt; 1;
+    bld(lt, l, mid), bld(rt, mid + 1, r);
+    return;
+&amp;#125;
+void pushdown(int p) &amp;#123;
+    if (t[p].d) &amp;#123;
+        t[lt].mn += t[p].d, t[lt].d += t[p].d;
+        t[rt].mn += t[p].d, t[rt].d += t[p].d;
+        t[p].d = 0;
+    &amp;#125;
+    return;
+&amp;#125;
+void add(int p, int l, int r, int v) &amp;#123;
+    if (l &amp;lt;= t[p].l &amp;amp;&amp;amp; t[p].r &amp;lt;= r) &amp;#123;
+        t[p].mn += v, t[p].d += v;
+        return;
+    &amp;#125;
+    pushdown(p);
+    int mid = (t[p].l + t[p].r) &amp;gt;&amp;gt; 1;
+    if (l &amp;lt;= mid)
+        add(lt, l, r, v);
+    if (r &amp;gt; mid)
+        add(rt, l, r, v);
+    t[p].mn = std::min(t[lt].mn, t[rt].mn);
+    return;
+&amp;#125;
+#undef lt
+#undef rt
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+    std::freopen(&amp;quot;string.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;string.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int T;
+    for (std::cin &amp;gt;&amp;gt; T; T--; ) &amp;#123;
+        int n, q;
+        std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; q;
+        std::vector&amp;lt;int&amp;gt; a(n + 1), b(n + 1);
+        bld(1, 1, n);
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            char t;
+            std::cin &amp;gt;&amp;gt; t, a[i] = (t == &amp;#39;B&amp;#39;);
+            if (i &amp;amp; 1)
+                a[i] ^= 1;
+        &amp;#125;
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            char t;
+            std::cin &amp;gt;&amp;gt; t, b[i] = (t == &amp;#39;B&amp;#39;);
+            if (i &amp;amp; 1)
+                b[i] ^= 1;
+        &amp;#125;
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            int v = 0;
+            v += (i == n || a[i] != a[i + 1]);
+            v -= (i == n || b[i] != b[i + 1]);
+            if (v)
+                add(1, 1, i, v);
+        &amp;#125;
+        for (char op; q--; ) &amp;#123;
+            int i;
+            std::cin &amp;gt;&amp;gt; op &amp;gt;&amp;gt; i;
+            if (op == &amp;#39;X&amp;#39;) &amp;#123;
+                int v = 0, v1 = 0;
+                v -= (i == n || a[i] != a[i + 1]);
+                v1 -= (i != 1 &amp;amp;&amp;amp; a[i] != a[i - 1]);
+                a[i] ^= 1;
+                v += (i == n || a[i] != a[i + 1]);
+                v1 += (i != 1 &amp;amp;&amp;amp; a[i] != a[i - 1]);
+                if (v)
+                    add(1, 1, i, v);
+                if (v1)
+                    add(1, 1, i - 1, v1);
+            &amp;#125;
+            else &amp;#123;
+                int v = 0, v1 = 0;
+                v += (i == n || b[i] != b[i + 1]);
+                v1 += (i != 1 &amp;amp;&amp;amp; b[i] != b[i - 1]);
+                b[i] ^= 1;
+                v -= (i == n || b[i] != b[i + 1]);
+                v1 -= (i != 1 &amp;amp;&amp;amp; b[i] != b[i - 1]);
+                if (v)
+                    add(1, 1, i, v);
+                if (v1)
+                    add(1, 1, i - 1, v1);
+            &amp;#125;
+            std::cout &amp;lt;&amp;lt; ((a[n] == b[n] &amp;amp;&amp;amp; t[1].mn &amp;gt;= 0) ? &amp;quot;YES&amp;quot; : &amp;quot;NO&amp;quot;) &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+        &amp;#125;
+    &amp;#125;
+#ifndef ONLINE_JUDGE
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt; (std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s\n&amp;quot;;
+#endif
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;c.-监控&#34;&gt;C. 监控&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.becoder.com.cn/problem/52057&#34; class=&#34;uri&#34;&gt;https://www.becoder.com.cn/problem/52057&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;给定 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 个怪，每个怪有 &lt;span class=&#34;math inline&#34;&gt;\(B_i\)&lt;/span&gt; 滴血，也就是说每个怪能被打 &lt;span class=&#34;math inline&#34;&gt;\(\le B_i\)&lt;/span&gt; 次。&lt;/p&gt;
+&lt;p&gt;要求每个怪必须被打 &lt;span class=&#34;math inline&#34;&gt;\(\ge A_i\)&lt;/span&gt; 次，并认为被打恰好 &lt;span class=&#34;math inline&#34;&gt;\(A_i\)&lt;/span&gt; 次时这个怪是好的。&lt;/p&gt;
+&lt;p&gt;对于每个 &lt;span class=&#34;math inline&#34;&gt;\(1\le x\le \sum B_i\)&lt;/span&gt;，求：在攻击次数只能为 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 的倍数的前提下，不好的怪的最小值。你只需要输出答案的和。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(N\le 10^5,1\le A_i&amp;lt; B_i\le 10^5\)&lt;/span&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;记 &lt;span class=&#34;math inline&#34;&gt;\(c_i=B_i-A_i\)&lt;/span&gt;，把 &lt;span class=&#34;math inline&#34;&gt;\(c_i\)&lt;/span&gt; 降序排列，记 &lt;span class=&#34;math inline&#34;&gt;\(s=\sum A_i\)&lt;/span&gt;，那么一个 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 的答案为：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\min\left\{i\mid{\left\lceil \frac{s}x \right\rceil\cdot x - s\ge c_i}\right\}
+\]&lt;/span&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;容易想到整除分块，枚举 &lt;span class=&#34;math inline&#34;&gt;\(\left\lceil \dfrac{s}x \right\rceil\)&lt;/span&gt; 的值 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;，那么相当于想要找到 &lt;span class=&#34;math inline&#34;&gt;\([L_i,R_i]\)&lt;/span&gt; 中的每个 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，&lt;span class=&#34;math inline&#34;&gt;\(x\cdot k-s\)&lt;/span&gt; 会落在哪个 &lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt; 的管辖范围里。&lt;/p&gt;
+&lt;p&gt;不妨记 &lt;span class=&#34;math inline&#34;&gt;\(c_i\)&lt;/span&gt; 的管辖范围为 &lt;span class=&#34;math inline&#34;&gt;\([cL_i,cR_i]\)&lt;/span&gt;，那么转化为 &lt;span class=&#34;math inline&#34;&gt;\(x\cdot k-s\in [cL_i,cR_i]\)&lt;/span&gt;，枚举 &lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt; 解不等式即可。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;但发现一个严重的问题：外层整除分块复杂度是 &lt;span class=&#34;math inline&#34;&gt;\(\sqrt(s)\)&lt;/span&gt; 的，最劣 &lt;span class=&#34;math inline&#34;&gt;\(10^5\)&lt;/span&gt; 级别，很坏了。&lt;/p&gt;
+&lt;p&gt;发现枚举商数劣的原因是使 &lt;span class=&#34;math inline&#34;&gt;\(\left\lceil \dfrac{s}x \right\rceil\)&lt;/span&gt; 很大的 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 并不多，却占用了很多枚举次数&lt;/p&gt;
+&lt;p&gt;如果做经典的整除分块同样会发现到后期块内元素远远少于 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;，却要花费 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 次操作来处理它们。所以对于这部分数我们直接朴素二分。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;取阈值为 1500 即可。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int B = 1500;
+const long long inf = 1e18;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    std::vector&amp;lt;long long&amp;gt; c(n + 1);
+    auto sa = 0ll, sb = 0ll;
+    for (int i = 1, a, b; i &amp;lt;= n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; a &amp;gt;&amp;gt; b;
+        sa += a, sb += b, c[i] = b - a;
+    &amp;#125;
+    std::sort(c.begin() + 1, c.end(), std::greater&amp;lt;int&amp;gt; ());
+    std::partial_sum(c.begin() + 1, c.end(), c.begin() + 1);
+    auto L = sb + 1;
+    std::stack&amp;lt;std::pair&amp;lt;long long, int&amp;gt; &amp;gt; st;
+    for (int k = 1; k &amp;lt;= 1500; ++k) &amp;#123;
+        auto l = (sa + k - 1) / k, r = L - 1;
+        if (l &amp;gt; r)
+            continue;
+        L = l;
+        st.emplace(r, n + 1);
+        for (int i = n; ~i; --i)
+            st.emplace(std::min(r, (c[i] + sa) / k), i);
+    &amp;#125;
+    for (int i = L - 1; i; --i)
+        st.emplace(i, std::lower_bound(c.begin(), c.end(), ((sa + i - 1) / i) * i - sa) - c.begin());
+    auto res = 0ll;
+    for (auto l = 1ll; !st.empty(); ) &amp;#123;
+        auto [r, v] = st.top();
+        st.pop();
+        if (l &amp;gt; r)
+            continue;
+        if (v == n + 1)
+            v = 0;
+        res += (r - l + 1) * v;
+        l = r + 1;
+    &amp;#125;
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+#ifndef ONLINE_JUDGE
+    std::cerr &amp;lt;&amp;lt; std::fixed &amp;lt;&amp;lt; std::setprecision(6) &amp;lt;&amp;lt; std::chrono::duration&amp;lt;double&amp;gt; (std::chrono::steady_clock::now() - stime).count() &amp;lt;&amp;lt; &amp;quot;s\n&amp;quot;;
+#endif
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;g---range-set-modifying-query&#34;&gt;G - Range Set Modifying Query&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/abc430/tasks/abc430_g&#34; class=&#34;uri&#34;&gt;https://atcoder.jp/contests/abc430/tasks/abc430_g&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;发现开 60 个线段树非常合理&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;接着发现是 beats 板子题。看似需要三只 log，其实只有两只。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;参见 abc426，最近 abc 都喜欢 beats 板子题吗？&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+        <category term="分治" />
+        <category term="分块" />
+        <category term="背包" />
+        <updated>2025-10-28T09:06:42.000Z</updated>
+    </entry>
+    <entry>
+        <id>https://xsc062.netlify.app/20250907/</id>
+        <title>近期杂题</title>
+        <link rel="alternate" href="https://xsc062.netlify.app/20250907/"/>
+        <content type="html">&lt;p&gt;突围&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;e---colinear&#34;&gt;E - Colinear&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/abc422/tasks/abc422_e&#34; class=&#34;uri&#34;&gt;https://atcoder.jp/contests/abc422/tasks/abc422_e&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;看到题目会有一个乱搞的想法：随机取一对点，那么是有 &lt;span class=&#34;math inline&#34;&gt;\(\dfrac 14\)&lt;/span&gt; 的概率都在直线上的。带进去暴力 check 一下，多来几次正确率就比较高。&lt;/p&gt;
+&lt;p&gt;什么，这是正解？abc 的风格真是越来越奇怪了。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;f---eat-and-ride&#34;&gt;F - Eat and Ride&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/abc422/tasks/abc422_f&#34; class=&#34;uri&#34;&gt;https://atcoder.jp/contests/abc422/tasks/abc422_f&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;考虑一个费用提前计算的分层图，就可以跑 Dij 了。&lt;/p&gt;
+&lt;p&gt;官解给出了一个优化：&lt;strong&gt;搜索实际上是在给边定向；这样图就转化为 DAG&lt;/strong&gt;（实际上反向边并不会产生有效更新，故直接朴素转移即可）。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;b---triangle-toggle&#34;&gt;B - Triangle Toggle&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/arc205/tasks/arc205_b&#34; class=&#34;uri&#34;&gt;https://atcoder.jp/contests/arc205/tasks/arc205_b&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;现场是打表找规律做出来的 😅&lt;/p&gt;
+&lt;p&gt;发现这样一次操作之后每个点上黑边的奇偶性是不会变的，所以会有一个上界，难点在于是否可以达到这个上界。&lt;/p&gt;
+&lt;p&gt;发现只要存在一个点上连有两条白边，就可以把 001 反转为 110，一次操作至少可以新增一条黑边。故是可以达到的。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;d---non-ancestor-matching&#34;&gt;D - Non-Ancestor Matching&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/arc205/tasks/arc205_d&#34; class=&#34;uri&#34;&gt;https://atcoder.jp/contests/arc205/tasks/arc205_d&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;没啥好说的摩尔投票，有一个非常简单的优先队列做法&lt;/p&gt;
+&lt;p&gt;但 Rosmist 打了另一个看起来有点玄学的东西：可以感受到每次只向最大的子树递归是合理的，尝试证明一下发现确实比较显然&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;e---subset-product-problem&#34;&gt;E - Subset Product Problem&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/AT_arc205_e&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/problem/AT_arc205_e&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;奇怪题目&lt;/p&gt;
+&lt;p&gt;高维前缀和 + 分块其实不算特别罕见的 trick&lt;/p&gt;
+&lt;p&gt;用 &lt;span class=&#34;math inline&#34;&gt;\(f_{i,j}\)&lt;/span&gt; 表示前 &lt;span class=&#34;math inline&#34;&gt;\(10\)&lt;/span&gt; 位为 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;，后 &lt;span class=&#34;math inline&#34;&gt;\(10\)&lt;/span&gt; 位的高维前缀和&lt;/p&gt;
+&lt;p&gt;每次查询 / 更新都是 &lt;span class=&#34;math inline&#34;&gt;\(O(2^{10})\)&lt;/span&gt; 的，可以接受（吗）&lt;/p&gt;
+&lt;p&gt;然后还有一个科研性的做法 见 &lt;a href=&#34;https://www.luogu.com.cn/article/1uyz0hn2&#34; class=&#34;uri&#34;&gt;https://www.luogu.com.cn/article/1uyz0hn2&lt;/a&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;c.-by-the-assignment&#34;&gt;C. By the Assignment&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/contest/2135/problem/C&#34; class=&#34;uri&#34;&gt;https://codeforces.com/contest/2135/problem/C&lt;/a&gt;&lt;/p&gt;
+</content>
+        <category term="分块" />
+        <category term="随机化" />
+        <category term="最短路" />
+        <updated>2025-09-07T08:13:09.000Z</updated>
+    </entry>
     <entry>
         <id>https://xsc062.netlify.app/20240501/</id>
         <title>五一杂题</title>
         <link rel="alternate" href="https://xsc062.netlify.app/20240501/"/>
-        <content type="html">&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/5169&#34;&gt;SAM 杂题&lt;/a&gt; + &lt;a href=&#34;http://222.180.160.110:61235/contest/5170&#34;&gt;NOIPS8&lt;/a&gt; + &lt;a href=&#34;http://222.180.160.110:61235/contest/5175&#34;&gt;周考&lt;/a&gt; 选讲。&lt;/p&gt;
+        <content type="html">&lt;p&gt;&lt;a href=&#34;https://www.becoder.com.cn/contest/5169&#34;&gt;SAM 杂题&lt;/a&gt; + &lt;a href=&#34;https://www.becoder.com.cn/contest/5170&#34;&gt;NOIPS8&lt;/a&gt; + &lt;a href=&#34;https://www.becoder.com.cn/contest/5175&#34;&gt;周考&lt;/a&gt; 选讲。&lt;/p&gt;
 &lt;p&gt;看看这个标签列表长度就知道这三天做的题有多杂。&lt;/p&gt;
 &lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
 &lt;hr /&gt;
 &lt;h3 id=&#34;d.-字符串&#34;&gt;D. 字符串&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/5169/problem/4&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/5169/problem/4&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.becoder.com.cn/contest/5169/problem/4&#34; class=&#34;uri&#34;&gt;https://www.becoder.com.cn/contest/5169/problem/4&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;和 SA 的做法一样，先二分 &lt;span class=&#34;math inline&#34;&gt;\(s_{c\sim d}\)&lt;/span&gt; 的前缀长度 &lt;span class=&#34;math inline&#34;&gt;\(mid\)&lt;/span&gt;，只需 check &lt;span class=&#34;math inline&#34;&gt;\(s_{c \sim c + mid - 1}\)&lt;/span&gt; 是否在 &lt;span class=&#34;math inline&#34;&gt;\(s_{a\sim b}\)&lt;/span&gt; 中出现过。&lt;/p&gt;
 &lt;p&gt;考虑怎么快速 check。从 &lt;span class=&#34;math inline&#34;&gt;\(c\)&lt;/span&gt; 一步一步跳到 &lt;span class=&#34;math inline&#34;&gt;\(c+mid-1\)&lt;/span&gt; 显然会起飞，考虑到查询是静态的，我们事先预处理一下然后倍增地跳即可。&lt;/p&gt;
 &lt;p&gt;此时只需看当前状态的 &lt;span class=&#34;math inline&#34;&gt;\(\text {endpos}\)&lt;/span&gt; 是否在 &lt;span class=&#34;math inline&#34;&gt;\([a + mid - 1, b]\)&lt;/span&gt; 出现过。&lt;/p&gt;
@@ -244,7 +754,7 @@ int main() &amp;#123;
 &lt;/details&gt;
 &lt;hr /&gt;
 &lt;h3 id=&#34;f.-security&#34;&gt;F. Security&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/5169/problem/6&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/5169/problem/6&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.becoder.com.cn/contest/5169/problem/6&#34; class=&#34;uri&#34;&gt;https://www.becoder.com.cn/contest/5169/problem/6&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;对我们来说应该是会 D 就会 F 的。所以只打了 10min。&lt;/p&gt;
 &lt;p&gt;首先考虑一个大家喜闻乐见的 DFS 求最小字典序。显然地，如果存在和当前位相等的字符，那么优先跳相等字符，进入下一层深搜；否则找到最小的更大字符，然后直接 out。&lt;/p&gt;
 &lt;p&gt;此时 SAM 就是我们用来判断 &lt;span class=&#34;math inline&#34;&gt;\(S_{l, r}\)&lt;/span&gt; 中是否存在某状态的工具了。甚至比上一题简单，因为不用写二分和倍增。&lt;/p&gt;
@@ -395,7 +905,7 @@ int main() &amp;#123;
 &lt;/details&gt;
 &lt;hr /&gt;
 &lt;h3 id=&#34;a.-六出祁山&#34;&gt;A. 六出祁山&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/5170/problem/1&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/5170/problem/1&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.becoder.com.cn/contest/5170/problem/1&#34; class=&#34;uri&#34;&gt;https://www.becoder.com.cn/contest/5170/problem/1&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;是能用贪心拿 60pts 的 DP 题 /tuu&lt;/p&gt;
 &lt;p&gt;需要先把暴力的式子写出来。设 &lt;span class=&#34;math inline&#34;&gt;\(f_{i, j}\)&lt;/span&gt; 为将 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 山修改高度为 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 的代价，则：&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
@@ -460,7 +970,7 @@ int main() &amp;#123;
 &lt;/details&gt;
 &lt;hr /&gt;
 &lt;h3 id=&#34;b.-水淹七军&#34;&gt;B. 水淹七军&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/5170/problem/2&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/5170/problem/2&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.becoder.com.cn/contest/5170/problem/2&#34; class=&#34;uri&#34;&gt;https://www.becoder.com.cn/contest/5170/problem/2&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;容易发现最后连出来一定是没有环的。所以一定是一个 DAG。&lt;/p&gt;
 &lt;p&gt;我们知道状态压缩是会遍历到每一种情况的，所以我们可以假设当前的 DAG 就是该状态下的最优。&lt;/p&gt;
 &lt;p&gt;至于这个「最优」如何定义就要交给我们了。我们不妨强制认为这个 DAG 是按层序遍历得到的，也就是说连续遍历到的点属于同一层（这里的层是指某点到任意源点的最长路长度）。&lt;/p&gt;
@@ -555,7 +1065,7 @@ int main() &amp;#123;
 &lt;/details&gt;
 &lt;hr /&gt;
 &lt;h3 id=&#34;c.-煮酒论英雄&#34;&gt;C. 煮酒论英雄&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/5170/problem/3&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/5170/problem/3&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.becoder.com.cn/contest/5170/problem/3&#34; class=&#34;uri&#34;&gt;https://www.becoder.com.cn/contest/5170/problem/3&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;注意到如果存在串被其他串包含那么直接将其毙掉就可以了。&lt;/p&gt;
 &lt;p&gt;对于相互不完全包含的串，我们令 &lt;span class=&#34;math inline&#34;&gt;\(mx_{i, j, 0/1, 0/1}\)&lt;/span&gt; 表示将正序 / 逆序的 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 串拼到正序 / 逆序的 &lt;span class=&#34;math inline&#34;&gt;\(j\)&lt;/span&gt; 串之前，两者共用相接公共部分的串长。这个可以用字符串哈希暴力求。&lt;/p&gt;
 &lt;p&gt;用状压枚举拼接顺序，求得最小总串长即可。&lt;/p&gt;
@@ -682,7 +1192,7 @@ int main() &amp;#123;
 &lt;/details&gt;
 &lt;hr /&gt;
 &lt;h3 id=&#34;a.-捏斑马&#34;&gt;A. 捏斑马&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/5175/problem/1&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/5175/problem/1&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.becoder.com.cn/contest/5175/problem/1&#34; class=&#34;uri&#34;&gt;https://www.becoder.com.cn/contest/5175/problem/1&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;我甚至不会（）&lt;/p&gt;
 &lt;p&gt;翻转 + 拼接本质上就是首尾相接。我们把字符串整个拼到自己后边儿，然后任取一段长度为 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 的串就可以得到一个倒过来的操作后的字符串。&lt;/p&gt;
 &lt;p&gt;注意到可以操作很多次。但是既然我们操作后的串也可以在这个拼接后的串中找到了，那么其实多次操作后的也行。&lt;/p&gt;
@@ -715,7 +1225,7 @@ int main() &amp;#123;
 &lt;/details&gt;
 &lt;hr /&gt;
 &lt;h3 id=&#34;d.-链状闪电&#34;&gt;D. 链状闪电&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/5175/problem/4&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/5175/problem/4&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.becoder.com.cn/contest/5175/problem/4&#34; class=&#34;uri&#34;&gt;https://www.becoder.com.cn/contest/5175/problem/4&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;莫名其妙且又臭又长的根号做法。&lt;/p&gt;
 &lt;p&gt;容易发现一个怪被杀掉了序列就会裂开成两段连续子序列，以及最先被杀掉的怪物一定血量最少。在裂开来的两段连续子序列中也满足此规律，以此类推。&lt;/p&gt;
 &lt;p&gt;考虑对序列建立笛卡尔树。令树根为 &lt;span class=&#34;math inline&#34;&gt;\(rt\)&lt;/span&gt;，当前攻击力为 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;，记 &lt;span class=&#34;math inline&#34;&gt;\(t_{x, k}=\left\lceil \dfrac {h_x}k \right\rceil\)&lt;/span&gt;，即不考虑其他条件时击倒 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 所需次数。&lt;/p&gt;
@@ -824,7 +1334,7 @@ int main() &amp;#123;
 &lt;/details&gt;
 &lt;hr /&gt;
 &lt;h3 id=&#34;f.-弹飞绵羊&#34;&gt;F. 弹飞绵羊&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/5175/problem/6&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/5175/problem/6&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.becoder.com.cn/contest/5175/problem/6&#34; class=&#34;uri&#34;&gt;https://www.becoder.com.cn/contest/5175/problem/6&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;很棒可持久化分块，使我 lxl 旋转。&lt;/p&gt;
 &lt;p&gt;笑话：赛后 5s 才交上去。然后 A 了。&lt;/p&gt;
 &lt;p&gt;我们猜大家都会普通的弹飞绵羊这道题。就是块间暴力跳嘛。&lt;/p&gt;
@@ -922,8 +1432,8 @@ int&amp;amp; devicer::val(int x) &amp;#123;
 &lt;/details&gt;
 </content>
         <category term="DP" />
-        <category term="SAM" />
         <category term="状压" />
+        <category term="SAM" />
         <category term="分块" />
         <category term="可持久化" />
         <category term="笛卡尔树" />

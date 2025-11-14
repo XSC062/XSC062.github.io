@@ -16,13 +16,12 @@
         <category>单调队列</category>
         <category>分治</category>
         <category>计数</category>
+        <category>容斥</category>
         <category>二分图</category>
         <category>CRT / exCRT</category>
         <category>排列组合</category>
         <category>网络流</category>
-        <category>费用流</category>
         <category>二分</category>
-        <category>上下界网络流</category>
         <category>容斥原理</category>
         <category>线段树</category>
         <category>树状数组</category>
@@ -31,37 +30,36 @@
         <category>数据结构</category>
         <category>Tarjan</category>
         <category>下饭</category>
+        <category>李超线段树</category>
+        <category>树链剖分</category>
         <category>LCA</category>
         <category>倍增</category>
         <category>鸽巢原理</category>
-        <category>概率期望</category>
+        <category>数学</category>
         <category>调和级数</category>
         <category>差分</category>
         <category>思维</category>
         <category>树形 DP</category>
         <category>最小生成树</category>
-        <category>SAM</category>
         <category>状压</category>
+        <category>高维前缀和</category>
+        <category>SAM</category>
         <category>分块</category>
         <category>可持久化</category>
         <category>笛卡尔树</category>
-        <category>高维前缀和</category>
         <category>闲话</category>
         <category>欧拉回路</category>
-        <category>树链剖分</category>
         <category>长链剖分</category>
         <category>KMP</category>
         <category>border</category>
+        <category>随机化</category>
         <category>字符串</category>
         <category>AC 自动机</category>
         <category>SA</category>
-        <category>数学</category>
         <category>树上差分</category>
         <category>FWT</category>
         <category>堆</category>
         <category>树的重心</category>
-        <category>二项式定理</category>
-        <category>二项式反演</category>
         <category>贪心</category>
         <category>均摊</category>
         <category>优化建图</category>
@@ -72,22 +70,18 @@
         <category>DP 优化</category>
         <category>虚树</category>
         <category>点分治</category>
-        <category>WQS 二分</category>
-        <category>闵可夫斯基和</category>
-        <category>slope trick</category>
         <category>四边形不等式</category>
-        <category>状压 DP</category>
-        <category>组合数学</category>
         <category>支配对</category>
         <category>DDP</category>
-        <category>容斥</category>
+        <category>CDQ 分治</category>
+        <category>猫树</category>
+        <category>DP 套 DP</category>
         <category>Kruskal 重构树</category>
         <category>高精度</category>
         <category>最短路</category>
         <category>树套树</category>
-        <category>Boruvka</category>
-        <category>树链剖分 - 最小生成树</category>
-        <category>李超线段树</category>
+        <category>二项式反演</category>
+        <category>搜索</category>
         <item>
             <guid isPermalink="true">https://xsc062.netlify.app/20250824/</guid>
             <title>杂题</title>
@@ -303,7 +297,7 @@ int main() &amp;#123;
 &lt;/details&gt;
 &lt;hr /&gt;
 &lt;h2 id=&#34;d.-团队选拔&#34;&gt;D. 团队选拔&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/6534/problem/4&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/6534/problem/4&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.becoder.com.cn/contest/6534/problem/4&#34; class=&#34;uri&#34;&gt;https://www.becoder.com.cn/contest/6534/problem/4&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;给定 &lt;span class=&#34;math inline&#34;&gt;\(a_{1\sim n}\)&lt;/span&gt;，从中任选一些互不相交的区间，满足每个区间内元素的 gcd 相同。&lt;/p&gt;
 &lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\le 10^5,V\le 10^7\)&lt;/span&gt;。&lt;/p&gt;
@@ -312,7 +306,7 @@ int main() &amp;#123;
 &lt;p&gt;很容易想到与此原理类似的全局答案求法：对于每个 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;，向左处理出每一段 &lt;span class=&#34;math inline&#34;&gt;\([l,r]\)&lt;/span&gt;，满足 &lt;span class=&#34;math inline&#34;&gt;\(\gcd(a_{l\cdots i})=\gcd(a_r\cdots i)\)&lt;/span&gt;，并记录该 &lt;span class=&#34;math inline&#34;&gt;\(\gcd\)&lt;/span&gt;。这样求出来的 &lt;span class=&#34;math inline&#34;&gt;\((i,l,r)\)&lt;/span&gt; 共有 &lt;span class=&#34;math inline&#34;&gt;\(O(n\log V)\)&lt;/span&gt; 段。&lt;/p&gt;
 &lt;p&gt;对于每个 gcd 有 &lt;span class=&#34;math inline&#34;&gt;\(f_{i}=f_{i-1}+\sum\limits_{j=l_i}^{r_i} f_{j - 1}\)&lt;/span&gt;，可以做一个扫描线，得到全局答案；向前向后分别做到 &lt;span class=&#34;math inline&#34;&gt;\(i-1,i+1\)&lt;/span&gt;，相乘就能得到 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 未被选取时的答案&lt;/p&gt;
 &lt;p&gt;考虑怎么完成『相乘』这个动作：最后的 &lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt; 在每个右端点处发生变化，可以转化成若干段 &lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt;；反过来的 &lt;span class=&#34;math inline&#34;&gt;\(f&amp;#39;\)&lt;/span&gt; 亦可以这样转化。将 &lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt; 整体后移一位、&lt;span class=&#34;math inline&#34;&gt;\(f&amp;#39;\)&lt;/span&gt; 整体前移一位，就可以对齐。二者的端点总数是均摊单 log 的，区间总数也就是均摊单 log 的（归并就能快速寻找到区间），用差分做一个区间加即可。&lt;/p&gt;
-&lt;p&gt;用二分勉强单 log 解决了转移；还看到 &lt;span class=&#34;citation&#34; data-cites=&#34;spdarkle&#34;&gt;@spdarkle&lt;/span&gt; 疑似在 &lt;span class=&#34;math inline&#34;&gt;\(1\sim n\)&lt;/span&gt; 上直接做的&lt;a href=&#34;http://222.180.160.110:61235/submission/3108272&#34;&gt;做法&lt;/a&gt;，和 &lt;span class=&#34;citation&#34; data-cites=&#34;Rosmist&#34;&gt;@Rosmist&lt;/span&gt; 疑似直接在每个 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 上做的&lt;a href=&#34;http://222.180.160.110:61235/submission/3108581&#34;&gt;做法&lt;/a&gt;。官解是个看不懂的做法&lt;/p&gt;
+&lt;p&gt;用二分勉强单 log 解决了转移；还看到 &lt;span class=&#34;citation&#34; data-cites=&#34;spdarkle&#34;&gt;@spdarkle&lt;/span&gt; 疑似在 &lt;span class=&#34;math inline&#34;&gt;\(1\sim n\)&lt;/span&gt; 上直接做的&lt;a href=&#34;https://www.becoder.com.cn/submission/3108272&#34;&gt;做法&lt;/a&gt;，和 &lt;span class=&#34;citation&#34; data-cites=&#34;Rosmist&#34;&gt;@Rosmist&lt;/span&gt; 疑似直接在每个 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 上做的&lt;a href=&#34;https://www.becoder.com.cn/submission/3108581&#34;&gt;做法&lt;/a&gt;。官解是个看不懂的做法&lt;/p&gt;
 &lt;p&gt;呃，好像一不小心拿了最优解。而且优势很明显（怎么总用时比别人一个点还少？），这是为什么？&lt;/p&gt;
 &lt;p&gt;可能因为大家都看不懂官解，做法比较多样？除了我之外比较快的 lwz 和 &lt;span class=&#34;citation&#34; data-cites=&#34;GoldSpade&#34;&gt;@GoldSpade&lt;/span&gt; 都用归并完成最后一步；我较他们的额外优势大概是用二分换掉了树状数组？迷惑&lt;/p&gt;
 &lt;details&gt;
@@ -466,7 +460,7 @@ int main() &amp;#123;
 &lt;p&gt;我一开始将 &lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt; 定义为单点答案而非前缀和，会导致需要线段树维护等差序列，还丢失了答案段数不多这个性质，非常麻烦。将 &lt;span class=&#34;math inline&#34;&gt;\(f\)&lt;/span&gt; 的意义替换为前缀和后，就可以很轻松地做了。&lt;/p&gt;
 &lt;hr /&gt;
 &lt;h2 id=&#34;a.-宇宙&#34;&gt;A. 宇宙&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/6535/problem/1&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/6535/problem/1&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.becoder.com.cn/contest/6535/problem/1&#34; class=&#34;uri&#34;&gt;https://www.becoder.com.cn/contest/6535/problem/1&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;给定 &lt;span class=&#34;math inline&#34;&gt;\(a_{1\sim n}\)&lt;/span&gt;，对于 &lt;span class=&#34;math inline&#34;&gt;\(k=1,2,\cdots,n-1\)&lt;/span&gt;，回答：&lt;/p&gt;
 &lt;ul&gt;
@@ -507,7 +501,7 @@ int main() &amp;#123;
 &lt;/details&gt;
 &lt;hr /&gt;
 &lt;h2 id=&#34;b.-跳跃&#34;&gt;B. 跳跃&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;http://222.180.160.110:61235/contest/6535/problem/2&#34; class=&#34;uri&#34;&gt;http://222.180.160.110:61235/contest/6535/problem/2&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.becoder.com.cn/contest/6535/problem/2&#34; class=&#34;uri&#34;&gt;https://www.becoder.com.cn/contest/6535/problem/2&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;给定长度为 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 的 01 序列和跳跃上限 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;。给定 &lt;span class=&#34;math inline&#34;&gt;\(q\)&lt;/span&gt; 个询问，回答：&lt;/p&gt;
 &lt;ul&gt;
@@ -1327,6 +1321,310 @@ int main() &amp;#123;
         std::cout &amp;lt;&amp;lt; -1 &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
     else
         std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+ ]]></description>
+        </item>
+        <item>
+            <guid isPermalink="true">https://xsc062.netlify.app/20250712/</guid>
+            <title>杂题</title>
+            <link>https://xsc062.netlify.app/20250712/</link>
+            <category>DP</category>
+            <category>树形 DP</category>
+            <category>贪心</category>
+            <pubDate>Sat, 12 Jul 2025 15:36:52 +0800</pubDate>
+            <description><![CDATA[ &lt;p&gt;我生待明日，万事成蹉跎。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;town&#34;&gt;town&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.becoder.com.cn/contest/6407/problem/1&#34; class=&#34;uri&#34;&gt;https://www.becoder.com.cn/contest/6407/problem/1&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;给定一棵大小为 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 的树，点有点权，欲将树划分为若干个连通块，使得每个块内的点权异或和都为 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，求方案数，模 &lt;span class=&#34;math inline&#34;&gt;\(998244353\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\le 10^6,0\le x\le 10^9\)&lt;/span&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;记 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 引导的子树异或和为 &lt;span class=&#34;math inline&#34;&gt;\(s_u\)&lt;/span&gt;。把连通块转化为对断边的讨论。考察一条最末端的边，其下方子树的异或和一定为 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;简单数归可得断掉的每一条边，其下方子树异或和为 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 或 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;（那么显然有解的充要条件是 &lt;span class=&#34;math inline&#34;&gt;\(s_1=0\lor s_1=x\)&lt;/span&gt;）。考虑树形 DP，令 &lt;span class=&#34;math inline&#34;&gt;\(f_{u,0/1}\)&lt;/span&gt; 表示当前 DP 到 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 子树头上那条边，它连接了一个异或和为 &lt;span class=&#34;math inline&#34;&gt;\(s_u\)&lt;/span&gt; （或 &lt;span class=&#34;math inline&#34;&gt;\(s_u\oplus x\)&lt;/span&gt;）的连通块的合法方案数，分别代表已经『断』掉了偶数 / 奇数个合法连通块。&lt;/p&gt;
+&lt;p&gt;首先自然可以一条边都不断，&lt;span class=&#34;math inline&#34;&gt;\(f_{u,0}=1\)&lt;/span&gt;。那么更新就应为：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+f&amp;#39;_{u,0}=f_{u,0}\cdot f_{v,0}+f_{u,1}\cdot f_{v,1}\\
+f&amp;#39;_{u,1}=f_{u,0}\cdot f_{v,1}+f_{u,1}\cdot f_{v,0}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;接着，如果 &lt;span class=&#34;math inline&#34;&gt;\(s_u\)&lt;/span&gt; 恰好为 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt; 或 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，这条边连接的连通块的异或和就可以是 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;，那么就可以在这条边处断开，提供一个空连通块（加入异或和为 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt; 的方案）。&lt;/p&gt;
+&lt;p&gt;最后注意 &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; 可能为 &lt;span class=&#34;math inline&#34;&gt;\(0\)&lt;/span&gt;，需要特殊处理——每个 &lt;span class=&#34;math inline&#34;&gt;\(s_u=0\)&lt;/span&gt; 处都可以断开。&lt;/p&gt;
+&lt;p&gt;这个 DP 状态实在非常新奇；同时 DP 和删边又是分开的，显得非常割裂。看 sol、听 grisses 讲解的时候都完全一头雾水。quack 说这是因为我没做过连通块 DP /ll&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 998244353;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;ex_town1.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int n, m;
+    std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; m;
+    std::vector&amp;lt;int&amp;gt; a(n + 1), s(n + 1);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        std::cin &amp;gt;&amp;gt; a[i];
+    std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g(n + 1);
+    for (int i = 1, x, y; i &amp;lt; n; ++i) &amp;#123;
+        std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y;
+        g[x].push_back(y), g[y].push_back(x);
+    &amp;#125;
+    std::function&amp;lt;void(int, int)&amp;gt; DFS = [&amp;amp;](int x, int fa) &amp;#123;
+        s[x] = a[x];
+        for (auto i : g[x])
+            if (i != fa) &amp;#123;
+                DFS(i, x);
+                s[x] ^= s[i];
+            &amp;#125;
+        return;
+    &amp;#125;;
+    DFS(1, -1);
+    if (s[1] != 0 &amp;amp;&amp;amp; s[1] != m) &amp;#123;
+        std::cout &amp;lt;&amp;lt; 0 &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+        return 0;
+    &amp;#125;
+    if (m == 0) &amp;#123;
+        auto res(1ll);
+        for (int i = 2; i &amp;lt;= n; ++i)
+            if (s[i] == 0)
+                (res *= 2) %= mod;
+        std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    &amp;#125;
+    else &amp;#123;
+        std::vector&amp;lt;std::array&amp;lt;long long, 2&amp;gt; &amp;gt; f(n + 1);
+        DFS = [&amp;amp;](int x, int fa) &amp;#123;
+            f[x][0] = 1ll;
+            for (auto i : g[x])
+                if (i != fa) &amp;#123;
+                    DFS(i, x);
+                    std::tie(f[x][0], f[x][1]) = std::make_tuple((f[x][0] * f[i][0] + f[x][1] * f[i][1]) % mod, (f[x][0] * f[i][1] + f[x][1] * f[i][0]) % mod);
+                &amp;#125;
+            if (x != 1) &amp;#123;
+                if (s[x] == m)
+                    (f[x][1] += f[x][0]) %= mod;
+                if (s[x] == 0)
+                    (f[x][0] += f[x][1]) %= mod;
+            &amp;#125;
+            // printf(&amp;quot;f[%d][0] = %lld, f[%d][1] = %lld\n&amp;quot;, x, f[x][0], x, f[x][1]);
+            return;
+        &amp;#125;;
+        DFS(1, -1);
+        std::cout &amp;lt;&amp;lt; (s[1] == m ? f[1][0] : f[1][1]) &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    &amp;#125;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;perm&#34;&gt;perm&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.becoder.com.cn/contest/6407/problem/3&#34; class=&#34;uri&#34;&gt;https://www.becoder.com.cn/contest/6407/problem/3&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;给定一个长度为 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt;、元素两两不同的序列，你可以交换任意两个元素。试使用最少交换次数使得序列有序，问方案数。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(n\le 10^6\)&lt;/span&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;对于一个下标，将它和它上面元素的 rank 连有向边，那么每个下标的出、入度都为 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt;，则图由若干个简单环组成。&lt;/p&gt;
+&lt;p&gt;接着，考虑一次任意一次交换 &lt;span class=&#34;math inline&#34;&gt;\((x,y)\)&lt;/span&gt; 的操作会带来什么：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;若 &lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt; 不在同一环上：&lt;/p&gt;
+该操作使得 &lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt; 所在的环合为一个大环。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;若 &lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt; 在同一环上：&lt;/p&gt;
+&lt;p&gt;该操作使得环以 &lt;span class=&#34;math inline&#34;&gt;\(x,y\)&lt;/span&gt; 为分界线裂成两个小环。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以得到 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 个自环为目标，数归得到，对于最优方案，当且仅当每次交换的目标都在同一环上。&lt;/p&gt;
+&lt;p&gt;考虑方案数。把一个大小为 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 的环，欲将其拆成 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 个自环，共需 &lt;span class=&#34;math inline&#34;&gt;\(k-1\)&lt;/span&gt; 次 &lt;em&gt;有序&lt;/em&gt; 的拆解。&lt;/p&gt;
+&lt;p&gt;考虑 DP，令 &lt;span class=&#34;math inline&#34;&gt;\(f_k\)&lt;/span&gt; 为方案数，那么 &lt;span class=&#34;math inline&#34;&gt;\(f_k=\dfrac {k\sum\limits_{j=1}^{k-1} f_j\cdot f_{k-j}\cdot C_{k-2}^j}2\)&lt;/span&gt;。尝试打表，（惊讶地）发现 &lt;span class=&#34;math inline&#34;&gt;\(f_k=k^{k-2}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;不同的环之间的操作可以交错，看作多重集排列即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int mod = 998244353;
+int main() &amp;#123;
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+    int n;
+    std::cin &amp;gt;&amp;gt; n;
+    std::vector&amp;lt;int&amp;gt; a(n + 1), p(n + 1);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        std::cin &amp;gt;&amp;gt; a[i], p[i] = i;
+    std::sort(p.begin() + 1, p.end(), [&amp;amp;](int i, int j) &amp;#123; return a[i] &amp;lt; a[j]; &amp;#125;);
+    std::vector&amp;lt;int&amp;gt; f(n + 1), siz(n + 1, 1);
+    std::iota(f.begin() + 1, f.end(), 1);
+    std::function&amp;lt;int(int)&amp;gt; find = [&amp;amp;](int x) &amp;#123;
+        return x == f[x] ? x : f[x] = find(f[x]);
+    &amp;#125;;
+    auto merge = [&amp;amp;](int x, int y) &amp;#123;
+        x = find(x), y = find(y);
+        if (x != y)
+            siz[y] += siz[x], f[x] = y;
+        return;
+    &amp;#125;;
+    for (int i = 1; i &amp;lt;= n; ++i)
+        merge(i, p[i]);
+    std::vector&amp;lt;long long&amp;gt; g(n + 1), fac(n + 1), inv(n + 1);
+    g[1] = g[2] = 1ll, fac[0] = inv[0] = 1ll;
+    for (int i = 1; i &amp;lt;= n; ++i)
+        fac[i] = fac[i - 1] * i % mod;
+    auto qkp = [&amp;amp;](long long x, int y) &amp;#123;
+        auto res(1ll);
+        for (; y; (x *= x) %= mod, y &amp;gt;&amp;gt;= 1)
+            if (y &amp;amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &amp;#125;;
+    inv[n] = qkp(fac[n], mod - 2);
+    for (int i = n - 1; i; --i)
+        inv[i] = inv[i + 1] * (i + 1) % mod;
+    for (int i = 3; i &amp;lt;= n; ++i)
+        g[i] = qkp(i, i - 2);
+    int cnt(0);
+    auto res(1ll);
+    for (int i = 1; i &amp;lt;= n; ++i)
+        if (f[i] == i) &amp;#123;
+            cnt += siz[i] - 1;
+            (res *= g[siz[i]]) %= mod;
+            (res *= inv[siz[i] - 1]) %= mod;
+        &amp;#125;
+    (res *= fac[cnt]) %= mod;
+    std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;cf2122d-traffic-lights&#34;&gt;CF2122D Traffic Lights&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://codeforces.com/contest/2122/problem/D&#34; class=&#34;uri&#34;&gt;https://codeforces.com/contest/2122/problem/D&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;给你一个由 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 个顶点和 &lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt; 条边组成的简单无向连通图。在顶点 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 有一个标记。认为初始时间为 &lt;span class=&#34;math inline&#34;&gt;\(t=0\)&lt;/span&gt;，在 &lt;span class=&#34;math inline&#34;&gt;\(t\)&lt;/span&gt; 秒后，如果标记位于点 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; ，则必须执行以下操作之一：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;等待一秒。&lt;/li&gt;
+&lt;li&gt;将标记沿 &lt;span class=&#34;math inline&#34;&gt;\(u\)&lt;/span&gt; 的第 &lt;span class=&#34;math inline&#34;&gt;\((t \bmod \mathrm{deg}(u) + 1)\)&lt;/span&gt; 条边移动，花费一秒。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;计算将标记从顶点 &lt;span class=&#34;math inline&#34;&gt;\(1\)&lt;/span&gt; 移到顶点 &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; 所需的最短时间，以及在使总时间最小化的同时所能达到的最短等待时间。&lt;span class=&#34;math inline&#34;&gt;\(m\le 5\times 10^5\)&lt;/span&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;能够发现这是一个边权和 dis 有关的最短路，本着分层图一类的想法，考察答案的最值。发现一个很松的上界是 &lt;span class=&#34;math inline&#34;&gt;\(O(m)\)&lt;/span&gt;；发现实际情况会比这个乐观得多，这个时候就会考虑用一些暴力做法草过去了。&lt;/p&gt;
+&lt;p&gt;实际上有一个上界是 &lt;span class=&#34;math inline&#34;&gt;\(3n\)&lt;/span&gt;：取一条最短路，则不存在路径外的点，与路径上至少四个点有连边，否则可以更新最短路。设最短路长 &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt;，让每次等待时间取满，考察答案发现为 &lt;span class=&#34;math inline&#34;&gt;\(2k\)&lt;/span&gt;（路径上点之间）、&lt;span class=&#34;math inline&#34;&gt;\(3(n-k)\)&lt;/span&gt;（路径上与路径外），共为 &lt;span class=&#34;math inline&#34;&gt;\(\le 3n\)&lt;/span&gt;。还有一个上确界是 &lt;span class=&#34;math inline&#34;&gt;\(2n-3\)&lt;/span&gt;，可以欣赏一下 &lt;a href=&#34;https://codeforces.com/blog/entry/144876?#comment-1295568&#34; class=&#34;uri&#34;&gt;https://codeforces.com/blog/entry/144876?#comment-1295568&lt;/a&gt;，我没看懂 😰&lt;/p&gt;
+&lt;p&gt;总之可以猜到暴力 dij 上 DP 得到…… 啊题解怎么说是 &lt;span class=&#34;math inline&#34;&gt;\(O(n^2+m)\)&lt;/span&gt; 的。原因是求得答案上界之后就能暴力模拟这个过程了 😅&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+const int inf = 0x3f3f3f3f;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int T;
+    for (std::cin &amp;gt;&amp;gt; T; T--; ) &amp;#123;
+        int n, m;
+        std::cin &amp;gt;&amp;gt; n &amp;gt;&amp;gt; m;
+        std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; g(n + 1);
+        for (int x, y; m--; ) &amp;#123;
+            std::cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y;
+            g[x].push_back(y), g[y].push_back(x);
+        &amp;#125;
+        std::vector&amp;lt;std::vector&amp;lt;int&amp;gt; &amp;gt; dis(2, std::vector&amp;lt;int&amp;gt; (n + 1, inf));
+        dis[1][1] = 0;
+        for (int t = 0; ; ++t) &amp;#123;
+            auto &amp;amp;d = dis[t &amp;amp; 1], &amp;amp;la = dis[(t &amp;amp; 1) ^ 1];
+            std::vector&amp;lt;int&amp;gt; (n + 1, inf).swap(d);
+            for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+                int to = t % ((int)g[i].size());
+                d[g[i][to]] = std::min(d[g[i][to]], la[i]);
+                d[i] = std::min(d[i], la[i] + 1);
+            &amp;#125;
+            if (d[n] != inf) &amp;#123;
+                std::cout &amp;lt;&amp;lt; t + 1 &amp;lt;&amp;lt; &amp;#39; &amp;#39; &amp;lt;&amp;lt; d[n] &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+                break;
+            &amp;#125;
+        &amp;#125;
+    &amp;#125;
+    return 0;
+&amp;#125;&lt;/code&gt;&lt;/pre&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
+&lt;h2 id=&#34;arc202a-merge-and-increment&#34;&gt;ARC202A Merge and Increment&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://atcoder.jp/contests/arc202/tasks/arc202_a&#34; class=&#34;uri&#34;&gt;https://atcoder.jp/contests/arc202/tasks/arc202_a&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;假设相邻元素全部不同，至少在当前这一步有一个很显然的策略（记为 &lt;em&gt;策略一&lt;/em&gt;）是选全局最小值，把它和它左边、右边更小的一个 merge 起来。&lt;/p&gt;
+&lt;p&gt;注意到如果当前全局最小值有相邻的偶数个，可以把相邻项合并一次，得到长度减半的区间，一定不劣（记为 &lt;em&gt;策略二&lt;/em&gt;）；假如当前全局最小值存在相邻的奇数个，很容易注意到有两种处理方式：&lt;/p&gt;
+&lt;ol type=&#34;1&#34;&gt;
+&lt;li&gt;选取偶数个应用策略二，剩余一个应用策略一。&lt;/li&gt;
+&lt;li&gt;花一步，补一个全局最小值，转化为策略二。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;很容易发现第二种方式一定不劣 😅。模拟即可。&lt;/p&gt;
+&lt;details&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;bits/stdc++.h&amp;gt;
+int main() &amp;#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&amp;quot;.in&amp;quot;, &amp;quot;r&amp;quot;, stdin);
+    std::freopen(&amp;quot;.out&amp;quot;, &amp;quot;w&amp;quot;, stdout);
+#endif
+    int T;
+    for (std::cin &amp;gt;&amp;gt; T; T--; ) &amp;#123;
+        int n;
+        std::cin &amp;gt;&amp;gt; n;
+        std::vector&amp;lt;std::pair&amp;lt;int, int&amp;gt; &amp;gt; a(1);
+        &amp;#123;
+            for (int i = 1, x; i &amp;lt;= n; ++i) &amp;#123;
+                std::cin &amp;gt;&amp;gt; x;
+                if (x != a.back().first)
+                    a.emplace_back(x, 1);
+                else
+                    ++a.back().second;
+            &amp;#125;
+            n = (int)a.size() - 1;
+        &amp;#125;
+        std::vector&amp;lt;int&amp;gt; pre(n + 2), nex(n + 1), tag(n + 1);
+        std::priority_queue&amp;lt;std::pair&amp;lt;int, int&amp;gt;, std::vector&amp;lt;std::pair&amp;lt;int, int&amp;gt; &amp;gt;, std::greater&amp;lt;std::pair&amp;lt;int, int&amp;gt; &amp;gt; &amp;gt; q;
+        for (int i = 1; i &amp;lt;= n; ++i) &amp;#123;
+            q.emplace(a[i].first, i);
+            pre[i] = i - 1, nex[i] = i + 1;
+        &amp;#125;
+        nex[0] = 1, pre[n + 1] = n;
+        auto del = [&amp;amp;](int i) &amp;#123;
+            tag[i] = 1;
+            pre[nex[i]] = pre[i], nex[pre[i]] = nex[i];
+            return;
+        &amp;#125;;
+        auto res(0ll);
+        for (; (int)q.size() &amp;gt; 1;) &amp;#123;
+            auto [x, id] = q.top();
+            q.pop();
+            if (tag[id] || a[id].first != x)
+                continue;
+            if (a[id].second == 1) &amp;#123;
+                if (!pre[id] || (nex[id] != n + 1 &amp;amp;&amp;amp; a[nex[id]].first &amp;lt;= a[pre[id]].first))
+                    res += a[nex[id]].first - x, a[id].first = a[nex[id]].first;
+                else
+                    res += a[pre[id]].first - x, a[id].first = a[pre[id]].first;
+            &amp;#125;
+            else &amp;#123;
+                if (a[id].second &amp;amp; 1)
+                    ++res, ++a[id].second;
+                ++a[id].first, a[id].second /= 2;
+            &amp;#125;
+            if (pre[id] &amp;amp;&amp;amp; a[id].first == a[pre[id]].first)
+                a[id].second += a[pre[id]].second, del(pre[id]);
+            if (nex[id] != n + 1 &amp;amp;&amp;amp; a[id].first == a[nex[id]].first)
+                a[id].second += a[nex[id]].second, del(nex[id]);
+            q.emplace(a[id].first, id);
+        &amp;#125;
+        &amp;#123;
+            auto [x, id] = q.top();
+            for ( ; a[id].second != 1; ) &amp;#123;
+                if (a[id].second &amp;amp; 1)
+                    ++res, ++a[id].second;
+                ++a[id].first, a[id].second /= 2;
+            &amp;#125;
+        &amp;#125;
+        std::cout &amp;lt;&amp;lt; res &amp;lt;&amp;lt; &amp;#39;\n&amp;#39;;
+    &amp;#125;
     return 0;
 &amp;#125;&lt;/code&gt;&lt;/pre&gt;
 &lt;/details&gt;

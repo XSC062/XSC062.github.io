@@ -81,10 +81,10 @@ h4 {
 }
 
 .text {
-	font-family: 'MyUbuntu', 'NotoSans', Ubuntu, Roboto, 'Open Sans', 'Microsoft Yahei', 'Arial', sans-serif;
+	font-family: 'MyUbuntu', Ubuntu, Roboto, 'Open Sans', 'Microsoft Yahei', 'Arial', sans-serif;
 }
 .serif {
-	font-family: 'NotoSerif', 'Serif', 'Open Sans', 'Microsoft serif', sans-serif;
+	font-family: 'Serif', 'Open Sans', 'Microsoft serif', sans-serif;
 }
 .code {
 	font-family: 'FiraCode', Ubuntu, 'Consolas', 'Serif';
@@ -102,18 +102,6 @@ h4 {
 	src: url('/fonts/FiraCode-SemiBold.ttf') format('truetype');
 }
 @font-face {
-	font-family: 'NotoSerif';
-	font-display: swap;
-	font-weight: bold;
-	src: url('/fonts/NotoSerifCJK-Bold.ttc') format('truetype');
-}
-@font-face {
-	font-family: 'NotoSerif';
-	font-display: swap;
-	font-weight: normal;
-	src: url('/fonts/NotoSerifCJK-Regular.ttc') format('truetype');
-}
-@font-face {
 	font-family: 'MyUbuntu';
 	font-display: swap;
 	font-weight: normal;
@@ -124,18 +112,6 @@ h4 {
 	font-display: swap;
 	font-weight: bold;
 	src: url('/fonts/Ubuntu-B.ttf') format('truetype');
-}
-@font-face {
-	font-family: 'NotoSans';
-	font-display: swap;
-	font-weight: normal;
-	src: url('/fonts/NotoSansCJK-Regular.ttc') format('truetype');
-}
-@font-face {
-	font-family: 'NotoSans';
-	font-display: swap;
-	font-weight: bold;
-	src: url('/fonts/NotoSansCJK-Bold.ttc') format('truetype');
 }
 code:not(pre>code) {
 	font-family: 'FiraCode', 'Consolas', 'Microsoft serif', sans-serif;
@@ -236,6 +212,8 @@ del {
 	color: #bdb3aa;
 }
 
+/* 顶栏，topbar */
+
 .ui.top.menu {
 	background: #fff;
 	display: flex;
@@ -274,7 +252,7 @@ del {
 	flex-direction: row;
 	justify-content: center;
 	align-items: flex-end;
-    margin-bottom: 8px;
+	border-bottom: solid transparent 8px;
 }
 
 #bartitle {
@@ -302,12 +280,10 @@ del {
 }
 
 .logo:hover {
-	transition: .15s;
 	background: rgb(250, 250, 250);
 }
 
 .ui.top.menu>div>.item:hover {
-	transition: .15s;
 	color: rgb(238, 122, 76) !important;
 	background: rgb(250, 250, 250);
 }
@@ -351,15 +327,49 @@ span.vpriority {
 	font-size: 14px;
 }
 
+#CCTAG {
+	transition: opacity .2s;
+	background: #000;
+	opacity: .7;
+}
+#CCTAG:hover {
+	opacity: .9;
+}
+
 /* details 特化 */
 details {
 	padding: 10px 20px;
 	margin: 10px 0;
 	border-radius: 5px;
 	background: #f4f4f4;
+	transition: box-shadow .15s;
 }
-
-details > *,
+details:hover {
+	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+details summary::marker {
+	display: none;
+	list-style: none;
+	color: transparent;
+}
+details>summary::before {
+	content: "";
+	position: absolute;
+	left: -7px;
+	z-index: 10;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 20px;
+	height: 20px;
+	background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23555668"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>');
+	background-repeat: no-repeat;
+	background-position: center;
+	transition: transform .1s ease;
+}
+details[open] summary::before {
+	transform: translateY(-50%) rotate(90deg);
+}
+/* details > *, */
 blockquote > *
 
 /* 引用优化 */
@@ -368,8 +378,13 @@ blockquote > *
 	font-size: 15px;
 }
 
+details > * {
+	font-size: 15px;
+}
+
 details>summary {
 	font-weight: bold;
+	position: relative;
 }
 
 details>p>span,
@@ -385,30 +400,6 @@ details>summary {
 	outline: 0;
 	cursor: pointer;
 }
-
-details[open] {
-	-webkit-animation: detailsmove 1s;
-	animation: detailsmove 1s;
-}
-
-@keyframes detailsmove {
-	from {
-		height: 0%;
-	}
-	to {
-		height: auto;
-	}
-}
-
-@-webkit-keyframes detailsmove {
-	from {
-		height: 0%;
-	}
-	to {
-		height: auto;
-	}
-}
-
 /* 搜索相关配置 */
 #search-bg {
 	margin: 0;
@@ -423,11 +414,21 @@ details[open] {
 }
 #search-bg {
 	opacity: 0%;
-	/* backdrop-filter: blur(.6px); */
 }
-/* #search-bg:hover {
-	backdrop-filter: unset;
-} */
+button#close-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #555;
+    font-size: 125%;
+	transition: color .2s;
+}
+button#close-button:hover {
+    color: #aaa;
+}
 #search-input {
 	display: block;
     margin: auto;

@@ -75,17 +75,34 @@ const searchPath = "/search.xml"
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
 
 	<!-- 搜索 -->
+<script>
+	function closeSearchBox() {
+		$("#search-bg").css("transition", "null"); 
+		$("#search-bg").css("z-index", "-1"); 
+		$("#search-bg").css("opacity", "0%");
+		return;
+	}
+</script>
 <div id="search-bg">
 	<div id="search-box">
+		<button id="close-button" onclick="closeSearchBox()">
+			<i class="fas fa-times"></i>
+		</button>
 		<input type="text" id="search-input" placeholder="Type to search...">
-		<div id="search-results"><div id="emptyInput">键入以搜索…</div></div>
+		<div id="search-results">
+			<div id="emptyInput">
+				<p>键入以搜索…</p>
+				<p><i>匹配算法</i>：把输入按空格拆分，单独<strong>匹配</strong>每一段输入（不区分大小写，仅匹配文章文本内容），输出取或后的结果。</p>
+				<p>模糊搜索似乎很难搞，目前没有相关打算。</p>
+			</div>
+		</div>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
 	<!-- 左对齐 logo -->
 	<a class="logo" href="/">
-		<img src="/images/icon.png"></img>
+		<img width="25px" height="25px" style="border: solid transparent 2.5px" src="/images/icon.svg"></img>
 		<div id="bartitle" class="text">
 			XSC062 的博客
 		</div>
@@ -152,15 +169,9 @@ const searchPath = "/search.xml"
 			<div id="posttags" class="dotted border">
 				
 					
-						<a href="/tags/排列组合/" class="citem">排列组合</a>
+						<a href="/tags/DP/" class="citem">DP</a>
 					
-						<a href="/tags/容斥原理/" class="citem">容斥原理</a>
-					
-						<a href="/tags/数学/" class="citem">数学</a>
-					
-						<a href="/tags/二项式定理/" class="citem">二项式定理</a>
-					
-						<a href="/tags/二项式反演/" class="citem">二项式反演</a>
+						<a href="/tags/计数/" class="citem">计数</a>
 					
 				
 			</div>
@@ -171,7 +182,7 @@ const searchPath = "/search.xml"
 <span id="more"></span>
 <hr />
 <h2 id="a.-二分图染色">A. 二分图染色</h2>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/6181/problem/1" class="uri">http://222.180.160.110:61235/contest/6181/problem/1</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/6181/problem/1" class="uri">https://www.becoder.com.cn/contest/6181/problem/1</a></p>
 <p>首先只看红色。显然一个左部点最多只能用红边连接一个右部点，反之同理。把左部点视为下标，其用红边相连的右部点视为值，则一个合法的方案为 <span class="math inline">\(n\)</span> 的只保留一部分元素的排列。显然为 <span class="math inline">\(f(n)=\sum\limits_{i=0}^nC_n^i\cdot A_n^i\)</span>。</p>
 <p>再加上蓝色，<span class="math inline">\(f^2(n)\)</span> 会给一条边涂两种颜色，故钦定有两种颜色的边数，容斥得到 <span class="math inline">\(\sum\limits_{i=0}^n(-1)^i\cdot C_n^i\cdot A_n^i\cdot f^2(n-i)\)</span>。发现 <span class="math inline">\(f\)</span> 的计算可能需要优化一下。考虑已经知道 <span class="math inline">\(f(n-1)\)</span>，此时对于新增的第 <span class="math inline">\(n\)</span> 对点：</p>
 <ol type="1">
@@ -224,7 +235,7 @@ int main() &#123;
 </details>
 <hr />
 <h2 id="b.-七选五">B. 七选五</h2>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/6181/problem/2" class="uri">http://222.180.160.110:61235/contest/6181/problem/2</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/6181/problem/2" class="uri">https://www.becoder.com.cn/contest/6181/problem/2</a></p>
 <p>首先 <span class="math inline">\(p\)</span> 固定，钦定有 <span class="math inline">\(x\)</span> 个数相等，有 <span class="math inline">\(C_k^x\)</span> 个方案，剩下的就是从 <span class="math inline">\(n-x\)</span> 个元素里选出 <span class="math inline">\(k-x\)</span> 个来错排，考虑钦定相同的个数来容斥：</p>
 <p><span class="math display">\[
 \sum_{i=0}^{k-x}(-1)^i\cdot C_{k-x}^i\cdot A_{n-x-i}^{k-x-i}
@@ -271,7 +282,7 @@ int main() &#123;
 </details>
 <hr />
 <h2 id="d.-硬币购物">D. 硬币购物</h2>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/6181/problem/4" class="uri">http://222.180.160.110:61235/contest/6181/problem/4</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/6181/problem/4" class="uri">https://www.becoder.com.cn/contest/6181/problem/4</a></p>
 <p>每次多重背包会超时，考虑用钦定每种硬币是否超额来容斥。令 <span class="math inline">\(f_s\)</span> 表示凑出 <span class="math inline">\(s\)</span> 的方案数（完全背包），那么 <span class="math inline">\(f_{s-c_1\times (d_1 + 1)}\)</span> 就表示钦定第 1 种硬币超额时凑出 <span class="math inline">\(s\)</span> 的方案数，以此类推。</p>
 <details>
 <pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
@@ -314,7 +325,7 @@ int main() &#123;
 </details>
 <hr />
 <h2 id="e.-distinct-multiples">E. Distinct Multiples</h2>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/6181/problem/5" class="uri">http://222.180.160.110:61235/contest/6181/problem/5</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/6181/problem/5" class="uri">https://www.becoder.com.cn/contest/6181/problem/5</a></p>
 <p>推式子题。题意转化为，给定 <span class="math inline">\(n\)</span> 个位置可选的值集合，要求任意两个位置值不等，问方案数。</p>
 <p>如果把两个位置取等视作在团上选中边，那么有朴素做法钦定选边的集合 <span class="math inline">\(S\)</span> 然后容斥，考虑它们构成的连通块 <span class="math inline">\(\{s\} \subseteq S\)</span>，有 <span class="math inline">\(res=\sum\limits_{S\subseteq V}(-1)^{|S|}\cdot \prod\limits_{s_i} \left\lfloor \frac m{\operatorname{lcm} s_i} \right\rfloor\)</span>。</p>
 <p>有个很神奇的操作是把 <span class="math inline">\(S\)</span> 丢掉，直接枚举 <span class="math inline">\(\{s\}\)</span> 尝试子集 DP。有：<span class="math inline">\(res=\sum\limits_{\{s\}}\prod\limits_s f(s)\cdot\left\lfloor \frac m{\operatorname{lcm} s} \right\rfloor\)</span>。其中 <span class="math inline">\(f(s)\)</span> 表示选取一个 <span class="math inline">\(s\)</span> 的导出子图的容斥系数之和，其中次数为导出子图中边数。</p>
@@ -380,7 +391,7 @@ int main() &#123;
 </details>
 <hr />
 <h2 id="f.-permutation">F. Permutation</h2>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/6181/problem/6" class="uri">http://222.180.160.110:61235/contest/6181/problem/6</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/6181/problem/6" class="uri">https://www.becoder.com.cn/contest/6181/problem/6</a></p>
 <p>如果全是 <code>&lt;</code>，方案数为 <span class="math inline">\(1\)</span>。</p>
 <p>现在把其中一些 <code>&lt;</code> 变成 <code>?</code>，比如 <code>&lt;&lt;??&lt;?&lt;&lt;&lt;&lt;</code> 的方案数，<del>太好了是多重集排列，我们没救了</del> 显然被 <code>&lt;</code> 连接起来的一段元素只有一种排列方式，所以可以视为多重集排列，方案数为 <span class="math inline">\(\dfrac {11!}{3!\times 2!\times 5!}\)</span>。</p>
 <p>似乎只需要枚举把 <code>&gt;</code> 变成 <code>&lt;</code> 或 <code>=</code> 的 <span class="math inline">\(2^k\)</span> 种情况再计算就可以了，可惜 <span class="math inline">\(k\)</span> 有点大。但我们发现它在一定程度上是没有后效性的，比如 <code>&lt;&lt;??&lt;</code> 和 <code>&lt;&lt;?&lt;&lt;</code>，前面的 <code>&lt;&lt;</code> 不会对后面的内容带来影响。</p>
@@ -436,7 +447,7 @@ int main() &#123;
 <p><em>忳郁邑余侘傺兮，余独穷困乎此时也。</em></p>
 <hr />
 <h2 id="h.-k-perm-counting">H. ~K Perm Counting</h2>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/6181/problem/8" class="uri">http://222.180.160.110:61235/contest/6181/problem/8</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/6181/problem/8" class="uri">https://www.becoder.com.cn/contest/6181/problem/8</a></p>
 <p>考虑钦定令几个元素不满足条件进行容斥，即答案为 <span class="math inline">\(\sum\limits_{i=0}^n (-1)^i\cdot f(i)\)</span>。但我们发现 <span class="math inline">\([n-k,n+k]\)</span> 都有两个不能选的值，直接取 <span class="math inline">\(f(i)=\prod 2\)</span> 肯定会选到相同值，一个自然（？）的想法是再容斥一遍，可惜手玩一下发现似乎容不动。考虑把玩意儿拍在棋盘上：</p>
 <figure>
 <img src="1.png" alt="以 k=2 为例" /><figcaption>以 <span class="math inline">\(k=2\)</span> 为例</figcaption>
@@ -1519,6 +1530,7 @@ int main() &#123;
     <p style="margin-top: 5px;">
         2021 - 2025
     </p>
+    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" id="CCTAG"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg"></a>
 </div>
 <!-- Valine 相关配置 -->
 <script>

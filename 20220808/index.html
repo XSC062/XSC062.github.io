@@ -75,17 +75,34 @@ const searchPath = "/search.xml"
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
 
 	<!-- 搜索 -->
+<script>
+	function closeSearchBox() {
+		$("#search-bg").css("transition", "null"); 
+		$("#search-bg").css("z-index", "-1"); 
+		$("#search-bg").css("opacity", "0%");
+		return;
+	}
+</script>
 <div id="search-bg">
 	<div id="search-box">
+		<button id="close-button" onclick="closeSearchBox()">
+			<i class="fas fa-times"></i>
+		</button>
 		<input type="text" id="search-input" placeholder="Type to search...">
-		<div id="search-results"><div id="emptyInput">键入以搜索…</div></div>
+		<div id="search-results">
+			<div id="emptyInput">
+				<p>键入以搜索…</p>
+				<p><i>匹配算法</i>：把输入按空格拆分，单独<strong>匹配</strong>每一段输入（不区分大小写，仅匹配文章文本内容），输出取或后的结果。</p>
+				<p>模糊搜索似乎很难搞，目前没有相关打算。</p>
+			</div>
+		</div>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
 	<!-- 左对齐 logo -->
 	<a class="logo" href="/">
-		<img src="/images/icon.png"></img>
+		<img width="25px" height="25px" style="border: solid transparent 2.5px" src="/images/icon.svg"></img>
 		<div id="bartitle" class="text">
 			XSC062 的博客
 		</div>
@@ -129,7 +146,7 @@ const searchPath = "/search.xml"
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E8%AE%BA%E9%A2%98%E4%B8%AD%E7%9A%84%E6%97%B6%E5%85%89%E5%80%92%E6%B5%81"><span class="toc-text">图论题中的时光倒流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#one-dimensional-battle-ships"><span class="toc-text">One-Dimensional Battle Ships</span></a></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -167,13 +184,25 @@ const searchPath = "/search.xml"
 				<p>老题解批量补档。</p>
 <span id="more"></span>
 <hr />
+<h2 id="图论题中的时光倒流">图论题中的时光倒流</h2>
+<ul>
+<li><p>主要体现在只存在删边操作，且可离线的题目。</p></li>
+<li><p>核心思想在于删边是及其不方便维护的，而加边可以用并查集等手段快速维护。</p></li>
+<li><p>如果信息与连通块有关且方便合并就可以用并查集做。</p></li>
+</ul>
+<hr />
+<h2 id="one-dimensional-battle-ships">One-Dimensional Battle Ships</h2>
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF567D" class="uri">https://www.luogu.com.cn/problem/CF567D</a></p>
-<p>因为「某一时刻是否一定被击中过」具有单调性，考虑先提前发射所有炮弹，倒序枚举炮弹，不断「撤销」当前最后一发炮弹的发射，如果在「撤销」这发炮弹后，存在任意一种放下 <span class="math inline">\(k\)</span> 艘完整的战舰的方案，说明在发射这一发炮弹之后绝对能够击中。</p>
-<p>如果发射所有炮弹后，依然存在一种放下 <span class="math inline">\(k\)</span> 艘完整的战舰的方案，则无解。</p>
-<p>具体实现可以使用并查集维护连通块大小，每「撤销」一发炮弹的发射相当于合并三个连通块：炮弹的落点、落点的前一个元素（若不存在或已被炮弹摧毁则忽略）、落点的后一个元素（若不存在或已被炮弹摧毁则忽略）。</p>
-<p>设某连通块大小为 <span class="math inline">\(x\)</span>，可容纳战舰数为 <span class="math inline">\(res\)</span>，显然有 <span class="math inline">\(res = \lfloor (x + 1) \div (p + 1) \rfloor\)</span>。</p>
-<p>记统计当前可容纳战舰的数量为 <span class="math inline">\(ans\)</span>，在并查集合并时，<span class="math inline">\(ans\)</span> 分别减去两个待合并连通块的可容纳战舰的数量，再加上新连通块可容纳战舰的数量。最靠后的 <span class="math inline">\(ans\ge k\)</span> 的时刻即为所求。</p>
-<p>同时使用路径压缩和按秩合并，时空复杂度均为 <span class="math inline">\(\mathcal O(n)\)</span>。优于 multiset 解法。</p>
+<ul>
+<li><p>「某一时刻是否一定被击中过」具有单调性，考虑时光倒流：</p>
+<p>先提前发射所有炮弹，倒序枚举炮弹，不断「撤销」当前最后一发炮弹的发射，如果在「撤销」这发炮弹后，存在任意一种放下 <span class="math inline">\(k\)</span> 艘完整的战舰的方案，说明在发射这一发炮弹之后绝对能够击中。</p>
+<p>如果发射所有炮弹后，依然存在一种放下 <span class="math inline">\(k\)</span> 艘完整的战舰的方案，则无解。</p></li>
+<li><p>具体实现可以使用并查集维护连通块大小：</p>
+<p>每「撤销」一发炮弹的发射相当于合并三个连通块：炮弹的落点、落点的前一个元素（若不存在或已被炮弹摧毁则忽略）、落点的后一个元素（若不存在或已被炮弹摧毁则忽略）。</p></li>
+<li><p>设某连通块大小为 <span class="math inline">\(x\)</span>，可容纳战舰数为 <span class="math inline">\(res\)</span>，显然有 <span class="math inline">\(res = \lfloor (x + 1) \div (p + 1) \rfloor\)</span>。</p>
+<p>记统计当前可容纳战舰的数量为 <span class="math inline">\(ans\)</span>，在并查集合并时，<span class="math inline">\(ans\)</span> 分别减去两个待合并连通块的可容纳战舰的数量，再加上新连通块可容纳战舰的数量。最靠后的 <span class="math inline">\(ans\ge k\)</span> 的时刻即为所求。</p></li>
+<li><p>同时使用路径压缩和按秩合并，时空复杂度均为 <span class="math inline">\(O(n)\)</span>。优于 <code>multiset</code> 解法。</p></li>
+</ul>
 <details>
 <pre class="cpp"><code>namespace XSC062 &#123;
 using namespace fastIO;
@@ -396,6 +425,7 @@ int main() &#123;
     <p style="margin-top: 5px;">
         2021 - 2025
     </p>
+    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" id="CCTAG"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg"></a>
 </div>
 <!-- Valine 相关配置 -->
 <script>

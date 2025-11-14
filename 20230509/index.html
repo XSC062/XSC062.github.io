@@ -75,17 +75,34 @@ const searchPath = "/search.xml"
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
 
 	<!-- 搜索 -->
+<script>
+	function closeSearchBox() {
+		$("#search-bg").css("transition", "null"); 
+		$("#search-bg").css("z-index", "-1"); 
+		$("#search-bg").css("opacity", "0%");
+		return;
+	}
+</script>
 <div id="search-bg">
 	<div id="search-box">
+		<button id="close-button" onclick="closeSearchBox()">
+			<i class="fas fa-times"></i>
+		</button>
 		<input type="text" id="search-input" placeholder="Type to search...">
-		<div id="search-results"><div id="emptyInput">键入以搜索…</div></div>
+		<div id="search-results">
+			<div id="emptyInput">
+				<p>键入以搜索…</p>
+				<p><i>匹配算法</i>：把输入按空格拆分，单独<strong>匹配</strong>每一段输入（不区分大小写，仅匹配文章文本内容），输出取或后的结果。</p>
+				<p>模糊搜索似乎很难搞，目前没有相关打算。</p>
+			</div>
+		</div>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
 	<!-- 左对齐 logo -->
 	<a class="logo" href="/">
-		<img src="/images/icon.png"></img>
+		<img width="25px" height="25px" style="border: solid transparent 2.5px" src="/images/icon.svg"></img>
 		<div id="bartitle" class="text">
 			XSC062 的博客
 		</div>
@@ -309,7 +326,7 @@ int Hungary(int n) &#123;
 <p>所谓冲突，就是我们通常理解中的选了一个就不能选另一个。因此也可以通过冲突存在的形式思考建图方式。</p>
 <hr />
 <h3 id="a.-棋盘上的骑士">A. 棋盘上的骑士</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3699/problem/1" class="uri">http://222.180.160.110:61235/contest/3699/problem/1</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/3699/problem/1" class="uri">https://www.becoder.com.cn/contest/3699/problem/1</a></p>
 <p>这道题就是我们提到的边转化为点的情况。</p>
 <p>为棋盘上的每个格子编号。骑士走的是日字，所以我们要把周围每个格子日字方向八个格子都连上边。</p>
 <p>那要怎么将所有 <span class="math inline">\(n\times n\)</span> 个格子分为有冲突的两方呢？注意到日字连接的两个格子一定奇偶性相异，故我们以奇偶性分类。</p>
@@ -382,7 +399,7 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="b.-火力网">B. 火力网</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3699/problem/2" class="uri">http://222.180.160.110:61235/contest/3699/problem/2</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/3699/problem/2" class="uri">https://www.becoder.com.cn/contest/3699/problem/2</a></p>
 <p>这里用到了二分图在地图上一个较为常用的分组方法。</p>
 <p>找到每行每列的「连通块」，满足在行上的连通块任意放一个炮台，炮台覆盖连通块内所有点，所有点均被连通块覆盖，列范围内同理。为连通块分别编号，则样例的情况可转化如下：</p>
 <pre class="plain"><code>/* 对于行 */        /* 对于列 */
@@ -459,7 +476,7 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="c.-超级英雄-hero">C. 超级英雄 Hero</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3699/problem/3" class="uri">http://222.180.160.110:61235/contest/3699/problem/3</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/3699/problem/3" class="uri">https://www.becoder.com.cn/contest/3699/problem/3</a></p>
 <p>分析冲突。每个锦囊只能被一道题使用，一道题只能使用一个锦囊，故考虑将锦囊和题连边。题目要求连续解题最多，故以题目进行匈牙利。</p>
 <p>最后输出匹配数组即可。</p>
 <details>
@@ -1025,7 +1042,7 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="d.-导弹防御塔">D. 导弹防御塔</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/3699/problem/4" class="uri">http://222.180.160.110:61235/contest/3699/problem/4</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/3699/problem/4" class="uri">https://www.becoder.com.cn/contest/3699/problem/4</a></p>
 <p>GM 说的好哇（指 <em>毛病多，一会儿分钟一会儿秒</em>）。</p>
 <p>寻找冲突。一个敌人只能被一炮打死，故考虑</p>
 <p>但一个塔可以打很多炮，考虑拆点。</p>
@@ -1173,6 +1190,7 @@ int main() &#123;
     <p style="margin-top: 5px;">
         2021 - 2025
     </p>
+    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" id="CCTAG"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg"></a>
 </div>
 <!-- Valine 相关配置 -->
 <script>

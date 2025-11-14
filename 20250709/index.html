@@ -75,17 +75,34 @@ const searchPath = "/search.xml"
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
 
 	<!-- 搜索 -->
+<script>
+	function closeSearchBox() {
+		$("#search-bg").css("transition", "null"); 
+		$("#search-bg").css("z-index", "-1"); 
+		$("#search-bg").css("opacity", "0%");
+		return;
+	}
+</script>
 <div id="search-bg">
 	<div id="search-box">
+		<button id="close-button" onclick="closeSearchBox()">
+			<i class="fas fa-times"></i>
+		</button>
 		<input type="text" id="search-input" placeholder="Type to search...">
-		<div id="search-results"><div id="emptyInput">键入以搜索…</div></div>
+		<div id="search-results">
+			<div id="emptyInput">
+				<p>键入以搜索…</p>
+				<p><i>匹配算法</i>：把输入按空格拆分，单独<strong>匹配</strong>每一段输入（不区分大小写，仅匹配文章文本内容），输出取或后的结果。</p>
+				<p>模糊搜索似乎很难搞，目前没有相关打算。</p>
+			</div>
+		</div>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
 	<!-- 左对齐 logo -->
 	<a class="logo" href="/">
-		<img src="/images/icon.png"></img>
+		<img width="25px" height="25px" style="border: solid transparent 2.5px" src="/images/icon.svg"></img>
 		<div id="bartitle" class="text">
 			XSC062 的博客
 		</div>
@@ -165,7 +182,7 @@ const searchPath = "/search.xml"
 <span id="more"></span>
 <hr />
 <h2 id="d.-akvizna">D. Akvizna</h2>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/6393/problem/4" class="uri">http://222.180.160.110:61235/contest/6393/problem/4</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/6393/problem/4" class="uri">https://www.becoder.com.cn/contest/6393/problem/4</a></p>
 <p>其实到这里应该发现了，WQS 的奖励都以一次项系数出现，原因也很显然，奖励的对象是一次项系数嘛。此外，WQS 内层 DP 数组的维度都应和操作次数无关，而 DP 值应为最大收益。这个也很显然。</p>
 <p>令一轮比赛的惩罚是 <span class="math inline">\(mid\)</span> 然后二分。令 <span class="math inline">\(f_{j}\)</span> 表示剩余人数为 <span class="math inline">\(j\)</span> 时的最大收益，那么有 <span class="math inline">\(f_{j}=\max\limits_{k\ge j}\left\{f_k+\frac {k-j}k\right\}-mid\)</span>。最后在 <span class="math inline">\(f_0\)</span> 处找答案即可。</p>
 <p>然后就发现一个很可怕的问题，内层 DP 咋写。发现把 <span class="math inline">\(\frac {k-j}k\)</span> 改写成 <span class="math inline">\(1-\frac jk\)</span> 后出现交叉项，考虑斜优。令 <span class="math inline">\(a&lt;b\)</span>，那么 <span class="math inline">\(a\)</span> 优于 <span class="math inline">\(b\)</span> 当且仅当 <span class="math inline">\(\dfrac {f_a-f_b}{\frac 1a - \frac 1b} &gt; j\)</span>。维护单减的斜率即可。</p>
@@ -219,7 +236,7 @@ int main() &#123;
 </details>
 <hr />
 <h2 id="e.-poborcy-podatkowi">E. Poborcy podatkowi</h2>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/6393/problem/5" class="uri">http://222.180.160.110:61235/contest/6393/problem/5</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/6393/problem/5" class="uri">https://www.becoder.com.cn/contest/6393/problem/5</a></p>
 <p>首先令 <span class="math inline">\(f_{u,l}(i),l=0,1,2,3\)</span> 表示在 <span class="math inline">\(u\)</span> 上挂了长度为 <span class="math inline">\(l\)</span> 的半条链，共有 <span class="math inline">\(i\)</span> 条整链的最大收益。</p>
 <p>可以观察到是凸的。那么不难发现需要闵可夫斯基和，考虑 <span class="math inline">\(u\)</span> 位置上的合并。<strong>首先需要注意到儿子上长度为 <span class="math inline">\(l\)</span> 的链到父亲上会变成 <span class="math inline">\(l+1\)</span></strong>。显然每条可以不选；如果选了 <span class="math inline">\(cnt_a\)</span> 条长度为 <span class="math inline">\(a\)</span> 的半链，那么合并出来的结果是 <span class="math inline">\(cnt_1-cnt_3\)</span> 条长度为 <span class="math inline">\(1\)</span> 或 <span class="math inline">\(3\)</span> 的链、<span class="math inline">\(cnt_2\bmod 2\)</span> 条长度为 <span class="math inline">\(2\)</span> 的链，并且要求两者不同时出现。发现这个东西基本上处理不了。</p>
 <p>接着注意到这个形式有点像背包。但怎么处理 <span class="math inline">\(cnt_1\)</span> 和 <span class="math inline">\(cnt_3\)</span> 配对的这个要求呢？有个非常精妙的在物品体积上做文章的方法：</p>
@@ -464,6 +481,7 @@ int main() &#123;
     <p style="margin-top: 5px;">
         2021 - 2025
     </p>
+    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" id="CCTAG"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg"></a>
 </div>
 <!-- Valine 相关配置 -->
 <script>

@@ -13,13 +13,12 @@
     <category term="单调队列" />
     <category term="分治" />
     <category term="计数" />
+    <category term="容斥" />
     <category term="二分图" />
     <category term="CRT / exCRT" />
     <category term="排列组合" />
     <category term="网络流" />
-    <category term="费用流" />
     <category term="二分" />
-    <category term="上下界网络流" />
     <category term="容斥原理" />
     <category term="线段树" />
     <category term="树状数组" />
@@ -28,37 +27,36 @@
     <category term="数据结构" />
     <category term="Tarjan" />
     <category term="下饭" />
+    <category term="李超线段树" />
+    <category term="树链剖分" />
     <category term="LCA" />
     <category term="倍增" />
     <category term="鸽巢原理" />
-    <category term="概率期望" />
+    <category term="数学" />
     <category term="调和级数" />
     <category term="差分" />
     <category term="思维" />
     <category term="树形 DP" />
     <category term="最小生成树" />
-    <category term="SAM" />
     <category term="状压" />
+    <category term="高维前缀和" />
+    <category term="SAM" />
     <category term="分块" />
     <category term="可持久化" />
     <category term="笛卡尔树" />
-    <category term="高维前缀和" />
     <category term="闲话" />
     <category term="欧拉回路" />
-    <category term="树链剖分" />
     <category term="长链剖分" />
     <category term="KMP" />
     <category term="border" />
+    <category term="随机化" />
     <category term="字符串" />
     <category term="AC 自动机" />
     <category term="SA" />
-    <category term="数学" />
     <category term="树上差分" />
     <category term="FWT" />
     <category term="堆" />
     <category term="树的重心" />
-    <category term="二项式定理" />
-    <category term="二项式反演" />
     <category term="贪心" />
     <category term="均摊" />
     <category term="优化建图" />
@@ -69,22 +67,18 @@
     <category term="DP 优化" />
     <category term="虚树" />
     <category term="点分治" />
-    <category term="WQS 二分" />
-    <category term="闵可夫斯基和" />
-    <category term="slope trick" />
     <category term="四边形不等式" />
-    <category term="状压 DP" />
-    <category term="组合数学" />
     <category term="支配对" />
     <category term="DDP" />
-    <category term="容斥" />
+    <category term="CDQ 分治" />
+    <category term="猫树" />
+    <category term="DP 套 DP" />
     <category term="Kruskal 重构树" />
     <category term="高精度" />
     <category term="最短路" />
     <category term="树套树" />
-    <category term="Boruvka" />
-    <category term="树链剖分 - 最小生成树" />
-    <category term="李超线段树" />
+    <category term="二项式反演" />
+    <category term="搜索" />
     <entry>
         <id>https://xsc062.netlify.app/20241027/</id>
         <title>CSP-S</title>
@@ -133,9 +127,11 @@
 &lt;details&gt;
 &lt;p&gt;&lt;summary&gt;&lt;strong&gt;容易记错的操作复杂度：&lt;/strong&gt;&lt;/summary&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;线段树合并、线段树建树&lt;/strong&gt;：&lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;线段树建树：&lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;线段树合并：单次线段树合并复杂度为新建的点数。均摊单次 &lt;span class=&#34;math inline&#34;&gt;\(O(\log n)\)&lt;/span&gt;。&lt;/p&gt;
+两颗满的线段树合并复杂度为 &lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt;，故 DSU on tree + 线段树合并的复杂度为 &lt;span class=&#34;math inline&#34;&gt;\(O(n\log n)\)&lt;/span&gt;，且显然跑不满。&lt;/li&gt;
 &lt;li&gt;FHQ Treap 建树：视作笛卡尔树，&lt;span class=&#34;math inline&#34;&gt;\(O(n)\)&lt;/span&gt;。&lt;/li&gt;
-&lt;li&gt;动态开店线段树单次访问至多增加 &lt;span class=&#34;math inline&#34;&gt;\(4\log\)&lt;/span&gt; 个点，e.g. &lt;span class=&#34;math inline&#34;&gt;\([2,n-1]\)&lt;/span&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;动态开店线段树单次访问至多增加 &lt;span class=&#34;math inline&#34;&gt;\(4\log\)&lt;/span&gt; 个点，e.g. &lt;span class=&#34;math inline&#34;&gt;\([2,n-1]\)&lt;/span&gt;。&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/details&gt;
 &lt;details&gt;
@@ -203,6 +199,14 @@
 &lt;p&gt;&lt;summary&gt;&lt;strong&gt;求线段穿过直线系的次数：&lt;/strong&gt;&lt;/summary&gt;&lt;/p&gt;
 &lt;p&gt;求线段 &lt;span class=&#34;math inline&#34;&gt;\((x_1,y_1,x_2,y_2)\)&lt;/span&gt; 穿过直线系 &lt;span class=&#34;math inline&#34;&gt;\(x+y=k\cdots m(k\in \mathbb{N}^*)\)&lt;/span&gt; 的次数算出线段中 &lt;span class=&#34;math inline&#34;&gt;\(x+y\)&lt;/span&gt; 的取值范围也即 &lt;span class=&#34;math inline&#34;&gt;\([x_1+y_1,x_2+y_2]\)&lt;/span&gt;（斜率为负就不同了，但可以证明都是单调的），求出 &lt;span class=&#34;math inline&#34;&gt;\(k\cdot m\)&lt;/span&gt; 在里面的出现次数就可以了。&lt;del&gt;有的人高中数学欠的债要到竞赛来还&lt;/del&gt;&lt;/p&gt;
 &lt;p&gt;goto &lt;a href=&#34;https://codeforces.com/contest/2098/problem/E&#34;&gt;CF2098E&lt;/a&gt;。&lt;/p&gt;
+&lt;/details&gt;
+&lt;details&gt;
+&lt;p&gt;&lt;summary&gt;模数非质数时求多重集组合：&lt;/summary&gt;&lt;/p&gt;
+&lt;p&gt;杨辉三角求组合数，答案为：&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+\prod_{i=1}^m \binom{\sum_{j=i}^m s_j}{s_i}
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;goto &lt;a href=&#34;https://www.luogu.com.cn/problem/AT_abc425_e&#34;&gt;ABC425E&lt;/a&gt;。&lt;/p&gt;
 &lt;/details&gt;
 &lt;hr /&gt;
 &lt;h2 id=&#34;图论&#34;&gt;图论&lt;/h2&gt;
@@ -343,7 +347,7 @@ goto &lt;a href=&#34;/20250809/#a---记忆&#34;&gt;solu to &lt;em&gt;记忆&lt;/
 &lt;details&gt;
 &lt;p&gt;&lt;summary&gt;&lt;strong&gt;与字典序有关的状态设计：&lt;/strong&gt;&lt;/summary&gt;&lt;/p&gt;
 &lt;p&gt;要求字典序大于 / 小于给定值的方案数，考虑使用 &lt;span class=&#34;math inline&#34;&gt;\(f_i\)&lt;/span&gt; 表示 &lt;span class=&#34;math inline&#34;&gt;\(1\sim i\)&lt;/span&gt; 全部和给定值相同，&lt;span class=&#34;math inline&#34;&gt;\(i+1\)&lt;/span&gt; 大于 / 小于给定值，后面无限制的情况总数。&lt;/p&gt;
-&lt;p&gt;Goto &lt;a href=&#34;http://222.180.160.110:61235/contest/5423/problem/2&#34;&gt;冒泡排序&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;Goto &lt;a href=&#34;https://www.becoder.com.cn/contest/5423/problem/2&#34;&gt;冒泡排序&lt;/a&gt;。&lt;/p&gt;
 &lt;/details&gt;
 &lt;ul&gt;
 &lt;li&gt;计数 DP 和容斥的选择。&lt;/li&gt;
@@ -403,18 +407,28 @@ goto &lt;a href=&#34;/20230716-1/&#34;&gt;solu to &lt;em&gt;匹配数&lt;/em&gt;
 &lt;p&gt;Goto &lt;a href=&#34;https://www.luogu.com.cn/article/ugg047a7&#34;&gt;NOI2024 D1T1&lt;/a&gt;，&lt;a href=&#34;/20221010/&#34;&gt;solu to &lt;em&gt;博弈&lt;/em&gt;&lt;/a&gt;。&lt;/p&gt;
 &lt;/details&gt;
 &lt;hr /&gt;
+&lt;h2 id=&#34;字符串&#34;&gt;字符串&lt;/h2&gt;
+&lt;details&gt;
+&lt;p&gt;&lt;summary&gt;对于相邻 00 或 01 的操作，考虑奇数位 flip&lt;/summary&gt;&lt;/p&gt;
+&lt;p&gt;这样可以让操作呈现出一些更好处理的性质，往往表现为：可以忽略 &lt;span class=&#34;math inline&#34;&gt;\(a_i=a_{i+1}\)&lt;/span&gt; 的前提，得到一个适用于所有情况的新操作。&lt;/p&gt;
+&lt;p&gt;goto &lt;a href=&#34;/20240906/#legondary-grandmaster&#34;&gt;solu to &lt;em&gt;LEGOndary Grandmaster&lt;/em&gt;&lt;/a&gt;，&lt;a href=&#34;/20251028/#b.-字符串转换&#34;&gt;solu to &lt;em&gt;字符串转换&lt;/em&gt;&lt;/a&gt;，&lt;a href=&#34;https://qoj.ac/problem/9565&#34;&gt;QOJ#9565. Birthday Gift&lt;/a&gt;。&lt;/p&gt;
+&lt;/details&gt;
+&lt;hr /&gt;
 &lt;h2 id=&#34;关于最值&#34;&gt;关于最值&lt;/h2&gt;
-&lt;h3 id=&#34;关于冒泡排序&#34;&gt;关于冒泡排序&lt;/h3&gt;
-&lt;p&gt;&lt;em&gt;『冒泡排序有一种被出烂但是每次碰到我都不会的美感。』——wosile&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;这个人我不认识，但是我觉得这句话说得太好了！&lt;/em&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;一轮冒泡排序做的事情：将序列按前缀最大值为段首划分为若干段，并把其移到段末。&lt;/p&gt;
-goto &lt;a href=&#34;/20250510/#c---1-loop-bubble-sort&#34;&gt;1 Loop Bubble Sort&lt;/a&gt;。&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;前缀最大值在一轮冒泡排序后仍是前缀最大值。&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
 &lt;details&gt;
 &lt;p&gt;&lt;summary&gt;求某下标在序列所有的 LIS 中出现次数：&lt;/summary&gt;&lt;/p&gt;
 &lt;p&gt;分别统计以其结尾和开头的 LIS 长度与次数，如果加起来是序列 LIS 的长度，那么次数相乘就是答案。&lt;/p&gt;
+&lt;/details&gt;
+&lt;details&gt;
+&lt;p&gt;&lt;summary&gt;关于冒泡排序：&lt;/summary&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;反序表&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;令 &lt;span class=&#34;math inline&#34;&gt;\(f_i\)&lt;/span&gt; 表示以 &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; 结尾的逆序对数，那么对一个序列排序，需要的最少冒泡轮数为 &lt;span class=&#34;math inline&#34;&gt;\(\max\{f_i\}\)&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;goto &lt;a href=&#34;/20251028/#a.-排序&#34;&gt;solu to &lt;em&gt;排序&lt;/em&gt;&lt;/a&gt;。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;一轮冒泡排序做的事情：将序列按前缀最大值为段首划分为若干段，并把其移到段末。&lt;/p&gt;
+&lt;p&gt;goto &lt;a href=&#34;/20250510/#c---1-loop-bubble-sort&#34;&gt;1 Loop Bubble Sort&lt;/a&gt;。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;前缀最大值在一轮冒泡排序后仍是前缀最大值。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/details&gt;
 &lt;h2 id=&#34;杂项&#34;&gt;杂项&lt;/h2&gt;
 &lt;details&gt;
@@ -496,9 +510,16 @@ goto &lt;a href=&#34;/20250907/#d---non-ancestor-matching&#34;&gt;ARC205D&lt;/a&
 &lt;/blockquote&gt;
 &lt;p&gt;goto &lt;a href=&#34;/20250520/#abc407e-most-valuable-parentheses&#34;&gt;solu to &lt;em&gt;abc407E&lt;/em&gt;&lt;/a&gt;。&lt;/p&gt;
 &lt;/details&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; 个「二者至少选其一」形式的限制，要求选的尽可能少，使用 &lt;span class=&#34;math inline&#34;&gt;\(2^k\)&lt;/span&gt; 枚举后取并集代替 &lt;span class=&#34;math inline&#34;&gt;\(3^k\)&lt;/span&gt; 枚举。&lt;/li&gt;
-&lt;/ul&gt;
+&lt;details&gt;
+&lt;p&gt;&lt;summary&gt;切比雪夫距离：&lt;/summary&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[
+|PQ|=\max(|x_P-x_Q|,|y_P-y_Q|)
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;将平面直角坐标系旋转 &lt;span class=&#34;math inline&#34;&gt;\(45^\circ\)&lt;/span&gt; 的坐标系中，两个点的切比雪夫距离是原坐标系中的曼哈顿距离。&lt;/p&gt;
+&lt;p&gt;做仿射变换（&lt;span class=&#34;math inline&#34;&gt;\((x+y,y-x)\)&lt;/span&gt; 之类，都行）即可得到新的坐标系。&lt;/p&gt;
+&lt;p&gt;可以用于棋盘题，用于把『距某点曼哈顿距离为 &lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt; 的点集』组成的斜向正方形变为正向的&lt;/p&gt;
+&lt;p&gt;或者一些数据结构题中，把式子中的 max 转写成 +，方便算贡献。&lt;/p&gt;
+&lt;/details&gt;
 </content>
         <category term="下饭" />
         <updated>2023-11-17T06:31:23.000Z</updated>

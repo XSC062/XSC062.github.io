@@ -227,7 +227,19 @@ class LocalSearch {
     }
 
     getResultItems(keywords) {
+        // console.log(keywords);
         const resultItems = [];
+        if (!keywords[0]) {
+            let resultItem = '';
+            resultItem += `<p>键入以搜索…</p>`;
+			resultItem += `<p><i>匹配算法</i>：把输入按空格拆分，单独<strong>匹配</strong>每一段输入（不区分大小写，仅匹配文章文本内容），输出取或后的结果。</p>`;
+			resultItem += `<p>模糊搜索似乎很难搞，目前没有相关打算。</p>`;
+            resultItems.push({
+                item: resultItem,
+                id  : resultItems.length
+            });
+            return resultItems;
+        }
         this.datas.forEach(({ title, content, url }) => {
             // The number of different keywords included in the article.
             const [indexOfTitle, keysOfTitle] = this.getIndexByWord(keywords, title);
@@ -292,6 +304,17 @@ class LocalSearch {
                 includedCount
             });
         });
+        if (!resultItems.length) {
+            let resultItem = '';
+            resultItem += `<p>啥也没搜到！看看<i>匹配算法</i>？</p>`;
+			resultItem += `<p><i>匹配算法</i>：把输入按空格拆分，单独<strong>匹配</strong>每一段输入（不区分大小写，仅匹配文章文本内容），输出取或后的结果。</p>`;
+			resultItem += `<p>模糊搜索似乎很难搞，目前没有相关打算。</p>`;
+            resultItems.push({
+                item: resultItem,
+                id  : resultItems.length
+            });
+            return resultItems;
+        }
         return resultItems;
     }
 

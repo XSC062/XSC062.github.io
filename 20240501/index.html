@@ -75,17 +75,34 @@ const searchPath = "/search.xml"
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
 
 	<!-- 搜索 -->
+<script>
+	function closeSearchBox() {
+		$("#search-bg").css("transition", "null"); 
+		$("#search-bg").css("z-index", "-1"); 
+		$("#search-bg").css("opacity", "0%");
+		return;
+	}
+</script>
 <div id="search-bg">
 	<div id="search-box">
+		<button id="close-button" onclick="closeSearchBox()">
+			<i class="fas fa-times"></i>
+		</button>
 		<input type="text" id="search-input" placeholder="Type to search...">
-		<div id="search-results"><div id="emptyInput">键入以搜索…</div></div>
+		<div id="search-results">
+			<div id="emptyInput">
+				<p>键入以搜索…</p>
+				<p><i>匹配算法</i>：把输入按空格拆分，单独<strong>匹配</strong>每一段输入（不区分大小写，仅匹配文章文本内容），输出取或后的结果。</p>
+				<p>模糊搜索似乎很难搞，目前没有相关打算。</p>
+			</div>
+		</div>
 	</div>
 </div>
 <!-- 顶栏整体导航菜单 -->
 <div class="ui top menu">
 	<!-- 左对齐 logo -->
 	<a class="logo" href="/">
-		<img src="/images/icon.png"></img>
+		<img width="25px" height="25px" style="border: solid transparent 2.5px" src="/images/icon.svg"></img>
 		<div id="bartitle" class="text">
 			XSC062 的博客
 		</div>
@@ -154,9 +171,9 @@ const searchPath = "/search.xml"
 					
 						<a href="/tags/DP/" class="citem">DP</a>
 					
-						<a href="/tags/SAM/" class="citem">SAM</a>
-					
 						<a href="/tags/状压/" class="citem">状压</a>
+					
+						<a href="/tags/SAM/" class="citem">SAM</a>
 					
 						<a href="/tags/分块/" class="citem">分块</a>
 					
@@ -169,12 +186,12 @@ const searchPath = "/search.xml"
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
-				<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5169">SAM 杂题</a> + <a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5170">NOIPS8</a> + <a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5175">周考</a> 选讲。</p>
+				<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/5169">SAM 杂题</a> + <a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/5170">NOIPS8</a> + <a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/5175">周考</a> 选讲。</p>
 <p>看看这个标签列表长度就知道这三天做的题有多杂。</p>
 <span id="more"></span>
 <hr />
 <h3 id="d.-字符串">D. 字符串</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5169/problem/4" class="uri">http://222.180.160.110:61235/contest/5169/problem/4</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/5169/problem/4" class="uri">https://www.becoder.com.cn/contest/5169/problem/4</a></p>
 <p>和 SA 的做法一样，先二分 <span class="math inline">\(s_{c\sim d}\)</span> 的前缀长度 <span class="math inline">\(mid\)</span>，只需 check <span class="math inline">\(s_{c \sim c + mid - 1}\)</span> 是否在 <span class="math inline">\(s_{a\sim b}\)</span> 中出现过。</p>
 <p>考虑怎么快速 check。从 <span class="math inline">\(c\)</span> 一步一步跳到 <span class="math inline">\(c+mid-1\)</span> 显然会起飞，考虑到查询是静态的，我们事先预处理一下然后倍增地跳即可。</p>
 <p>此时只需看当前状态的 <span class="math inline">\(\text {endpos}\)</span> 是否在 <span class="math inline">\([a + mid - 1, b]\)</span> 出现过。</p>
@@ -324,7 +341,7 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="f.-security">F. Security</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5169/problem/6" class="uri">http://222.180.160.110:61235/contest/5169/problem/6</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/5169/problem/6" class="uri">https://www.becoder.com.cn/contest/5169/problem/6</a></p>
 <p>对我们来说应该是会 D 就会 F 的。所以只打了 10min。</p>
 <p>首先考虑一个大家喜闻乐见的 DFS 求最小字典序。显然地，如果存在和当前位相等的字符，那么优先跳相等字符，进入下一层深搜；否则找到最小的更大字符，然后直接 out。</p>
 <p>此时 SAM 就是我们用来判断 <span class="math inline">\(S_{l, r}\)</span> 中是否存在某状态的工具了。甚至比上一题简单，因为不用写二分和倍增。</p>
@@ -475,7 +492,7 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="a.-六出祁山">A. 六出祁山</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5170/problem/1" class="uri">http://222.180.160.110:61235/contest/5170/problem/1</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/5170/problem/1" class="uri">https://www.becoder.com.cn/contest/5170/problem/1</a></p>
 <p>是能用贪心拿 60pts 的 DP 题 /tuu</p>
 <p>需要先把暴力的式子写出来。设 <span class="math inline">\(f_{i, j}\)</span> 为将 <span class="math inline">\(i\)</span> 山修改高度为 <span class="math inline">\(j\)</span> 的代价，则：</p>
 <p><span class="math display">\[
@@ -540,7 +557,7 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="b.-水淹七军">B. 水淹七军</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5170/problem/2" class="uri">http://222.180.160.110:61235/contest/5170/problem/2</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/5170/problem/2" class="uri">https://www.becoder.com.cn/contest/5170/problem/2</a></p>
 <p>容易发现最后连出来一定是没有环的。所以一定是一个 DAG。</p>
 <p>我们知道状态压缩是会遍历到每一种情况的，所以我们可以假设当前的 DAG 就是该状态下的最优。</p>
 <p>至于这个「最优」如何定义就要交给我们了。我们不妨强制认为这个 DAG 是按层序遍历得到的，也就是说连续遍历到的点属于同一层（这里的层是指某点到任意源点的最长路长度）。</p>
@@ -635,7 +652,7 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="c.-煮酒论英雄">C. 煮酒论英雄</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5170/problem/3" class="uri">http://222.180.160.110:61235/contest/5170/problem/3</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/5170/problem/3" class="uri">https://www.becoder.com.cn/contest/5170/problem/3</a></p>
 <p>注意到如果存在串被其他串包含那么直接将其毙掉就可以了。</p>
 <p>对于相互不完全包含的串，我们令 <span class="math inline">\(mx_{i, j, 0/1, 0/1}\)</span> 表示将正序 / 逆序的 <span class="math inline">\(i\)</span> 串拼到正序 / 逆序的 <span class="math inline">\(j\)</span> 串之前，两者共用相接公共部分的串长。这个可以用字符串哈希暴力求。</p>
 <p>用状压枚举拼接顺序，求得最小总串长即可。</p>
@@ -762,7 +779,7 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="a.-捏斑马">A. 捏斑马</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5175/problem/1" class="uri">http://222.180.160.110:61235/contest/5175/problem/1</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/5175/problem/1" class="uri">https://www.becoder.com.cn/contest/5175/problem/1</a></p>
 <p>我甚至不会（）</p>
 <p>翻转 + 拼接本质上就是首尾相接。我们把字符串整个拼到自己后边儿，然后任取一段长度为 <span class="math inline">\(n\)</span> 的串就可以得到一个倒过来的操作后的字符串。</p>
 <p>注意到可以操作很多次。但是既然我们操作后的串也可以在这个拼接后的串中找到了，那么其实多次操作后的也行。</p>
@@ -795,7 +812,7 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="d.-链状闪电">D. 链状闪电</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5175/problem/4" class="uri">http://222.180.160.110:61235/contest/5175/problem/4</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/5175/problem/4" class="uri">https://www.becoder.com.cn/contest/5175/problem/4</a></p>
 <p>莫名其妙且又臭又长的根号做法。</p>
 <p>容易发现一个怪被杀掉了序列就会裂开成两段连续子序列，以及最先被杀掉的怪物一定血量最少。在裂开来的两段连续子序列中也满足此规律，以此类推。</p>
 <p>考虑对序列建立笛卡尔树。令树根为 <span class="math inline">\(rt\)</span>，当前攻击力为 <span class="math inline">\(k\)</span>，记 <span class="math inline">\(t_{x, k}=\left\lceil \dfrac {h_x}k \right\rceil\)</span>，即不考虑其他条件时击倒 <span class="math inline">\(x\)</span> 所需次数。</p>
@@ -904,7 +921,7 @@ int main() &#123;
 </details>
 <hr />
 <h3 id="f.-弹飞绵羊">F. 弹飞绵羊</h3>
-<p><a target="_blank" rel="noopener" href="http://222.180.160.110:61235/contest/5175/problem/6" class="uri">http://222.180.160.110:61235/contest/5175/problem/6</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.becoder.com.cn/contest/5175/problem/6" class="uri">https://www.becoder.com.cn/contest/5175/problem/6</a></p>
 <p>很棒可持久化分块，使我 lxl 旋转。</p>
 <p>笑话：赛后 5s 才交上去。然后 A 了。</p>
 <p>我们猜大家都会普通的弹飞绵羊这道题。就是块间暴力跳嘛。</p>
@@ -1144,6 +1161,7 @@ int&amp; devicer::val(int x) &#123;
     <p style="margin-top: 5px;">
         2021 - 2025
     </p>
+    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" id="CCTAG"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg"></a>
 </div>
 <!-- Valine 相关配置 -->
 <script>
