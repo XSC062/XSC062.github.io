@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 网站图标 -->
+<link rel="icon" type="image/png" sizes="32x32" href="/images/icon.svg">
+<!-- 其他图标支持 -->
+<link rel="stylesheet" href="/css/facss/fa-brands.min.css">
+<link rel="stylesheet" href="/css/facss/fa-regular.min.css">
+<link rel="stylesheet" href="/css/facss/fa-solid.min.css">
+<link rel="stylesheet" href="/css/facss/fontawesome.min.css">
+<link rel="stylesheet" href="/css/facss/fontawesome-all.css">
+<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+<!-- 网站标题 -->
+<title>
+	
+		杂题选谈 计数 -
+	
+	XSC062 的博客
+</title>
+<!-- js 引入 -->
+<script>
+const searchPath = "/search.xml"
+</script>
+
+<script src="/js/afterloaded.js"></script>
+
+
+<script src="/js/jQuery.js"></script>
+
+<!-- 载入 Valine -->
+
+<script src="/js/Valine.min.js"></script>
+
+<!-- css 引入 -->
+
+<link rel="stylesheet" href="/css/layout.css">
+
+
+<link rel="stylesheet" href="/css/prcss/prism.css">
+
+
+
+<!-- rss -->
+<link rel="alternate" type="application/rss+xml" title="" href="https://xsc062.netlify.app/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="" href="https://xsc062.netlify.app/atom.xml" />
+<link rel="alternate" type="application/json" title="" href="https://xsc062.netlify.app/feed.json" />
+
+<meta charset="utf-8"> 
+    
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            processEscapes: true
+          }
+        });
+      </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+            tex2jax: {
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+          });
+      </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+              var all = MathJax.Hub.getAllJax(), i;
+              for(i=0; i < all.length; i += 1) {
+                  all[i].SourceElement().parentNode.className += ' has-jax';
+              }
+          });
+      </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
+
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body class="line-numbers match-braces no-brace-select rainbow-braces">
+	<!-- 搜索 -->
+<script>
+	function closeSearchBox() {
+		$("#search-bg").css("transition", "null"); 
+		$("#search-bg").css("z-index", "-1"); 
+		$("#search-bg").css("opacity", "0%");
+		return;
+	}
+</script>
+<div id="search-bg">
+	<div id="search-box">
+		<button id="close-button" onclick="closeSearchBox()">
+			<i class="fas fa-times"></i>
+		</button>
+		<input type="text" id="search-input" placeholder="Type to search...">
+		<div id="search-results">
+			<div id="emptyInput">
+				<p>键入以搜索…</p>
+				<p><i>匹配算法</i>：把输入按空格拆分，单独<strong>匹配</strong>每一段输入（不区分大小写，仅匹配文章文本内容），输出取或后的结果。</p>
+				<p>模糊搜索似乎很难搞，目前没有相关打算。</p>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 顶栏整体导航菜单 -->
+<div class="ui top menu">
+	<!-- 左对齐 logo -->
+	<a class="logo" href="/">
+		<img width="25px" height="25px" style="border: solid transparent 2.5px" src="/images/icon.svg"></img>
+		<div id="bartitle" class="text">
+			XSC062 的博客
+		</div>
+	</a>
+	<!-- 右对齐部分导航 -->
+	<div id="rightali" class="serif">
+		<a class="item" id="Search" type="button">
+			<i class="btn text-muted fa fa-search" id="search-icon" disabled></i>
+		</a>
+		<a class="item" id="Home" href="/">
+			Home
+		</a>
+		<a class="item" id="Arch" href="/archives">
+			Archives
+		</a>
+		<!-- <a class="item" id="Cate" href="/categories">
+			Categories
+		</a> -->
+		<a class="item" id="Tags" href="/tags">
+			Tags
+		</a>
+		<a class="item" id="Frie" href="/friends">
+			Friends
+		</a>
+		<a class="item" id="Abou" href="/about">
+			About
+		</a>
+	</div>
+</div>
+    
+<link rel="stylesheet" href="/css/post.css">
+
+
+<script src="/js/post.js"></script>
+
+
+<div class="main">
+	<div id="sidebar" class="text">
+		<aside id="toc">
+			<span id="toctitle">
+				<i class="fas fa-list"></i>
+				目录
+			</span>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#a---range-set"><span class="toc-text">A - Range Set</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b---popping-balls"><span class="toc-text">B - Popping Balls</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c---minimum-bounding-box-2"><span class="toc-text">C - Minimum Bounding Box 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#d---colorful-candies-2"><span class="toc-text">D - Colorful Candies 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#a---catastrophic-roulette"><span class="toc-text">A - Catastrophic Roulette</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#b---swap-permutation"><span class="toc-text">B - Swap Permutation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#c---random-walk-on-tree"><span class="toc-text">C - Random Walk on Tree</span></a></li></ol>
+		</aside>
+	</div>
+	<div class="ui post container">
+		<div class="ui text container">
+			<span id="postcon">
+				<span id="postinfo">
+					<div class="ui post title serif">
+						<div id="fortitle" data-content="杂题选谈 计数">
+							杂题选谈 计数
+						</div>
+						<div class="ui title background">
+						</div>
+					</div>
+					<span id="date">
+						<i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
+						2025-11-16
+					</span>
+				</span>
+			</span>
+			<div id="posttags" class="dotted border">
+				
+					
+						<a href="/tags/计数/" class="citem">计数</a>
+					
+				
+			</div>
+			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
+			
+			<div id="content">
+				<p>上一篇杂题里，新的题目严重阻碍了老题目的生长。为了解除顶端抑制，一部分伸长区被移植到这里了。</p>
+<span id="more"></span>
+<hr />
+<h2 id="a---range-set">A - Range Set</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_agc045_c" class="uri">https://www.luogu.com.cn/problem/AT_agc045_c</a></p>
+<ul>
+<li><p>首先考虑 <span class="math inline">\(A\le B\)</span> 的情况。覆盖类问题的一个想法是倒推回 <code>?</code>（<strong>这种方法的优点在于，操作总能和原始操作一一对应，形成和正向操作序列的双射，通过倒推得到的性质总是充要的</strong>）。</p>
+<p>则目标串为长度为 <span class="math inline">\(n\)</span> 的 <code>0?</code> 串，起始串为待判定串，可进行的操作有：</p>
+<ol type="1">
+<li><p>选择一个长度为 <span class="math inline">\(B\)</span> 的 <code>1?</code> 串，全部变为 <code>?</code>；</p></li>
+<li><p>选择一个长度为 <span class="math inline">\(A\)</span> 的 <code>0?</code> 串，全部变为 <code>?</code>。</p></li>
+</ol>
+<p>容易发现，只要在任意时刻进行了一次 1 操作，总能通过若干次 1 2 操作扩展到一个长为 <span class="math inline">\(n\)</span> 的 <code>0?</code> 序列（而一次 1 操作都不做只有一种情况，虽然在后面 DP 会自然统计到这种情况）。故目标转化为找到能够进行<strong>第一次</strong>（又一个经典技巧）1 操作的局面。</p>
+<p>容易发现当且仅当能够通过若干次 2 操作，得到一个长度 <span class="math inline">\(\ge B\)</span> 的 <code>1?</code> 串，显然的等价转换是，存在一个长度 <span class="math inline">\(\ge B\)</span> 的子串，里面所有 <code>0</code> 的连续段长度均 <span class="math inline">\(\ge A\)</span>。现在就可以想办法统计了。</p></li>
+<li><p>接下来考虑 <span class="math inline">\(B&lt;A\)</span> 的情况，容易发现，只要在任意时刻进行了一次 2 操作，总能通过若干次 1 2 操作扩展到一个长为 <span class="math inline">\(n\)</span> 的 <code>0?</code> 序列。把上面得到所有合法串 flip 就可以得到这里的所有合法串，故并不需要分讨。</p></li>
+<li><p>令 <span class="math inline">\(f_{i,j,0/1}\)</span> 表示 DP 到 <span class="math inline">\(i\)</span>，有一段长度为 <span class="math inline">\(j\)</span> 的合法后缀，第 <span class="math inline">\(i-1\)</span> 位的值为 <span class="math inline">\(0/1\)</span> 的方案数，则：</p>
+<p><span class="math display">\[
+f_{i,j,1}=\sum_{k=1}^j f_{i-k,j-k,0}\\
+f_{i,j,0}=\left(\sum_{k=1}^{\min(A-1,j-B)}f_{i-k,j-k,1}\right)+\left(\sum_{k=A}^j f_{i-k,j-k,1}\right)\\
+f_{i,0,0}=\sum_{k=1}^{A-1}\sum_{j=0}^{B-1} f_{i-k,j,1}
+\]</span></p>
+<p>最后一种转移的优化是显然的；前两种转移中，<span class="math inline">\(i\)</span> 和 <span class="math inline">\(j\)</span> 的变化量是一致的，也可以前缀和优化。</p></li>
+</ul>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int mod = 1e9 + 7;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n, a, b;
+    std::cin &gt;&gt; n &gt;&gt; a &gt;&gt; b;
+    if (a &gt; b)
+        std::swap(a, b);
+    using arr = std::vector&lt;long long&gt;;
+    using brr = std::vector&lt;arr&gt;;
+    using crr = std::vector&lt;brr&gt;;
+    brr sum(n + 1, arr(n + 1));
+    crr s(2, brr(n + 1, arr(n + 1)));
+    sum[0][0] = 1ll;
+    s[0][0][0] = s[1][0][0] = 1ll;
+    auto fun = [&amp;](int op, int i, int j, int l, int r) &#123;
+        if (l &gt; r)
+            return 0ll;
+        auto res = s[op][i - j][i - l];
+        if (i &gt; r)
+            res += mod - s[op][i - j][i - r - 1];
+        return res &lt; mod ? res : res - mod;
+    &#125;;
+    auto res = 0ll;
+    for (int i = 1; i &lt;= n; ++i) &#123;
+        for (int j = 1; j &lt;= n &amp;&amp; j &lt;= i; ++j) &#123;
+            auto f0 = fun(1, i, j, 1, std::min(a - 1, j - b)) + fun(1, i, j, a, j);
+            auto f1 = fun(0, i, j, 1, j);
+            if (f0 &gt;= mod)
+                f0 -= mod;
+            if ((s[0][i - j][i] = s[0][i - j][i - 1] + f0) &gt;= mod)
+                s[0][i - j][i] -= mod;
+            if ((s[1][i - j][i] = s[1][i - j][i - 1] + f1) &gt;= mod)
+                s[1][i - j][i] -= mod;
+            if (i == n &amp;&amp; j &gt;= b)
+                res += f0 + f1;
+            if ((sum[i][j] = sum[i][j - 1] + f1) &gt;= mod)
+                sum[i][j] -= mod;
+        &#125;
+        s[0][i][i] = 0ll;
+        for (int k = 1; k &lt; a &amp;&amp; k &lt;= i; ++k)
+            s[0][i][i] += sum[i - k][std::min(b - 1, i - k)];
+        s[0][i][i] %= mod;
+    &#125;
+    std::cout &lt;&lt; res % mod &lt;&lt; &#39;\n&#39;;
+#ifndef ONLINE_JUDGE
+    std::cerr &lt;&lt; std::fixed &lt;&lt; std::setprecision(6) &lt;&lt; std::chrono::duration&lt;double&gt; (std::chrono::steady_clock::now() - stime).count() &lt;&lt; &quot;s\n&quot;;
+#endif
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="b---popping-balls">B - Popping Balls</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_code_festival_2017_qualb_e" class="uri">https://www.luogu.com.cn/problem/AT_code_festival_2017_qualb_e</a></p>
+<ul>
+<li><p>容易发现好的出发点应该是尽可能多地统计局面。容易发现应该尽量让 <span class="math inline">\(s\)</span> 和 <span class="math inline">\(t\)</span> 取到蓝色的球。</p>
+<p>进一步发现，<strong>在第一次取蓝球时</strong>，<span class="math inline">\(t\)</span> 应该在蓝球的队首处。直到取走了 <span class="math inline">\(B\)</span> 个球，<span class="math inline">\(t\)</span> 已经超出序列时，<span class="math inline">\(s\)</span> 才可能发挥作用。</p></li>
+<li><p>相似地，在这之后<strong>第一次取蓝球时</strong>，<span class="math inline">\(s\)</span> 应该在蓝球的队首处。</p>
+<p>很容易发现只需要统计两个点处分别取走了多少个蓝球（尽量让 <span class="math inline">\(t\)</span> 取）就能统计。</p></li>
+<li><p>具体地，设 <span class="math inline">\(t\)</span> 处取走了 <span class="math inline">\(c\)</span> 个、<span class="math inline">\(s\)</span> 处取走了 <span class="math inline">\(d\)</span> 个，则这两个点处的方案数为：</p>
+<p><span class="math display">\[
+\binom{B-1}{c-1}\times \binom{B-c-1}{d-1}
+\]</span></p></li>
+<li><p>此外，总共 <span class="math inline">\(A-(B-c)-(B-c-d)\)</span> 个红球，可以在 <span class="math inline">\(t\)</span> 进入决策之前，<span class="math inline">\(s\)</span> 进入决策之前，<span class="math inline">\(s\)</span> 决策完后三个时刻给出去。插板得到 <span class="math inline">\(\binom{A-(B-c)-(B-c-d)+2}2\)</span> 种方案。</p>
+<p>此外，还要考虑 <span class="math inline">\(s\)</span> 与 <span class="math inline">\(t\)</span> 重合，共 <span class="math inline">\(A+1\)</span> 种方案。</p></li>
+</ul>
+<!-- - 具体地，设 $t$ 第一次发挥作用的局面为 $c+B$，$s$ 第一次发挥作用的局面为 $(c-d)+(B-e)$。
+
+    - 两个状态过渡的方案数为 $\large\binom {B-1}{e-1}$（注意第一次必须选蓝）。
+
+    - 接下来，除开第一次选择，接下来的 $\min(c-d,B-e-1)$ 次可以任意选取，方案数为 $2^{\min(c-d,B-e-1)}$。
+
+    - 接下来的选择固定，方案数唯一。 -->
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int mod = 1e9 + 7;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int A, B;
+    std::cin &gt;&gt; A &gt;&gt; B;
+    using arr = std::vector&lt;long long&gt;;
+    using brr = std::vector&lt;arr&gt;;
+    brr C(A + B + 1, arr(A + B + 1));
+    C[0][0] = 1ll;
+    for (int i = 1; i &lt;= A + B; ++i) &#123;
+        C[i][0] = 1ll;
+        for (int j = 1; j &lt;= i; ++j)
+            C[i][j] = (C[i - 1][j - 1] + C[i - 1][j]) % mod;
+    &#125;
+    auto res = A + 1;
+    for (int c = 1; c &lt; B; ++c)
+        for (int d = 1; c + d &lt;= B; ++d)
+            (res += C[B - 1][c - 1] * C[B - c - 1][d - 1] % mod * C[std::max(0, A - (B - c) - (B - c - d) + 2)][2] % mod) %= mod;
+    std::cout &lt;&lt; res &lt;&lt; &#39;\n&#39;;
+#ifndef ONLINE_JUDGE
+    std::cerr &lt;&lt; std::fixed &lt;&lt; std::setprecision(6) &lt;&lt; std::chrono::duration&lt;double&gt; (std::chrono::steady_clock::now() - stime).count() &lt;&lt; &quot;s\n&quot;;
+#endif
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="c---minimum-bounding-box-2">C - Minimum Bounding Box 2</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_abc297_f" class="uri">https://www.luogu.com.cn/problem/AT_abc297_f</a></p>
+<ul>
+<li>枚举矩形长宽，二项式算方案数即可，非常简单。</li>
+</ul>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int mod = 998244353;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n, m, k;
+    std::cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+    using arr = std::vector&lt;long long&gt;;
+    using brr = std::vector&lt;arr&gt;;
+    arr fac(n * m + 1), inv(n * m + 1);
+    fac[0] = inv[0] = 1ll;
+    for (int i = 1; i &lt;= n * m; ++i)
+        fac[i] = fac[i - 1] * i % mod;
+    auto qkp = [&amp;](long long x, int y) &#123;
+        auto res = 1ll;
+        for (; y; (x *= x) %= mod, y &gt;&gt;= 1)
+            if (y &amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &#125;;
+    inv[n * m] = qkp(fac[n * m], mod - 2);
+    for (int i = n * m - 1; i; --i)
+        inv[i] = inv[i + 1] * (i + 1) % mod;
+    auto C = [&amp;](int n, int m) &#123;
+        if (n &lt; m)
+            return 0ll;
+        return fac[n] * inv[m] % mod * inv[n - m] % mod;
+    &#125;;
+    auto res = 0ll;
+    brr f(n + 1, arr(m + 1)), g(n + 1, arr(m + 1));
+    for (int i = 1; i &lt;= n; ++i)
+        for (int j = 1; j &lt;= m; ++j) &#123;
+            g[i][j] = C(i * j, k);
+            f[i][j] = g[i][j] - g[i - 1][j] * 2 - g[i][j - 1] * 2 + g[i - 1][j - 1] * 4;
+            if (i &gt;= 2)
+                f[i][j] += g[i - 2][j] - 2 * g[i - 2][j - 1];
+            if (j &gt;= 2)
+                f[i][j] += g[i][j - 2] - 2 * g[i - 1][j - 2];
+            if (i &gt;= 2 &amp;&amp; j &gt;= 2)
+                f[i][j] += g[i - 2][j - 2];
+            f[i][j] = (f[i][j] % mod + mod) % mod;
+            (res += i * j * f[i][j] % mod * (n - i + 1) % mod * (m - j + 1)) %= mod;
+            // printf(&quot;f[%d][%d] = %lld \n&quot;, i, j, f[i][j]);
+        &#125;
+    std::cout &lt;&lt; res * qkp(C(n * m, k), mod - 2) % mod &lt;&lt; &#39;\n&#39;;
+#ifndef ONLINE_JUDGE
+    std::cerr &lt;&lt; std::fixed &lt;&lt; std::setprecision(6) &lt;&lt; std::chrono::duration&lt;double&gt; (std::chrono::steady_clock::now() - stime).count() &lt;&lt; &quot;s\n&quot;;
+#endif
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="d---colorful-candies-2">D - Colorful Candies 2</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_abc215_g" class="uri">https://www.luogu.com.cn/problem/AT_abc215_g</a></p>
+<p>啥啊。原来要拆贡献。</p>
+<ul>
+<li><p>观察到类根号的复杂度，考虑把出现次数相同的数放在一起计算，元素种类就只有 <span class="math inline">\(O(\sqrt n)\)</span> 个了。</p>
+<p>DP 不太能处理这样的多重结构，故需要考虑更线性的计算方式，这里进行了拆贡献。</p></li>
+<li><p>考虑一个出现了 <span class="math inline">\(c\)</span> 次的数被选入的概率，为 <span class="math inline">\(1-\dfrac {C_{n-c}^K}{C_{n}^K}\)</span>。相加即可。</p></li>
+</ul>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int mod = 998244353;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    int n;
+    std::cin &gt;&gt; n;
+    std::unordered_map&lt;int, int&gt; cnt;
+    for (int i = 1, x; i &lt;= n; ++i)
+        std::cin &gt;&gt; x, ++cnt[x];
+    std::vector&lt;int&gt; b;
+    for (auto [x, y] : cnt)
+        b.push_back(y);
+    std::sort(b.begin(), b.end());
+    std::vector&lt;std::pair&lt;int, int&gt; &gt; a;
+    std::vector&lt;long long&gt; fac(n + 1), inv(n + 1);
+    fac[0] = inv[0] = 1ll;
+    for (int i = 1; i &lt;= n; ++i)
+        fac[i] = fac[i - 1] * i % mod;
+    auto qkp = [&amp;](long long x, int y) &#123;
+        auto res = 1ll;
+        for (; y; (x *= x) %= mod, y &gt;&gt;= 1)
+            if (y &amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &#125;;
+    inv[n] = qkp(fac[n], mod - 2);
+    for (int i = n - 1; i; --i)
+        inv[i] = inv[i + 1] * (i + 1) % mod;
+    for (auto i : b)
+        if (a.empty() || i != a.back().first)
+            a.emplace_back(i, 1);
+        else
+            ++a.back().second;
+    auto C = [&amp;](int n, int m) &#123;
+        if (n &lt; m)
+            return 0ll;
+        return fac[n] * inv[m] % mod * inv[n - m] % mod;
+    &#125;;
+    for (int k = 1; k &lt;= n; ++k) &#123;
+        auto res = 0ll;
+        auto invC = qkp(C(n, k), mod - 2);
+        for (auto [c, m] : a)
+            res += m * (1ll + mod - C(n - c, k) * invC % mod);
+        std::cout &lt;&lt; res % mod &lt;&lt; &#39;\n&#39;;
+    &#125;
+#ifndef ONLINE_JUDGE
+    std::cerr &lt;&lt; std::fixed &lt;&lt; std::setprecision(6) &lt;&lt; std::chrono::duration&lt;double&gt; (std::chrono::steady_clock::now() - stime).count() &lt;&lt; &quot;s\n&quot;;
+#endif
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="a---catastrophic-roulette">A - Catastrophic Roulette</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_arc174_c" class="uri">https://www.luogu.com.cn/problem/AT_arc174_c</a></p>
+<hr />
+<h2 id="b---swap-permutation">B - Swap Permutation</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_arc176_d" class="uri">https://www.luogu.com.cn/problem/AT_arc176_d</a></p>
+<ul>
+<li><p>发现最后关心的位置比较少，只有 <span class="math inline">\(O(n)\)</span> 个。同时发现一件事：假设 <span class="math inline">\(A_i=x,A_{i+1}=y\)</span>，那么最后 <span class="math inline">\(A_i\)</span> 和 <span class="math inline">\(A_{i+1}\)</span> 的值的可能情况只有：</p>
+<p><span class="math inline">\((x,y)\)</span>，<span class="math inline">\((x,?)\)</span>，<span class="math inline">\((y,x)\)</span>，<span class="math inline">\((y,?)\)</span>，<span class="math inline">\((?,x)\)</span>，<span class="math inline">\((?,y)\)</span>，<span class="math inline">\((?,?)\)</span></p>
+<p>这 7 种情况。且每种情况的期望是相对好算的。发现每种情况出现的概率可以用矩阵求解。</p></li>
+<li><p>发现矩阵有点大。题解区中的处理方法之一是经典的偏序 + 01，但为什么不能沿用原本的思路呢？</p>
+<p>进一步把 <span class="math inline">\(A,B\)</span> 视作同一个数，这样状态数就减少到 3 种 <span class="math inline">\((0,0),(0,1)/(1,0),(1,1)\)</span>，相应的期望也是好算的，且矩阵大小会减少很多。</p>
+<p><span class="math display">\[
+M=\begin{bmatrix}
+\dfrac {(n-2)(n-3)}2+1+2(n-4)&amp;2\times 2&amp;0\\
+n-3&amp;2+(n-3)+\dfrac {(n-2)(n-3)}2&amp;1\\
+0&amp;(n-2)\times 2&amp;1+\dfrac {(n-2)(n-3)}2
+\end{bmatrix}
+\]</span></p>
+<p>检查技巧：保证每一行的和均为 <span class="math inline">\(\dfrac {n(n-1)}2\)</span> 即可。</p></li>
+</ul>
+<details>
+<pre class="cpp"><code>#include &lt;bits/stdc++.h&gt;
+const int mod = 998244353, inv2 = (mod + 1) &gt;&gt; 1, N = 3;
+struct mat &#123;
+    std::vector&lt;std::vector&lt;long long&gt; &gt; a;
+    mat(void): a(N, std::vector&lt;long long&gt; (N)) &#123;&#125;
+    std::vector&lt;long long&gt;&amp; operator[](const int q) &#123;
+        return a[q];
+    &#125;
+    mat operator* (mat &amp;q) const &#123;
+        mat res;
+        for (int i = 0; i &lt; N; ++i)
+            for (int k = 0; k &lt; N; ++k)
+                for (int j = 0; j &lt; N; ++j)
+                    if ((res[i][j] += a[i][k] * q[k][j] % mod) &gt;= mod)
+                        res[i][j] -= mod;
+        return res;
+    &#125;
+&#125;;
+struct vec &#123;
+    std::vector&lt;long long&gt; a;
+    vec(void): a(N) &#123;&#125;
+    long long&amp; operator[](const int q) &#123;
+        return a[q];
+    &#125;
+    vec operator* (mat &amp;q) const &#123;
+        vec res;
+        for (int k = 0; k &lt; N; ++k)
+            for (int j = 0; j &lt; N; ++j)
+                if ((res[j] += a[k] * q[k][j] % mod) &gt;= mod)
+                    res[j] -= mod;
+        return res;
+    &#125;
+&#125;;
+int main() &#123;
+#ifdef ONLINE_JUDGE
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr), std::cout.tie(nullptr);
+#else
+    std::freopen(&quot;.in&quot;, &quot;r&quot;, stdin);
+    std::freopen(&quot;.out&quot;, &quot;w&quot;, stdout);
+    const auto stime = std::chrono::steady_clock::now();
+#endif
+    long long n, m;
+    std::cin &gt;&gt; n &gt;&gt; m;
+    std::vector&lt;long long&gt; a(n + 1);
+    for (int i = 1; i &lt;= n; ++i)
+        std::cin &gt;&gt; a[i];
+    if (n == 2) &#123;
+        std::cout &lt;&lt; std::abs(a[1] - a[2]) &lt;&lt; &#39;\n&#39;;
+        return 0;
+    &#125;
+    auto qkp = [&amp;](long long x, int y) &#123;
+        auto res = 1ll;
+        for (; y; (x *= x) %= mod, y &gt;&gt;= 1)
+            if (y &amp; 1)
+                (res *= x) %= mod;
+        return res;
+    &#125;;
+    vec d;
+    d[2] = 1ll;
+    mat t;
+    t[0][0] = ((n - 2) * (n - 3) / 2 + 1 + 2 * (n - 4)) % mod;
+    t[0][1] = 2 * 2;
+    t[1][0] = n - 3;
+    t[1][1] = (2 + (n - 3) + (n - 2) * (n - 3) / 2) % mod;
+    t[1][2] = 1;
+    t[2][1] = (n - 2) * 2 % mod;
+    t[2][2] = (1 + (n - 2) * (n - 3) / 2) % mod;
+    for (int i = m; i; i &gt;&gt;= 1, t = t * t)
+        if (i &amp; 1)
+            d = d * t;
+    auto s = 0ll;
+    auto calc = [&amp;](long long l, long long r) &#123;
+        return (l + r) * (r - l + 1) / 2 % mod;
+    &#125;;
+    for (int i = 1; i &lt;= n; ++i)
+        s += (calc(i + 1, n) + mod - (long long)i * (n - (i + 1) + 1) % mod) % mod;
+    auto res = 0ll, invM = qkp((long long)(n - 2) * (n - 3) / 2 % mod, mod - 2), invN2 = qkp(n - 2, mod - 2);
+    for (int i = 1; i &lt; n; ++i) &#123;
+        auto k = (calc(a[i] + 1, n) - a[i] * (n - (a[i] + 1) + 1) % mod + a[i] * (a[i] - 1) % mod - calc(1, a[i] - 1) - std::abs(a[i] - a[i + 1]) + calc(a[i + 1] + 1, n) - a[i + 1] * (n - (a[i + 1] + 1) + 1) % mod + a[i + 1] * (a[i + 1] - 1) % mod - calc(1, a[i + 1] - 1) - std::abs(a[i] - a[i + 1])) % mod, t = (s - k - std::abs(a[i] - a[i + 1])) % mod;
+        res += t * invM % mod * d[0] % mod;
+        res += d[1] % mod * invN2 % mod * inv2 % mod % mod * k % mod;
+        res += std::abs(a[i] - a[i + 1]) * d[2] % mod;
+    &#125;
+    std::cout &lt;&lt; (res % mod + mod) % mod &lt;&lt; &#39;\n&#39;;
+#ifndef ONLINE_JUDGE
+    std::cerr &lt;&lt; std::fixed &lt;&lt; std::setprecision(6) &lt;&lt; std::chrono::duration&lt;double&gt; (std::chrono::steady_clock::now() - stime).count() &lt;&lt; &quot;s\n&quot;;
+#endif
+    return 0;
+&#125;</code></pre>
+</details>
+<hr />
+<h2 id="c---random-walk-on-tree">C - Random Walk on Tree</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/AT_arc185_d" class="uri">https://www.luogu.com.cn/problem/AT_arc185_d</a></p>
+<ul>
+<li>即一个根上挂了 <span class="math inline">\(n\div m\)</span> 条长为 <span class="math inline">\(m\)</span> 的链。令 <span class="math inline">\(f_i\)</span> 表示走到一条链底</li>
+</ul>
+
+			</div>
+			<hr class="dotted">
+			<div class="post footer">
+				<div id="hitokoto">
+					<h3 id="hitokoto-title">
+						言论
+					</h3>
+					<div id="hitokoto-content">
+					</div>
+					<div id="hitokoto-from">
+					</div>
+				</div>
+				<div class="button flex">
+					<div id="prev">
+						
+							<!-- 吐槽，为啥还需要加 / -->
+							<a href="/20251118/">
+								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
+								杂题选谈
+							</a>
+						
+					</div>
+					<div id="next">
+						
+							<a href="/20251107/">
+								学习笔记：一类序列区间排序问题
+								<i class="fas fa-angle-double-right" style="margin-left: 10px;"></i>
+							</a>
+						
+					</div>
+				</div>
+				<div id="vcomments" class="text"></div>
+<script>
+	new Valine({
+		el: '#vcomments',
+		appId: 'OlmvQ0a2Zw7xo3no2bwabOzx-gzGzoHsz',
+		appKey: 'TW6t8mFeGLmhPjWisvmllvvo',
+		recordIP: true,
+		enableQQ: true, 
+		// [EDITED] 目前 Valine 的 QQ 自动获取昵称似乎不可用
+		// 该问题在 v1.5.3 中已修复
+		pageSize: 10,
+		requiredFields:
+			
+				['nick']
+			,
+		placeholder: "The world is but a little place after all...\n能够根据邮箱获取你的 Gravatar 头像。昵称是必填项，长度需不低于 3。",
+		avatar: 'identicon',
+		avatar_cdn: 'https://cravatar.cn/avatar/',
+		emojiCDN: 'https://xsc062.netlify.app/em/', 
+		emojiMaps: {
+			
+				"微笑": "wx.gif",
+			
+				"龇牙": "cy.gif",
+			
+				"流泪": "ll.gif",
+			
+				"笑哭": "xk.gif",
+			
+				"流汗": "lh.gif",
+			
+				"擦汗": "ch.gif",
+			
+				"亲亲": "qq.gif",
+			
+				"色": "se.gif",
+			
+				"疑问": "yiw.gif",
+			
+				"发呆": "fd.gif",
+			
+				"晕": "yun.gif",
+			
+				"鼓掌": "gz.gif",
+			
+				"憨笑": "hanx.gif",
+			
+				"快哭了": "kk.gif",
+			
+				"得意": "dy.gif",
+			
+				"狂笑": "kx.gif",
+			
+				"害羞": "hx.gif",
+			
+				"妈妈生的": "dz.gif",
+			
+				"糗大了": "qd.gif",
+			
+				"吃瓜": "cg.gif",
+			
+				"睁眼": "zy.webp",
+			
+				"辣眼睛": "lyj.gif",
+			
+				"酸了": "nm.gif",
+			
+				"滚": "gun.webp",
+			
+				"惊恐": "jk.gif",
+			
+				"幽灵": "youl.gif",
+			
+				"无聊": "wul.gif",
+			
+				"吃": "eat.gif",
+			
+				"你很棒棒": "bb.gif",
+			
+				"赞": "qiang.gif",
+			
+				"踩": "ruo.gif",
+			
+				"握手": "wsh.gif",
+			
+				"发抖": "fad.gif",
+			
+				"挥手": "hsh.gif",
+			
+				"磕头": "kt.gif",
+			
+				"怄火": "oh.gif",
+			
+		},
+		mathjax: true,
+	})
+</script>
+			</div>
+			<script>setHitokoto();</script>
+		</div> 
+	</div>
+</div>
+    <!-- 页脚开始 -->
+<div id="footer" class="serif">
+    Powered by
+    <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>
+    &
+    <a href="/about-this-theme">
+        iwll
+    </a>
+    <p style="margin-top: 5px;">
+        2021 - 2025
+    </p>
+    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" id="CCTAG"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg"></a>
+</div>
+<!-- Valine 相关配置 -->
+<script>
+    const getValineDomTimer = setInterval(() => {
+        // 不知道为什么 我从原博客 js 文件粘过来的参数是
+        // "#valine .vcards .vcard"
+        // DEBUG 了半天才定位到这个问题。。。
+        const vcards =
+            document.querySelectorAll('#valine, .vcards, .vcard');
+        if (vcards.length > 0) {
+            let author = 'XSC062';
+            for (let vcard of vcards) {
+                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                if (vnick_dom != null) {
+                    const vnick = vnick_dom.innerHTML;
+                    if (vnick === author) {
+                        vnick_dom.innerHTML =
+                        `${vnick} <span id="rootitem" class="code">root</span>`
+                    }
+                }
+            }
+        }
+        else {
+            clearInterval(getValineDomTimer);
+        }
+    }, 2000);
+    SetActiveItem();
+    setDetailsSummary();
+    setTitleAnchor();
+    setEmptyToc();
+    setCodeClassName();
+</script>
+
+
+<!-- js -->
+<!-- 搜索功能相关配置 -->
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/local-search.js"></script>
+
+</script>
+<!-- prism 相关配置 -->
+<script type="text/javascript" src="/js/prism.js" defer></script>
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/clipboard-use.js"></script>
+<!-- 页脚结束 -->
+</body>
+</html>

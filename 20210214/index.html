@@ -46,9 +46,7 @@ const searchPath = "/search.xml"
 <link rel="alternate" type="application/json" title="" href="https://xsc062.netlify.app/feed.json" />
 
 <meta charset="utf-8"> 
-<meta name="generator" content="Hexo 7.2.0"></head>
-<body class="line-numbers match-braces no-brace-select rainbow-braces">
-	
+    
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
           tex2jax: {
@@ -74,6 +72,8 @@ const searchPath = "/search.xml"
       </script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
 
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body class="line-numbers match-braces no-brace-select rainbow-braces">
 	<!-- 搜索 -->
 <script>
 	function closeSearchBox() {
@@ -200,7 +200,7 @@ f_i&amp;=\min\{f_j+(s_i-s_j)^2+M\}
 &amp;=\min\{f_j-2\times s_i\times s_j+{s_j}^2\}+{s_i}^2+M
 \end{aligned}
 \]</span> 其中 <span class="math inline">\(s\)</span> 为 <span class="math inline">\(c\)</span> 的前缀和。</p>
-<p>时间复杂度 <span class="math inline">\(\mathcal O(n^2)\)</span>，明显爆炸，所以我们需要优化。</p>
+<p>时间复杂度 <span class="math inline">\(O(n^2)\)</span>，明显爆炸，所以我们需要优化。</p>
 <p>在上一篇的 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/XSC062/p/14383610.html">单调队列优化DP</a> 中，我们提到过，只有 DP 式中的与 <span class="math inline">\(i\)</span> 有关的项能直接提出来时，我们才能使用单调队列优化，而这里的 <span class="math inline">\(s_i\)</span> 与 <span class="math inline">\(s_j\)</span> 相乘，无法使用单调队列优化。</p>
 <p>我们思考，对于 <span class="math inline">\(f_i\)</span> 来说，无非就是选出最优的 <span class="math inline">\(j\)</span> 来构造它。</p>
 <p>假设有 <span class="math inline">\(j\)</span> 与 <span class="math inline">\(k\)</span>，如何判断 <span class="math inline">\(j\)</span> 与 <span class="math inline">\(k\)</span> 谁更优呢？</p>
@@ -445,7 +445,7 @@ signed main() &#123;
 <p>故 <span class="math inline">\(S\times j+t_i\)</span> 为第 <span class="math inline">\(i\)</span> 个任务的完成时间。</p>
 <p>得出状态转移方程（<span class="math inline">\(k\)</span> 枚举上一批任务结束位置）： <span class="math display">\[
 f_{i,j}=\min\limits_{0\leqslant k&lt;i}\{f_{k,j-1}+(S\times j+t_i)\times(c_i-c_k)\}
-\]</span> 时间复杂度 <span class="math inline">\(\mathcal O(n^3)\)</span>。</p>
+\]</span> 时间复杂度 <span class="math inline">\(O(n^3)\)</span>。</p>
 <pre class="cpp"><code>#include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 #define int long long
@@ -595,7 +595,7 @@ f_j-f_k-s\times c_j+s\times c_k&lt;t_i\times(c_j-c_k)
 \\
 \dfrac{(f_j-s\times c_j)-(f_k-s\times c_k)}{(c_j)-(c_k)}&lt;t_i
 \]</span> 然后就是老套路。</p>
-<p>时间复杂度 <span class="math inline">\(\mathcal O(n)\)</span>。</p>
+<p>时间复杂度 <span class="math inline">\(O(n)\)</span>。</p>
 <pre class="cpp"><code>#include &lt;cstdio&gt;
 #define int long long
 const int maxn = 5e5 + 5;
@@ -652,7 +652,7 @@ signed main() &#123;
 <p>单调队列里装的始终还是个具有单调性的下凸包，于是我们可以在队列中二分一个 <span class="math inline">\(pos\)</span>，<span class="math inline">\(pos\)</span> 与 <span class="math inline">\(pos-1\)</span> 形成的斜率比 <span class="math inline">\(t_i\)</span> 小，<span class="math inline">\(pos+1\)</span> 与 <span class="math inline">\(pos\)</span> 形成的斜率比 <span class="math inline">\(t_i\)</span> 大。</p>
 <p>然后把 <span class="math inline">\(pos\)</span> 当成 <span class="math inline">\(q_l\)</span> 来处理就好了。</p>
 <p>队尾还是维护一个下凸。</p>
-<p>时间复杂度 <span class="math inline">\(\mathcal O(n\log n)\)</span>。</p>
+<p>时间复杂度 <span class="math inline">\(O(n\log n)\)</span>。</p>
 <p><em>强烈建议不要去动 AcWing 版本的那道。</em></p>
 <p><em>最后两组数据堪称毒瘤。</em></p>
 <p><em>卡 <code>long long</code> 乘法，卡 <code>__int128</code> 时限，卡 <code>double</code>精度，非 T 即 WA。</em></p>
@@ -1347,7 +1347,7 @@ signed main()&#123;
 							<!-- 吐槽，为啥还需要加 / -->
 							<a href="/20220808/">
 								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
-								解题报告 One-Dimensional Battle Ships
+								解题报告：One-Dimensional Battle Ships
 							</a>
 						
 					</div>
@@ -1449,6 +1449,7 @@ signed main()&#123;
 				"怄火": "oh.gif",
 			
 		},
+		mathjax: true,
 	})
 </script>
 			</div>

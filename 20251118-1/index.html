@@ -13,7 +13,7 @@
 <!-- 网站标题 -->
 <title>
 	
-		网络流 -
+		杂文速读 -
 	
 	XSC062 的博客
 </title>
@@ -46,9 +46,7 @@ const searchPath = "/search.xml"
 <link rel="alternate" type="application/json" title="" href="https://xsc062.netlify.app/feed.json" />
 
 <meta charset="utf-8"> 
-<meta name="generator" content="Hexo 7.2.0"></head>
-<body class="line-numbers match-braces no-brace-select rainbow-braces">
-	
+    
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
           tex2jax: {
@@ -74,6 +72,8 @@ const searchPath = "/search.xml"
       </script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
 
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body class="line-numbers match-braces no-brace-select rainbow-braces">
 	<!-- 搜索 -->
 <script>
 	function closeSearchBox() {
@@ -146,7 +146,7 @@ const searchPath = "/search.xml"
 				<i class="fas fa-list"></i>
 				目录
 			</span>
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E6%B5%81%E9%97%AE%E9%A2%98"><span class="toc-text">最大流问题</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#bfs-%E7%9A%84%E6%89%A9%E5%B1%95%E5%AE%9A%E8%BE%B9%E6%9D%83%E9%9B%86-bfs"><span class="toc-text">01BFS 的扩展：定边权集 BFS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#section"><span class="toc-text"></span></a></li></ol>
 		</aside>
 	</div>
 	<div class="ui post container">
@@ -154,50 +154,41 @@ const searchPath = "/search.xml"
 			<span id="postcon">
 				<span id="postinfo">
 					<div class="ui post title serif">
-						<div id="fortitle" data-content="网络流">
-							网络流
+						<div id="fortitle" data-content="杂文速读">
+							杂文速读
 						</div>
 						<div class="ui title background">
 						</div>
 					</div>
 					<span id="date">
 						<i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
-						2025-01-24
+						2025-11-18
 					</span>
 				</span>
 			</span>
 			<div id="posttags" class="dotted border">
 				
-					
-						<a href="/tags/网络流/" class="citem">网络流</a>
-					
+					<span style="color: #888;">暂无标签</span>
 				
 			</div>
 			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
 			
 			<div id="content">
-				<p>想当年叱诧风云左牵字符串右擎网络流，而今飘零憔悴沦落到需要学而时习之的地步 <img src="/em/kx.gif" /></p>
+				<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/article/46wz3f07">知识点征集速报!!!! 第一期</a></p>
 <span id="more"></span>
 <hr />
-<h2 id="定义">定义</h2>
-<p>对于有一个源点 <span class="math inline">\(s\)</span> 和汇点 <span class="math inline">\(t\)</span> 的有向图，每条边都有一个权值 <span class="math inline">\(c\)</span> 作为容量，称这个有向图 <span class="math inline">\(G\)</span> 是一个网络。</p>
-<p>假设现在有 <span class="math inline">\(f\)</span> 升水从 <span class="math inline">\(s\)</span> 流入，而我们可以自由分配每个点的水可以朝哪个方向流出，那么显然地：</p>
-<ul>
-<li>流出 <span class="math inline">\(t\)</span> 的水为 <span class="math inline">\(f\)</span> 升。</li>
-<li>对于除 <span class="math inline">\(s\)</span> 和 <span class="math inline">\(t\)</span> 以外的所有点，流入的水量等于流出的水量。</li>
-<li>对于任意一条边，流经的水量不超过容量。</li>
-</ul>
-<p>对于这个网络，任选出一部分点与 <span class="math inline">\(s\)</span> 分为一组，剩下与 <span class="math inline">\(t\)</span> 分为一组，该操作称为「割」。一个割的「容量」定义为 <span class="math inline">\(s\)</span> 组与 <span class="math inline">\(t\)</span> 组间连边的容量和。</p>
-<p>那么接下来就会由这个模型衍生出许多问题：</p>
-<ul>
-<li>最大流问题：找到一种分配方式最大化 <span class="math inline">\(f\)</span>。</li>
-<li>最小割问题：找到一种割的方案最小化割的容量。</li>
-<li>最小费用最大流问题：给每条边除容量 <span class="math inline">\(c\)</span> 外外加一个费用权值 <span class="math inline">\(w\)</span>，需要在保证最大化 <span class="math inline">\(f\)</span> 的前提下最小化 <span class="math inline">\(\sum f(u, v)\times w(u, v)\)</span>。</li>
-</ul>
-<p>接下来会分别介绍解决这几种不同问题的方法。</p>
+<h2 id="bfs-的扩展定边权集-bfs">01BFS 的扩展：定边权集 BFS</h2>
+<blockquote>
+<p>给定无向图，边权只会为 1 或 2，在线性复杂度内求出 <span class="math inline">\(s\to t\)</span> 的最短路。</p>
+</blockquote>
+<p>无法直接使用双端队列：<span class="math inline">\(1\)</span> 直接加入队首会破坏单调性。</p>
+<p>处理方式是开两个队列，对于两种边权分别放到队尾，取两个队首中更小的进行扩展。</p>
+<blockquote>
+<p>给定无向图，边权集大小为常数，在线性复杂度内求出 <span class="math inline">\(s\to t\)</span> 的最短路。</p>
+</blockquote>
+<p>开常数个队列，类似地处理即可。</p>
 <hr />
-<h2 id="最大流问题">最大流问题</h2>
-<p>一个主要的思想是 <strong>贪心寻找增广路更新当前答案</strong>。</p>
+<h2 id="section"></h2>
 
 			</div>
 			<hr class="dotted">
@@ -215,16 +206,16 @@ const searchPath = "/search.xml"
 					<div id="prev">
 						
 							<!-- 吐槽，为啥还需要加 / -->
-							<a href="/20250202/">
+							<a href="/20251124/">
 								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
-								学习笔记：后缀数组
+								性质题
 							</a>
 						
 					</div>
 					<div id="next">
 						
-							<a href="/20250121/">
-								技巧：字符串拆分
+							<a href="/20251118/">
+								杂题选谈
 								<i class="fas fa-angle-double-right" style="margin-left: 10px;"></i>
 							</a>
 						
@@ -324,6 +315,7 @@ const searchPath = "/search.xml"
 				"怄火": "oh.gif",
 			
 		},
+		mathjax: true,
 	})
 </script>
 			</div>
