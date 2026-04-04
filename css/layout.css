@@ -1,0 +1,575 @@
+html {
+	scroll-behavior: smooth;
+}
+body {
+	margin: 0;
+	background: rgb(230, 230, 230);
+}
+
+
+/* table */
+
+table {
+    border-collapse: collapse;
+}
+
+th, td {
+    border: solid 1px #e9e9e9;
+    padding: 5px 15px;
+}
+
+em {
+	color: #918570;
+}
+
+/* list */
+
+li {
+	margin: 10px 0;
+}
+.dotted.border,
+hr.dotted {
+	border: none !important;
+	background: none;
+	border-bottom: rgb(238, 122, 76) dotted !important;
+}
+
+hr {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	height: 2px;
+	border: none;
+	border-top: 1px solid transparent;
+	background: linear-gradient(white, white) padding-box,
+		repeating-linear-gradient(-45deg, #ccc 0,
+			#ccc 5px, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0) 8.5px);
+}
+
+a, a > em {
+	text-decoration: none;
+	color: rgb(235, 165, 101);
+	transition: .1s;
+	cursor: pointer;
+}
+
+mark a {
+	color: rgb(0 67 255);
+	text-decoration: underline;
+}
+
+a:hover, a > em:hover {
+	transition: .1s;
+	color: rgb(238, 122, 76);
+}
+
+#content blockquote {
+	border-radius: 4px;
+	background: rgb(248, 248, 248);
+	padding: 0 15px;
+	max-width: 100%;
+	margin: 0;
+	border: #bbb solid 1.5px;
+	font-size: 14px;
+}
+
+h3 {
+	font-size: 20px;
+}
+
+h4 {
+	font-size: 18px;
+}
+
+.text {
+	font-family: 'MyUbuntu', Ubuntu, Roboto, 'Open Sans', 'Noto Sans SC', 'Microsoft Yahei', 'Arial', sans-serif;
+}
+.serif {
+	font-family: 'Noto Serif CJK SC', 'Serif', 'Open Sans', 'Microsoft serif', sans-serif;
+}
+.code {
+	font-family: 'FiraCode', Ubuntu, 'Consolas', 'Serif';
+}
+@font-face {
+	font-family: 'FiraCode';
+	font-display: swap;
+	font-weight: normal;
+	src: url('/fonts/FiraCode-Regular.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'FiraCode';
+	font-display: swap;
+	font-weight: bold;
+	src: url('/fonts/FiraCode-SemiBold.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'MyUbuntu';
+	font-display: swap;
+	font-weight: normal;
+	src: url('/fonts/Ubuntu-R.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'MyUbuntu';
+	font-display: swap;
+	font-weight: bold;
+	src: url('/fonts/Ubuntu-B.ttf') format('truetype');
+}
+code:not(pre>code) {
+	font-family: 'FiraCode', 'Consolas', 'Microsoft serif', sans-serif;
+	font-size: 14px;
+    background: #f5f5f5;
+    padding: 2px 5px;
+	border-radius: 3px;
+	line-height: 1em;
+	color: #3e3e3e;
+}
+pre[class*="language-"] {
+	box-shadow: 0 0 4px 4px rgba(34, 36, 38, 0.07);
+}
+
+pre>code {
+	background: unset !important;
+	padding-right: 10px;
+}
+
+pre>code>#text {
+	background: unset !important;
+}
+
+.language-css .token.string,
+.style .token.string,
+.token.entity,
+.token.operator,
+.token.url {
+	background: unset !important;
+}
+
+
+pre.line-numbers {
+	font-size: .95em;
+}
+/* 代码块复制按钮 */
+.code-wrap {
+	position: relative;
+}
+.btn-copy {
+	display: inline-block;
+	cursor: pointer;
+	background-color: rgba(255, 255, 255, 0.514);
+	/* background-image: linear-gradient(#fcfcfc,#eee); */
+	border: 1px solid #d5d5d5;
+	border-radius: 3px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-appearance: none;
+	appearance: none;
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 20px;
+	outline: none;
+	color: #333;
+	transition: opacity .15s ease-in-out;
+	padding: 2px 6px;
+	position: absolute;
+	right: 7px;
+	top: 7px;
+	opacity: 0;
+	z-index: 1000;
+}
+.btn-copy span {
+	margin-left: 5px;
+}
+.code-wrap:hover .btn-copy {
+	opacity: 1;
+}
+
+img {
+	max-width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+a.citem {
+	background: #e3e3e3;
+	color: rgb(91, 91, 91);
+	text-align: center;
+	border-radius: 2px;
+	transition: .1s;
+	box-sizing: border-box;
+	margin: 2px;
+	font-size: 13px;
+	padding: 4px 5px;
+}
+
+a.citem:hover {
+	color: #fff;
+	transition: .1s;
+	background: #c3c3c3;
+}
+
+del {
+	color: #bdb3aa;
+}
+
+/* 顶栏，topbar */
+
+.ui.top.menu {
+	background: #fff;
+	display: flex;
+	flex-direction: row;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 1001;
+	/* Valine 查看更多的 z-index 是 999，顶栏原来的 z-index 是 101 不够用 😓 */
+	box-shadow: 0 3px 2px 0 rgba(34, 36, 38, .15);
+}
+
+#rightali {
+	display: flex;
+	font-weight: bold;
+	flex-direction: row;
+	justify-content: flex-end;
+	margin-left: auto;
+}
+
+.logo>img {
+	max-width: 30px;
+	margin-left: .4em;
+	margin-right: .2em;
+}
+
+.logo {
+	line-height: 1.5;
+	box-sizing: border-box;
+	margin-top: 0;
+	margin-bottom: 0;
+	min-width: 80px;
+	text-align: center;
+	font-size: 16px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: flex-end;
+	border-bottom: solid transparent 8px;
+}
+
+#bartitle {
+	color: #183153;
+	font-weight: bold;
+	font-size: 19px;
+	font-family: 'Arial', 'Open Sans', 'Microsoft serif', sans-serif;
+	margin-right: .4em;
+}
+
+/* 词条基本设置 */
+.ui.top.menu>div>.item {
+	line-height: 1.5;
+	box-sizing: border-box;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding: .6em 1em;
+	min-width: 80px;
+	text-align: center;
+	font-size: 16px;
+	color: rgb(91, 91, 91);
+	background: #fff;
+	height: 100%;
+	transition: .15s;
+}
+
+.logo:hover {
+	background: rgb(250, 250, 250);
+}
+
+.ui.top.menu>div>.item:hover {
+	color: rgb(238, 122, 76) !important;
+	background: rgb(250, 250, 250);
+}
+
+/* -------- Valine ------- */
+
+textarea#veditor {
+	font-family: 'FiraCode', 'NotoSans', monospace,  Ubuntu, Roboto, 'Open Sans', 'Microsoft serif', sans-serif !important;
+}
+
+.vpower.txt-right>a {
+	font-size: 1em !important;
+}
+
+#rootitem {
+	color: #fff;
+	background: orange;
+	font-size: .9em;
+	padding: 2px 5px;
+	border-radius: 2px;
+}
+
+a.vnick {
+	transition: .15s;
+}
+
+a.vnick:hover {
+	transition: .15s;
+	color: rgb(235, 165, 101) !important;
+}
+
+#footer {
+	text-align: center;
+	color: #919191 !important;
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+
+span.vpriority {
+	color: #919191;
+	font-size: 14px;
+}
+
+#CCTAG {
+	transition: opacity .2s;
+	background: #000;
+	opacity: .7;
+}
+#CCTAG:hover {
+	opacity: .9;
+}
+
+/* details 特化 */
+details {
+	padding: 10px 20px;
+	margin: 10px 0;
+	border-radius: 5px;
+	background: #f4f4f4;
+	transition: box-shadow .15s;
+}
+details:hover {
+	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+details summary::marker {
+	display: none;
+	list-style: none;
+	color: transparent;
+}
+details>summary::before {
+	content: "";
+	position: absolute;
+	left: -7px;
+	z-index: 10;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 20px;
+	height: 20px;
+	background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23555668"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>');
+	background-repeat: no-repeat;
+	background-position: center;
+	transition: transform .1s ease;
+}
+details[open] summary::before {
+	transform: translateY(-50%) rotate(90deg);
+}
+/* details > *, */
+blockquote > *
+
+/* 引用优化 */
+{
+	font-family: 'Cambria Math', 'Noto Sans SC', 'NotoSerif', 'Microsoft serif', 'Arial', 'Serif';
+	font-size: 15px;
+}
+
+details > * {
+	font-size: 15px;
+}
+
+details>summary {
+	font-weight: bold;
+	position: relative;
+}
+
+details>p>span,
+details>p>nobr {
+	font-size: 15.5px !important;
+}
+
+details>summary {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	outline: 0;
+	cursor: pointer;
+}
+/* 搜索相关配置 */
+#search-bg {
+	margin: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+	top: 0;
+	left: 0;
+    background: #62626247;
+    z-index: -1;
+}
+#search-bg {
+	opacity: 0%;
+}
+button#close-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #555;
+    font-size: 125%;
+	transition: color .2s;
+}
+button#close-button:hover {
+    color: #aaa;
+}
+#search-input {
+	display: block;
+    margin: auto;
+    width: 90%;
+    font-size: 19px;
+    font-family: monospace;
+    margin-top: 32px;
+    border: none;
+    padding-bottom: 3px;
+    border-bottom: #cdcdcd solid .5px;
+}
+#search-input:focus-visible {
+	outline: none;
+}
+#search-box {
+	width: 60%;
+    height: 80%;
+    display: block;
+    position: fixed;
+    background: white;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -45%);
+    border-radius: 4px;
+    box-shadow: #939393 0 5px 5px;
+}
+#search-results {
+    overflow-y: scroll;
+    max-height: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 90%;
+	font-family: monospace;
+	font-size: 15px;
+	margin-top: 10px;
+	scrollbar-width: thin;
+}
+#search-results:hover {
+	scrollbar-color: #009f92 transparent;
+}
+.search-result-item:hover {
+	background-color: #e9e9e9;
+    box-shadow: 0px 0px 16px 0px #c9c9c9;
+}
+.search-result-item {
+	padding: 10px;
+    box-shadow: 0px 0px 16px 0px #ebebeb;
+    margin: 10px;
+	border-radius: 3px;
+	transition: .2s;
+}
+.search-result-title {
+	color: #555;
+    font-weight: bold;
+    font-size: 17px;
+}
+span.search-result-url {
+    color: #aaa;
+    margin-left: 10px;
+    font-size: 90%;
+}
+.search-keyword {
+	color: #009f92;
+    background: inherit;
+}
+.search-result {
+	color: #999999;
+}
+i#search-icon {
+	margin-top: .2em;
+	color: rgb(99, 99, 99);
+	margin-right: .2em;
+	font-size: 18px;
+}
+
+a#Search {
+	padding-top: 10px;
+	min-width: unset;
+}
+
+/* 图片 text */
+figure {
+	text-align: center;
+}
+
+figcaption {
+	margin-top: 5px;
+	/* font-style: italic; */
+	color: #777;
+	font-size: 90%;
+}
+
+
+/* 表情 */
+img[src^="/em/"] {
+	width: 26px;
+    height: 26px;
+    overflow: hidden;
+	margin: 0 !important;
+	display: inline-block !important;
+	box-shadow: none !important;
+    vertical-align: middle;
+}
+
+/* mark */
+mark {
+	background-color: #fff85f;
+	padding: 1px 2px;
+	margin: 0 2px;
+}
+
+/* toc */
+h1::before, h2::before, h3::before, h4::before, h5::before, h6::before, p[id]::before {      
+    height: 4rem;
+    margin-top: -4rem;
+    content: "";
+    display: block;
+    transition: .1s;
+}
+/* anchor */
+#anchor {
+    margin-left: -25px;
+    display: inline-block;
+    transition: .1s;
+    position: relative;
+}
+h2>#inner {
+	margin-left: -19px;
+}
+h3>#inner {
+	margin-left: -16px;
+}
+h2>#inner, h3>#inner {
+    background: #fff;
+    z-index: 3;
+    color: #555668;
+    position: relative;
+    padding-left: 26px;
+    transition: background .15s;
+}
+h2>#inner:hover, h3>#inner:hover {
+    cursor: pointer;
+    background: #00000000;
+}

@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 网站图标 -->
+<link rel="icon" type="image/png" sizes="32x32" href="/images/icon.svg">
+<!-- 其他图标支持 -->
+<link rel="stylesheet" href="/css/facss/fa-brands.min.css">
+<link rel="stylesheet" href="/css/facss/fa-regular.min.css">
+<link rel="stylesheet" href="/css/facss/fa-solid.min.css">
+<link rel="stylesheet" href="/css/facss/fontawesome.min.css">
+<link rel="stylesheet" href="/css/facss/fontawesome-all.css">
+<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+<!-- 网站标题 -->
+<title>
+	
+		学习笔记：AC 自动机 -
+	
+	XSC062 的博客
+</title>
+<!-- js 引入 -->
+<script>
+const searchPath = "/search.xml"
+</script>
+
+<script src="/js/afterloaded.js"></script>
+
+
+<script src="/js/jQuery.js"></script>
+
+<!-- 载入 Valine -->
+
+<script src="/js/Valine.min.js"></script>
+
+<!-- css 引入 -->
+
+<link rel="stylesheet" href="/css/layout.css">
+
+
+<link rel="stylesheet" href="/css/prcss/prism.css">
+
+
+
+<!-- rss -->
+<link rel="alternate" type="application/rss+xml" title="" href="https://xsc062.netlify.app/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="" href="https://xsc062.netlify.app/atom.xml" />
+<link rel="alternate" type="application/json" title="" href="https://xsc062.netlify.app/feed.json" />
+
+<meta charset="utf-8"> 
+    
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            processEscapes: true
+          }
+        });
+      </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+            tex2jax: {
+              skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+          });
+      </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+              var all = MathJax.Hub.getAllJax(), i;
+              for(i=0; i < all.length; i += 1) {
+                  all[i].SourceElement().parentNode.className += ' has-jax';
+              }
+          });
+      </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS_CHTML"></script>
+
+<meta name="generator" content="Hexo 7.2.0"></head>
+<body class="line-numbers match-braces no-brace-select rainbow-braces">
+	<!-- 搜索 -->
+<script>
+	function closeSearchBox() {
+		$("#search-bg").css("transition", "null"); 
+		$("#search-bg").css("z-index", "-1"); 
+		$("#search-bg").css("opacity", "0%");
+		return;
+	}
+</script>
+<div id="search-bg">
+	<div id="search-box">
+		<button id="close-button" onclick="closeSearchBox()">
+			<i class="fas fa-times"></i>
+		</button>
+		<input type="text" id="search-input" placeholder="Type to search..." class="text">
+		<div id="search-results">
+			<div id="emptyInput" class="text">
+				<p>键入以搜索…</p>
+				<p><i>匹配算法</i>：把输入按空格拆分，单独<strong>匹配</strong>每一段输入（不区分大小写，仅匹配文章文本内容），输出取或后的结果。</p>
+				<p>模糊搜索似乎很难搞，目前没有相关打算。</p>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 顶栏整体导航菜单 -->
+<div class="ui top menu">
+	<!-- 左对齐 logo -->
+	<a class="logo" href="/">
+		<img width="25px" height="25px" style="border: solid transparent 2.5px" src="/images/icon.svg"></img>
+		<div id="bartitle" class="text">
+			XSC062 的博客
+		</div>
+	</a>
+	<!-- 右对齐部分导航 -->
+	<div id="rightali" class="serif">
+		<a class="item" id="Search" type="button">
+			<i class="btn text-muted fa fa-search" id="search-icon" disabled></i>
+		</a>
+		<a class="item" id="Home" href="/">
+			Home
+		</a>
+		<a class="item" id="Arch" href="/archives">
+			Archives
+		</a>
+		<!-- <a class="item" id="Cate" href="/categories">
+			Categories
+		</a> -->
+		<a class="item" id="Tags" href="/tags">
+			Tags
+		</a>
+		<a class="item" id="Frie" href="/friends">
+			Friends
+		</a>
+		<a class="item" id="Abou" href="/about">
+			About
+		</a>
+	</div>
+</div>
+    
+<link rel="stylesheet" href="/css/post.css">
+
+
+<script src="/js/post.js"></script>
+
+
+<div class="main">
+	<div id="sidebar" class="text">
+		<aside id="toc">
+			<span id="toctitle">
+				<i class="fas fa-list"></i>
+				目录
+			</span>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-text">前置知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ac-%E8%87%AA%E5%8A%A8%E6%9C%BA%E7%9A%84%E5%BB%BA%E7%AB%8B"><span class="toc-text">AC 自动机的建立</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ac-%E8%87%AA%E5%8A%A8%E6%9C%BA%E7%9A%84%E5%BA%94%E7%94%A8%E4%B8%8E%E8%AF%86%E5%88%AB"><span class="toc-text">AC 自动机的应用与识别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%9A%BE%E7%82%B9%E8%AE%BE%E8%AE%A1"><span class="toc-text">字符串难点设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#eg.-indie-album"><span class="toc-text">eg. Indie Album</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fail-%E6%A0%91%E7%9A%84%E7%BB%B4%E6%8A%A4"><span class="toc-text">fail 树的维护</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#eg.-divljak"><span class="toc-text">eg. Divljak</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%95%E4%B8%80%E6%8A%8A%E5%8A%A8%E6%80%81%E9%97%AE%E9%A2%98%E7%A6%BB%E7%BA%BF"><span class="toc-text">法一：把动态问题离线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%95%E4%BA%8C%E8%BD%AC%E8%80%8C%E5%A4%84%E7%90%86%E9%9D%99%E6%80%81%E9%97%AE%E9%A2%98"><span class="toc-text">法二：转而处理静态问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ac-%E8%87%AA%E5%8A%A8%E6%9C%BA%E4%B8%8A%E7%9A%84-dp"><span class="toc-text">AC 自动机上的 DP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#eg1.-l-%E8%AF%AD%E8%A8%80"><span class="toc-text">eg1. L 语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eg2.-popcount-words"><span class="toc-text">eg2. Popcount Words</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eg3.-legen"><span class="toc-text">eg3. Legen…</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eg4.-you-are-given-some-strings"><span class="toc-text">eg4. You Are Given Some
+Strings…</span></a></li></ol></li></ol>
+		</aside>
+	</div>
+	<div class="ui post container">
+		<div class="ui text container">
+			<span id="postcon">
+				<span id="postinfo">
+					<div class="ui post title serif">
+						<div id="fortitle" data-content="学习笔记：AC 自动机">
+							学习笔记：AC 自动机
+						</div>
+						<div class="ui title background">
+						</div>
+					</div>
+					<span id="date">
+						<i class="fas fa-calendar-alt" style="margin-right: 4px;"></i>
+						2025-01-20
+					</span>
+				</span>
+			</span>
+			<div id="posttags" class="dotted border">
+				
+					
+						<a href="/tags/DP/" class="citem">DP</a>
+					
+						<a href="/tags/字符串/" class="citem">字符串</a>
+					
+						<a href="/tags/AC-自动机/" class="citem">AC 自动机</a>
+					
+				
+			</div>
+			<!-- 本来用的是 fromNow 然后字符串判断，没想到可以直接调用 moment() -->
+			
+			<div id="content">
+				<p>耳机声音疑似有点小了，用心旷神怡的话来说大致会是「比果蝇↑嗡嗡声还小」。</p>
+<span id="more"></span>
+<p>？卧槽耳机上居然可以调音量 <img src="/em/oh.gif" /></p>
+<hr />
+<h2 id="前置知识">前置知识</h2>
+<p>首先可能需要知道专有名词「自动机」的含义。</p>
+<p>大致可以简单理解为，一个
+DAG，其中点表示状态，边表示转移。给进去一个字符串之类，就可以在 DAG
+上游走，根据最后所处结点，可以得到字符串相关特征。</p>
+<p>这个定义让我们想到了 Trie。事实上，Trie
+就是一种相当基础的自动机。</p>
+<hr />
+<p>接下来，让我们复习 KMP 相关概念。</p>
+<p>假想一个场景：你需要求得 <span class="math inline">\(T\)</span> 在
+<span class="math inline">\(S\)</span> 中的出现次数。</p>
+<p>拥有一定题目经验的你，会使用 KMP 求出 <span
+class="math inline">\(T\)</span> 的 <code>next</code> 数组，令 <span
+class="math inline">\(T\)</span> 在 <span
+class="math inline">\(S\)</span> 上进行匹配，失配或完全匹配时回到 <span
+class="math inline">\(T\)</span> 在该处的 <code>next</code>，<span
+class="math inline">\(S\)</span> 上的指针始终向右，<span
+class="math inline">\(T\)</span>
+上的指针如果向右，每次只能移动一位；如果向左，最左移到开头，均摊下来复杂度即为
+<span class="math inline">\(O(|S| + |T|)\)</span>。</p>
+<p>假如场景变得更复杂：给定 <span
+class="math inline">\(\{T_m\}\)</span>，你需要求出每个 <span
+class="math inline">\(T_j\)</span> 在 <span
+class="math inline">\(S\)</span> 中的出现次数。</p>
+<p>那么如果我们对每个 <span class="math inline">\(T_j\)</span> 进行一次
+KMP，复杂度将会上升到 <span
+class="math inline">\(O(m|S|)\)</span>，难以承受。有没有优化的方法呢？</p>
+<hr />
+<h2 id="ac-自动机的建立">AC 自动机的建立</h2>
+<p>结合上面的知识，我们下意识想到，能不能将 <span
+class="math inline">\(\{T_m\}\)</span> 建成一个树状结构，令 <span
+class="math inline">\(S\)</span> 在其上进行 KMP 呢？</p>
+<p>将 <span class="math inline">\(\{T_m\}\)</span> 全部加入 Trie，由于
+<code>next</code>
+只会由更深的点指向更浅的点，似乎从直觉上是有规则的。但随之而来的是一个问题：点
+<span class="math inline">\(u\)</span> 的 <code>next</code> 不一定在
+<span class="math inline">\(\text{root}\to u\)</span> 的链上（由于 Trie
+的性质，可知指向的点是唯一的）。鉴于这一点不同，我们结合其「失配指针」的定义，将
+<code>next</code> 在 Trie 上的同分异构体唤为 <code>fail</code>。</p>
+<p>考察 Trie 上该 <code>fail</code> 边的性质。现欲求解 <span
+class="math inline">\(u\)</span> 的 <code>fail</code> 指向的 <span
+class="math inline">\(c\)</span>，结合 KMP 中 <code>next</code>
+的性质，假设 <span class="math inline">\(u\)</span> 的父节点的
+<code>fail</code> 边指向 <span
+class="math inline">\(v&#39;\)</span>，那么 <span
+class="math inline">\(v\)</span> 的值为：</p>
+<ul>
+<li><span class="math inline">\(v&#39;\)</span> 上有边权相同的边，那么
+<span class="math inline">\(v\)</span> 就是该边指向的点。</li>
+<li>否则，前往 <span class="math inline">\(v&#39;\)</span> 的
+<code>fail</code>，重复以上判定。</li>
+</ul>
+<p>那么就完成了失配的处理。相应地，完全匹配时的跳转应如何处理？直接将
+<code>fail</code> 的儿子全部接到 <span class="math inline">\(u\)</span>
+下面即可。如果 <span class="math inline">\(u\)</span> 和
+<code>fail</code> 具有同一个边权的边时，保留 <span
+class="math inline">\(u\)</span> 的这条边 <span
+class="math inline">\(u\to v\)</span>，因为 <span
+class="math inline">\(v\)</span> 的 <code>fail</code> 必定指向 <span
+class="math inline">\(u\)</span> 的 <code>fail</code> 的对应儿子。</p>
+<p>两点结合，我们发现从实现上，可以直接令 <span
+class="math inline">\(v\)</span> 的 <code>fail</code> 指向 <span
+class="math inline">\(u\)</span> 的 <code>fail</code>
+的对应儿子（那么时间复杂度显而易见是 <span
+class="math inline">\(O(26\sum |T|)\)</span> 的）。</p>
+<p>匹配时，对于每个点和其返回到根的 <code>fail</code>
+链，全部标记。则一个模式串匹配的次数即为被打标记的次数。</p>
+<p>那么可以发现 AC 自动机的本质就是添加了 <code>fail</code> 边的
+Trie。</p>
+<hr />
+<p>那么根据上述要求，我们需要按照深度顺序求得 <code>fail</code>，考虑
+BFS。</p>
+<details>
+<p>哦哦好神奇复活之后记得啥是 KMP 但忘了啥是 C++
+了。甚至花了一点时间学习怎么创建一个函数？？？</p>
+<p>大家写 AC 自动机 Trie 根节点下标一定要设成 0 啊 <img
+src="/em/ll.gif" /> 设成 1 被各种细节坑惨了 <img src="/em/ll.gif" /></p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> maxn <span class="op">=</span> <span class="fl">2e5</span> <span class="op">+</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> T<span class="op">[</span>maxn<span class="op">][</span><span class="dv">26</span><span class="op">],</span> tot<span class="op">,</span> cnt<span class="op">[</span>maxn<span class="op">],</span> fail<span class="op">[</span>maxn<span class="op">];</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ins<span class="op">(</span><span class="bu">std::</span>string <span class="op">&amp;</span>t<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> p <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i <span class="op">:</span> t<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(!</span>T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">])</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>            T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">]</span> <span class="op">=</span> <span class="op">++</span>tot<span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">];</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> p<span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">&#123;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef ONLINE_JUDGE</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>ios::sync_with_stdio<span class="op">(</span><span class="kw">false</span><span class="op">);</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cin<span class="op">.</span>tie<span class="op">(</span><span class="kw">nullptr</span><span class="op">),</span> <span class="bu">std::</span>cout<span class="op">.</span>tie<span class="op">(</span><span class="kw">nullptr</span><span class="op">);</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>freopen<span class="op">(</span><span class="st">&quot;.in&quot;</span><span class="op">,</span> <span class="st">&quot;r&quot;</span><span class="op">,</span> stdin<span class="op">);</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>freopen<span class="op">(</span><span class="st">&quot;.out&quot;</span><span class="op">,</span> <span class="st">&quot;w&quot;</span><span class="op">,</span> stdout<span class="op">);</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n<span class="op">;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> n<span class="op">;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> tail<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="bu">std::</span>string<span class="op">&gt;</span> t<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> t<span class="op">[</span>i<span class="op">],</span> tail<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> ins<span class="op">(</span>t<span class="op">[</span>i<span class="op">]);</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#123;</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> q<span class="op">;</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">26</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>T<span class="op">[</span><span class="dv">0</span><span class="op">][</span>i<span class="op">])</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>                q<span class="op">.</span>push<span class="op">(</span>T<span class="op">[</span><span class="dv">0</span><span class="op">][</span>i<span class="op">]);</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(;</span> <span class="op">!</span>q<span class="op">.</span>empty<span class="op">();</span> <span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>            <span class="dt">int</span> u <span class="op">=</span> q<span class="op">.</span>front<span class="op">();</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>            q<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">26</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>T<span class="op">[</span>u<span class="op">][</span>i<span class="op">])</span> <span class="op">&#123;</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">int</span> v <span class="op">=</span> T<span class="op">[</span>u<span class="op">][</span>i<span class="op">];</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>                    fail<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> T<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]][</span>i<span class="op">];</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>                    q<span class="op">.</span>push<span class="op">(</span>v<span class="op">);</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>                <span class="op">&#125;</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>                    T<span class="op">[</span>u<span class="op">][</span>i<span class="op">]</span> <span class="op">=</span> T<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]][</span>i<span class="op">];</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>string s<span class="op">;</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> s<span class="op">;</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#123;</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> p <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i <span class="op">:</span> s<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>            p <span class="op">=</span> T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">];</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> fa <span class="op">=</span> p<span class="op">;</span> fa<span class="op">;</span> fa <span class="op">=</span> fail<span class="op">[</span>fa<span class="op">])</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>                <span class="op">++</span>cnt<span class="op">[</span>fa<span class="op">];</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> cnt<span class="op">[</span>tail<span class="op">[</span>i<span class="op">]]</span> <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span></code></pre></div>
+</details>
+<hr />
+<p>肉眼可见该查询方式是极其低效的，故考虑优化跳 <code>fail</code>
+打标记的过程。</p>
+<p>既然自动机结构不变，不如将跳 <code>fail</code>
+的步骤放在最后统一进行。容易在发现 <code>fail</code>
+树上进行拓扑排序转移即可。</p>
+<details>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> maxn <span class="op">=</span> <span class="fl">2e5</span> <span class="op">+</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> T<span class="op">[</span>maxn<span class="op">][</span><span class="dv">26</span><span class="op">],</span> tot<span class="op">,</span> cnt<span class="op">[</span>maxn<span class="op">],</span> fail<span class="op">[</span>maxn<span class="op">],</span> deg<span class="op">[</span>maxn<span class="op">];</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ins<span class="op">(</span><span class="bu">std::</span>string <span class="op">&amp;</span>t<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> p <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i <span class="op">:</span> t<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(!</span>T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">])</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>            T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">]</span> <span class="op">=</span> <span class="op">++</span>tot<span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">];</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> p<span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">&#123;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef ONLINE_JUDGE</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>ios::sync_with_stdio<span class="op">(</span><span class="kw">false</span><span class="op">);</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cin<span class="op">.</span>tie<span class="op">(</span><span class="kw">nullptr</span><span class="op">),</span> <span class="bu">std::</span>cout<span class="op">.</span>tie<span class="op">(</span><span class="kw">nullptr</span><span class="op">);</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>freopen<span class="op">(</span><span class="st">&quot;.in&quot;</span><span class="op">,</span> <span class="st">&quot;r&quot;</span><span class="op">,</span> stdin<span class="op">);</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>freopen<span class="op">(</span><span class="st">&quot;.out&quot;</span><span class="op">,</span> <span class="st">&quot;w&quot;</span><span class="op">,</span> stdout<span class="op">);</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n<span class="op">;</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> n<span class="op">;</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> tail<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="bu">std::</span>string<span class="op">&gt;</span> t<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> t<span class="op">[</span>i<span class="op">],</span> tail<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> ins<span class="op">(</span>t<span class="op">[</span>i<span class="op">]);</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#123;</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> q<span class="op">;</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">26</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>T<span class="op">[</span><span class="dv">0</span><span class="op">][</span>i<span class="op">])</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>                q<span class="op">.</span>push<span class="op">(</span>T<span class="op">[</span><span class="dv">0</span><span class="op">][</span>i<span class="op">]);</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(;</span> <span class="op">!</span>q<span class="op">.</span>empty<span class="op">();</span> <span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>            <span class="dt">int</span> u <span class="op">=</span> q<span class="op">.</span>front<span class="op">();</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>            q<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">26</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>T<span class="op">[</span>u<span class="op">][</span>i<span class="op">])</span> <span class="op">&#123;</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">int</span> v <span class="op">=</span> T<span class="op">[</span>u<span class="op">][</span>i<span class="op">];</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>                    fail<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> T<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]][</span>i<span class="op">],</span> <span class="op">++</span>deg<span class="op">[</span>T<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]][</span>i<span class="op">]];</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>                    q<span class="op">.</span>push<span class="op">(</span>v<span class="op">);</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>                <span class="op">&#125;</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>                    T<span class="op">[</span>u<span class="op">][</span>i<span class="op">]</span> <span class="op">=</span> T<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]][</span>i<span class="op">];</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>string s<span class="op">;</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> s<span class="op">;</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#123;</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> p <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i <span class="op">:</span> s<span class="op">)</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>            p <span class="op">=</span> T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">],</span> <span class="op">++</span>cnt<span class="op">[</span>p<span class="op">];</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#123;</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> q<span class="op">;</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> tot<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(!</span>deg<span class="op">[</span>i<span class="op">])</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>                q<span class="op">.</span>push<span class="op">(</span>i<span class="op">);</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(;</span> <span class="op">!</span>q<span class="op">.</span>empty<span class="op">();</span> <span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>            <span class="dt">int</span> u <span class="op">=</span> q<span class="op">.</span>front<span class="op">();</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>            q<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>            cnt<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]]</span> <span class="op">+=</span> cnt<span class="op">[</span>u<span class="op">];</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(!--</span>deg<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]])</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>                q<span class="op">.</span>push<span class="op">(</span>fail<span class="op">[</span>u<span class="op">]);</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> cnt<span class="op">[</span>tail<span class="op">[</span>i<span class="op">]]</span> <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span></code></pre></div>
+</details>
+<hr />
+<h2 id="ac-自动机的应用与识别">AC 自动机的应用与识别</h2>
+<p>我们知道其最典型的特征是 <strong>多模式串</strong>、<strong>静态 /
+离线</strong>。当碰到类似特点时，大概率就是 AC 自动机。</p>
+<p>其中，可以设置的难点有：</p>
+<ol type="1">
+<li>字符串难点，和其他字符串题可设置的难点相同。</li>
+<li>fail 树维护，可能结合数据结构、拓扑排序、树形 DP 等考察。</li>
+<li>DP 的设计。</li>
+</ol>
+<hr />
+<h2 id="字符串难点设计">字符串难点设计</h2>
+<h3 id="eg.-indie-album">eg. Indie Album</h3>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1207/G"
+class="uri">https://codeforces.com/problemset/problem/1207/G</a></p>
+<p>题目的「可持久化」试图误导我们用操作串建立自动机，但这样就会有一个比较严重的问题，我们没办法求
+<span class="math inline">\(t\)</span> 的出现次数。</p>
+<p>为了保证答案可求我们仍然在 <span class="math inline">\(t\)</span>
+上建立 ACAM。容易发现操作串以 Trie 形式给出，我们可以在遍历 Trie
+时同时完成游走，通过回溯完成询问。</p>
+<p>假设当前 DFS 中，遍历到 Trie 树中的 <span
+class="math inline">\(x\)</span> 点和自动机中的 <span
+class="math inline">\(u\)</span> 状态，那么对于 <span
+class="math inline">\(x\)</span> 点所对应的一个询问串 <span
+class="math inline">\(t\)</span>，相当于询问经过的所有状态有多少个在
+<span class="math inline">\(t\)</span> 引导的 fail 树子树中。我们求出
+fail 树的 dfn，用树状数组简单统计即可。</p>
+<details>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> maxn <span class="op">=</span> <span class="fl">4e5</span> <span class="op">+</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> g<span class="op">[</span>maxn<span class="op">],</span> q<span class="op">[</span>maxn<span class="op">];</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fail<span class="op">[</span>maxn<span class="op">],</span> T<span class="op">[</span>maxn<span class="op">][</span><span class="dv">26</span><span class="op">],</span> tot<span class="op">,</span> bit<span class="op">[</span>maxn<span class="op">],</span> to<span class="op">[</span>maxn<span class="op">][</span><span class="dv">26</span><span class="op">],</span> cnt<span class="op">[</span>maxn<span class="op">];</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ins<span class="op">(</span><span class="bu">std::</span>string s<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> p <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i <span class="op">:</span> s<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(!</span>T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">])</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">]</span> <span class="op">=</span> <span class="op">++</span>tot<span class="op">;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">];</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> p<span class="op">;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> lowbit<span class="op">(</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x <span class="op">&amp;</span> <span class="op">-</span>x<span class="op">;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> add<span class="op">(</span><span class="dt">int</span> x<span class="op">,</span> <span class="dt">int</span> v<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(;</span> x <span class="op">&lt;=</span> tot <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> x <span class="op">+=</span> lowbit<span class="op">(</span>x<span class="op">))</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        bit<span class="op">[</span>x<span class="op">]</span> <span class="op">+=</span> v<span class="op">;</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ask<span class="op">(</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> res <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(;</span> x<span class="op">;</span> x <span class="op">-=</span> lowbit<span class="op">(</span>x<span class="op">))</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        res <span class="op">+=</span> bit<span class="op">[</span>x<span class="op">];</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">&#123;</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef ONLINE_JUDGE</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>ios::sync_with_stdio<span class="op">(</span><span class="kw">false</span><span class="op">);</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cin<span class="op">.</span>tie<span class="op">(</span><span class="kw">nullptr</span><span class="op">),</span> <span class="bu">std::</span>cout<span class="op">.</span>tie<span class="op">(</span><span class="kw">nullptr</span><span class="op">);</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>freopen<span class="op">(</span><span class="st">&quot;.in&quot;</span><span class="op">,</span> <span class="st">&quot;r&quot;</span><span class="op">,</span> stdin<span class="op">);</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>freopen<span class="op">(</span><span class="st">&quot;.out&quot;</span><span class="op">,</span> <span class="st">&quot;w&quot;</span><span class="op">,</span> stdout<span class="op">);</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n<span class="op">,</span> now <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> n<span class="op">;</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> id<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">,</span> op<span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>        <span class="dt">char</span> t<span class="op">;</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> op<span class="op">;</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>op <span class="op">==</span> <span class="dv">1</span><span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>            <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> t<span class="op">;</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(!</span>to<span class="op">[</span><span class="dv">0</span><span class="op">][</span>t <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">])</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>                to<span class="op">[</span><span class="dv">0</span><span class="op">][</span>t <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">]</span> <span class="op">=</span> <span class="op">++</span>now<span class="op">;</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>            <span class="op">++</span>cnt<span class="op">[</span>to<span class="op">[</span><span class="dv">0</span><span class="op">][</span>t <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">]],</span> id<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> to<span class="op">[</span><span class="dv">0</span><span class="op">][</span>t <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">];</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span> <span class="op">&#123;</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>            <span class="dt">int</span> j<span class="op">;</span> </span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>            <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> j <span class="op">&gt;&gt;</span> t<span class="op">;</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(!</span>to<span class="op">[</span>id<span class="op">[</span>j<span class="op">]][</span>t <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">])</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>                to<span class="op">[</span>id<span class="op">[</span>j<span class="op">]][</span>t <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">]</span> <span class="op">=</span> <span class="op">++</span>now<span class="op">;</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>            <span class="op">++</span>cnt<span class="op">[</span>to<span class="op">[</span>id<span class="op">[</span>j<span class="op">]][</span>t <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">]],</span> id<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> to<span class="op">[</span>id<span class="op">[</span>j<span class="op">]][</span>t <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">];</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> m<span class="op">;</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> m<span class="op">;</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> tail<span class="op">(</span>m <span class="op">+</span> <span class="dv">1</span><span class="op">),</span> res<span class="op">(</span>m <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">,</span> x<span class="op">;</span> i <span class="op">&lt;=</span> m<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>string t<span class="op">;</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> x <span class="op">&gt;&gt;</span> t<span class="op">,</span> tail<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> ins<span class="op">(</span>t<span class="op">);</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>        q<span class="op">[</span>id<span class="op">[</span>x<span class="op">]].</span>push_back<span class="op">(</span>i<span class="op">);</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#123;</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> q<span class="op">;</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">26</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>T<span class="op">[</span><span class="dv">0</span><span class="op">][</span>i<span class="op">])</span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>                q<span class="op">.</span>push<span class="op">(</span>T<span class="op">[</span><span class="dv">0</span><span class="op">][</span>i<span class="op">]),</span> g<span class="op">[</span><span class="dv">0</span><span class="op">].</span>push_back<span class="op">(</span>T<span class="op">[</span><span class="dv">0</span><span class="op">][</span>i<span class="op">]);</span></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(;</span> <span class="op">!</span>q<span class="op">.</span>empty<span class="op">();</span> <span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>            <span class="dt">int</span> u <span class="op">=</span> q<span class="op">.</span>front<span class="op">();</span></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>            q<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">26</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>T<span class="op">[</span>u<span class="op">][</span>i<span class="op">])</span> <span class="op">&#123;</span></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">int</span> v <span class="op">=</span> T<span class="op">[</span>u<span class="op">][</span>i<span class="op">];</span></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>                    fail<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> T<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]][</span>i<span class="op">];</span></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>                    q<span class="op">.</span>push<span class="op">(</span>v<span class="op">),</span> g<span class="op">[</span>fail<span class="op">[</span>v<span class="op">]].</span>push_back<span class="op">(</span>v<span class="op">);</span></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>                <span class="op">&#125;</span></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>                    T<span class="op">[</span>u<span class="op">][</span>i<span class="op">]</span> <span class="op">=</span> T<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]][</span>i<span class="op">];</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> dfn<span class="op">(</span>tot <span class="op">+</span> <span class="dv">1</span><span class="op">),</span> rfn<span class="op">(</span>tot <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>function<span class="op">&lt;</span><span class="dt">void</span><span class="op">(</span><span class="dt">int</span><span class="op">)&gt;</span> DFS <span class="op">=</span> <span class="op">[&amp;](</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>        <span class="at">static</span> <span class="dt">int</span> now <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>        dfn<span class="op">[</span>x<span class="op">]</span> <span class="op">=</span> <span class="op">++</span>now<span class="op">;</span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>        <span class="co">// printf(&quot;%d &quot;, x);</span></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i <span class="op">:</span> g<span class="op">[</span>x<span class="op">])</span></span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>            DFS<span class="op">(</span>i<span class="op">);</span></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>        rfn<span class="op">[</span>x<span class="op">]</span> <span class="op">=</span> now<span class="op">;</span></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;;</span></span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>    DFS<span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>function<span class="op">&lt;</span><span class="dt">void</span><span class="op">(</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">)&gt;</span> DFS1 <span class="op">=</span> <span class="op">[&amp;](</span><span class="dt">int</span> x<span class="op">,</span> <span class="dt">int</span> u<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>        add<span class="op">(</span>dfn<span class="op">[</span>u<span class="op">],</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i <span class="op">:</span> q<span class="op">[</span>x<span class="op">])</span></span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>            res<span class="op">[</span>i<span class="op">]</span> <span class="op">+=</span> ask<span class="op">(</span>rfn<span class="op">[</span>tail<span class="op">[</span>i<span class="op">]])</span> <span class="op">-</span> ask<span class="op">(</span>dfn<span class="op">[</span>tail<span class="op">[</span>i<span class="op">]]</span> <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">26</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>to<span class="op">[</span>x<span class="op">][</span>i<span class="op">])</span></span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>                DFS1<span class="op">(</span>to<span class="op">[</span>x<span class="op">][</span>i<span class="op">],</span> T<span class="op">[</span>u<span class="op">][</span>i<span class="op">]);</span></span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>        add<span class="op">(</span>dfn<span class="op">[</span>u<span class="op">],</span> <span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;;</span></span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>    DFS1<span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> m<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> res<span class="op">[</span>i<span class="op">]</span> <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span></span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span></code></pre></div>
+</details>
+<hr />
+<h2 id="fail-树的维护">fail 树的维护</h2>
+<h3 id="eg.-divljak">eg. Divljak</h3>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5840"
+class="uri">https://www.luogu.com.cn/problem/P5840</a></p>
+<h4 id="法一把动态问题离线">法一：把动态问题离线</h4>
+<p>问题相当于将模式串 <span class="math inline">\(T:\{P\}\)</span>
+动态化，但我们仍可以无脑离线下来解决问题。</p>
+<p>考虑原本的答案计算过程，即在经过的所有状态及其 fail
+链上打标记。现在我们需要离线并区分标记的来源（并且标记类型为布尔值），下意识想到使用线段树维护。</p>
+<p>我们对每个状态建立动态开点线段树，最后拓扑排序时使用线段树合并处理信息。容易证明时间复杂度相较原来多了一个
+<span class="math inline">\(\log\)</span>。</p>
+<p><del>理论可行，开始实践</del>
+出题人似乎不是很喜欢线段树选手所以决定剥夺你的 Memory
+Limit。想要用这种做法通过本题可见 <a
+target="_blank" rel="noopener" href="https://www.luogu.com.cn/article/jaxk3sno"
+class="uri">https://www.luogu.com.cn/article/jaxk3sno</a>。</p>
+<h4 id="法二转而处理静态问题">法二：转而处理静态问题</h4>
+<p>注意到题目中的静态的 <span class="math inline">\(S_x\)</span> 比起
+<span class="math inline">\(T:\{P\}\)</span> 更适合用来做模式串，我们在
+<span class="math inline">\(S_x\)</span> 上构建 AC
+自动机，考虑在线解决问题。</p>
+<p>在每次 <code>1</code> 操作时，更新模式串信息。对于途径的所有状态
+<span class="math inline">\(\{u\}\)</span>，考虑更新其所在 fail
+链上的信息。</p>
+<p>注意到我们需要修改整条 fail
+链上的信息，询问则是询问单点。这个时候可以考虑使用树上差分。</p>
+<p>但是 here comes a
+problem，我们对于这一整个串只能在整个树上每个点上更新一次。怎么消去相同的影响呢？</p>
+<p>这里实现上我们将经过的点按 fail 树上 dfn
+排序，并且对于序列中相邻的两点在其 LCA
+上减去一次标记。为什么这是正确的呢？参考虚树，我们只需要让序列中相邻的两个点尽量近就可以保证重复的被删除完毕。</p>
+<details>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> maxn <span class="op">=</span> <span class="fl">2e6</span> <span class="op">+</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> tot<span class="op">,</span> bit<span class="op">[</span>maxn<span class="op">],</span> T<span class="op">[</span>maxn<span class="op">][</span><span class="dv">26</span><span class="op">],</span> fail<span class="op">[</span>maxn<span class="op">];</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ins<span class="op">(</span><span class="bu">std::</span>string <span class="op">&amp;</span>t<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> p <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i <span class="op">:</span> t<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(!</span>T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">])</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>            T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">]</span> <span class="op">=</span> <span class="op">++</span>tot<span class="op">;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">];</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> p<span class="op">;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> lowbit<span class="op">(</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x <span class="op">&amp;</span> <span class="op">-</span>x<span class="op">;</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> add<span class="op">(</span><span class="dt">int</span> x<span class="op">,</span> <span class="dt">int</span> v<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">// printf(&quot;add (%d, %d)\n&quot;, x, v);</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(;</span> x <span class="op">&lt;=</span> tot <span class="op">+</span> <span class="dv">1</span><span class="op">;</span> x <span class="op">+=</span> lowbit<span class="op">(</span>x<span class="op">))</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        bit<span class="op">[</span>x<span class="op">]</span> <span class="op">+=</span> v<span class="op">;</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ask<span class="op">(</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> res <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> to <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(;</span> x<span class="op">;</span> x <span class="op">-=</span> lowbit<span class="op">(</span>x<span class="op">))</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        res <span class="op">+=</span> bit<span class="op">[</span>x<span class="op">];</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">// printf(&quot;ask(%d) = %d\n&quot;, to, res);</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">&#123;</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef ONLINE_JUDGE</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>ios::sync_with_stdio<span class="op">(</span><span class="kw">false</span><span class="op">);</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cin<span class="op">.</span>tie<span class="op">(</span><span class="kw">nullptr</span><span class="op">),</span> <span class="bu">std::</span>cout<span class="op">.</span>tie<span class="op">(</span><span class="kw">nullptr</span><span class="op">);</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>freopen<span class="op">(</span><span class="st">&quot;.in&quot;</span><span class="op">,</span> <span class="st">&quot;r&quot;</span><span class="op">,</span> stdin<span class="op">);</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>freopen<span class="op">(</span><span class="st">&quot;.out&quot;</span><span class="op">,</span> <span class="st">&quot;w&quot;</span><span class="op">,</span> stdout<span class="op">);</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n<span class="op">,</span> q<span class="op">;</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> n<span class="op">;</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> tail<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>string t<span class="op">;</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> t<span class="op">,</span> tail<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> ins<span class="op">(</span>t<span class="op">);</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">&gt;</span> g<span class="op">(</span>tot <span class="op">+</span> <span class="dv">2</span><span class="op">);</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#123;</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> q<span class="op">;</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">26</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>T<span class="op">[</span><span class="dv">0</span><span class="op">][</span>i<span class="op">])</span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>                q<span class="op">.</span>push<span class="op">(</span>T<span class="op">[</span><span class="dv">0</span><span class="op">][</span>i<span class="op">]);</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(;</span> <span class="op">!</span>q<span class="op">.</span>empty<span class="op">();</span> <span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>            <span class="dt">int</span> u <span class="op">=</span> q<span class="op">.</span>front<span class="op">();</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>            q<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">26</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>T<span class="op">[</span>u<span class="op">][</span>i<span class="op">])</span> <span class="op">&#123;</span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">int</span> v <span class="op">=</span> T<span class="op">[</span>u<span class="op">][</span>i<span class="op">];</span></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>                    fail<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> T<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]][</span>i<span class="op">];</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>                    q<span class="op">.</span>push<span class="op">(</span>v<span class="op">);</span></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>                <span class="op">&#125;</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>                    T<span class="op">[</span>u<span class="op">][</span>i<span class="op">]</span> <span class="op">=</span> T<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]][</span>i<span class="op">];</span></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> tot<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>            g<span class="op">[</span>fail<span class="op">[</span>i<span class="op">]</span> <span class="op">+</span> <span class="dv">1</span><span class="op">].</span>push_back<span class="op">(</span>i <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="bu">std::</span>array<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dv">22</span><span class="op">&gt;</span> <span class="op">&gt;</span> f<span class="op">(</span>tot <span class="op">+</span> <span class="dv">2</span><span class="op">);</span></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> dep<span class="op">(</span>tot <span class="op">+</span> <span class="dv">2</span><span class="op">),</span> dfn<span class="op">(</span>tot <span class="op">+</span> <span class="dv">2</span><span class="op">),</span> siz<span class="op">(</span>tot <span class="op">+</span> <span class="dv">2</span><span class="op">);</span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>function<span class="op">&lt;</span><span class="dt">void</span><span class="op">(</span><span class="dt">int</span><span class="op">)&gt;</span> DFS <span class="op">=</span> <span class="op">[&amp;](</span><span class="dt">int</span> x<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>        <span class="at">static</span> <span class="dt">int</span> now <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>        siz<span class="op">[</span>x<span class="op">]</span> <span class="op">=</span> <span class="dv">1</span><span class="op">,</span> dfn<span class="op">[</span>x<span class="op">]</span> <span class="op">=</span> <span class="op">++</span>now<span class="op">;</span></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>        <span class="co">// printf(&quot;%d\n&quot;, x);</span></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i <span class="op">:</span> g<span class="op">[</span>x<span class="op">])</span> <span class="op">&#123;</span></span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>            dep<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> dep<span class="op">[</span>x<span class="op">]</span> <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>            f<span class="op">[</span>i<span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> x<span class="op">;</span></span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;=</span> <span class="dv">21</span><span class="op">;</span> <span class="op">++</span>j<span class="op">)</span></span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>                f<span class="op">[</span>i<span class="op">][</span>j<span class="op">]</span> <span class="op">=</span> f<span class="op">[</span>f<span class="op">[</span>i<span class="op">][</span>j <span class="op">-</span> <span class="dv">1</span><span class="op">]][</span>j <span class="op">-</span> <span class="dv">1</span><span class="op">];</span></span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>            DFS<span class="op">(</span>i<span class="op">),</span> siz<span class="op">[</span>x<span class="op">]</span> <span class="op">+=</span> siz<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;;</span></span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>    dep<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> <span class="dv">1</span><span class="op">,</span> DFS<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span> askLCA <span class="op">=</span> <span class="op">[&amp;](</span><span class="dt">int</span> x<span class="op">,</span> <span class="dt">int</span> y<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>x <span class="op">==</span> y<span class="op">)</span></span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> x<span class="op">;</span></span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>dep<span class="op">[</span>x<span class="op">]</span> <span class="op">&lt;</span> dep<span class="op">[</span>y<span class="op">])</span></span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>            <span class="bu">std::</span>swap<span class="op">(</span>x<span class="op">,</span> y<span class="op">);</span></span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">21</span><span class="op">;</span> <span class="op">~</span>i<span class="op">;</span> <span class="op">--</span>i<span class="op">)</span></span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>dep<span class="op">[</span>f<span class="op">[</span>x<span class="op">][</span>i<span class="op">]]</span> <span class="op">&gt;=</span> dep<span class="op">[</span>y<span class="op">])</span></span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>                x <span class="op">=</span> f<span class="op">[</span>x<span class="op">][</span>i<span class="op">];</span></span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>x <span class="op">==</span> y<span class="op">)</span></span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> x<span class="op">;</span></span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">21</span><span class="op">;</span> <span class="op">~</span>i<span class="op">;</span> <span class="op">--</span>i<span class="op">)</span></span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>f<span class="op">[</span>x<span class="op">][</span>i<span class="op">]</span> <span class="op">!=</span> f<span class="op">[</span>y<span class="op">][</span>i<span class="op">])</span></span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>                x <span class="op">=</span> f<span class="op">[</span>x<span class="op">][</span>i<span class="op">],</span> y <span class="op">=</span> f<span class="op">[</span>y<span class="op">][</span>i<span class="op">];</span></span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> f<span class="op">[</span>x<span class="op">][</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;;</span></span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> q<span class="op">;</span></span>
+<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(;</span> q<span class="op">--;</span> <span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> op<span class="op">;</span></span>
+<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> op<span class="op">;</span></span>
+<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>op <span class="op">==</span> <span class="dv">1</span><span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>            <span class="bu">std::</span>string s<span class="op">;</span></span>
+<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>            <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> s<span class="op">;</span></span>
+<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a>            <span class="dt">int</span> p <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> len <span class="op">=</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span>s<span class="op">.</span>length<span class="op">();</span></span>
+<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a>            <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> id<span class="op">(</span>len <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> len<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a>                p <span class="op">=</span> T<span class="op">[</span>p<span class="op">][</span>s<span class="op">[</span>i <span class="op">-</span> <span class="dv">1</span><span class="op">]</span> <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">],</span> id<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> p <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a>            <span class="bu">std::</span>sort<span class="op">(</span>id<span class="op">.</span>begin<span class="op">()</span> <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> id<span class="op">.</span>end<span class="op">(),</span> <span class="op">[&amp;](</span><span class="dt">int</span> x<span class="op">,</span> <span class="dt">int</span> y<span class="op">)</span> <span class="op">&#123;</span> <span class="cf">return</span> dfn<span class="op">[</span>x<span class="op">]</span> <span class="op">&lt;</span> dfn<span class="op">[</span>y<span class="op">];</span> <span class="op">&#125;);</span></span>
+<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a>            <span class="co">// for (int i = 1; i &lt;= len; ++i)</span></span>
+<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a>            <span class="co">//     printf(&quot;%d &quot;, id[i]);</span></span>
+<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a>            <span class="co">// puts(&quot;&quot;);</span></span>
+<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> len<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a>                <span class="co">// printf(&quot;%d %d %d\n&quot;, i, id[i], dfn[id[i]]);</span></span>
+<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a>                <span class="co">// assert(0);</span></span>
+<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a>                add<span class="op">(</span>dfn<span class="op">[</span>id<span class="op">[</span>i<span class="op">]],</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>i <span class="op">!=</span> <span class="dv">1</span><span class="op">)</span></span>
+<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a>                    add<span class="op">(</span>dfn<span class="op">[</span>askLCA<span class="op">(</span>id<span class="op">[</span>i<span class="op">],</span> id<span class="op">[</span>i <span class="op">-</span> <span class="dv">1</span><span class="op">])],</span> <span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a>            <span class="op">&#125;</span></span>
+<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
+<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span> <span class="op">&#123;</span></span>
+<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a>            <span class="dt">int</span> x<span class="op">;</span></span>
+<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a>            <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> x<span class="op">;</span></span>
+<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> tail<span class="op">[</span>x<span class="op">]</span> <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb4-123"><a href="#cb4-123" aria-hidden="true" tabindex="-1"></a>            <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> ask<span class="op">(</span>dfn<span class="op">[</span>x<span class="op">]</span> <span class="op">+</span> siz<span class="op">[</span>x<span class="op">]</span> <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="op">-</span> ask<span class="op">(</span>dfn<span class="op">[</span>x<span class="op">]</span> <span class="op">-</span> <span class="dv">1</span><span class="op">)</span> <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span></span>
+<span id="cb4-124"><a href="#cb4-124" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
+<span id="cb4-125"><a href="#cb4-125" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb4-126"><a href="#cb4-126" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb4-127"><a href="#cb4-127" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span></code></pre></div>
+</details>
+<hr />
+<h2 id="ac-自动机上的-dp">AC 自动机上的 DP</h2>
+<p>鉴于 AC
+自动机的优秀结构与性质，并不经常作为字符串匹配工具出现，其一个应用是作为
+DP 的载体。</p>
+<h3 id="eg1.-l-语言">eg1. L 语言</h3>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2292"
+class="uri">https://www.luogu.com.cn/problem/P2292</a></p>
+<p>我们想到要在自动机上匹配，但此时 <code>fail</code>
+作为「断句」的唯一手段（断句的位置在链上当前点深度 - <code>fail</code>
+深度处），不再仅当失配时才能经过。我们考虑朴素的
+DP：在经过的每个状态考虑断句，那么这要求断句处是一个单词的结尾，那么此时
+<code>fail</code>
+最长匹配长度即可被更新。最后遍历所有单词的末结点，取最大答案。这里的
+<code>fail</code> 其实是 <code>fail</code> 链上任意一点。</p>
+<p>考虑复杂度。容易发现对于每一个点我们跳了其整条 fail
+链，那么复杂度就是最劣 <span class="math inline">\(n^2\)</span>
+的。考虑优化这个过程至 <span class="math inline">\(O(1)\)</span>。</p>
+<p>题目里有一个很重要的条件还没有用到：单个单词长度 <span
+class="math inline">\(\le
+20\)</span>，这让我们想到状态压缩。对于每一个状态，记录其断出来单词的可能长度。</p>
+<p>我们在 DAG
+上游走的时候记录目前可以断的所有位置，如果其和当前可断出来的长度之交不为空，就可以将此处加入「可以断的所有位置」并更新答案。</p>
+<details>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> maxn <span class="op">=</span> <span class="fl">2e5</span> <span class="op">+</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> T<span class="op">[</span>maxn<span class="op">][</span><span class="dv">26</span><span class="op">],</span> tot<span class="op">,</span> fail<span class="op">[</span>maxn<span class="op">],</span> len<span class="op">[</span>maxn<span class="op">],</span> dep<span class="op">[</span>maxn<span class="op">],</span> tag<span class="op">[</span>maxn<span class="op">];</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ins<span class="op">(</span><span class="bu">std::</span>string <span class="op">&amp;</span>t<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> p <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i <span class="op">:</span> t<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(!</span>T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">])</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">]</span> <span class="op">=</span> <span class="op">++</span>tot<span class="op">,</span> dep<span class="op">[</span>tot<span class="op">]</span> <span class="op">=</span> dep<span class="op">[</span>p<span class="op">]</span> <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">];</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">++</span>tag<span class="op">[</span>p<span class="op">];</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> p<span class="op">;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">&#123;</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef ONLINE_JUDGE</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>ios::sync_with_stdio<span class="op">(</span><span class="kw">false</span><span class="op">);</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cin<span class="op">.</span>tie<span class="op">(</span><span class="kw">nullptr</span><span class="op">),</span> <span class="bu">std::</span>cout<span class="op">.</span>tie<span class="op">(</span><span class="kw">nullptr</span><span class="op">);</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>freopen<span class="op">(</span><span class="st">&quot;.in&quot;</span><span class="op">,</span> <span class="st">&quot;r&quot;</span><span class="op">,</span> stdin<span class="op">);</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>freopen<span class="op">(</span><span class="st">&quot;.out&quot;</span><span class="op">,</span> <span class="st">&quot;w&quot;</span><span class="op">,</span> stdout<span class="op">);</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n<span class="op">,</span> m<span class="op">;</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> n <span class="op">&gt;&gt;</span> m<span class="op">;</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> tail<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="bu">std::</span>string<span class="op">&gt;</span> t<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> t<span class="op">[</span>i<span class="op">],</span> tail<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> ins<span class="op">(</span>t<span class="op">[</span>i<span class="op">]);</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#123;</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> q<span class="op">;</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">26</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>T<span class="op">[</span><span class="dv">0</span><span class="op">][</span>i<span class="op">])</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>                q<span class="op">.</span>push<span class="op">(</span>T<span class="op">[</span><span class="dv">0</span><span class="op">][</span>i<span class="op">]);</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(;</span> <span class="op">!</span>q<span class="op">.</span>empty<span class="op">();</span> <span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>            <span class="dt">int</span> u <span class="op">=</span> q<span class="op">.</span>front<span class="op">();</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>            q<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>            len<span class="op">[</span>u<span class="op">]</span> <span class="op">=</span> len<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]];</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>tag<span class="op">[</span>u<span class="op">])</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>                len<span class="op">[</span>u<span class="op">]</span> <span class="op">|=</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> dep<span class="op">[</span>u<span class="op">]);</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">26</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>T<span class="op">[</span>u<span class="op">][</span>i<span class="op">])</span> <span class="op">&#123;</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">int</span> v <span class="op">=</span> T<span class="op">[</span>u<span class="op">][</span>i<span class="op">];</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>                    fail<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> T<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]][</span>i<span class="op">];</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>                    q<span class="op">.</span>push<span class="op">(</span>v<span class="op">);</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>                <span class="op">&#125;</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>                    T<span class="op">[</span>u<span class="op">][</span>i<span class="op">]</span> <span class="op">=</span> T<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]][</span>i<span class="op">];</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(;</span> m<span class="op">--;</span> <span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>string s<span class="op">;</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> s<span class="op">;</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> p <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> q <span class="op">=</span> <span class="dv">1</span><span class="op">,</span> res <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span>s<span class="op">.</span>length<span class="op">();</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>            p <span class="op">=</span> T<span class="op">[</span>p<span class="op">][</span>s<span class="op">[</span>i<span class="op">]</span> <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">],</span> q <span class="op">&lt;&lt;=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>len<span class="op">[</span>p<span class="op">]</span> <span class="op">&amp;</span> q<span class="op">)</span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>                q <span class="op">|=</span> <span class="dv">1</span><span class="op">,</span> res <span class="op">=</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> res <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span></span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span></code></pre></div>
+</details>
+<hr />
+<h3 id="eg2.-popcount-words">eg2. Popcount Words</h3>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/gym/103409/problem/H"
+class="uri">https://codeforces.com/gym/103409/problem/H</a></p>
+<p><del>咋上强度了啊。</del></p>
+<p>先把整个序列写出来，即 <span
+class="math inline">\(w=\texttt{01101001100101}\cdots\)</span>，尝试进一步探究形式化的规律，可以得到：</p>
+<ol type="1">
+<li><span class="math inline">\(w_{[0, 2^n), 0}=w_{[0,
+2^{n-1}),0}+w_{[0, 2^n), 1}\)</span>，其中 <span
+class="math inline">\(w_{[l, r], 0/1}\)</span> 表示 <span
+class="math inline">\([l, r]\)</span> 内，原串 / 取反的值。</li>
+<li>对于不以 <span class="math inline">\(0\)</span>
+开头的整段，可以从上述规则转化为 <span class="math inline">\(0\)</span>
+开头的整段。</li>
+</ol>
+<p>接着不难想到一种类似线段树的方式，将待求的 <span
+class="math inline">\(w_{[l, r], 0}\)</span> 分到 <span
+class="math inline">\(O(\log V)\)</span> 个整段上，那么 <span
+class="math inline">\(S\)</span> 就可以被 <span
+class="math inline">\(O(n\log V)\)</span> 个整段（也是 <span
+class="math inline">\(\log V\)</span> 个本质不同整段）描述。</p>
+<p>我们对 <span class="math inline">\({p_m}\)</span> 建立 AC
+自动机，需要知道这 <span class="math inline">\(\log V\)</span>
+个整段在每个点上的出现次数。对于自动机上任意状态 <span
+class="math inline">\(u\)</span>，设 <span class="math inline">\(to_{u,
+n, 0/1}\)</span> 表示 <span class="math inline">\(u\)</span> 经过 <span
+class="math inline">\(w_{[0, 2^n), 0/1}\)</span>
+后到达的点，则可倍增（嘶，这里是不是应该反过来叫分治啊）简单解决。</p>
+<p>那么接下来我们就可以用 <span class="math inline">\(to\)</span>
+来进行快速游走了。顺便打个 <span class="math inline">\(cnt\)</span>
+记录一下每个 <span class="math inline">\(u\)</span>
+作为不同整段的开头被经过的次数。然后做一个 DP，类似于线段树上
+<code>pushdown</code> 的操作把所有整段下放到单点上的单个字符。</p>
+<p>有一说一用 DP
+来处理这个东西还挺难想的。可能也是基于前面的倍增吧。最后拓扑排序就行了。</p>
+<details>
+<p>大家数组一定要用 C-style array 啊，<code>std::vector&lt;&gt;</code>
+计算的是申请空间包 MLE 的 <img src="/em/ll.gif" /></p>
+<p>大家大数组一定要内存连续访问优化啊，TLE <span
+class="math inline">\(\to\)</span> 100ms 泪目了 <img
+src="/em/ll.gif" /></p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> maxn <span class="op">=</span> <span class="fl">5e5</span> <span class="op">+</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="dt">long</span> <span class="dt">long</span> sum<span class="op">[</span>maxn<span class="op">],</span> f<span class="op">[</span><span class="dv">2</span><span class="op">][</span><span class="dv">30</span><span class="op">][</span>maxn<span class="op">];</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> cnt<span class="op">[</span><span class="dv">2</span><span class="op">][</span><span class="dv">30</span><span class="op">][</span>maxn<span class="op">],</span> to<span class="op">[</span><span class="dv">2</span><span class="op">][</span><span class="dv">30</span><span class="op">][</span>maxn<span class="op">];</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> T<span class="op">[</span>maxn<span class="op">][</span><span class="dv">2</span><span class="op">],</span> tot<span class="op">,</span> fail<span class="op">[</span>maxn<span class="op">],</span> deg<span class="op">[</span>maxn<span class="op">];</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ins<span class="op">(</span><span class="bu">std::</span>string <span class="op">&amp;</span>t<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> p <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i <span class="op">:</span> t<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(!</span>T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;0&#39;</span><span class="op">])</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>            T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;0&#39;</span><span class="op">]</span> <span class="op">=</span> <span class="op">++</span>tot<span class="op">;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;0&#39;</span><span class="op">];</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> p<span class="op">;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> ask<span class="op">(</span><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="bu">std::</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;</span> <span class="op">&gt;</span> <span class="op">&amp;</span>s<span class="op">,</span> <span class="dt">int</span> ql<span class="op">,</span> <span class="dt">int</span> qr<span class="op">,</span> <span class="dt">int</span> l <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">int</span> r <span class="op">=</span> <span class="op">(</span><span class="dv">1</span> <span class="op">&lt;&lt;</span> <span class="dv">30</span><span class="op">)</span> <span class="op">-</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">int</span> len <span class="op">=</span> <span class="dv">30</span><span class="op">,</span> <span class="dt">int</span> v <span class="op">=</span> <span class="dv">0</span><span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>ql <span class="op">&lt;=</span> l <span class="op">&amp;&amp;</span> r <span class="op">&lt;=</span> qr<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        s<span class="op">.</span>emplace_back<span class="op">(</span>len<span class="op">,</span> v<span class="op">);</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> mid <span class="op">=</span> l <span class="op">+</span> <span class="op">(</span>r <span class="op">-</span> l<span class="op">)</span> <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>ql <span class="op">&lt;=</span> mid<span class="op">)</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>        ask<span class="op">(</span>s<span class="op">,</span> ql<span class="op">,</span> qr<span class="op">,</span> l<span class="op">,</span> mid<span class="op">,</span> len <span class="op">-</span> <span class="dv">1</span><span class="op">,</span> v<span class="op">);</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>qr <span class="op">&gt;</span> mid<span class="op">)</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>        ask<span class="op">(</span>s<span class="op">,</span> ql<span class="op">,</span> qr<span class="op">,</span> mid <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> r<span class="op">,</span> len <span class="op">-</span> <span class="dv">1</span><span class="op">,</span> v <span class="op">^</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">&#123;</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef ONLINE_JUDGE</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>ios::sync_with_stdio<span class="op">(</span><span class="kw">false</span><span class="op">);</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cin<span class="op">.</span>tie<span class="op">(</span><span class="kw">nullptr</span><span class="op">),</span> <span class="bu">std::</span>cout<span class="op">.</span>tie<span class="op">(</span><span class="kw">nullptr</span><span class="op">);</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>freopen<span class="op">(</span><span class="st">&quot;.in&quot;</span><span class="op">,</span> <span class="st">&quot;r&quot;</span><span class="op">,</span> stdin<span class="op">);</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>freopen<span class="op">(</span><span class="st">&quot;.out&quot;</span><span class="op">,</span> <span class="st">&quot;w&quot;</span><span class="op">,</span> stdout<span class="op">);</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n<span class="op">,</span> m<span class="op">;</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> n <span class="op">&gt;&gt;</span> m<span class="op">;</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="bu">std::</span>pair<span class="op">&lt;</span><span class="dt">int</span><span class="op">,</span> <span class="dt">int</span><span class="op">&gt;</span> <span class="op">&gt;</span> s<span class="op">;</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> l<span class="op">,</span> r<span class="op">;</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> l <span class="op">&gt;&gt;</span> r<span class="op">;</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>        ask<span class="op">(</span>s<span class="op">,</span> l<span class="op">,</span> r<span class="op">);</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> tail<span class="op">(</span>m <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> m<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>string t<span class="op">;</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> t<span class="op">;</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>        tail<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> ins<span class="op">(</span>t<span class="op">);</span></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#123;</span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> q<span class="op">;</span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">2</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>T<span class="op">[</span><span class="dv">0</span><span class="op">][</span>i<span class="op">])</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>                q<span class="op">.</span>push<span class="op">(</span>T<span class="op">[</span><span class="dv">0</span><span class="op">][</span>i<span class="op">]);</span></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(;</span> <span class="op">!</span>q<span class="op">.</span>empty<span class="op">();</span> <span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>            <span class="dt">int</span> u <span class="op">=</span> q<span class="op">.</span>front<span class="op">();</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>            q<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">2</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>T<span class="op">[</span>u<span class="op">][</span>i<span class="op">])</span> <span class="op">&#123;</span></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">int</span> v <span class="op">=</span> T<span class="op">[</span>u<span class="op">][</span>i<span class="op">];</span></span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>                    fail<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> T<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]][</span>i<span class="op">],</span> <span class="op">++</span>deg<span class="op">[</span>T<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]][</span>i<span class="op">]];</span></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>                    q<span class="op">.</span>push<span class="op">(</span>v<span class="op">);</span></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>                <span class="op">&#125;</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>                    T<span class="op">[</span>u<span class="op">][</span>i<span class="op">]</span> <span class="op">=</span> T<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]][</span>i<span class="op">];</span></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;=</span> tot<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>        to<span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">0</span><span class="op">][</span>i<span class="op">]</span> <span class="op">=</span> T<span class="op">[</span>i<span class="op">][</span><span class="dv">0</span><span class="op">],</span> to<span class="op">[</span><span class="dv">1</span><span class="op">][</span><span class="dv">0</span><span class="op">][</span>i<span class="op">]</span> <span class="op">=</span> T<span class="op">[</span>i<span class="op">][</span><span class="dv">1</span><span class="op">];</span></span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> j <span class="op">&lt;</span> <span class="dv">30</span><span class="op">;</span> <span class="op">++</span>j<span class="op">)</span></span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;=</span> tot<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>            to<span class="op">[</span><span class="dv">0</span><span class="op">][</span>j<span class="op">][</span>i<span class="op">]</span> <span class="op">=</span> to<span class="op">[</span><span class="dv">1</span><span class="op">][</span>j <span class="op">-</span> <span class="dv">1</span><span class="op">][</span>to<span class="op">[</span><span class="dv">0</span><span class="op">][</span>j <span class="op">-</span> <span class="dv">1</span><span class="op">][</span>i<span class="op">]];</span></span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>            to<span class="op">[</span><span class="dv">1</span><span class="op">][</span>j<span class="op">][</span>i<span class="op">]</span> <span class="op">=</span> to<span class="op">[</span><span class="dv">0</span><span class="op">][</span>j <span class="op">-</span> <span class="dv">1</span><span class="op">][</span>to<span class="op">[</span><span class="dv">1</span><span class="op">][</span>j <span class="op">-</span> <span class="dv">1</span><span class="op">][</span>i<span class="op">]];</span></span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#123;</span></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> p <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> <span class="op">[</span>n<span class="op">,</span> i<span class="op">]</span> <span class="op">:</span> s<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>            <span class="co">// printf(&quot;# %d %d\n&quot;, n, i);</span></span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>            <span class="op">++</span>cnt<span class="op">[</span>i<span class="op">][</span>n<span class="op">][</span>p<span class="op">],</span> p <span class="op">=</span> to<span class="op">[</span>i<span class="op">][</span>n<span class="op">][</span>p<span class="op">];</span></span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">29</span><span class="op">;</span> <span class="op">~</span>j<span class="op">;</span> <span class="op">--</span>j<span class="op">)</span></span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;=</span> tot<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>j <span class="op">!=</span> <span class="dv">29</span><span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>                f<span class="op">[</span><span class="dv">0</span><span class="op">][</span>j<span class="op">][</span>i<span class="op">]</span> <span class="op">+=</span> f<span class="op">[</span><span class="dv">0</span><span class="op">][</span>j <span class="op">+</span> <span class="dv">1</span><span class="op">][</span>i<span class="op">];</span></span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>                f<span class="op">[</span><span class="dv">1</span><span class="op">][</span>j<span class="op">][</span>i<span class="op">]</span> <span class="op">+=</span> f<span class="op">[</span><span class="dv">1</span><span class="op">][</span>j <span class="op">+</span> <span class="dv">1</span><span class="op">][</span>i<span class="op">];</span></span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>                f<span class="op">[</span><span class="dv">0</span><span class="op">][</span>j<span class="op">][</span>to<span class="op">[</span><span class="dv">1</span><span class="op">][</span>j<span class="op">][</span>i<span class="op">]]</span> <span class="op">+=</span> f<span class="op">[</span><span class="dv">1</span><span class="op">][</span>j <span class="op">+</span> <span class="dv">1</span><span class="op">][</span>i<span class="op">];</span></span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>                f<span class="op">[</span><span class="dv">1</span><span class="op">][</span>j<span class="op">][</span>to<span class="op">[</span><span class="dv">0</span><span class="op">][</span>j<span class="op">][</span>i<span class="op">]]</span> <span class="op">+=</span> f<span class="op">[</span><span class="dv">0</span><span class="op">][</span>j <span class="op">+</span> <span class="dv">1</span><span class="op">][</span>i<span class="op">];</span></span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>            <span class="op">&#125;</span></span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>            f<span class="op">[</span><span class="dv">1</span><span class="op">][</span>j<span class="op">][</span>i<span class="op">]</span> <span class="op">+=</span> cnt<span class="op">[</span><span class="dv">1</span><span class="op">][</span>j<span class="op">][</span>i<span class="op">];</span></span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>            f<span class="op">[</span><span class="dv">0</span><span class="op">][</span>j<span class="op">][</span>i<span class="op">]</span> <span class="op">+=</span> cnt<span class="op">[</span><span class="dv">0</span><span class="op">][</span>j<span class="op">][</span>i<span class="op">];</span></span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;=</span> tot<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>        sum<span class="op">[</span>T<span class="op">[</span>i<span class="op">][</span><span class="dv">0</span><span class="op">]]</span> <span class="op">+=</span> f<span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">0</span><span class="op">][</span>i<span class="op">],</span> sum<span class="op">[</span>T<span class="op">[</span>i<span class="op">][</span><span class="dv">1</span><span class="op">]]</span> <span class="op">+=</span> f<span class="op">[</span><span class="dv">1</span><span class="op">][</span><span class="dv">0</span><span class="op">][</span>i<span class="op">];</span></span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>        <span class="co">// printf(&quot;%d %d\n&quot;, f[i][0][0], f[i][0][1]);</span></span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#123;</span></span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> q<span class="op">;</span></span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;=</span> tot<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(!</span>deg<span class="op">[</span>i<span class="op">])</span></span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a>                q<span class="op">.</span>push<span class="op">(</span>i<span class="op">);</span></span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(;</span> <span class="op">!</span>q<span class="op">.</span>empty<span class="op">();</span> <span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>            <span class="dt">int</span> u <span class="op">=</span> q<span class="op">.</span>front<span class="op">();</span></span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>            q<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>            sum<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]]</span> <span class="op">+=</span> sum<span class="op">[</span>u<span class="op">];</span></span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(!--</span>deg<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]])</span></span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a>                q<span class="op">.</span>push<span class="op">(</span>fail<span class="op">[</span>u<span class="op">]);</span></span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> m<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> sum<span class="op">[</span>tail<span class="op">[</span>i<span class="op">]]</span> <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span></span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span></code></pre></div>
+</details>
+<hr />
+<h3 id="eg3.-legen">eg3. Legen…</h3>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/696/D"
+class="uri">https://codeforces.com/problemset/problem/696/D</a></p>
+<p>先在 fail
+树上把每个状态的实际价值计算出来。我们发现匹配串是未知的，也就是我们需要主动决定游走路径。注意到
+<span class="math inline">\(l=10^{14}\)</span>，考虑矩阵。</p>
+<p>令 <span class="math inline">\(f_{u, i}\)</span> 表示在 <span
+class="math inline">\(u\)</span> 状态时已经走了 <span
+class="math inline">\(i\)</span>
+步，可以得到的最大价值。那么显然有：</p>
+<p><span class="math display">\[
+f_{v,i+1}=f_{u,i}+s_v.
+\]</span></p>
+<p>其中 <span class="math inline">\(v\)</span> 是自动机上 <span
+class="math inline">\(u\)</span> 的任意出边。图的大小为 <span
+class="math inline">\(200\)</span>，可以放到 <span
+class="math inline">\(+\max\)</span> 矩阵里加速转移。</p>
+<details>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;bits/stdc++.h&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> maxn <span class="op">=</span> <span class="fl">2e5</span> <span class="op">+</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">long</span> <span class="dt">long</span> inf <span class="op">=</span> <span class="fl">1e18</span><span class="op">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> fail<span class="op">[</span>maxn<span class="op">],</span> T<span class="op">[</span>maxn<span class="op">][</span><span class="dv">26</span><span class="op">],</span> tot<span class="op">;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ins<span class="op">(</span><span class="bu">std::</span>string s<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> p <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> i <span class="op">:</span> s<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(!</span>T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">])</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>            T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">]</span> <span class="op">=</span> <span class="op">++</span>tot<span class="op">;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        p <span class="op">=</span> T<span class="op">[</span>p<span class="op">][</span>i <span class="op">-</span> <span class="ch">&#39;a&#39;</span><span class="op">];</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> p<span class="op">;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> matrix <span class="op">&#123;</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n<span class="op">,</span> m<span class="op">;</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> <span class="op">&gt;</span> a<span class="op">;</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    matrix<span class="op">(</span><span class="dt">int</span> n1<span class="op">,</span> <span class="dt">int</span> m1<span class="op">,</span> <span class="dt">long</span> <span class="dt">long</span> v <span class="op">=</span> <span class="op">-</span>inf<span class="op">,</span> <span class="dt">bool</span> op <span class="op">=</span> <span class="dv">0</span><span class="op">):</span> n<span class="op">(</span>n1<span class="op">),</span> m<span class="op">(</span>m1<span class="op">),</span> a<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> <span class="op">(</span>m <span class="op">+</span> <span class="dv">1</span><span class="op">,</span> v<span class="op">))</span> <span class="op">&#123;</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>op<span class="op">)</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>                a<span class="op">[</span>i<span class="op">][</span>i<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> <span class="op">&amp;</span><span class="kw">operator</span><span class="op">[]</span> <span class="op">(</span><span class="dt">int</span> i<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> a<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    matrix <span class="kw">operator</span><span class="op">*</span> <span class="op">(</span>matrix <span class="op">&amp;</span>q<span class="op">)</span> <span class="at">const</span> <span class="op">&#123;</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>        matrix res<span class="op">(</span>n<span class="op">,</span> q<span class="op">.</span>m<span class="op">);</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> k <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> k <span class="op">&lt;=</span> m<span class="op">;</span> <span class="op">++</span>k<span class="op">)</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;=</span> q<span class="op">.</span>m<span class="op">;</span> <span class="op">++</span>j<span class="op">)</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>                    res<span class="op">[</span>i<span class="op">][</span>j<span class="op">]</span> <span class="op">=</span> <span class="bu">std::</span>max<span class="op">(</span>res<span class="op">[</span>i<span class="op">][</span>j<span class="op">],</span> a<span class="op">[</span>i<span class="op">][</span>k<span class="op">]</span> <span class="op">+</span> q<span class="op">[</span>k<span class="op">][</span>j<span class="op">]);</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    matrix<span class="op">&amp;</span> <span class="kw">operator</span><span class="op">*=</span> <span class="op">(</span>matrix q<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">*</span><span class="kw">this</span> <span class="op">=</span> <span class="op">*</span><span class="kw">this</span> <span class="op">*</span> q<span class="op">;</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>    matrix <span class="kw">operator</span><span class="op">^</span> <span class="op">(</span><span class="dt">long</span> <span class="dt">long</span> q<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>        matrix res<span class="op">(</span>n<span class="op">,</span> n<span class="op">,</span> <span class="op">-</span>inf<span class="op">,</span> <span class="dv">1</span><span class="op">),</span> x<span class="op">(*</span><span class="kw">this</span><span class="op">);</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(;</span> q<span class="op">;</span> q <span class="op">&gt;&gt;=</span> <span class="dv">1</span><span class="op">,</span> x <span class="op">*=</span> x<span class="op">)</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>q <span class="op">&amp;</span> <span class="dv">1</span><span class="op">)</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>                res <span class="op">*=</span> x<span class="op">;</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> res<span class="op">;</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;;</span></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">&#123;</span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef ONLINE_JUDGE</span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>ios::sync_with_stdio<span class="op">(</span><span class="kw">false</span><span class="op">);</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cin<span class="op">.</span>tie<span class="op">(</span><span class="kw">nullptr</span><span class="op">),</span> <span class="bu">std::</span>cout<span class="op">.</span>tie<span class="op">(</span><span class="kw">nullptr</span><span class="op">);</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>freopen<span class="op">(</span><span class="st">&quot;.in&quot;</span><span class="op">,</span> <span class="st">&quot;r&quot;</span><span class="op">,</span> stdin<span class="op">);</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>freopen<span class="op">(</span><span class="st">&quot;.out&quot;</span><span class="op">,</span> <span class="st">&quot;w&quot;</span><span class="op">,</span> stdout<span class="op">);</span></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> n<span class="op">;</span></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>    <span class="dt">long</span> <span class="dt">long</span> m<span class="op">;</span></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> n <span class="op">&gt;&gt;</span> m<span class="op">;</span></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> a<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> a<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> tail<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="bu">std::</span>string<span class="op">&gt;</span> t<span class="op">(</span>n <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>cin <span class="op">&gt;&gt;</span> t<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>        tail<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> ins<span class="op">(</span>t<span class="op">[</span>i<span class="op">]);</span></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span><span class="dt">long</span> <span class="dt">long</span><span class="op">&gt;</span> s<span class="op">(</span>tot <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;=</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>        s<span class="op">[</span>tail<span class="op">[</span>i<span class="op">]]</span> <span class="op">+=</span> a<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#123;</span></span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>queue<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> q<span class="op">;</span></span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">26</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>T<span class="op">[</span><span class="dv">0</span><span class="op">][</span>i<span class="op">])</span></span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>                q<span class="op">.</span>push<span class="op">(</span>T<span class="op">[</span><span class="dv">0</span><span class="op">][</span>i<span class="op">]);</span> </span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(;</span> <span class="op">!</span>q<span class="op">.</span>empty<span class="op">();</span> <span class="op">)</span> <span class="op">&#123;</span></span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>            <span class="dt">int</span> u <span class="op">=</span> q<span class="op">.</span>front<span class="op">();</span></span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>            q<span class="op">.</span>pop<span class="op">();</span></span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">26</span><span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="op">(</span>T<span class="op">[</span>u<span class="op">][</span>i<span class="op">])</span> <span class="op">&#123;</span></span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">int</span> v <span class="op">=</span> T<span class="op">[</span>u<span class="op">][</span>i<span class="op">];</span></span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>                    fail<span class="op">[</span>v<span class="op">]</span> <span class="op">=</span> T<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]][</span>i<span class="op">],</span> s<span class="op">[</span>v<span class="op">]</span> <span class="op">+=</span> s<span class="op">[</span>fail<span class="op">[</span>v<span class="op">]];</span></span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>                    q<span class="op">.</span>push<span class="op">(</span>v<span class="op">);</span></span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>                <span class="op">&#125;</span></span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span></span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a>                    T<span class="op">[</span>u<span class="op">][</span>i<span class="op">]</span> <span class="op">=</span> T<span class="op">[</span>fail<span class="op">[</span>u<span class="op">]][</span>i<span class="op">];</span></span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a>        <span class="op">&#125;</span></span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a>    <span class="op">&#125;</span></span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a>    matrix f<span class="op">(</span><span class="dv">0</span><span class="op">,</span> tot<span class="op">),</span> op<span class="op">(</span>tot<span class="op">,</span> tot<span class="op">);</span></span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a>    f<span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">0</span><span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;=</span> tot<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span></span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> <span class="dv">26</span><span class="op">;</span> <span class="op">++</span>j<span class="op">)</span></span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a>            op<span class="op">[</span>i<span class="op">][</span>T<span class="op">[</span>i<span class="op">][</span>j<span class="op">]]</span> <span class="op">=</span> s<span class="op">[</span>T<span class="op">[</span>i<span class="op">][</span>j<span class="op">]];</span></span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a>    f <span class="op">*=</span> <span class="op">(</span>op <span class="op">*</span> m<span class="op">);</span></span>
+<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout <span class="op">&lt;&lt;</span> <span class="op">*</span><span class="bu">std::</span>max_element<span class="op">(</span>f<span class="op">[</span><span class="dv">0</span><span class="op">].</span>begin<span class="op">(),</span> f<span class="op">[</span><span class="dv">0</span><span class="op">].</span>end<span class="op">())</span> <span class="op">&lt;&lt;</span> <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span><span class="op">;</span></span>
+<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a><span class="op">&#125;</span></span></code></pre></div>
+</details>
+<hr />
+<h3 id="eg4.-you-are-given-some-strings">eg4. You Are Given Some
+Strings…</h3>
+<p>goto <a
+href="/20250121/#%E4%B8%80%E4%B8%AA%E6%A8%A1%E6%9D%BFcf1202e-you-are-given-some-strings...">link</a>.</p>
+
+			</div>
+			<hr class="dotted">
+			<div class="post footer">
+				<div id="hitokoto">
+					<h3 id="hitokoto-title">
+						言论
+					</h3>
+					<div id="hitokoto-content">
+					</div>
+					<div id="hitokoto-from">
+					</div>
+				</div>
+				<div class="button flex">
+					<div id="prev">
+						
+							<!-- 吐槽，为啥还需要加 / -->
+							<a href="/20250121/">
+								<i class="fas fa-angle-double-left" style="margin-right: 10px;"></i>
+								学习笔记：字符串拆分
+							</a>
+						
+					</div>
+					<div id="next">
+						
+							<a href="/20241104/">
+								杂题选谈
+								<i class="fas fa-angle-double-right" style="margin-left: 10px;"></i>
+							</a>
+						
+					</div>
+				</div>
+				<div id="vcomments" class="text"></div>
+<script>
+	new Valine({
+		el: '#vcomments',
+		appId: 'OlmvQ0a2Zw7xo3no2bwabOzx-gzGzoHsz',
+		appKey: 'TW6t8mFeGLmhPjWisvmllvvo',
+		recordIP: true,
+		enableQQ: true, 
+		// [EDITED] 目前 Valine 的 QQ 自动获取昵称似乎不可用
+		// 该问题在 v1.5.3 中已修复
+		pageSize: 10,
+		requiredFields:
+			
+				['nick']
+			,
+		placeholder: "The world is but a little place after all...\n能够根据邮箱获取你的 Gravatar 头像。昵称是必填项，长度需不低于 3。",
+		avatar: 'identicon',
+		avatar_cdn: 'https://cravatar.cn/avatar/',
+		emojiCDN: 'https://xsc062.netlify.app/em/', 
+		emojiMaps: {
+			
+				"微笑": "wx.gif",
+			
+				"龇牙": "cy.gif",
+			
+				"流泪": "ll.gif",
+			
+				"笑哭": "xk.gif",
+			
+				"流汗": "lh.gif",
+			
+				"擦汗": "ch.gif",
+			
+				"亲亲": "qq.gif",
+			
+				"色": "se.gif",
+			
+				"疑问": "yiw.gif",
+			
+				"发呆": "fd.gif",
+			
+				"晕": "yun.gif",
+			
+				"鼓掌": "gz.gif",
+			
+				"憨笑": "hanx.gif",
+			
+				"快哭了": "kk.gif",
+			
+				"得意": "dy.gif",
+			
+				"狂笑": "kx.gif",
+			
+				"害羞": "hx.gif",
+			
+				"妈妈生的": "dz.gif",
+			
+				"糗大了": "qd.gif",
+			
+				"吃瓜": "cg.gif",
+			
+				"睁眼": "zy.webp",
+			
+				"辣眼睛": "lyj.gif",
+			
+				"酸了": "nm.gif",
+			
+				"滚": "gun.webp",
+			
+				"惊恐": "jk.gif",
+			
+				"幽灵": "youl.gif",
+			
+				"无聊": "wul.gif",
+			
+				"吃": "eat.gif",
+			
+				"你很棒棒": "bb.gif",
+			
+				"赞": "qiang.gif",
+			
+				"踩": "ruo.gif",
+			
+				"握手": "wsh.gif",
+			
+				"发抖": "fad.gif",
+			
+				"挥手": "hsh.gif",
+			
+				"磕头": "kt.gif",
+			
+				"怄火": "oh.gif",
+			
+		},
+		mathjax: true,
+	})
+</script>
+			</div>
+			<script>setHitokoto();</script>
+		</div> 
+	</div>
+</div>
+    <!-- 页脚开始 -->
+<div id="footer" class="serif">
+    Powered by
+    <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a>
+    &
+    <a href="/about-this-theme">
+        iwll
+    </a>
+    <p style="margin-top: 5px;">
+        2021 - 2026
+    </p>
+    <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" id="CCTAG"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/big/by_nc_sa.svg"></a>
+</div>
+<!-- Valine 相关配置 -->
+<script>
+    const getValineDomTimer = setInterval(() => {
+        // 不知道为什么 我从原博客 js 文件粘过来的参数是
+        // "#valine .vcards .vcard"
+        // DEBUG 了半天才定位到这个问题。。。
+        const vcards =
+            document.querySelectorAll('#valine, .vcards, .vcard');
+        if (vcards.length > 0) {
+            let author = 'XSC062';
+            for (let vcard of vcards) {
+                const vnick_dom = vcard.querySelector('.vhead .vnick');
+                if (vnick_dom != null) {
+                    const vnick = vnick_dom.innerHTML;
+                    if (vnick === author) {
+                        vnick_dom.innerHTML =
+                        `${vnick} <span id="rootitem" class="code">root</span>`
+                    }
+                }
+            }
+        }
+        else {
+            clearInterval(getValineDomTimer);
+        }
+    }, 2000);
+    SetActiveItem();
+    setDetailsSummary();
+    setTitleAnchor();
+    setEmptyToc();
+    setCodeClassName();
+</script>
+
+
+<!-- js -->
+<!-- 搜索功能相关配置 -->
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/local-search.js"></script>
+
+</script>
+<!-- prism 相关配置 -->
+<script type="text/javascript" src="/js/prism.js" defer></script>
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/clipboard-use.js"></script>
+<!-- 页脚结束 -->
+</body>
+</html>
